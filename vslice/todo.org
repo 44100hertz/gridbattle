@@ -1,0 +1,7 @@
+* TODO inbattle
+ - 6x3 grid
+ - movement
+ - HP
+ - player can shoot
+ - enemy that shoots
+ - hitbox display
