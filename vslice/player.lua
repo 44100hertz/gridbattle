@@ -3,7 +3,6 @@ local idle, move, shoot
 player = {
    x=0, y=0,
    img = love.graphics.newImage("ben.png"),
-   action = idle,
 }
 
 local actionTimer = 0
@@ -19,19 +18,25 @@ player.frame = frames.idle
 
 function idle()
    player.frame = frames.idle
-   if input.check("a") then
+   if input.check("a",10) then
+      actionTimer = 20
+      player.action = shoot
    elseif input.check("left",10) then
       x_goal=player.x-40
       input.stale()
+      move()
    elseif input.check("down",10) then
       y_goal=player.y+24
       input.stale()
+      move()
    elseif input.check("up",10) then
       y_goal=player.y-24
       input.stale()
+      move()
    elseif input.check("right",10) then
       x_goal=player.x+40
       input.stale()
+      move()
    end
 end
 
@@ -47,6 +52,7 @@ function move()
    elseif y_goal > y then y=y+3/2
    else
       player.action = idle
+      idle()
    end
    player.x = x
    player.y = y
