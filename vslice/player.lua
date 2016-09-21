@@ -19,31 +19,33 @@ player.frame = frames.idle
 
 function idle()
    player.frame = frames.idle
-   if love.keyboard.isDown('s') then
-      actionTimer = 10
-      player.action = shoot
-   elseif love.keyboard.isDown('a') then
+   if input.check("a") then
+   elseif input.check("left",10) then
       x_goal=player.x-40
-   elseif love.keyboard.isDown('o') then
+      input.stale()
+   elseif input.check("down",10) then
       y_goal=player.y+24
-   elseif love.keyboard.isDown('e') then
+      input.stale()
+   elseif input.check("up",10) then
       y_goal=player.y-24
-   elseif love.keyboard.isDown('u') then
+      input.stale()
+   elseif input.check("right",10) then
       x_goal=player.x+40
+      input.stale()
    end
 end
 
 function move()
    local x = player.x
    local y = player.y
-   if((x + y) % 10 < 5) then player.frame = frames.idle
+   if((x + y*2) % 15 < 6) then player.frame = frames.idle
    else player.frame = frames.move
    end
-   if x_goal < x then x=x-2 end
-   if x_goal > x then x=x+2 end
-   if y_goal < y then y=y-2 end
-   if y_goal > y then y=y+2 end
-   if x==x_goal and y==y_goal then
+   if x_goal < x then x=x-5/2
+   elseif x_goal > x then x=x+5/2
+   elseif y_goal < y then y=y-3/2
+   elseif y_goal > y then y=y+3/2
+   else
       player.action = idle
    end
    player.x = x
