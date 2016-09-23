@@ -50,11 +50,13 @@ stage = {
    end,
    
    canGo = function (stage_x, stage_y, side)
-      if stage_x > stage_size[1] or stage_x < 1 then return false end
-      if stage_y > stage_size[2] or stage_y < 1 then return false end
-      if floor[stage_y][stage_x]==0 then return false end
-      if side==0 and stage_x >  turf[stage_y] then return false end
-      if side==1 and stage_x <= turf[stage_y] then return false end
+      if (stage_x > stage_size[1] or stage_x < 1) or
+	 (stage_y > stage_size[2] or stage_y < 1) or
+	 (floor[stage_y][stage_x]==0) or
+	 (side==0 and stage_x >  turf[stage_y]) or
+	 (side==1 and stage_x <= turf[stage_y])
+      then return false
+      end
       return true
    end
 }
