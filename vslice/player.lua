@@ -1,73 +1,60 @@
-local idle, move, shoot
+assert "sheet"
+assert "stage"
 
-player = {
-   x=0, y=0,
-   img = love.graphics.newImage("ben.png"),
+local img, frames, origin, stagePos, pos
+local idle_init
+
+player = { 
+   init = function ()
+      player.update = idle_init
+      img = love.graphics.newImage("ben.png")
+      frames = sheet.generate(50, 60, 1, 5, img:getDimensions())
+      origin_x, origin_y = 25, 57
+      stage_x, stage_y = 1, 1
+      posx, posy = stage.position(stage_x, stage_y)
+   end,
+
+   draw = function ()
+      love.graphics.draw(img, frame, posx, posy, 0, 1, 1, origin_x, origin_y)
+   end
 }
 
-local actionTimer = 0
-local x_goal, y_goal = 0,0
-local width = player.img:getWidth()
-local height = player.img:getHeight()   
-local frames = {
-   idle = love.graphics.newQuad(0, 0, 49, 60, width, height),
-   move = love.graphics.newQuad(0, 60, 49, 60, width, height),
-   shoot = love.graphics.newQuad(0, 120, 49, 60, width, height)
-}
-player.frame = frames.idle
+local idle
+function idle_init()
+   frame = frames[1]
+   player.update = idle
+   idle()
+end
 
+local checkInput
 function idle()
-   player.frame = frames.idle
-   if input.check("a",10) then
-      actionTimer = 20
-      player.action = shoot
-   elseif input.check("left",10) then
-      x_goal=player.x-40
-      input.stale()
-      move()
-   elseif input.check("down",10) then
-      y_goal=player.y+24
-      input.stale()
-      move()
-   elseif input.check("up",10) then
-      y_goal=player.y-24
-      input.stale()
-      move()
-   elseif input.check("right",10) then
-      x_goal=player.x+40
-      input.stale()
+   checkInput()
+end
+
+function checkInput()
+   if input.check("up") then move_init(stage_x, stage_y-1) end
+   if input.check("down") then move_init(stage_x, stage_y+1) end
+   if input.check("left") then move_init(stage_x-1, stage_y) end
+   if input.check("right") then move_init(stage_x+1, stage_y) end
+end
+
+local inputTimer
+local move
+function move_init(goal_x, goal_y)
+   input.stale("pad")
+   if stage.canGo(goal_x, goal_y, 0) then
+      inputTimer = 20
+      stage.free(stage_x, stage_y)
+      stage.occupy(goal_x, goal_y)
+      stage_x, stage_y = goal_x, goal_y
+      posx, posy = stage.position(stage_x, stage_y)
+      frame = frames[2]
+      player.update = move
       move()
    end
 end
 
 function move()
-   local x = player.x
-   local y = player.y
-   if((x + y*2) % 15 < 6) then player.frame = frames.idle
-   else player.frame = frames.move
-   end
-   if x_goal < x then x=x-5/2
-   elseif x_goal > x then x=x+5/2
-   elseif y_goal < y then y=y-3/2
-   elseif y_goal > y then y=y+3/2
-   else
-      player.action = idle
-      idle()
-   end
-   player.x = x
-   player.y = y
-end
-
-function shoot()
-   player.frame = frames.shoot
-   actionTimer=actionTimer-1
-   if actionTimer==0 then player.action = idle end
-end
-
-function player.update()
-   player.action = player.action or idle
-   if not (player.x==x_goal and player.y==y_goal) then
-      player.action = move
-   end
-   player.action()
+   if inputTimer > 0 then inputTimer = inputTimer - 1
+   else idle_init() end
 end

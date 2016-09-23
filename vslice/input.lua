@@ -10,8 +10,6 @@ local buttons = {
 }
 
 input = {
-   --[[ Scan for inputs
-   ]]--
    update = function ()
       for k,v in pairs(buttons) do
 	 local pressed = love.keyboard.isScancodeDown(keyBind[k])
@@ -25,8 +23,8 @@ input = {
       be registered until let go and re-pressed
    ]]--
    stale = function (arg)
-      arg = arg or "move"
-      if arg=="move" then
+      arg = arg or "pad"
+      if arg=="pad" then
 	 buttons.up = stale
 	 buttons.down = stale
 	 buttons.left = stale
