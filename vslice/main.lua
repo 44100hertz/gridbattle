@@ -4,11 +4,13 @@ require "player"
 require "input"
 
 local canvas = love.graphics.newCanvas()
+local canvas_scale = 4
+local gameSize_x, gameSize_y = 240, 160
 
 function love.load()
    stage.init()
    player.init()
-   love.window.setMode(480,320)
+   love.window.setMode(gameSize_x * canvas_scale, gameSize_y * canvas_scale)
 end
 
 function love.draw()
@@ -20,5 +22,5 @@ function love.draw()
 	 player.draw()
    end)
    canvas:setFilter("nearest", "nearest")
-   love.graphics.draw(canvas, 0, 0, 0, 2, 2)
+   love.graphics.draw(canvas, 0, 0, 0, canvas_scale, canvas_scale)
 end
