@@ -1,27 +1,40 @@
+assert "sheet"
+
 local stage_size = {6, 3}
 local stage_offset = {20, 82}
 local stage_spacing = {40, 24}
-local default_turf = { 3, 3, 3 }
-local zero_stage = {
-   { 0, 0, 0, 0, 0, 0 },
-   { 0, 0, 0, 0, 0, 0 },
-   { 0, 0, 0, 0, 0, 0 },
-}
-
-local img, floor, turf
+local img, quads, floor, collision, turf
 
 stage = {
-   init = function ()
+   init = function (new_floor, new_collision, new_turf)
       img = img or love.graphics.newImage("stage.png")
-      floor = floor or zero_stage
-      collision = zero_stage
-      turf = turf or default_turf
+      quads = sheet.generate(40, 40, 2, 2, img:getDimensions())
+      floor = new_floor or {
+	 { 1, 1, 1, 1, 1, 1 },
+	 { 1, 1, 1, 1, 1, 1 },
+	 { 1, 1, 1, 1, 1, 1 },
+		       }
+      collision = new_collision or {
+	 { 1, 1, 1, 1, 1, 1 },
+	 { 1, 1, 1, 1, 1, 1 },
+	 { 1, 1, 1, 1, 1, 1 },
+		       }
+      turf = new_turf or { 3, 3, 3 }
    end,
-   
+
+   -- Optional todo: store this to a canvas, and redraw only when needed
    draw = function ()
-      love.graphics.draw(img)
+      local x, y
+      for y=1, 3 do
+	 local color_offset = 0
+	 for x=1, 6 do
+	    if x>turf[y] then color_offset = 2 end
+	    love.graphics.draw(img, quads[color_offset + floor[y][x]],
+			       (x-1)*40, (y-1)*24+72)
+	 end
+      end
    end,
-      
+
    occupy = function (stage_x, stage_y)
       collision[stage_y][stage_x] = 1
    end,
@@ -39,6 +52,7 @@ stage = {
    canGo = function (stage_x, stage_y, side)
       if stage_x > stage_size[1] or stage_x < 1 then return false end
       if stage_y > stage_size[2] or stage_y < 1 then return false end
+      if floor[stage_y][stage_x]==0 then return false end
       if side==0 and stage_x >  turf[stage_y] then return false end
       if side==1 and stage_x <= turf[stage_y] then return false end
       return true

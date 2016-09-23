@@ -22,6 +22,3 @@ function love.draw()
    canvas:setFilter("nearest", "nearest")
    love.graphics.draw(canvas, 0, 0, 0, 2, 2)
 end
-
-function love.update(dt)
-end
