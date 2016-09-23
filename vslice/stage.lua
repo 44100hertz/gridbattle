@@ -12,14 +12,14 @@ stage = {
       floor = new_floor or {
 	 { 1, 1, 1, 1, 1, 1 },
 	 { 1, 1, 1, 1, 1, 1 },
-	 { 1, 1, 1, 1, 1, 1 },
+	 { 1, 1, 0, 1, 1, 1 },
 		       }
       collision = new_collision or {
 	 { 1, 1, 1, 1, 1, 1 },
 	 { 1, 1, 1, 1, 1, 1 },
 	 { 1, 1, 1, 1, 1, 1 },
 		       }
-      turf = new_turf or { 3, 3, 3 }
+      turf = new_turf or { 3, 4, 5 }
    end,
 
    -- Optional todo: store this to a canvas, and redraw only when needed
@@ -29,7 +29,7 @@ stage = {
 	 local color_offset = 0
 	 for x=1, 6 do
 	    if x>turf[y] then color_offset = 2 end
-	    love.graphics.draw(img, quads[color_offset + floor[y][x]],
+	    love.graphics.draw(img, quads[color_offset + floor[y][x] + 1],
 			       (x-1)*40, (y-1)*24+72)
 	 end
       end
