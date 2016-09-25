@@ -1,15 +1,18 @@
 sheet = {
-   generate = function
-	 (width, height, quads_width, quads_height, imgwidth, imgheight)
-      local x_offset, y_offset = 0,0
-      local output = {}
-      for y_offset = 0,quads_height do
-	 for x_offset = 0,quads_height do
-	    output[y_offset * quads_width + x_offset + 1] =
-	       love.graphics.newQuad( width*x_offset, height*y_offset,
-				      width, height, imgwidth, imgheight )
+   generate = function(quad_size, num_frames, img_size_x, img_size_y)
+      local x, y
+      local quads = {}
+      for y = 0,num_frames.y do
+	 quads[y+1] = {}
+	 for x = 0,num_frames.x do
+	    quads[y+1][x+1] =
+	          love.graphics.newQuad(
+		  quad_size.x*x, quad_size.y*y,
+		  quad_size.x, quad_size.y,
+		  img_size_x, img_size_y
+	       )
 	 end
       end
-      return output
+      return quads
    end
 }
