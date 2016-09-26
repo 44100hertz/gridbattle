@@ -1,5 +1,3 @@
-assert "sheet"
-
 local stage_size = {x=6, y=3}
 local stage_offset = {x=20, y=82}
 local stage_spacing = {x=40, y=24}
@@ -8,7 +6,7 @@ local quads, floor, collision, turf = {}, {}, {}, {}
 
 stage = {
    init = function (new_floor, new_collision, new_turf)
-      img = img or love.graphics.newImage("stage.png")
+      img = img or love.graphics.newImage("img/stage.png")
       quads = sheet.generate({x=40, y=40}, {x=2, y=2}, img:getDimensions())
       floor = new_floor or {
 	 { 1, 1, 1, 1, 1, 1 },

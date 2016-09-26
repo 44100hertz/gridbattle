@@ -1,7 +1,7 @@
 require "sheet"
-require "stage"
-require "player"
 require "input"
+require "battle-stage"
+require "actors/player"
 
 local canvas = love.graphics.newCanvas()
 local canvas_scale = 4

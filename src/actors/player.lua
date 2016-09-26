@@ -1,6 +1,3 @@
-assert "sheet"
-assert "stage"
-
 local img, frames, origin, s_pos, pos, side
 local hp, maxhp
 local idle, idle_init
@@ -12,7 +9,7 @@ local inputTimer
 player = { 
    init = function ()
       player.update = idle_init
-      img = love.graphics.newImage("ben.png")
+      img = love.graphics.newImage("img/ben.png")
       frames = sheet.generate({x=50, y=60}, {x=1, y=5}, img:getDimensions())
       origin = {x=25, y=57}
       s_pos = {x=1, y=1}
