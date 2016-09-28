@@ -54,7 +54,7 @@ stage = {
 	 (s_pos.y > stage_size.y or s_pos.y < 1) or
 	 (floor[s_pos.y][s_pos.x]==0) or
 	 (side=="left" and s_pos.x >  turf[s_pos.y]) or
-	 (side=="right" and s_pos.y <= turf[s_pos.y])
+	 (side=="right" and s_pos.x <= turf[s_pos.y])
       then
 	 return false
       else
