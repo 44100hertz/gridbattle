@@ -59,8 +59,9 @@ end
 function shoot()
    if state ~= shoot then
       input.stale("a")
-      frame = frames[3]
+      frame = frames[3][1]
       state = shoot
+      state_timer = 0
    end
    if state_timer > 10 then
       return idle()
