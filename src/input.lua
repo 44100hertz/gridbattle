@@ -11,7 +11,6 @@ local buttons = {
 
 input = {
    update = function ()
-      print(buttons.left)
       for k,v in pairs(buttons) do
 	 local pressed = love.keyboard.isScancodeDown(keyBind[k])
 	 if pressed and buttons[k] ~= stale then buttons[k]=buttons[k]+1

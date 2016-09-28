@@ -1,5 +1,5 @@
 local idle, move, shoot
-local state_timer = 0
+local state_timer
 
 local state, space, side, pos
 local speed
