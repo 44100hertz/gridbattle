@@ -1,15 +1,28 @@
 local idle, move, shoot
 local state_timer = 0
 
-local state
-local speed = 1
+local state, space, side, pos
+local speed
 local img = love.graphics.newImage("img/ben.png")
 local frames = sheet.generate({x=50, y=60}, {x=1, y=5}, img:getDimensions())
 local origin = {x=25, y=57}
-local space = {x=1, y=1}
-local side = "left"
-local pos = stage.pos(space)
-stage.occupy(space)
+
+local function init(init_space, init_side, init_speed)
+   space = init_space or {x=1, y=1}
+   side = init_side or "left"
+   pos = stage.pos(space)
+   stage.occupy(space)
+   speed = init_speed or 1
+end
+
+local function update()
+   if state then state() else idle() end
+   state_timer = state_timer + speed
+end
+
+local function draw()
+   love.graphics.draw(img, frame, pos.x, pos.y, 0, 1, 1, origin.x, origin.y)
+end
 
 function idle()
    if state ~= idle then
@@ -55,14 +68,9 @@ function shoot()
 end
 
 player = {
-   update = function ()
-      if state then state() else idle() end
-      state_timer = state_timer + speed
-   end,
-
-   draw = function ()
-      love.graphics.draw(img, frame, pos.x, pos.y, 0, 1, 1, origin.x, origin.y)
-   end
+   init = init,
+   update = update,
+   draw = draw
 }
 
 return player

@@ -1,13 +1,14 @@
 require "sheet"
 require "input"
 require "battle-stage"
-local player = require "actors/player"
 
 local canvas = love.graphics.newCanvas()
 local canvas_scale = 4
 local gameSize_x, gameSize_y = 240, 160
 
 function love.load()
+   local player = require "actors/player"
+   player.init()
    stage.init()
    love.window.setMode(gameSize_x * canvas_scale, gameSize_y * canvas_scale)
 end
