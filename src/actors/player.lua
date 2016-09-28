@@ -4,8 +4,10 @@ local state_timer
 local state, space, side, pos
 local speed
 local img = love.graphics.newImage("img/ben.png")
+local frame
 local frames = sheet.generate({x=50, y=60}, {x=1, y=5}, img:getDimensions())
 local origin = {x=25, y=57}
+local flip
 
 local function init(init_space, init_side, init_speed)
    space = init_space or {x=1, y=1}
@@ -13,6 +15,7 @@ local function init(init_space, init_side, init_speed)
    pos = stage.pos(space)
    stage.occupy(space)
    speed = init_speed or 1
+   if side == "right" then flip = -1 else flip = 1 end
 end
 
 local function update()
@@ -21,7 +24,7 @@ local function update()
 end
 
 local function draw()
-   love.graphics.draw(img, frame, pos.x, pos.y, 0, 1, 1, origin.x, origin.y)
+   love.graphics.draw(img, frame, pos.x, pos.y, 0, flip, 1, origin.x, origin.y)
 end
 
 function idle()
