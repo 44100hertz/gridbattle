@@ -11,14 +11,14 @@ stage = {
       floor = new_floor or {
 	 { 1, 1, 1, 1, 1, 1 },
 	 { 1, 1, 1, 1, 1, 1 },
-	 { 1, 1, 0, 1, 1, 1 },
+	 { 1, 1, 1, 1, 1, 1 },
 		       }
       collision = new_collision or {
-	 { 1, 1, 1, 1, 1, 1 },
-	 { 1, 1, 1, 1, 1, 1 },
-	 { 1, 1, 1, 1, 1, 1 },
+	 { 0, 0, 0, 0, 0, 0 },
+	 { 0, 0, 0, 0, 0, 0 },
+	 { 0, 0, 0, 0, 0, 0 },
 		       }
-      turf = new_turf or { 3, 4, 5 }
+      turf = new_turf or { 3, 3, 3 }
    end,
 
    -- Optional todo: store this to a canvas, and redraw only when needed
@@ -34,27 +34,28 @@ stage = {
       end
    end,
 
-   occupy = function (s_pos)
-      collision[s_pos] = 1
+   occupy = function (space)
+      collision[space.y][space.x] = 1
    end,
 
-   free = function (s_pos)
-      collision[s_pos] = 0
+   free = function (space)
+      collision[space.y][space.x] = 0
    end,
 
-   pos = function (s_pos)
+   pos = function (space)
       return {
-	 x = stage_offset.x + stage_spacing.x * (s_pos.x-1),
-	 y = stage_offset.y + stage_spacing.y * (s_pos.y-1)
+	 x = stage_offset.x + stage_spacing.x * (space.x-1),
+	 y = stage_offset.y + stage_spacing.y * (space.y-1)
       }
    end,
    
-   canGo = function (s_pos, side)
-      if (s_pos.x > stage_size.x or s_pos.x < 1) or
-	 (s_pos.y > stage_size.y or s_pos.y < 1) or
-	 (floor[s_pos.y][s_pos.x]==0) or
-	 (side=="left" and s_pos.x >  turf[s_pos.y]) or
-	 (side=="right" and s_pos.x <= turf[s_pos.y])
+   canGo = function (space, side)
+      if (space.x > stage_size.x or space.x < 1) or
+	 (space.y > stage_size.y or space.y < 1) or
+	 (floor[space.y][space.x]==0) or
+	 (collision[space.y][space.x]==1) or
+	 (side=="left" and space.x >  turf[space.y]) or
+	 (side=="right" and space.x <= turf[space.y])	 
       then
 	 return false
       else
