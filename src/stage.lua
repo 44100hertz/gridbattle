@@ -39,7 +39,6 @@ stage = {
       
    -- Optional todo: store this to a canvas, and redraw only when needed
    draw = function ()
-      for o,_ in ipairs(actors) do actors[o].draw() end
       local x, y
       for y=1, 3 do
 	 local color=1
@@ -49,6 +48,7 @@ stage = {
 			       (x-1)*40, (y-1)*24+72)
 	 end
       end
+      for o,_ in ipairs(actors) do actors[o].draw() end
    end,
 
    occupy = function (space)
