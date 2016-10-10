@@ -1,7 +1,32 @@
-* TODO inbattle
+* TODO structural
+** DONE stage actor inheiritance
+** TODO metatables for inheiritance (so it actually works)
+** TODO time-independent updates; still once per frame
+** TODO serializable battle data
+** TODO serializable animation data
+* TODO graphical
+** TODO auto-sorting draw list (z-buffer)
+https://love2d.org/wiki/Skip_list:Drawing_Order
+** TODO animation class w/organization
+** TODO custom fonts
+** TODO drawing statusbar
+** TODO hitbox display
+* TODO gameplay
 ** DONE 6x3 grid
 ** DONE movement
-** TODO HP
+** TODO true input buffer
+ - input.queue() queues one input
+ - clean way to register an input and stale it at once
 ** TODO player can shoot
 ** TODO enemy that shoots
-** TODO hitbox display
+
+* Proposed organizational structure
+ - stage-object
+   - init/update/draw state machine
+   - position
+   - animation
+ - stage-object -> stage-actor
+   - has HP, occupies a space
+   - requires idle_init(), die()
+   - various functions; animation/cooldown, moving, etc.
+   - 
