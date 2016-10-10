@@ -12,8 +12,6 @@ function love.load()
 end
 
 function love.draw()
-   input.update()
-   stage.update()
    canvas:renderTo(function()
 	 love.graphics.clear(100,200,150,255)
 	 stage.draw()
@@ -21,3 +19,8 @@ function love.draw()
    canvas:setFilter("nearest", "nearest")
    love.graphics.draw(canvas, 0, 0, 0, canvas_scale, canvas_scale)
 end
+
+function love.update(dt)
+   input.update()
+   stage.update()
+end   
