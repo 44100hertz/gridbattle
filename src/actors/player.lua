@@ -1,80 +1,51 @@
-local idle, move, shoot
-local state_timer
+local o = {}
 
-local state, space, side, pos
-local speed
-local img = love.graphics.newImage("img/ben.png")
-local frame
-local frames = sheet.generate({x=50, y=60}, {x=1, y=5}, img:getDimensions())
-local origin = {x=25, y=57}
-local flip
+o.test = function () print("blah") end
 
-local function init(init_space, init_side, init_speed)
-   space = init_space or {x=1, y=1}
-   side = init_side or "left"
-   pos = stage.pos(space)
-   stage.occupy(space)
-   speed = init_speed or 1
-   if side == "right" then flip = -1 else flip = 1 end
+o.cooldown = function ()
+   print(o.state_timer)
+   if o.state_timer > 10 then
+      return o.idle_init()
+   end      
 end
 
-local function update()
-   if state then state() else idle() end
-   state_timer = state_timer + speed
-end
-
-local function draw()
-   love.graphics.draw(img, frame, pos.x, pos.y, 0, flip, 1, origin.x, origin.y)
-end
-
-function idle()
-   if state ~= idle then
-      state = idle
-      frame = frames[1][1]
-      state_timer = 0
-   end
-   if     input.check("a")     then shoot()
-   elseif input.check("up")    then move{x=space.x,   y=space.y-1}
-   elseif input.check("down")  then move{x=space.x,   y=space.y+1}
-   elseif input.check("left")  then move{x=space.x-1, y=space.y}
-   elseif input.check("right") then move{x=space.x+1, y=space.y}
+o.idle = function ()
+   -- Player moves based on user input
+   if     input.check("a")     then o.shoot()
+   elseif input.check("up")    then o.move_init{x=o.space.x,   y=o.space.y-1}
+   elseif input.check("down")  then o.move_init{x=o.space.x,   y=o.space.y+1}
+   elseif input.check("left")  then o.move_init{x=o.space.x-1, y=o.space.y}
+   elseif input.check("right") then o.move_init{x=o.space.x+1, y=o.space.y}
    end
 end
 
-function move(space_goal)
-   if state ~= move then
-      input.stale("pad")
-      if stage.canGo(space_goal, side) then
-	 frame = frames[2][1]
-	 stage.free(space)
-	 stage.occupy(space_goal)
-	 space = space_goal
-	 pos = stage.pos(space)
-	 state = move
-	 state_timer = 0
-      end
-   end
-   if state_timer > 10 then
-      return idle()
+o.idle_init = function ()
+   o.state = o.idle
+   o.frame = o.frames[1][1]
+   o.state_timer = 0
+   o.idle()
+end
+
+o.move_init = function (space_goal)
+   input.stale("pad") -- Force button repress in order to move twice
+   if stage.canGo(space_goal, o.side) then
+      o.state = o.cooldown
+      o.state_timer = 0
+      o.frame = o.frames[2][1]
+      
+      o.space = space_goal
+      o.pos = stage.pos(o.space)
+
+      stage.free(o.space)
+      stage.occupy(space_goal)
    end
 end
 
-function shoot()
-   if state ~= shoot then
-      input.stale("a")
-      frame = frames[3][1]
-      state = shoot
-      state_timer = 0
-   end
-   if state_timer > 10 then
-      return idle()
-   end   
+o.shoot_init = function ()
+   input.stale("a")
+   o.frame = o.frames[3][1]
+   o.state = o.cooldown
+   o.state_timer = 0
 end
 
-player = {
-   init = init,
-   update = update,
-   draw = draw
-}
-
-return player
+return o
