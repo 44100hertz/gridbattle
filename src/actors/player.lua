@@ -1,41 +1,42 @@
-local o = require "actors/actor"
+Actor = require "actors/actor"
 
-o.idle = function ()
-   -- Player moves based on user input
-   if     input.check("a")     then o.shoot()
-   elseif input.check("up")    then o.move{x=o.space.x,   y=o.space.y-1}
-   elseif input.check("down")  then o.move{x=o.space.x,   y=o.space.y+1}
-   elseif input.check("left")  then o.move{x=o.space.x-1, y=o.space.y}
-   elseif input.check("right") then o.move{x=o.space.x+1, y=o.space.y}
+Player = Actor:new()
+
+function Player:idle()
+   if     input.check("a")     then self:shoot()
+   elseif input.check("up")    then self:move{x=self.space.x,   y=self.space.y-1}
+   elseif input.check("down")  then self:move{x=self.space.x,   y=self.space.y+1}
+   elseif input.check("left")  then self:move{x=self.space.x-1, y=self.space.y}
+   elseif input.check("right") then self:move{x=self.space.x+1, y=self.space.y}
    end
 end
 
-o.idle_init = function ()
-   o.state = o.idle
-   o.frame = o.frames[1][1]
-   o.state_timer = 0
-   o.idle()
+function Player:init()
+   self.state = self.idle
+   self.frame = self.frames[1][1]
+   self.state_timer = 0
+   self:idle()
 end
 
-o.move = function (space_goal)
+function Player:move(space_goal)
    input.stale("pad") -- Force button repress in order to move twice
-   if stage.canGo(space_goal, o.side) then
-      o.state = o.cooldown
-      o.state_timer = 0
-      o.frame = o.frames[2][1]
+   if stage.canGo(space_goal, self.side) then
+      self.state = self.cooldown
+      self.state_timer = 0
+      self.frame = self.frames[2][1]
 
-      stage.free(o.space)
+      stage.free(self.space)
       stage.occupy(space_goal)
-      o.space = space_goal
-      o.pos = stage.pos(o.space)
+      self.space = space_goal
+      self.pos = stage.pos(self.space)
    end
 end
 
-o.shoot = function ()
+function Player:shoot()
    input.stale("a")
-   o.frame = o.frames[3][1]
-   o.state = o.cooldown
-   o.state_timer = 0
+   self.frame = self.frames[3][1]
+   self.state = self.cooldown
+   self.state_timer = 0
 end
 
-return o
+return Player

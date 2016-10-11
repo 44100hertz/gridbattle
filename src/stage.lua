@@ -11,30 +11,22 @@ local stage_spacing = {x=40, y=24}
 local img
 local quads, floor, collision, turf = {}, {}, {}, {}
 
-local actors = {} -- A PRIVATE numbered list of all active actors
-actors[1] = require "actors/player"
+floor = {
+   { 1, 1, 1, 1, 1, 1 },
+   { 1, 1, 1, 1, 1, 1 },
+   { 1, 1, 1, 1, 1, 1 },
+}
+collision = {
+   { 0, 0, 0, 0, 0, 0 },
+   { 0, 0, 0, 0, 0, 0 },
+   { 0, 0, 0, 0, 0, 0 },
+}
 
 stage = {
-   init = function (new_floor, new_collision, new_turf)
+   init = function ()
       img = img or love.graphics.newImage("img/stage.png")
       quads = sheet.generate({x=40, y=40}, {x=2, y=2}, img:getDimensions())
-      floor = new_floor or {
-	 { 1, 1, 1, 1, 1, 1 },
-	 { 1, 1, 1, 1, 1, 1 },
-	 { 1, 1, 1, 1, 1, 1 },
-		       }
-      collision = new_collision or {
-	 { 0, 0, 0, 0, 0, 0 },
-	 { 0, 0, 0, 0, 0, 0 },
-	 { 0, 0, 0, 0, 0, 0 },
-		       }
-      turf = new_turf or { 3, 3, 3 }
-      
-      for o,_ in ipairs(actors) do actors[o].init() end
-   end,
-
-   update = function ()
-      for o,_ in ipairs(actors) do actors[o].update() end
+      turf = new_turf or { 3, 3, 3 }      
    end,
       
    -- Optional todo: store this to a canvas, and redraw only when needed
@@ -48,7 +40,6 @@ stage = {
 			       (x-1)*40, (y-1)*24+72)
 	 end
       end
-      for o,_ in ipairs(actors) do actors[o].draw() end
    end,
 
    occupy = function (space)

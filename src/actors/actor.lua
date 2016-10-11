@@ -1,61 +1,60 @@
---[[
-### actor ###
-A set of extensible, common actor functions
-to be included LOCALLY in actor/ classes
-
-### functionality ##
-init():
-   initialize ALL module state
-   do instead of just putting things in the package header
-
-update():
-   calls a module function, so should not be extended
-   ideally is a clean state machine
-
-draw():
-   draw.
-   TODO: make draw return a canvas or custom type, for z-buffer
+--[[ Actor
+A set of extensible, common Actor functions
+to be included LOCALLY in Actor/ classes
 --]]
 
-o = {}
+Actor = {}
 
--- Start or re-start an actor without reloading its module
-function o.init()
-   -- init values
-   o.space = o.space or {x=2, y=2} -- Actor starting position
-   o.side = o.side or "left"       -- Actor starting stage side
-   o.speed = o.speed or 1          -- State speed
+-- Start or re-start an Actor without reloading its module
+-- initialize ALL module state
+-- do this instead of just putting things in the package header
+function Actor:new(space, side, speed)
+   -- Make this a class
+   o = {}
+   setmetatable(o, self)
+   self.__index = self
    
-   -- init calculations
-   stage.occupy(o.space)           -- Create collision on space
-   o.pos = stage.pos(o.space)      -- Find the actual coords for drawing
+   -- init values
+   self.space = space or {x=2,y=2} -- Actor starting position
+   self.side  = side  or "left"    -- Actor starting stage side
+   self.speed = speed or 1         -- State speed
+   
+   -- init actions
+   stage.occupy(self.space)         -- Create collision on space
+   self.pos = stage.pos(self.space) -- Find the actual coords for drawing
 
    -- Temporary hack to make drawing work. Everyone is Ben!
-   o.img = love.graphics.newImage("img/ben.png")
-   o.frames = sheet.generate({x=50, y=60}, {x=1, y=5}, o.img:getDimensions())
-   o.origin = {x=25, y=57}
+   self.img = love.graphics.newImage("img/ben.png")
+   self.frames = sheet.generate({x=50, y=60}, {x=1, y=5}, self.img:getDimensions())
+   self.origin = {x=25, y=57}
 
-   -- Require an idle state
-   o.state = o.idle_init
-   o.state_timer = 0
+   -- Init state machine
+   self.state = self.init
+   self.state_timer = 0
+
+   return o
 end
 
--- A hopefully clean way to run an actor state machine
-function o.update()
-   o.state()
-   o.state_timer = o.state_timer + o.speed
+-- Assumed that this is done before each draw
+function Actor:update()
+   self:state()
+   self.state_timer = self.state_timer + self.speed
 end
 
 -- Generic draw function, will be replaced
-function o.draw()
-   love.graphics.draw(o.img, o.frame, o.pos.x, o.pos.y,
-		      0, 1, 1, o.origin.x, o.origin.y)
+function Actor:draw()
+   love.graphics.draw(self.img, self.frame, self.pos.x, self.pos.y,
+		      0, 1, 1, self.origin.x, self.origin.y)
 end
 
-function o.cooldown()
-   if o.state_timer > 10 then
-      return o.idle_init()
-   end      
+-- For the end of animations; will be replaced
+function Actor:cooldown()
+   if self.state_timer > 10 then
+      return self:init()
+   end
 end
 
-return o
+-- Placeholder function; do nothing!
+function Actor:init() end
+
+return Actor

@@ -1,26 +1,13 @@
-require "sheet"
-require "input"
-require "stage"
-
-local canvas = love.graphics.newCanvas()
-local canvas_scale = 4
-local gameSize_x, gameSize_y = 240, 160
+local game_state = require "battle"
 
 function love.load()
-   stage.init()
-   love.window.setMode(gameSize_x * canvas_scale, gameSize_y * canvas_scale)
+   game_state.load()
 end
 
 function love.draw()
-   canvas:renderTo(function()
-	 love.graphics.clear(100,200,150,255)
-	 stage.draw()
-   end)
-   canvas:setFilter("nearest", "nearest")
-   love.graphics.draw(canvas, 0, 0, 0, canvas_scale, canvas_scale)
+   game_state.draw()
 end
 
 function love.update(dt)
-   input.update()
-   stage.update()
-end   
+   game_state.update(dt)
+end
