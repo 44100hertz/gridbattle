@@ -36,9 +36,9 @@ function Actor:new(space, side, speed)
 end
 
 -- Assumed that this is done before each draw
-function Actor:update()
+function Actor:update(dt)
    self:state()
-   self.state_timer = self.state_timer + self.speed
+   self.state_timer = self.state_timer + self.speed*60*dt
 end
 
 -- Generic draw function, will be replaced

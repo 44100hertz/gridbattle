@@ -31,7 +31,7 @@ end
 
 function battle.update(dt)
    input.update()
-   for o,_ in ipairs(actors) do actors[o]:update() end
+   for o,_ in ipairs(actors) do actors[o]:update(dt) end
 end
 
 return battle

@@ -1,7 +1,7 @@
 * TODO structural
 ** DONE stage actor inheiritance
 ** DONE metatables for inheiritance (so it actually works)
-** TODO time-independent updates; still once per frame
+** DONE time-independent updates...FOR NOW...
 ** TODO serializable battle data
 ** TODO serializable animation data
 * TODO graphical
