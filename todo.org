@@ -1,6 +1,6 @@
 * TODO structural
 ** DONE stage actor inheiritance
-** TODO metatables for inheiritance (so it actually works)
+** DONE metatables for inheiritance (so it actually works)
 ** TODO time-independent updates; still once per frame
 ** TODO serializable battle data
 ** TODO serializable animation data
@@ -20,13 +20,3 @@ https://love2d.org/wiki/Skip_list:Drawing_Order
 ** TODO player can shoot
 ** TODO enemy that shoots
 
-* Proposed organizational structure
- - stage-object
-   - init/update/draw state machine
-   - position
-   - animation
- - stage-object -> stage-actor
-   - has HP, occupies a space
-   - requires idle_init(), die()
-   - various functions; animation/cooldown, moving, etc.
-   - 

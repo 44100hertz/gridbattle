@@ -1,4 +1,4 @@
-Actor = require "actors/actor"
+Actor = require "battle/actors/Actor"
 
 Player = Actor:new()
 

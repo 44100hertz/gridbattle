@@ -1,4 +1,4 @@
-local game_state = require "battle"
+local game_state = require "battle/battle"
 
 function love.load()
    game_state.load()
