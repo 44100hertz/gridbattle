@@ -1,22 +1,23 @@
 * TODO structural
 ** DONE stage actor inheiritance
 ** DONE metatables for inheiritance (so it actually works)
-** DONE time-independent updates...FOR NOW...
-** TODO serializable battle data
-** TODO serializable animation data
+** DONE framerate-independent updates...FOR NOW...
+** TODO serializable battle/frame data
+** DONE serializable sheet data
 * TODO graphical
 ** TODO auto-sorting draw list (z-buffer)
 https://love2d.org/wiki/Skip_list:Drawing_Order
-** TODO animation class w/organization
+** TODO drawing class w/organization
 ** TODO custom fonts
 ** TODO drawing statusbar
 ** TODO hitbox display
 * TODO gameplay
 ** DONE 6x3 grid
 ** DONE movement
-** TODO true input buffer
- - input.queue() queues one input
- - clean way to register an input and stale it at once
-** TODO player can shoot
-** TODO enemy that shoots
+** TODO battle objects (bullets, etc.)
+** TODO hitboxes/collision
+
+* removed
+** true input buffer
+input buffer removed in favor of interruptible animations, press/hold to act
 
