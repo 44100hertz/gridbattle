@@ -6,18 +6,12 @@ require "battle/actors/Actor"
 require "battle/actors/Player"
 
 local canvas = love.graphics.newCanvas()
-local canvas_scale = 4
-local game_size = {x=240, y=160}
 local battle = {}
 local actors = {}
 
 function battle.load()
-   love.window.setMode(game_size.x * canvas_scale,
-		       game_size.y * canvas_scale)
-   
    stage.init()
    actors[1] = Player:new()
-   
    for o,_ in ipairs(actors) do actors[o]:init() end
 end
 
