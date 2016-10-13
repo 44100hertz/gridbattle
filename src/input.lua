@@ -11,10 +11,12 @@ local buttons = {
 
 input = {
    update = function ()
-      for k,v in pairs(buttons) do
+      for k,_ in pairs(buttons) do
 	 local pressed = love.keyboard.isScancodeDown(keyBind[k])
-	 if pressed and buttons[k] ~= stale then buttons[k]=buttons[k]+1
-	 elseif not pressed then buttons[k] = 0
+	 if pressed and buttons[k] ~= stale then
+	    buttons[k]=buttons[k]+1
+	 elseif not pressed then
+	    buttons[k] = 0
 	 end
       end
    end,
@@ -37,10 +39,7 @@ input = {
    --[[ Grab an input value from the table
       BufferLen: maximum time ago button was pressed
    --]]
-   check = function (button, bufferLen)
-      bufferLen = bufferLen or 6
-      if buttons[button]>0 and buttons[button]<bufferLen then return true
-      else return false
-      end
+   check = function (button)
+      return (buttons[button]>0)
    end
 }
