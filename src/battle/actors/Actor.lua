@@ -8,8 +8,8 @@ Actor = {}
 -- Start or re-start an Actor without reloading its module
 -- initialize ALL module state
 -- do this instead of just putting things in the package header
-function Actor:new(o, space, side, speed)
-   o = {}
+function Actor:new(space, side, speed)
+   local o = {}
    setmetatable(o, self)
    self.__index = self
    

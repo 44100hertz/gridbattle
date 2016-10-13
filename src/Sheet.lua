@@ -39,7 +39,7 @@ end
    returns a table of named strips, with numbered love quads
 --]] 
 function Sheet.new(sheet, img)
-   o = {}
+   local o = {}
    o.img = img or assert(love.graphics.newImage(sheet.file))
 
    -- Parameters outside "strip"
