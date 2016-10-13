@@ -29,7 +29,7 @@ stage = {
 	 for x=1,6 do
 	    local side = (x>turf[y]) and sheet.left or sheet.right
 	    love.graphics.draw(
-	       sheet.img, side[floor[y][x]],
+	       sheet.img, side[floor[y][x]+1],
 	       (x-1)*stage_spacing.x, (y-1)*stage_spacing.y+72)
 	 end
       end

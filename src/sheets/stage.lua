@@ -1,5 +1,5 @@
 return {
-   size = {x=40, y=32},
+   size = {x=40, y=40},
    file = "img/stage.png",
    strips = {
       left = {
@@ -7,7 +7,7 @@ return {
 	 num = 2,
       },
       right = {
-	 pos = {x=0,y=32},
+	 pos = {x=0,y=40},
 	 num = 2,
       }
    }

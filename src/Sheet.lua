@@ -25,9 +25,9 @@ Sheet = {}
 local function read_strip(offset, size, img_size, num)
    local x
    local quads = {}
-   for x = 0, num do
-      quads[x+1] = love.graphics.newQuad(
-	 offset.x, offset.y,
+   for x=1, num do
+      quads[x] = love.graphics.newQuad(
+	 offset.x + (x-1) * size.x, offset.y,
 	 size.x, size.y,
 	 img_size.x, img_size.y)
    end
