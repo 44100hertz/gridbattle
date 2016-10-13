@@ -8,8 +8,7 @@ Actor = {}
 -- Start or re-start an Actor without reloading its module
 -- initialize ALL module state
 -- do this instead of just putting things in the package header
-function Actor:new(space, side, speed)
-   -- Make this a class
+function Actor:new(o, space, side, speed)
    o = {}
    setmetatable(o, self)
    self.__index = self
@@ -23,10 +22,9 @@ function Actor:new(space, side, speed)
    stage.occupy(self.space)         -- Create collision on space
    self.pos = stage.pos(self.space) -- Find the actual coords for drawing
 
-   -- Temporary hack to make drawing work. Everyone is Ben!
-   self.img = love.graphics.newImage("img/ben.png")
-   self.frames = sheet.generate({x=50, y=60}, {x=1, y=5}, self.img:getDimensions())
-   self.origin = {x=25, y=57}
+   -- now using a Sheet; soon to use an Animation
+   self.sheet = Sheet.new(require "sheets/ben")
+   self.origin = {x=25,y=57}
 
    -- Init state machine
    self.state = self.init
@@ -43,7 +41,7 @@ end
 
 -- Generic draw function, will be replaced
 function Actor:draw()
-   love.graphics.draw(self.img, self.frame, self.pos.x, self.pos.y,
+   love.graphics.draw(self.sheet.img, self.frame, self.pos.x, self.pos.y,
 		      0, 1, 1, self.origin.x, self.origin.y)
 end
 

@@ -1,4 +1,4 @@
-Actor = require "battle/actors/Actor"
+assert(Actor)
 
 Player = Actor:new()
 
@@ -13,7 +13,7 @@ end
 
 function Player:init()
    self.state = self.idle
-   self.frame = self.frames[1][1]
+   self.frame = self.sheet.idle[1]
    self.state_timer = 0
    self:idle()
 end
@@ -23,7 +23,7 @@ function Player:move(space_goal)
    if stage.canGo(space_goal, self.side) then
       self.state = self.cooldown
       self.state_timer = 0
-      self.frame = self.frames[2][1]
+      self.frame = self.sheet.move[1]
 
       stage.free(self.space)
       stage.occupy(space_goal)
@@ -34,7 +34,7 @@ end
 
 function Player:shoot()
    input.stale("a")
-   self.frame = self.frames[3][1]
+   self.frame = self.sheet.shoot[1]
    self.state = self.cooldown
    self.state_timer = 0
 end

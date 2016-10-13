@@ -1,15 +1,8 @@
---[[
-### battle-stage ###
- - stores and runs all actors and stage data
- - ALL actor data and functions are exposed here, do nottouch
- - that data is not exposed to the rest of the game
---]]
-
 local stage_size = {x=6, y=3}
 local stage_offset = {x=20, y=82}
 local stage_spacing = {x=40, y=24}
-local img
-local quads, floor, collision, turf = {}, {}, {}, {}
+local sheet
+local floor, collision, turf = {}, {}, {}, {}
 
 floor = {
    { 1, 1, 1, 1, 1, 1 },
@@ -25,19 +18,19 @@ collision = {
 stage = {
    init = function ()
       img = img or love.graphics.newImage("img/stage.png")
-      quads = sheet.generate({x=40, y=40}, {x=2, y=2}, img:getDimensions())
+      sheet = Sheet.new(require "sheets/stage")
       turf = new_turf or { 3, 3, 3 }      
    end,
       
    -- Optional todo: store this to a canvas, and redraw only when needed
    draw = function ()
       local x, y
-      for y=1, 3 do
-	 local color=1
-	 for x=1, 6 do
-	    if x>turf[y] then color=2 end
-	    love.graphics.draw(img, quads[color][floor[y][x]+1],
-			       (x-1)*40, (y-1)*24+72)
+      for y=1,3 do
+	 for x=1,6 do
+	    local side = (x>turf[y]) and sheet.left or sheet.right
+	    love.graphics.draw(
+	       sheet.img, side[floor[y][x]],
+	       (x-1)*stage_spacing.x, (y-1)*stage_spacing.y+72)
 	 end
       end
    end,

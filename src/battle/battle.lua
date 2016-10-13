@@ -1,10 +1,9 @@
-require "sheet"
+require "Sheet"
 require "input"
-require "battle/stage"
-require "battle/actors/Player"
 
-require "Animation"
-local ben_sheet = require "battle/anim/ben"
+require "battle/stage"
+require "battle/actors/Actor"
+require "battle/actors/Player"
 
 local canvas = love.graphics.newCanvas()
 local canvas_scale = 4
@@ -13,8 +12,6 @@ local battle = {}
 local actors = {}
 
 function battle.load()
-   ben = Animation:new(ben_sheet)
-   
    love.window.setMode(game_size.x * canvas_scale,
 		       game_size.y * canvas_scale)
    
