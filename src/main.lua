@@ -1,3 +1,4 @@
+require "test"
 local game_state
 local battle = require "battle/battle"
 
