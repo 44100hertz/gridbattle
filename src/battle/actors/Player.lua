@@ -1,8 +1,41 @@
 assert(Actor)
 
+local sheet = Sheet.new(require "sheets/ben")
+
 Player = Actor:new()
 
-function Player:idle()
+local anims = {
+   idle = {
+      strip = sheet.idle,
+      frame_time = {5,5},
+   },
+   move = {
+      strip = sheet.move,
+      frame_time = {5,5},
+      length = 10,
+   },
+   shoot = {
+      strip = sheet.shoot,
+      frame_time = {10},
+      length = 10,
+   }
+}
+
+local states = {
+   idle = {
+      anim = anims.idle,
+   },
+   move = {
+      anim = anims.move,
+      now = Player.move,
+   },
+   shoot = {
+      anim = anims.shoot,
+      now = Player.shoot,
+   }
+}
+
+function Player:act()
    if     input.check("a")     then self:shoot()
    elseif input.check("up")    then self:move{x=self.space.x,   y=self.space.y-1}
    elseif input.check("down")  then self:move{x=self.space.x,   y=self.space.y+1}
@@ -11,32 +44,25 @@ function Player:idle()
    end
 end
 
-function Player:init()
-   self.state = self.idle
-   self.frame = self.sheet.idle[1]
-   self.state_timer = 0
-   self:idle()
+function Player:start()
+   self.state = states.idle
 end
 
 function Player:move(space_goal)
-   input.stale("pad") -- Force button repress in order to move twice
+   input.stale("pad") -- Require a re-press
    if stage.canGo(space_goal, self.side) then
-      self.state = self.cooldown
-      self.state_timer = 0
-      self.frame = self.sheet.move[1]
-
+      self.state = states.move
       stage.free(self.space)
       stage.occupy(space_goal)
+      -- TODO: make moving not instant
       self.space = space_goal
       self.pos = stage.pos(self.space)
    end
 end
 
 function Player:shoot()
+   self.state = states.shoot
    input.stale("a")
-   self.frame = self.sheet.shoot[1]
-   self.state = self.cooldown
-   self.state_timer = 0
 end
 
 return Player

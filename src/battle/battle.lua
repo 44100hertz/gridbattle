@@ -12,7 +12,6 @@ local actors = {}
 function battle.load()
    stage.init()
    actors[1] = Player:new()
-   for o,_ in ipairs(actors) do actors[o]:init() end
 end
 
 function battle.draw()
