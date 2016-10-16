@@ -2,21 +2,24 @@ assert(Actor)
 
 local sheet = Sheet.new(require "sheets/ben")
 
-Player = Actor:new()
+o = {img = sheet.img}
+Player = Actor:new(o)
 
 local anims = {
    idle = {
       strip = sheet.idle,
-      frame_time = {5,5},
+      timing = {5,5},
+      length = 10,
+      loop = true,
    },
    move = {
       strip = sheet.move,
-      frame_time = {5,5},
+      timing = {5,5},
       length = 10,
    },
    shoot = {
       strip = sheet.shoot,
-      frame_time = {10},
+      timing = {10},
       length = 10,
    }
 }
@@ -45,18 +48,20 @@ function Player:act()
 end
 
 function Player:start()
-   self.state = states.idle
+   return states.idle
 end
 
 function Player:move(space_goal)
    input.stale("pad") -- Require a re-press
    if stage.canGo(space_goal, self.side) then
-      self.state = states.move
       stage.free(self.space)
       stage.occupy(space_goal)
       -- TODO: make moving not instant
       self.space = space_goal
       self.pos = stage.pos(self.space)
+      return states.move
+   else
+      return self.state
    end
 end
 

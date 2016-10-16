@@ -20,8 +20,9 @@ format:
    self.anim = {
        strip = _,               ; what strip to play; sheet.x, etc.
        timing = {_,_,...},      ; length of each frame
-       order = {_,_,...},       ; [optional] what order to play frames in
-       length = _,              ; [optional] when to enter next state. nil = loop
+       TODO: order = {_,_,...},       ; [optional] what order to play frames in
+       length = _,              ; [optional] when to enter next state.
+       loop = true              ; [optional] enable looping
        iasa = _,                ; [optional] frames until actor can act again
    }
 --]]
@@ -47,13 +48,16 @@ function Actor:new (o)
 
    -- Init state machine
    self.state = { now = self.start }
-   self.frame = 0
+   self.frame = 1
    self.state_time = 0
    self.frame_time = 0
 
    return o
 end
 
+
+-- TODO: write code for when changing states
+-- and separate code for when running
 --[[
    Actor:update
    Done before each draw
@@ -63,8 +67,10 @@ function Actor:update (dt)
    self.state_time = self.state_time + self.speed*60*dt
    self.frame_time = self.frame_time + self.speed*60*dt
 
-   -- Run current state
-   if self.state.now then self.state:now() end
+   -- Run current state, update if returned
+   if self.state.now then
+      self.state = self.state:now()
+   end
 
    -- Go through animations
    local length = self.state.anim.length
@@ -72,25 +78,30 @@ function Actor:update (dt)
    if length and not iasa then iasa = length-1 end
    -- If animation ended
    if length and self.state_time > length then
-      self.state = self.after or self.start
+      self.state = self.state.after or self.start()
    end
    -- if animation interruptible
    if not iasa or self.state_time > iasa then
-      self.act()
+      self:act()
    end
 
    -- Go through frames
-   local timing = self.anim.timing[frame]
-   if self.frame_time > timing then
-      self.frame_time = self.frame_time - timing
+   local anim = self.state.anim
+
+   if self.frame_time > anim.timing[self.frame] then
+      self.frame_time = self.frame_time - anim.timing[self.frame]
       self.frame = self.frame + 1
+      if anim.loop and not anim.timing[self.frame] then
+	 self.frame_time = self.frame_time - length
+	 self.frame = 1
+      end
    end
 end
 
 function Actor:draw ()
    love.graphics.draw(
-      self.sheet.img,
-      self.anim.strip[frame],
+      self.img,
+      self.state.anim.strip[self.frame],
       self.pos.x, self.pos.y,
       0, 1, 1,
       self.origin.x, self.origin.y
