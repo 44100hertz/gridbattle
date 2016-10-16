@@ -18,7 +18,7 @@ function battle.draw()
    canvas:renderTo(function()
 	 love.graphics.clear(100, 200, 150, 255)
 	 stage.draw()
-	 for o,_ in ipairs(actors) do actors[o]:draw() end
+	 for i,_ in ipairs(actors) do actors[i]:draw() end
    end)
    canvas:setFilter("nearest", "nearest")
    love.graphics.draw(canvas, 0, 0, 0, canvas_scale, canvas_scale)
@@ -26,7 +26,7 @@ end
 
 function battle.update(dt)
    input.update()
-   for o,_ in ipairs(actors) do actors[o]:update(dt) end
+   for i,_ in ipairs(actors) do actors[i]:update(dt) end
 end
 
 return battle
