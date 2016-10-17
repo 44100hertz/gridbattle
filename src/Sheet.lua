@@ -48,7 +48,7 @@ function Sheet.new(data)
    for k,_ in pairs(data.strips) do
       local size = data.strips[k].size or default_size
       sheet[k] = read_strip(
-	 data.strips[k].pos,
+	 {x=data.strips[k].x, y=data.strips[k].y},
 	 size,
 	 data.img_size,
 	 data.strips[k].num

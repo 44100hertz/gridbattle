@@ -1,8 +1,19 @@
+local img = "img/stage.png"
+
+local sheet_data = {
+   size = {x=40, y=40},
+   strips = {
+      left =  { x=0, y=0, num=2 },
+      right = { x=0, y=40, num=2 },
+   }
+}
+
+local sheet = Sheet.new(sheet_data)
+
 local stage_size = {x=6, y=3}
 local stage_offset = {x=20, y=82}
 local stage_spacing = {x=40, y=24}
-local sheet
-local floor, collision, turf = {}, {}, {}, {}
+local floor, collision, turf = {}, {}, {}
 
 floor = {
    { 1, 1, 1, 1, 1, 1 },
@@ -15,13 +26,11 @@ collision = {
    { 0, 0, 0, 0, 0, 0 },
 }
 
+local sheet
+
+turf = { 3, 3, 3 }
+
 stage = {
-   init = function ()
-      img = img or love.graphics.newImage("img/stage.png")
-      sheet = Sheet.new(require "sheets/stage")
-      turf = new_turf or { 3, 3, 3 }      
-   end,
-      
    -- Optional todo: store this to a canvas, and redraw only when needed
    draw = function ()
       local x, y
