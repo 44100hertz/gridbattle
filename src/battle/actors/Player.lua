@@ -1,9 +1,10 @@
-local header = require "Player_h"
+dofile(Player_h)
 
 o = {
-   sheet = header.sheet
-   anims = header.anim
+   sheet = Sheet.new(sheet_data),
+   anim = Animation.new(anim_data)
 }
+
 Player = Actor:new(o)
 
 local states = {
