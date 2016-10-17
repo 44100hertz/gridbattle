@@ -1,9 +1,29 @@
-dofile(Player_h)
-
-o = {
-   sheet = Sheet.new(sheet_data),
-   anim = Animation.new(anim_data)
+local sheet_data = {
+   size = {x=50, y=60},
+   img_size = {x=100, y=600},
+   strips = {
+      idle = {
+	 pos = {x=0, y=0},
+	 num = 2,
+      },
+      move = {
+	 pos = {x=0, y=60},
+	 num = 2,
+      },
+      shoot = {
+	 pos = {x=0, y=120},
+	 num = 1,
+      }
+   }
 }
+
+local anims = {
+   idle = {1,1,1,1,1,2,2,2,2,2},
+   move = {1,1,1,1,1,2,2,2,2,2},
+   shoot = {1,1,1,1,1,1,1,1,1,1},
+}
+
+sheet = Sheet.new(sheet_data)
 
 Player = Actor:new(o)
 
