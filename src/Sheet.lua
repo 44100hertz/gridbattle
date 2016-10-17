@@ -38,13 +38,10 @@ end
    'img' should be a love.graphics.image, is optional, and overrides the sheet
    returns a table of named strips, with numbered love quads
 --]]
-function Sheet.new(data, img)
+function Sheet.new(data)
    local sheet = {}
-   sheet.img = img or assert(love.graphics.newImage(data.file))
 
    -- Parameters outside "strip"
-   local img_size = {}
-   img_size.x, img_size.y = sheet.img:getDimensions()
    local default_size = data.size
 
    -- Read each strip
@@ -53,7 +50,7 @@ function Sheet.new(data, img)
       sheet[k] = read_strip(
 	 data.strips[k].pos,
 	 size,
-	 img_size,
+	 data.img_size,
 	 data.strips[k].num
       )
    end
