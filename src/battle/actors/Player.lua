@@ -1,3 +1,7 @@
+Player = Actor:new()
+
+Player.img = love.graphics.newImage("img/ben.png")
+
 local sheet_data = {
    size = {x=50, y=60},
    img_size = {x=100, y=600},
@@ -7,30 +11,27 @@ local sheet_data = {
       shoot = { x=0,  y=120, num=1, },
    }
 }
-
-local anims = {
-   idle = {1,1,1,1,1,2,2,2,2,2},
-   move = {1,1,1,1,1,2,2,2,2,2},
-   shoot = {1,1,1,1,1,1,1,1,1,1},
-}
-
 sheet = Sheet.new(sheet_data)
-
-Player = Actor:new(o)
 
 local states = {
    idle = {
-      anim = anims.idle,
+      strip = sheet.idle,
+      anim = {1,1,1,1,1,2,2,2,2,2},
    },
    move = {
-      anim = anims.move,
-      now = Player.move,
+      strip = sheet.move,
+      anim = {1,1,1,2,2,2},
+      now  = Player.move,
+      length = 10,
    },
    shoot = {
-      anim = anims.shoot,
+      strip = sheet.shoot,
+      anim = {1},
       now = Player.shoot,
+      length = 10,
    }
 }
+Player.start = states.idle
 
 function Player:act()
    if     input.check("a")     then self:shoot()
@@ -39,10 +40,6 @@ function Player:act()
    elseif input.check("left")  then self:move{x=self.space.x-1, y=self.space.y}
    elseif input.check("right") then self:move{x=self.space.x+1, y=self.space.y}
    end
-end
-
-function Player:start()
-   return states.idle
 end
 
 function Player:move(space_goal)

@@ -10,7 +10,6 @@ local battle = {}
 local actors = {}
 
 function battle.load()
-   stage.init()
    actors[1] = Player:new()
 end
 
