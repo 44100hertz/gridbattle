@@ -1,28 +1,10 @@
-assert(Actor)
+local header = require "Player_h"
 
-local sheet = Sheet.new(require "sheets/ben")
-
-o = {img = sheet.img}
-Player = Actor:new(o)
-
-local anims = {
-   idle = {
-      strip = sheet.idle,
-      timing = {5,5},
-      length = 10,
-      loop = true,
-   },
-   move = {
-      strip = sheet.move,
-      timing = {5,5},
-      length = 10,
-   },
-   shoot = {
-      strip = sheet.shoot,
-      timing = {10},
-      length = 10,
-   }
+o = {
+   sheet = header.sheet
+   anims = header.anim
 }
+Player = Actor:new(o)
 
 local states = {
    idle = {
