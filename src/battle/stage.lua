@@ -1,7 +1,8 @@
-local img = "img/stage.png"
+local img = love.graphics.newImage("img/stage.png")
 
 local sheet_data = {
    size = {x=40, y=40},
+   img_size = {x=240, y=160},
    strips = {
       left =  { x=0, y=0, num=2 },
       right = { x=0, y=40, num=2 },
@@ -9,28 +10,23 @@ local sheet_data = {
 }
 
 local sheet = Sheet.new(sheet_data)
-
-local stage_size = {x=6, y=3}
-local stage_offset = {x=20, y=82}
-local stage_spacing = {x=40, y=24}
-local floor, collision, turf = {}, {}, {}
-
-floor = {
+local floor = {
    { 1, 1, 1, 1, 1, 1 },
    { 1, 1, 1, 1, 1, 1 },
    { 1, 1, 1, 1, 1, 1 },
 }
-collision = {
+local collision = {
    { 0, 0, 0, 0, 0, 0 },
    { 0, 0, 0, 0, 0, 0 },
    { 0, 0, 0, 0, 0, 0 },
 }
-
-local sheet
-
-turf = { 3, 3, 3 }
+local turf = { 3, 3, 3 }
 
 stage = {
+   size = {x=6, y=3},
+   offset = {x=20, y=82},
+   spacing = {x=40, y=24},
+
    -- Optional todo: store this to a canvas, and redraw only when needed
    draw = function ()
       local x, y
@@ -38,8 +34,8 @@ stage = {
 	 for x=1,6 do
 	    local side = (x>turf[y]) and sheet.left or sheet.right
 	    love.graphics.draw(
-	       sheet.img, side[floor[y][x]+1],
-	       (x-1)*stage_spacing.x, (y-1)*stage_spacing.y+72)
+	       img, side[floor[y][x]+1],
+	       (x-1)*stage.spacing.x, (y-1)*stage.spacing.y+72)
 	 end
       end
    end,
@@ -54,14 +50,14 @@ stage = {
 
    pos = function (space)
       return {
-	 x = stage_offset.x + stage_spacing.x * (space.x-1),
-	 y = stage_offset.y + stage_spacing.y * (space.y-1)
+	 x = stage.offset.x + stage.spacing.x * (space.x-1),
+	 y = stage.offset.y + stage.spacing.y * (space.y-1)
       }
    end,
    
    canGo = function (space, side)
-      if (space.x > stage_size.x or space.x < 1) or
-	 (space.y > stage_size.y or space.y < 1) or
+      if (space.x > stage.size.x or space.x < 1) or
+	 (space.y > stage.size.y or space.y < 1) or
 	 (floor[space.y][space.x]==0) or
 	 (collision[space.y][space.x]==1) or
 	 (side=="left" and space.x >  turf[space.y]) or
