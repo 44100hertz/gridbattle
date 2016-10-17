@@ -5,12 +5,7 @@ callbacks:
 start = {[state]} ; what state to start in
 act()             ; called each frame after iasa
 
-Data:
-{
-   self.state_time    ; how far into current animation
-   loop = boolean     ; [optional] enable looping
-}
-
+State format:
 state = {
    strip,
    anim,         ; frame data
@@ -46,21 +41,28 @@ end
    Done before each draw
 --]]
 function Actor:update (dt)
-   self.state_time = self.state_time + 60*dt
-
-   if self.state.now then
-      self.state = self.state:now()
+   if self.nextState ~= self.state then
+      self.state_time = 0
+      self.state = self.nextState
    end
 
-   if length and self.state_time > length then
-      self.state_timer = self.state_timer - length
-      self.state = self.state.after or self.start
+   self.state_time = self.state_time + dt
+
+   local length = self.state.length
+   local rate = self.state.rate
+   local iasa = self.state.iasa
+   if length and not iasa then iasa = length-1 end
+
+   if length and self.state_time > length/rate then
+      self.nextState = self.state.after or self.start
    end
    if not length or self.state_time > iasa then
-      self:act()
+      self.nextState = self:act()
+   elseif self.state.now then
+      self.nextState = self.state:now()
    end
 
-   self.frame = (self.state_time % #self.state.anim) + 1
+   self.frame = (self.state_time * rate % #self.state.anim) + 1
 end
 
 function Actor:draw ()

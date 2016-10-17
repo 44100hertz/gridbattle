@@ -16,29 +16,35 @@ sheet = Sheet.new(sheet_data)
 local states = {
    idle = {
       strip = sheet.idle,
-      anim = {1,1,1,1,1,2,2,2,2,2},
+      anim = {1,2},
+      rate = 6
    },
    move = {
-      strip = sheet.move,
-      anim = {1,1,1,2,2,2},
       now  = Player.move,
-      length = 10,
+      strip = sheet.move,
+      anim = {1,2},
+      length = 4,
+      rate = 20
    },
    shoot = {
+      now = Player.shoot,
       strip = sheet.shoot,
       anim = {1},
-      now = Player.shoot,
       length = 10,
+      rate = 20,
    }
 }
 Player.start = states.idle
 
 function Player:act()
-   if     input.check("a")     then self:shoot()
-   elseif input.check("up")    then self:move{x=self.space.x,   y=self.space.y-1}
-   elseif input.check("down")  then self:move{x=self.space.x,   y=self.space.y+1}
-   elseif input.check("left")  then self:move{x=self.space.x-1, y=self.space.y}
-   elseif input.check("right") then self:move{x=self.space.x+1, y=self.space.y}
+   local x = self.space.x
+   local y = self.space.y
+   if     input.check("a")     then return self:shoot()
+   elseif input.check("up")    then return self:move{x=x,   y=y-1}
+   elseif input.check("down")  then return self:move{x=x,   y=y+1}
+   elseif input.check("left")  then return self:move{x=x-1, y=y}
+   elseif input.check("right") then return self:move{x=x+1, y=y}
+   else return self.state
    end
 end
 
@@ -57,8 +63,8 @@ function Player:move(space_goal)
 end
 
 function Player:shoot()
-   self.state = states.shoot
    input.stale("a")
+   return states.shoot
 end
 
 return Player
