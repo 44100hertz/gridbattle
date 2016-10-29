@@ -1,45 +1,42 @@
-local stale = -1
-
+-- keys should be "friendly" names
+-- values must be valid scancodes
 local keyBind = {
-   a ="x", b="z", l="a", r="s", start="enter", sel="shift",
-   up="i", down="k", left="j", right="l"
+   a ="x", b="z",
+   l="a", r="s",
+   st="enter", sel="shift",
+   du="i", dd="k",
+   dl="j", dr="l"
 }
 
-local buttons = {
-   a=0, b=0, l=0, r=0, start=0, sel=0, up=0, down=0, left=0, right=0
-}
+-- populate an array of buttons
+local buttons = {}
+for k,v in pairs(keyBind) do buttons[k] = 0 end
 
 input = {
+   -- update should be called in main loop 60 times a second
+   -- before functions that would grab that input
    update = function ()
-      for k,_ in pairs(buttons) do
-	 local pressed = love.keyboard.isScancodeDown(keyBind[k])
-	 if pressed and buttons[k] ~= stale then
-	    buttons[k]=buttons[k]+1
-	 elseif not pressed then
+      for k,v in pairs(keyBind) do
+	 if love.keyboard.isScanCodeDown(buttons[v]) then
+	    -- increment length of press for each frame pressed
+	    buttons[k] = buttons[k]+1
+	 else
+	    -- reset to 0 when released
 	    buttons[k] = 0
 	 end
       end
    end,
-
-   --[[ Make a specific input go "stale" so that it will not
-      be registered until let go and re-pressed
-   ]]--
-   stale = function (arg)
-      arg = arg or "pad"
-      if arg=="pad" then
-	 buttons.up = stale
-	 buttons.down = stale
-	 buttons.left = stale
-	 buttons.right = stale
-      else
-	 buttons[arg] = stale
-      end
-   end,
-
-   --[[ Grab an input value from the table
-      BufferLen: maximum time ago button was pressed
-   --]]
-   check = function (button)
-      return (buttons[button]>0)
-   end
 }
+
+-- Bind "input.a", for example, to the value of a
+-- but return it; do not allow modification
+input.mt = {
+   __index = function (table, key)
+      return buttons[key]
+   end
+   
+}
+
+setmetatable(input, input.mt)
+
+return input
