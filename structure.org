@@ -1,0 +1,53 @@
+* Global
+** TODO Main
+ - Main creates the window, manages fps, etc.
+ - Love.run is overriden to always update 60 times a second, but draw once a frame.
+ - Main loads in a module with init, update, and draw functions
+ - global main.loadState(module) unload a main module and loads another
+** TODO Input
+ - reads keyboard and pad configs from a text file
+
+* Battle
+** main module
+*** TODO Load
+ - battle data is serialized to be loaded into Stage
+ - battle/setups/*.lua contain object and stage data
+   - stage = { ... }
+   - objects = { ... }
+** TODO Stage
+ - New(stage) : return a stage with the given setup
+ - stores stage data and modifies it
+ - knows the stage size, spacing, position, and returns it
+** TODO Stored data
+ - Objects stores a list of objects always sorted by z-order
+ - Objects have state/animation/hitbox systems run through Object on updates
+*** add(object, space)
+  - insert a new object in a given space (float)
+*** update()
+  1. check collisions on all actors
+  2. update stage conditions
+  3. call a state update on all objects
+*** draw()
+  1. ask all drawable objects for a canvas function
+  2. draw z-ordered graphics
+** TODO Sprite
+  - A simple table of things called by Objects
+  - No "Object" type at all. Just suggestions.
+  - has table values that tell what behaviors it has
+*** Callback functions
+**** new()
+   - returns an object with a fresh scope
+**** draw()
+   - draws the sprite; called in z-order
+**** update(dt)
+   - runs current state
+**** collide(object)
+   - "notify" the object of a collision
+*** Vars used
+ - x, y, z: stage x, y, and z position
+   - x: spaces = 1-3
+   - y: spaces = 1-6
+   - z: height off ground. 1 = one platform width
+   - transformed into screen position for drawing in Objects
+ - recvbox{}
+   - ...
