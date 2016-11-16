@@ -34,7 +34,6 @@ input.mt = {
    __index = function (table, key)
       return buttons[key]
    end
-   
 }
 
 setmetatable(input, input.mt)

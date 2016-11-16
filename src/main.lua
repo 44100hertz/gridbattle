@@ -1,22 +1,45 @@
 require "test"
-local game_state
-local battle = require "battle/battle"
 
-local game_size = {x=240, y=160}
-canvas_scale = 4
+local state
+main = {
+   loadstate = function (mod)
+      state = mod
+      state.init()
+   end,
+}
 
-function love.load()
-   love.window.setMode(game_size.x * canvas_scale,
-		       game_size.y * canvas_scale)
+love.run = function ()
+   local gamestate
 
-   game_state = battle
-   battle.load()
-end
+   local gamesize = {x=240, y=160}
+   canvas_scale = 4
 
-function love.draw()
-   game_state.draw()
-end
+   local canvas = love.graphics.newCanvas(gamesize.x, gamesize.y)
 
-function love.update(dt)
-   game_state.update(dt)
+   love.math.setRandomSeed(os.time())
+   main.loadstate(require "battle/battle")
+
+   while true do
+      love.event.pump()
+      for name, a,b,c,d,e,f in love.event.poll() do
+	 if name == "quit" then
+	    if not love.quit or not love.quit() then
+	       return a
+	    end
+	 end
+	 love.handlers[name](a,b,c,d,e,f)
+      end
+
+      input.update()
+      state.update()
+
+      love.graphics.setBlendMode("alpha", "alphamultiply")
+      canvas:renderTo( function()
+	    state.draw()
+      end)
+
+      love.graphics.setBlendMode("replace", "premultiplied")
+      love.graphics.draw( canvas, 0,0,0, 3 )
+      love.graphics.present()
+   end
 end
