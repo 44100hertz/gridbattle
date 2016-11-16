@@ -5,7 +5,7 @@ local state
 main = {
    loadstate = function (mod)
       state = mod
-      state.load()
+      state.init()
    end,
 }
 
