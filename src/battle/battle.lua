@@ -21,7 +21,7 @@ function battle.load()
       for y = 1,3 do
 	 actors[#actors+1] = {
 	    class=stageactor,
-	    x=x, y=y, sz=0,
+	    x=x, y=y, z=0,
 	    side = (x<4) and "left" or "right"
 	 }
       end
@@ -34,6 +34,9 @@ end
 
 function battle.draw()
    love.graphics.clear(100, 200, 150, 255)
+   table.sort(actors, function(o1,o2)
+		 return o1.y < o2.y or o1.z < o2.z
+   end)
    for _,v in ipairs(actors) do
       if v.class.draw then
 	 local x = stage.offset.x + stage.spacing.x * v.x
