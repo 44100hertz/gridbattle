@@ -10,6 +10,7 @@ main = {
 }
 
 love.run = function ()
+   love.graphics.setDefaultFilter("nearest", "nearest")
    local gamestate
 
    local gamesize = {x=240, y=160}

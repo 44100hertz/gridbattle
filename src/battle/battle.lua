@@ -5,7 +5,7 @@ local battle = {}
 local actors = {}
 local stage = {
    size = {x=6, y=3},
-   offset = {x=20, y=82},
+   offset = {x=-20, y=60},
    spacing = {x=40, y=24},
 }
 
@@ -17,17 +17,14 @@ function battle.load()
 
    -- Add in stage panels
    local stageactor = require "battle/stage"
-   local index = #actors+1
    for x = 1,6 do
       for y = 1,3 do
-	 actors[index] = {
+	 actors[#actors+1] = {
 	    class=stageactor,
 	    x=x, y=y, sz=0,
 	    side = (x<4) and "left" or "right"
 	 }
-	 index = index + 1
       end
-      index = index + 1
    end
 
    for _,v in ipairs(actors) do
@@ -39,8 +36,8 @@ function battle.draw()
    love.graphics.clear(100, 200, 150, 255)
    for _,v in ipairs(actors) do
       if v.class.draw then
-	 local x = v.x * stage.offset.x + stage.spacing.x * v.x
-	 local y = v.y * stage.offset.y + stage.spacing.y * v.y
+	 local x = stage.offset.x + stage.spacing.x * v.x
+	 local y = stage.offset.y + stage.spacing.y * v.y
 	 v.class.draw(v, x, y)
       end
    end
