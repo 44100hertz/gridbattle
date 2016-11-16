@@ -1,7 +1,7 @@
 local img = love.graphics.newImage("img/ben.png")
 local iwidth, iheight = img:getDimensions()
 
-local anim = {
+local anims = {
    idle = {1,2, speed=0.3,
 	   sheet=anim.strip(0, 0, 50, 60, iwidth, iheight, 2)},
    move = {1,2, speed=0.5,
@@ -11,18 +11,19 @@ local anim = {
 }
 
 local shoot = function (self)
-   self.anim = anim.shoot
+   self.anim = anims.shoot
 end
 
 local move = function (self, dx, dy)
-   self.anim = anim.move
-   self.moveto = x=self.x+self.dx, x=self.y+self.dy
+   self.anim = anims.move
+   self.moveto = {x=self.x+self.dx, x=self.y+self.dy}
    self.dx, self.dy = dx/32, dy/32
 end
 
-player = {
+return {
    start = function (self)
       self.actionable = true
+      self.anim = anims.idle
       self.statetime = 0
    end,
 
@@ -47,6 +48,6 @@ player = {
    draw = function (self, x, y)
       local origin = {x=25,y=57}
 --      local frame = anim.frame(self.anim, statetime)
-      local frame = sheet.idle[1]
+      local frame = anims.idle.sheet[1]
    end,
 }

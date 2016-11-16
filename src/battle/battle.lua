@@ -29,6 +29,10 @@ function battle.load()
       end
       index = index + 1
    end
+
+   for _,v in ipairs(actors) do
+      if v.class.start then v.class.start(v) end
+   end
 end
 
 function battle.draw()

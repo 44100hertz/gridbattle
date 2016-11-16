@@ -17,7 +17,7 @@ input = {
    -- before functions that would grab that input
    update = function ()
       for k,v in pairs(keyBind) do
-	 if love.keyboard.isScanCodeDown(buttons[v]) then
+	 if love.keyboard.isScancodeDown(v) then
 	    -- increment length of press for each frame pressed
 	    buttons[k] = buttons[k]+1
 	 else

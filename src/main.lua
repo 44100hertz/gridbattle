@@ -1,10 +1,11 @@
 require "test"
+require "anim"
 
 local state
 main = {
    loadstate = function (mod)
       state = mod
-      state.init()
+      state.load()
    end,
 }
 

@@ -9,7 +9,7 @@ anim = {
       for x = 1,num do
 	 quads[x] = love.graphics.newQuad(
 	    xoff + (x-1)*width, yoff,
-	    width, height
+	    width, height,
 	    iwidth, iheight)
       end
       return quads
