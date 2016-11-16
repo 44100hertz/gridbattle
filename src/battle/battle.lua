@@ -41,7 +41,7 @@ function battle.draw()
       if v.class.draw then
 	 local x = v.x * stage.offset.x + stage.spacing.x * v.x
 	 local y = v.y * stage.offset.y + stage.spacing.y * v.y
-	 v.class.draw(v)
+	 v.class.draw(v, x, y)
       end
    end
    love.graphics.draw(canvas, 0, 0, 0, canvas_scale, canvas_scale)

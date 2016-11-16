@@ -9,11 +9,7 @@ local strips = {
 return {
    walkable = true,
    draw = function (self, x, y)
-      if self.side == "left" then
-	 local frame = strips.left[1]
-      else
-	 local frame = strips.right[1]
-      end
+      local frame = self.side=="left" and strips.left[1] or strips.right[1]
       love.graphics.draw(img, frame, x, y, 0, 1, 1, 20, 12)
    end,
 }

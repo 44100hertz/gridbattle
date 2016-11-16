@@ -46,8 +46,7 @@ return {
    end,
 
    draw = function (self, x, y)
-      local origin = {x=25,y=57}
---      local frame = anim.frame(self.anim, statetime)
-      local frame = anims.idle.sheet[1]
+      local frame = anim.frame(self.anim, 0) or anims.idle.sheet[1]
+      love.graphics.draw(img, frame, x, y, 0, 1, 1, 25, 57)
    end,
 }
