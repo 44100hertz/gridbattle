@@ -1,5 +1,5 @@
 require "test"
-require "anim"
+require "animation"
 
 local state
 main = {
