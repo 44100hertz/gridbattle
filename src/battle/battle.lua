@@ -49,7 +49,7 @@ return {
    draw = function ()
       love.graphics.clear(100, 200, 150, 255)
       table.sort(actors, function(o1,o2)
-		    return o1.y < o2.y or o1.z < o2.z
+		    return (o1.y < o2.y) and not (o1.z > o2.z)
       end)
       for _,v in ipairs(actors) do
 	 if v.class.draw then
