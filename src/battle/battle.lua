@@ -8,39 +8,39 @@ local stage = {
    spacing = {x=40, y=24},
 }
 
-battle = {}
+battle = {
+   loadset = function (set)
+      actors = {}
+      battle.turf = set.stage.turf
 
-battle.load = function (set)
-   actors = {}
-   battle.turf = set.stage.turf
-
-   -- Stage panels ALWAYS in slots 1-18
-   local panel = require "battle/actors/panel"
-   for x = 1,stage.size.x do
-      for y = 1,stage.size.y do
-	 local actor = {
-	    class=panel,
-	    x=x, y=y, z=0,
-	    side = battle.turf[y]<x and "left" or "right"
-	 }
-	 table.insert(actors, actor)
+      -- Stage panels ALWAYS in slots 1-18
+      local panel = require "battle/actors/panel"
+      for x = 1,stage.size.x do
+	 for y = 1,stage.size.y do
+	    local actor = {
+	       class=panel,
+	       x=x, y=y, z=0,
+	       side = battle.turf[y]<x and "left" or "right"
+	    }
+	    table.insert(actors, actor)
+	 end
       end
+
+      local player = {
+	 class=require "battle/actors/Player",
+	 x=set.stage.spawn.x, y=set.stage.spawn.y, z=1, side="left"
+      }
+      table.insert(actors, player)
+   end,
+
+   addactor = function (actor)
+      table.insert(actors, actor)
    end
-
-   local player = {
-      class=require "battle/actors/Player",
-      x=set.stage.spawn.x, y=set.stage.spawn.y, z=1, side="left"
-   }
-   table.insert(actors, player)
-end
-
-battle.addactor = function (actor)
-   table.insert(actors, actor)
-end
+}
 
 return {
    init = function ()
-      battle.load(require "battle/sets/test")
+      battle.loadset(require "battle/sets/test")
       for _,v in ipairs(actors) do
 	 if v.class.start then v.class.start(v) end
       end
