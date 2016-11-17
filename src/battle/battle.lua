@@ -38,32 +38,32 @@ battle.addactor = function (actor)
    table.insert(actors, actor)
 end
 
-battle.init = function ()
-   battle.load(require "battle/sets/test")
-   for _,v in ipairs(actors) do
-      if v.class.start then v.class.start(v) end
-   end
-end
+return {
+   init = function ()
+      battle.load(require "battle/sets/test")
+      for _,v in ipairs(actors) do
+	 if v.class.start then v.class.start(v) end
+      end
+   end,
 
-battle.draw = function ()
-   love.graphics.clear(100, 200, 150, 255)
-   table.sort(actors, function(o1,o2)
-		 return o1.y < o2.y or o1.z < o2.z
-   end)
-   for _,v in ipairs(actors) do
-      if v.class.draw then
-	 local x = stage.offset.x + stage.spacing.x * v.x
-	 local y = stage.offset.y + stage.spacing.y * v.y
-	 v.class.draw(v, x, y)
+   draw = function ()
+      love.graphics.clear(100, 200, 150, 255)
+      table.sort(actors, function(o1,o2)
+		    return o1.y < o2.y or o1.z < o2.z
+      end)
+      for _,v in ipairs(actors) do
+	 if v.class.draw then
+	    local x = stage.offset.x + stage.spacing.x * v.x
+	    local y = stage.offset.y + stage.spacing.y * v.y
+	    v.class.draw(v, x, y)
+	 end
+      end
+   end,
+
+   update = function ()
+      input.update()
+      for _,v in ipairs(actors) do
+	 if v.class.update then v.class.update(v) end
       end
    end
-end
-
-battle.update = function ()
-   input.update()
-   for _,v in ipairs(actors) do
-      if v.class.update then v.class.update(v) end
-   end
-end
-
-return battle
+}
