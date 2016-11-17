@@ -61,7 +61,6 @@ return {
    end,
 
    update = function ()
-      input.update()
       for _,v in ipairs(actors) do
 	 if v.class.update then v.class.update(v) end
       end
