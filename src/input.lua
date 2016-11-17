@@ -10,11 +10,9 @@ local keyBind = {
 
 -- populate an array of buttons
 local buttons = {}
-for k,v in pairs(keyBind) do buttons[k] = 0 end
+for k,_ in pairs(keyBind) do buttons[k] = 0 end
 
 input = {
-   -- update should be called in main loop 60 times a second
-   -- before functions that would grab that input
    update = function ()
       for k,v in pairs(keyBind) do
 	 if love.keyboard.isScancodeDown(v) then
