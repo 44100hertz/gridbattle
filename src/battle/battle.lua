@@ -1,7 +1,12 @@
 require "input"
 
-local panels = {}
 local actors
+
+local stage = {
+   size = {x=6, y=3},
+   offset = {x=-20, y=60},
+   spacing = {x=40, y=24},
+}
 
 battle = {}
 
@@ -11,9 +16,8 @@ battle.load = function (set)
 
    -- Stage panels ALWAYS in slots 1-18
    local panel = require "battle/actors/panel"
-   for x = 1,6 do
-      panels[x] = {}
-      for y = 1,3 do
+   for x = 1,stage.size.x do
+      for y = 1,stage.size.y do
 	 local actor = {
 	    class=panel,
 	    x=x, y=y, z=0,
@@ -42,12 +46,6 @@ battle.init = function ()
 end
 
 battle.draw = function ()
-   local stage = {
-      size = {x=6, y=3},
-      offset = {x=-20, y=60},
-      spacing = {x=40, y=24},
-   }
-
    love.graphics.clear(100, 200, 150, 255)
    table.sort(actors, function(o1,o2)
 		 return o1.y < o2.y or o1.z < o2.z
