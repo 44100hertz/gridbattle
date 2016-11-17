@@ -1,13 +1,7 @@
 require "input"
 
-local canvas = love.graphics.newCanvas()
 local battle = {}
 local actors = {}
-local stage = {
-   size = {x=6, y=3},
-   offset = {x=-20, y=60},
-   spacing = {x=40, y=24},
-}
 
 local battle = {
    init = function ()
@@ -34,6 +28,12 @@ local battle = {
    end,
 
    draw = function ()
+      local stage = {
+	 size = {x=6, y=3},
+	 offset = {x=-20, y=60},
+	 spacing = {x=40, y=24},
+      }
+
       love.graphics.clear(100, 200, 150, 255)
       table.sort(actors, function(o1,o2)
 		    return o1.y < o2.y or o1.z < o2.z
@@ -45,7 +45,6 @@ local battle = {
 	    v.class.draw(v, x, y)
 	 end
       end
-      love.graphics.draw(canvas, 0, 0, 0, canvas_scale, canvas_scale)
    end,
 
    update = function ()
