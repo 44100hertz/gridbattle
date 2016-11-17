@@ -1,30 +1,33 @@
 require "input"
 
-local battle = {}
+local panels = {}
 local actors
+
+battle = {}
 
 battle.load = function (set)
    actors = {}
+   battle.turf = set.stage.turf
 
-   -- Player
+   -- Stage panels ALWAYS in slots 1-18
+   local panel = require "battle/actors/panel"
+   for x = 1,6 do
+      panels[x] = {}
+      for y = 1,3 do
+	 local actor = {
+	    class=panel,
+	    x=x, y=y, z=0,
+	    side = battle.turf[y]<x and "left" or "right"
+	 }
+	 table.insert(actors, actor)
+      end
+   end
+
    local player = {
       class=require "battle/actors/Player",
       x=set.stage.spawn.x, y=set.stage.spawn.y, z=1, side="left"
    }
    table.insert(actors, player)
-
-   -- Stage panels
-   local stageactor = require "battle/stage"
-   for x = 1,6 do
-      for y = 1,3 do
-	 local actor = {
-	    class=stageactor,
-	    x=x, y=y, z=0,
-	    side = set.stage.turf[y]<x and "left" or "right"
-	 }
-	 table.insert(actors, actor)
-      end
-   end
 end
 
 battle.addactor = function (actor)
@@ -64,6 +67,5 @@ battle.update = function ()
       if v.class.update then v.class.update(v) end
    end
 end
-
 
 return battle
