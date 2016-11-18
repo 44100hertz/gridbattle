@@ -9,7 +9,14 @@ main = {
    end,
 }
 
+local screenwidth = 240
+local screenheight = 160
+local screenscale = 3
+
 love.run = function ()
+   if arg[2] == "dump" then screenscale = 1 end
+   local framecounter = 0
+   love.window.setMode(screenwidth*screenscale, screenheight*screenscale)
    love.graphics.setDefaultFilter("nearest", "nearest")
    local gamestate
 
@@ -41,7 +48,21 @@ love.run = function ()
       end)
 
       love.graphics.setBlendMode("replace", "premultiplied")
-      love.graphics.draw( canvas, 0,0,0, 3 )
+      love.graphics.draw( canvas, 0,0,0, screenscale )
       love.graphics.present()
+
+      framecounter = framecounter + 1
+      if arg[2] == "dump" then
+	 local screenshot = love.graphics.newScreenshot()
+	 local name = string.format("%3.3d.tga", framecounter)
+	 screenshot:encode("tga", name)
+      end
    end
 end
+
+love.quit = function ()
+   if arg[2] == "dump" then
+      os.execute("ffmpeg -framerate 60 -i src/%03d.tga -vf scale=iw*4:ih*4:sws_scale=nearest out.mp4")
+   end
+end
+
