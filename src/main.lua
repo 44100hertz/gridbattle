@@ -1,6 +1,7 @@
 require "test"
 require "animation"
 require "input"
+require "fonts"
 
 local state
 main = {
