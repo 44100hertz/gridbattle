@@ -9,7 +9,7 @@ local states = {
       iasa = 0,
    },
    move = {
-      anim = {3,4, speed=0.1},
+      anim = {3,4, speed=0.5},
       iasa = 20,
       length = 22,
       update = function (self)
@@ -64,8 +64,9 @@ return {
    draw = function (self, x, y)
       local frameindex =
 	 math.floor(self.statetime * self.anim.speed)
-	 % table.getn(self.anim)
-      love.graphics.draw(img, sheet[frameindex + 1],
+	 % #self.anim
+      local frame = sheet[self.state.anim[frameindex + 1]]
+      love.graphics.draw(img, frame,
 			 x, y, 0, 1, 1, 25, 65)
    end,
 }
