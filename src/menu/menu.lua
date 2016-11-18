@@ -45,11 +45,11 @@ return {
 
    update = function ()
       if input.dd == 1 then
-	 if sel < #current then sel = sel + 1 end
+	 sel = sel % (#current) + 1
       end
 
       if input.du == 1 then
-	 if sel > 1 then sel = sel - 1 end
+	 sel = (sel-2) % (#current) + 1
       end
 
       if input.a == 1 then
