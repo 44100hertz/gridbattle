@@ -3,38 +3,47 @@ local iwidth, iheight = img:getDimensions()
 
 local sheet = animation.sheet(0, 0, 50, 60, iwidth, iheight, 2, 2)
 
-local anim = {
-   idle = {1, speed=0, length=1},
-   move = {3,4, speed=0.1, length=2},
+local states = {
+   idle = {
+      anim = {1, speed=0},
+      iasa = 0,
+   },
+   move = {
+      anim = {3,4, speed=0.1},
+      iasa = 20,
+      length = 22,
+      update = function (self)
+	 if self.statetime == 10 then
+	    self.x, self.y = self.goalx, self.goaly
+	 end
+      end,
+   }
 }
 
-local idle = function (self)
+local loadstate = function (self, state)
+   self.state = state
    self.statetime = 0
-   self.iasa = 0
-   self.anim = anim.idle
+   self.anim = state.anim
 end
 
-local move = function (self, dx, dy)
+local move = function  (self, dx, dy)
    local goalx, goaly = self.x+dx, self.y+dy
    if space.occupy(self, goalx, goaly) then
+      self.goalx, self.goaly = goalx, goaly
       space.free(self.x, self.y)
-      self.statetime = 0
-      self.anim = anim.move
-      self.iasa = 20
-      self.x, self.y = goalx, goaly
+      loadstate(self, states.move)
    end
 end
 
 return {
    start = function (self)
       space.occupy(self, self.x, self.y)
-      self.iasa = 0 -- actionability
       self.dx, self.dy = 0,0
-      idle(self)
+      loadstate(self, states.idle)
    end,
 
    update = function (self)
-      if self.iasa==0 then
+      if self.statetime >= self.state.iasa then
 	 if input.du>0  then move(self, 0, -1)
 	 elseif input.dd>0  then move(self, 0, 1)
 	 elseif input.dl>0  then move(self, -1, 0)
@@ -42,12 +51,20 @@ return {
 	 end
       end
 
+      if self.statetime == self.state.length then
+	 loadstate(self, states.idle)
+      end
+
+      if self.state.update then self.state.update(self) end
       self.statetime = self.statetime + 1
-      if self.iasa>0 then self.iasa = self.iasa-1 end
+
+      self.z = space.getfloor(self.x, self.y)
    end,
 
    draw = function (self, x, y)
-      local frameindex = math.floor(self.statetime * self.anim.speed) % self.anim.length
+      local frameindex =
+	 math.floor(self.statetime * self.anim.speed)
+	 % table.getn(self.anim)
       love.graphics.draw(img, sheet[frameindex + 1],
 			 x, y, 0, 1, 1, 25, 65)
    end,

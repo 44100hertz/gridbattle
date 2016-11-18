@@ -28,6 +28,11 @@ space = {
       panel.under = nil
       return top
    end,
+
+   getfloor = function (x, y)
+      local panel = stage[math.floor(x+0.5)][math.floor(y+0.5)]
+      return panel.z + panel.class.height
+   end,
 }
 
 battle = {
@@ -40,13 +45,13 @@ battle = {
       for x = 1,stage.size.x do
 	 stage[x] = {}
 	 for y = 1,stage.size.y do
-	    local actor = {
+	    local newactor = {
 	       class=panel,
 	       x=x, y=y, z=-8,
 	       side = battle.turf[y]<x and "left" or "right"
 	    }
-	    stage[x][y] = actor
-	    table.insert(actors, actor)
+	    stage[x][y] = newactor
+	    table.insert(actors, newactor)
 	 end
       end
 
@@ -57,23 +62,10 @@ battle = {
       table.insert(actors, player)
    end,
 
-   addactor = function (actor)
-      table.insert(actors, actor)
+   addactor = function (newactor)
+      table.insert(actors, newactor)
    end
 }
-
-local zalign = function()
-   for x = 1,stage.size.x do
-      for y = 1,stage.size.y do
-	 local actor = stage[x][y]
-	 while actor.under do
-	    local z = actor.z + actor.class.height
-	    actor = actor.under
-	    actor.z = z
-	 end
-      end
-   end
-end
 
 return {
    init = function ()
@@ -101,6 +93,5 @@ return {
       for _,v in ipairs(actors) do
 	 if v.class.update then v.class.update(v) end
       end
-      zalign()
    end
 }
