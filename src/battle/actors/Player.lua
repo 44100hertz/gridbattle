@@ -49,6 +49,6 @@ return {
    draw = function (self, x, y)
       local frameindex = math.floor(self.statetime * self.anim.speed) % self.anim.length
       love.graphics.draw(img, sheet[frameindex + 1],
-			 x, y, 0, 1, 1, 25, 57)
+			 x, y, 0, 1, 1, 25, 65)
    end,
 }
