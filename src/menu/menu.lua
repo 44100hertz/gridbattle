@@ -31,7 +31,7 @@ optionsmenu = {
 
 local bg = love.graphics.newImage("img/menu.png")
 
-local framecounter
+local counter
 return {
    init = function ()
       love.graphics.setFont(fonts.std15)
