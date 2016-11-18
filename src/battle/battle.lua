@@ -8,6 +8,29 @@ local stage = {
    spacing = {x=40, y=24},
 }
 
+space = {
+   occupy = function (actor, x, y)
+      if x >= 1 and x <= stage.size.x and
+      y >= 1 and y <= stage.size.y then
+	 local panel = stage[x][y]
+	 local top = panel
+	 while top.under do top = top.under end
+	 if top.class.walkable then
+	    actor.over = top
+	    top.under = actor
+	    return true
+	 end
+      end
+   end,
+
+   free = function (x, y)
+      local panel = stage[x][y]
+      assert(panel.under, "attempt to free empty panel")
+      panel.under = nil
+      return top
+   end,
+}
+
 battle = {
    loadset = function (set)
       actors = {}
@@ -16,12 +39,14 @@ battle = {
       -- Stage panels ALWAYS in slots 1-18
       local panel = require "battle/actors/panel"
       for x = 1,stage.size.x do
+	 stage[x] = {}
 	 for y = 1,stage.size.y do
 	    local actor = {
 	       class=panel,
 	       x=x, y=y, z=0,
 	       side = battle.turf[y]<x and "left" or "right"
 	    }
+	    stage[x][y] = actor
 	    table.insert(actors, actor)
 	 end
       end
