@@ -1,23 +1,15 @@
-* TODO structural
-** DONE stage actor inheiritance
-** DONE metatables for inheiritance (so it actually works)
-** DONE framerate-independent updates...FOR NOW...
-** TODO serializable battle/frame data
-** DONE serializable sheet data
 * TODO graphical
-** TODO auto-sorting draw list (z-buffer)
+** DONE auto-sorting draw list (z-buffer)
 https://love2d.org/wiki/Skip_list:Drawing_Order
-** TODO drawing class w/organization
+** DONE drawing class w/organization
 ** TODO custom fonts
 ** TODO drawing statusbar
 ** TODO hitbox display
+
 * TODO gameplay
 ** DONE 6x3 grid
 ** DONE movement
+** TODO debug menus
 ** TODO battle objects (bullets, etc.)
 ** TODO hitboxes/collision
-
-* removed
-** true input buffer
-input buffer removed in favor of interruptible animations, press/hold to act
 
