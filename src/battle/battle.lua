@@ -85,22 +85,22 @@ return {
 
    draw = function ()
       love.graphics.clear(100, 200, 150, 255)
-      table.sort(actors, function(o1,o2)
-		    return (o1.y < o2.y) and not (o1.z > o2.z)
+      table.sort(actors, function(o1, o2)
+		    return (o1.y+(o1.z/40) < o2.y+(o2.z/40))
       end)
       for _,v in ipairs(actors) do
 	 if v.class.draw then
 	    local x = stage.offset.x + stage.spacing.x * v.x
-	    local y = stage.offset.y + stage.spacing.y * v.y
+	    local y = stage.offset.y + stage.spacing.y * v.y + v.z
 	    v.class.draw(v, x, y)
 	 end
       end
    end,
 
    update = function ()
-      zalign()
       for _,v in ipairs(actors) do
 	 if v.class.update then v.class.update(v) end
       end
+      zalign()
    end
 }
