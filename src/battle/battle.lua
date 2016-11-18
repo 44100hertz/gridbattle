@@ -4,7 +4,7 @@ local actors
 
 local stage = {
    size = {x=6, y=3},
-   offset = {x=-20, y=60},
+   offset = {x=-20, y=54},
    spacing = {x=40, y=24},
 }
 
@@ -25,7 +25,6 @@ space = {
 
    free = function (x, y)
       local panel = stage[x][y]
-      assert(panel.under, "attempt to free empty panel")
       panel.under = nil
       return top
    end,
@@ -43,7 +42,7 @@ battle = {
 	 for y = 1,stage.size.y do
 	    local actor = {
 	       class=panel,
-	       x=x, y=y, z=0,
+	       x=x, y=y, z=-8,
 	       side = battle.turf[y]<x and "left" or "right"
 	    }
 	    stage[x][y] = actor
@@ -53,7 +52,7 @@ battle = {
 
       local player = {
 	 class=require "battle/actors/Player",
-	 x=set.stage.spawn.x, y=set.stage.spawn.y, z=1, side="left"
+	 x=set.stage.spawn.x, y=set.stage.spawn.y, side="left"
       }
       table.insert(actors, player)
    end,
@@ -62,6 +61,19 @@ battle = {
       table.insert(actors, actor)
    end
 }
+
+local zalign = function()
+   for x = 1,stage.size.x do
+      for y = 1,stage.size.y do
+	 local actor = stage[x][y]
+	 while actor.under do
+	    local z = actor.z + actor.class.height
+	    actor = actor.under
+	    actor.z = z
+	 end
+      end
+   end
+end
 
 return {
    init = function ()
@@ -86,6 +98,7 @@ return {
    end,
 
    update = function ()
+      zalign()
       for _,v in ipairs(actors) do
 	 if v.class.update then v.class.update(v) end
       end
