@@ -1,11 +1,13 @@
 require "test"
 require "animation"
+require "input"
 
 local state
 main = {
    loadstate = function (mod)
       state = mod
       state.init()
+      state.update()
    end,
 }
 
@@ -26,7 +28,7 @@ love.run = function ()
    local canvas = love.graphics.newCanvas(gamesize.x, gamesize.y)
 
    love.math.setRandomSeed(os.time())
-   main.loadstate(require "battle/battle")
+   main.loadstate(require "menu/menu")
 
    while true do
       love.event.pump()

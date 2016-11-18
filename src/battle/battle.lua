@@ -1,5 +1,3 @@
-require "input"
-
 local actors
 
 local stage = {
@@ -75,6 +73,12 @@ return {
       end
    end,
 
+   update = function ()
+      for _,v in ipairs(actors) do
+	 if v.class.update then v.class.update(v) end
+      end
+   end,
+
    draw = function ()
       love.graphics.clear(100, 200, 150, 255)
       table.sort(actors, function(o1, o2)
@@ -88,10 +92,4 @@ return {
 	 end
       end
    end,
-
-   update = function ()
-      for _,v in ipairs(actors) do
-	 if v.class.update then v.class.update(v) end
-      end
-   end
 }
