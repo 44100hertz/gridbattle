@@ -1,6 +1,7 @@
 local rootmenu, optionsmenu
 
 local currentmenu, sel
+local selstack = {}
 
 rootmenu = {
    {text = "start demo",
@@ -16,6 +17,7 @@ rootmenu = {
    {text = "options",
     func = function ()
        current = optionsmenu
+       table.insert(selstack, sel)
        sel = 1
     end
    },
@@ -25,6 +27,7 @@ optionsmenu = {
    {text = "back",
     func = function ()
        current = rootmenu
+       sel = table.remove(selstack)
     end
    }
 }
