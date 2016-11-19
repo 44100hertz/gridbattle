@@ -1,4 +1,4 @@
-animation = {
+return {
    sheet = function (x, y, width, height, iwidth, iheight, numx, numy)
       local quads = {}
 

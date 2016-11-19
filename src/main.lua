@@ -1,7 +1,7 @@
-require "test"
-require "animation"
-require "input"
-require "fonts"
+test = require "test"
+animation = require "animation"
+input = require "input"
+fonts = require "fonts"
 
 local state
 main = {
@@ -21,11 +21,8 @@ love.run = function ()
    local framecounter = 0
    love.window.setMode(screenwidth*screenscale, screenheight*screenscale)
    love.graphics.setDefaultFilter("nearest", "nearest")
-   local gamestate
 
    local gamesize = {x=240, y=160}
-   canvas_scale = 4
-
    local canvas = love.graphics.newCanvas(gamesize.x, gamesize.y)
 
    love.math.setRandomSeed(os.time())

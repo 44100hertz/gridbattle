@@ -12,7 +12,7 @@ local keyBind = {
 local buttons = {}
 for k,_ in pairs(keyBind) do buttons[k] = 0 end
 
-input = {
+local input = {
    update = function ()
       for k,v in pairs(keyBind) do
 	 if love.keyboard.isScancodeDown(v) then
@@ -29,7 +29,7 @@ input = {
 -- Bind "input.a", for example, to the value of a
 -- but return it; do not allow modification
 input.mt = {
-   __index = function (table, key)
+   __index = function (_, key)
       return buttons[key]
    end
 }
