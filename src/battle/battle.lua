@@ -7,17 +7,24 @@ local stage = {
 }
 
 space = {
-   occupy = function (actor, x, y)
-      if x >= 1 and x <= stage.size.x and
-      y >= 1 and y <= stage.size.y then
-	 local panel = stage[x][y]
-	 local top = panel
+   getoccupant = function (x, y)
+      if stage[x] and stage[x][y] then
+	 local top = stage[x][y]
 	 while top.under do top = top.under end
-	 if top.class.walkable then
-	    actor.over = top
-	    top.under = actor
-	    return true
-	 end
+	 return top
+      end
+   end,
+
+   occupy = function (actor, x, y, side)
+      if side and stage[x] and stage[x][y] and
+	 stage[x][y].side ~= side
+      then return end
+
+      top = space.getoccupant(x, y)
+      if top and top.class.walkable then
+	 actor.over = top
+	 top.under = actor
+	 return true
       end
    end,
 
@@ -46,7 +53,7 @@ battle = {
 	    local newactor = {
 	       class=panel,
 	       x=x, y=y, z=-8,
-	       side = battle.turf[y]<x and "left" or "right"
+	       side = x <= battle.turf[y] and "left" or "right"
 	    }
 	    stage[x][y] = newactor
 	    table.insert(actors, newactor)

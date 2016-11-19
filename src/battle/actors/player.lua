@@ -28,7 +28,7 @@ end
 
 local move = function  (self, dx, dy)
    local goalx, goaly = self.x+dx, self.y+dy
-   if space.occupy(self, goalx, goaly) then
+   if space.occupy(self, goalx, goaly, "left") then
       self.goalx, self.goaly = goalx, goaly
       space.free(self.x, self.y)
       loadstate(self, states.move)
@@ -36,7 +36,6 @@ local move = function  (self, dx, dy)
 end
 
 return {
-   side = "left",
    start = function (self)
       space.occupy(self, self.x, self.y)
       loadstate(self, states.idle)
