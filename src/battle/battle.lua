@@ -9,33 +9,26 @@ local stage = {
 space = {
    getoccupant = function (x, y)
       if stage[x] and stage[x][y] then
-	 local top = stage[x][y]
-	 while top.under do top = top.under end
-	 return top
+	 return stage[x][y].occupant
       end
    end,
 
    occupy = function (actor, x, y, side)
-      if side and stage[x] and stage[x][y] and
-	 stage[x][y].side ~= side
-      then return end
-
-      top = space.getoccupant(x, y)
-      if top and top.class.walkable then
-	 actor.over = top
-	 top.under = actor
+      if side and stage[x] and stage[x][y]
+	 and not (side and stage[x][y].panel.side ~= side) and
+	 not space.getoccupant(x, y)
+      then
+	 stage[x][y].occupant = actor
 	 return true
       end
    end,
 
-   free = function (x, y)
-      local panel = stage[x][y]
-      panel.under = nil
-      return top
+   free = function (x,y)
+      stage[x][y].occupant = nil
    end,
 
    getfloor = function (x, y)
-      local panel = stage[math.floor(x+0.5)][math.floor(y+0.5)]
+      local panel = stage[math.floor(x+0.5)][math.floor(y+0.5)].panel
       return panel.z + panel.class.height
    end,
 }
@@ -45,17 +38,17 @@ battle = {
       actors = {}
       battle.turf = set.stage.turf
 
-      -- Stage panels ALWAYS in slots 1-18
       local panel = require "battle/actors/panel"
       for x = 1,stage.size.x do
 	 stage[x] = {}
 	 for y = 1,stage.size.y do
+	    stage[x][y] = {}
 	    local newactor = {
 	       class=panel,
 	       x=x, y=y, z=-8,
 	       side = x <= battle.turf[y] and "left" or "right"
 	    }
-	    stage[x][y] = newactor
+	    stage[x][y].panel = newactor
 	    table.insert(actors, newactor)
 	 end
       end

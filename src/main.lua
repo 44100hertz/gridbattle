@@ -65,8 +65,8 @@ love.run = function ()
       love.graphics.draw( canvas, 0,0,0, screenscale )
       love.graphics.present()
 
-      framecounter = framecounter + 1
       if arg[2] == "dump" then
+	 framecounter = framecounter + 1
 	 local screenshot = love.graphics.newScreenshot()
 	 local name = string.format("%3.3d.tga", framecounter)
 	 screenshot:encode("tga", name)
