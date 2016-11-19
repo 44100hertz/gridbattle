@@ -12,7 +12,7 @@ return {
    end,
 
    draw = function (self, x, y)
-      local frame = self.side=="left" and sheet[2] or sheet[4]
-      love.graphics.draw(img, frame, x, y, 0, 1, 1, 20, 12)
+      local frame = self.side=="left" and sheet[1] or sheet[3]
+      love.graphics.draw(img, frame, x, y, 0, 1, 1, 20, 0)
    end,
 }

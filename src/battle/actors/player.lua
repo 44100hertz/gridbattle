@@ -67,6 +67,6 @@ return {
 	 % #self.anim
       local frame = sheet[self.state.anim[frameindex + 1]]
       love.graphics.draw(img, frame,
-			 x, y, 0, 1, 1, 25, 65)
+			 x, y, 0, 1, 1, 25, 55)
    end,
 }
