@@ -74,6 +74,16 @@ return {
    end,
 
    update = function ()
+      for _,send in ipairs(actors) do
+	 for _,recv in ipairs(actors) do
+	    if send.class.send and
+	       recv.class.recv and
+	       math.abs(send.x - recv.x)<0.75 and
+	    math.abs(send.y - recv.y)<0.75 then
+	       recv.class.collide(send)
+	    end
+	 end
+      end
       for _,v in ipairs(actors) do
 	 if v.class.update then v.class.update(v) end
       end
