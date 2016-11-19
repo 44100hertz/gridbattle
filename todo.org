@@ -9,10 +9,7 @@ https://love2d.org/wiki/Skip_list:Drawing_Order
 * TODO gameplay
 ** DONE 6x3 grid
 ** DONE movement
-** TODO debug menus
-** TODO battle objects (bullets, etc.)
-** TODO hitboxes/collision
-** TODO debug menus
-** TODO battle objects (bullets, etc.)
-** TODO hitboxes/collision
-
+** TODO first enemy
+** TODO [#B] battle objects (bullets, etc.)
+** TODO [#B] hitboxes/collision
+** DONE debug menus
