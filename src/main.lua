@@ -47,7 +47,7 @@ love.run = function ()
    local canvas = love.graphics.newCanvas(gamesize.x, gamesize.y)
 
    love.math.setRandomSeed(os.time())
-   main.loadstate(require "menu/menu")
+   main.loadstate(require "menu/title")
 
    while true do
       love.event.pump()
