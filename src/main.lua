@@ -4,11 +4,32 @@ input = require "input"
 fonts = require "fonts"
 
 local state
+local statestack = {}
 main = {
    loadstate = function (mod)
       state = mod
       state.init()
       state.update()
+   end,
+
+   pushstate = function (mod)
+      local canvas = love.graphics.newCanvas(240, 160)
+      canvas:renderTo( function()
+	    state.draw()
+      end)
+      table.insert(statestack, state)
+      state = mod
+      state.init(canvas)
+      state.update()
+   end,
+
+   popstate = function ()
+      if #statestack > 0 then
+	 state = table.remove(statestack)
+	 state.init()
+	 state.update()
+	 return true
+      end
    end,
 }
 
@@ -61,6 +82,9 @@ love.run = function ()
 end
 
 love.quit = function ()
+   if main.popstate() then
+      return true
+   end
    if arg[2] == "dump" then
       os.execute("ffmpeg -framerate 60 -i ~/.local/share/love/src/%03d.tga -vf scale=iw*4:ih*4:sws_flags=neighbor out.mp4")
    end

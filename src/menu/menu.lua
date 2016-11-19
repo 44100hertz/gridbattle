@@ -6,7 +6,7 @@ local selstack = {}
 rootmenu = {
    {text = "start demo",
     func = function ()
-       main.loadstate(require "battle/battle")
+       main.pushstate(require "battle/battle")
     end
    },
    {text = "exit",
