@@ -1,6 +1,6 @@
 local rootmenu, optionsmenu
 
-local currentmenu, sel
+local current, sel
 local selstack = {}
 
 rootmenu = {
