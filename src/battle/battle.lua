@@ -54,7 +54,7 @@ battle = {
       end
 
       local player = {
-	 class=require "battle/actors/Player",
+	 class=require "battle/actors/player",
 	 x=set.stage.spawn.x, y=set.stage.spawn.y, side="left"
       }
       table.insert(actors, player)
