@@ -4,9 +4,8 @@ local iwidth, iheight = img:getDimensions()
 local sheet = animation.sheet(0, 0, 50, 60, iwidth, iheight, 1, 1)
 
 return {
-   side = "right",
    start = function (self)
-      space.occupy(self, self.x, self.y)
+      space.occupy(self, self.x, self.y, "right")
    end,
 
    update = function (self)
