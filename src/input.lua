@@ -3,7 +3,7 @@
 local keyBind = {
    a ="x", b="z",
    l="a", r="s",
-   st="enter", sel="shift",
+   start="return", sel="shift",
    du="i", dd="k",
    dl="j", dr="l"
 }

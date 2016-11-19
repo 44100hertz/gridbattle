@@ -74,6 +74,10 @@ return {
    end,
 
    update = function ()
+      if input.start == 1 then
+	 main.pushstate(require "battle/pause")
+	 return
+      end
       for _,send in ipairs(actors) do
 	 for _,recv in ipairs(actors) do
 	    if send.class.send and

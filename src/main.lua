@@ -9,7 +9,6 @@ main = {
    loadstate = function (mod)
       state = mod
       state.init()
-      state.update()
    end,
 
    pushstate = function (mod)
@@ -26,8 +25,6 @@ main = {
    popstate = function ()
       if #statestack > 0 then
 	 state = table.remove(statestack)
-	 state.init()
-	 state.update()
 	 return true
       end
    end,

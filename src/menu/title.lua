@@ -52,7 +52,7 @@ return {
 	 sel = (sel-2) % (#current) + 1
       end
 
-      if input.a == 1 then
+      if input.a == 1 or input.start == 2 then
 	 current[sel].func()
       end
    end,
