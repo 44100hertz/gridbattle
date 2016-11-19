@@ -1,11 +1,13 @@
 local canvas
 local img = love.graphics.newImage("img/pause.png")
 local delay
+local pausedmodule
 return {
-   init = function(pausecanvas)
+   init = function(mod)
       canvas = pausecanvas
       input.update()
       delay = 20
+      pausedmodule = mod
    end,
 
    update = function ()
@@ -14,7 +16,7 @@ return {
    end,
 
    draw = function()
-      love.graphics.draw(canvas)
+      pausedmodule.draw()
       love.graphics.draw(img)
    end,
 }

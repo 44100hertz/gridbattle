@@ -12,14 +12,10 @@ main = {
    end,
 
    pushstate = function (mod)
-      local canvas = love.graphics.newCanvas(240, 160)
-      canvas:renderTo( function()
-	    state.draw()
-      end)
       table.insert(statestack, state)
+      mod.init(state)
+      mod.update()
       state = mod
-      state.init(canvas)
-      state.update()
    end,
 
    popstate = function ()
