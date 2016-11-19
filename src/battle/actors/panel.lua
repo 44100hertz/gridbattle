@@ -8,7 +8,7 @@ return {
    height = 8,
 
    update = function (self)
-      self.z = self.under and -8 or -10
+      self.z = self.occupant and -8 or -10
    end,
 
    draw = function (self, x, y)

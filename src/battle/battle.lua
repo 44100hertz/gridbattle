@@ -15,7 +15,7 @@ space = {
 
    occupy = function (actor, x, y, side)
       if side and stage[x] and stage[x][y]
-	 and not (side and stage[x][y].panel.side ~= side) and
+	 and not (side and stage[x][y].side ~= side) and
 	 not space.getoccupant(x, y)
       then
 	 stage[x][y].occupant = actor
@@ -28,7 +28,7 @@ space = {
    end,
 
    getfloor = function (x, y)
-      local panel = stage[math.floor(x+0.5)][math.floor(y+0.5)].panel
+      local panel = stage[math.floor(x+0.5)][math.floor(y+0.5)]
       return panel.z + panel.class.height
    end,
 }
@@ -48,7 +48,7 @@ battle = {
 	       x=x, y=y, z=-8,
 	       side = x <= battle.turf[y] and "left" or "right"
 	    }
-	    stage[x][y].panel = newactor
+	    stage[x][y] = newactor
 	    table.insert(actors, newactor)
 	 end
       end
