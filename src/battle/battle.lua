@@ -58,6 +58,8 @@ battle = {
 	 x=set.stage.spawn.x, y=set.stage.spawn.y, side="left"
       }
       table.insert(actors, player)
+
+      for _,v in ipairs(set.actors) do table.insert(actors, v) end
    end,
 
    addactor = function (newactor)

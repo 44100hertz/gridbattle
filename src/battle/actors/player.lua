@@ -36,9 +36,9 @@ local move = function  (self, dx, dy)
 end
 
 return {
+   side = "left",
    start = function (self)
       space.occupy(self, self.x, self.y)
-      self.dx, self.dy = 0,0
       loadstate(self, states.idle)
    end,
 
@@ -66,7 +66,6 @@ return {
 	 math.floor(self.statetime * self.anim.speed)
 	 % #self.anim
       local frame = sheet[self.state.anim[frameindex + 1]]
-      love.graphics.draw(img, frame,
-			 x, y, 0, 1, 1, 25, 55)
+      love.graphics.draw(img, frame, x, y, 0, 1, 1, 25, 55)
    end,
 }
