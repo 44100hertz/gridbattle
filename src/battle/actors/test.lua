@@ -8,7 +8,7 @@ local sheet = animation.sheet(0, 0, 50, 60, iwidth, iheight, 1, 1)
 
 return {
    group = "enemy",
-   send = true,
+   send = true, size=20/64,
    start = function (self)
       battle.occupy(self, self.x, self.y, "right")
       self.hp = 100

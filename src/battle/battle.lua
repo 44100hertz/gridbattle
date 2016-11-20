@@ -65,11 +65,14 @@ return {
 	 for _,recv in ipairs(actors) do
 	    if send.class.group ~= recv.class.group and
 	       send.class.send and
-	       recv.class.recv and
-	       math.abs(send.x - recv.x)<0.75 and
-	       math.abs(send.y - recv.y)<0.75
+	       recv.class.recv
 	    then
-	       recv.class.recv(recv, send)
+	       local size = send.class.size + recv.class.size
+	       if math.abs(send.x - recv.x) < size and
+		  math.abs(send.y - recv.y) < size
+	       then
+		  recv.class.recv(recv, send)
+	       end
 	    end
 	 end
       end
