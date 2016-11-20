@@ -7,12 +7,12 @@ local statestack = {}
 local main = {
    loadstate = function (mod)
       state = mod
-      state.init()
+      state.start()
    end,
 
    pushstate = function (mod, ...)
       table.insert(statestack, state)
-      mod.init(state, ...)
+      mod.start(state, ...)
       mod.update()
       state = mod
    end,

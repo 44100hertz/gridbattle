@@ -5,7 +5,7 @@ local input = require "input"
 local delay
 local pausedmodule
 return {
-   init = function(mod)
+   start = function(mod)
       input.update()
       delay = 20
       pausedmodule = mod

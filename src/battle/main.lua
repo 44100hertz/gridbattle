@@ -7,7 +7,7 @@ local time
 local bg, bgquad
 
 return {
-   init = function (_, set)
+   start = function (_, set)
       time = 0
 
       bg = set.bg

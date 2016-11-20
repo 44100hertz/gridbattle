@@ -40,7 +40,7 @@ local bg = love.graphics.newImage("img/menu.png")
 
 local counter
 return {
-   init = function ()
+   start = function ()
       love.graphics.setFont(fonts.std15)
       sel = 1
       current = rootmenu
