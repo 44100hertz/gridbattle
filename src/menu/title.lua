@@ -65,9 +65,9 @@ return {
       love.graphics.draw(bg)
       counter = counter + 1
       local size = (counter/3 % 5) + 1
-      love.graphics.circle("fill", 70, 67+sel*20, size)
+      love.graphics.circle("fill", 110, 67+sel*20, size)
       for k,v in ipairs(current) do
-	 love.graphics.print(v.text, 80, 60+k*20)
+	 love.graphics.print(v.text, 120, 60+k*20)
       end
    end,
 }
