@@ -25,18 +25,17 @@ local main = {
    end,
 }
 
-local screenwidth = 240
-local screenheight = 160
+local gamewidth = 400
+local gameheight = 240
 local screenscale = 3
 
 love.run = function ()
    if arg[2] == "dump" then screenscale = 1 end
    local framecounter = 0
-   love.window.setMode(screenwidth*screenscale, screenheight*screenscale)
+   love.window.setMode(gamewidth*screenscale, gameheight*screenscale)
    love.graphics.setDefaultFilter("nearest", "nearest")
 
-   local gamesize = {x=240, y=160}
-   local canvas = love.graphics.newCanvas(gamesize.x, gamesize.y)
+   local canvas = love.graphics.newCanvas(gamewidth, gameheight)
 
    love.math.setRandomSeed(os.time())
    main.loadstate(require "menu/title")

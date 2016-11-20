@@ -12,7 +12,7 @@ return {
 
       bg = set.bg
       bg:setWrap("repeat", "repeat")
-      bgquad = love.graphics.newQuad(0, 0, 272, 192, 32, 32)
+      bgquad = love.graphics.newQuad(0, 0, 432, 272, 32, 32)
 
       battle.loadset(set)
    end,
