@@ -24,7 +24,7 @@ return {
       love.graphics.draw(img, frame, x, y, 0, 1, 1, 7, 0)
    end,
 
-   recv = function (self, x, y)
+   recv = function (self, with)
       self.despawn = true
    end,
 }

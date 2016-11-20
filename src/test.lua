@@ -14,6 +14,6 @@ return {
       end
 
       print("table = {")
-      table_recurse(_, tab, "")
+      table_recurse(nil, tab, "")
    end
 }
