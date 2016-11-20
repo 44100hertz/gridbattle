@@ -29,7 +29,8 @@ return {
 
    draw = function ()
       love.graphics.clear(100, 200, 150, 255)
-      love.graphics.draw(bg, bgquad, (time/2)%32-31.5, (time/2)%32-32)
+      love.graphics.draw(bg, bgquad,
+			 math.floor((time/2)%32-31.5), math.floor((time/2)%32-32))
       battle.draw()
    end,
 }

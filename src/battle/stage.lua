@@ -5,7 +5,7 @@ such that x and y are a given position that point to a loaded panel data
 
 return {
    width=6, height=3,
-   offset = {x=-24, y=54}, -- -24 = -32 + 8 (dist from screen edge)
+   offset = {x=-24, y=74}, -- -24 = -32 + 8 (dist from screen edge)
    spacing = {x=64, y=40},
 
    getpanel = function (self, x, y)
