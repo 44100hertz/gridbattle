@@ -95,7 +95,7 @@ return {
 	    v.class.draw(v, x, y)
 	    if v.hp then
 	       love.graphics.setFont(fonts.tinyhp)
-	       love.graphics.print(v.hp, x-10, y-20)
+	       love.graphics.print(v.hp, x-15, y-30)
 	    end
 	 end
       end
