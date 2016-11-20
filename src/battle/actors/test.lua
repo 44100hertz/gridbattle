@@ -9,9 +9,10 @@ return {
    end,
 
    update = function (self)
+      self.z = space.getfloor(self.x, self.y)+45
    end,
 
    draw = function (self, x, y)
-      love.graphics.draw(img, sheet[1], x, y, 0, 1, 1, 22, 51)
+      love.graphics.draw(img, sheet[1], x, y, 0, 1, 1, 22, 8)
    end,
 }

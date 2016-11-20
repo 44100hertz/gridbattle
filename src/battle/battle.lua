@@ -29,7 +29,7 @@ space = {
 
    getfloor = function (x, y)
       local panel = stage[math.floor(x+0.5)][math.floor(y+0.5)]
-      return panel.z + panel.class.height
+      return panel.z
    end,
 }
 
@@ -116,7 +116,7 @@ return {
       for _,v in ipairs(actors) do
 	 if v.class.draw then
 	    local x = stage.offset.x + stage.spacing.x * v.x
-	    local y = stage.offset.y + stage.spacing.y * v.y + v.z
+	    local y = stage.offset.y + stage.spacing.y * v.y - v.z
 	    v.class.draw(v, x, y)
 	 end
       end

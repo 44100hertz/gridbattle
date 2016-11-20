@@ -12,12 +12,12 @@ return {
 
    update = function (self)
       self.time = self.time + 1
-      self.dx = self.dx + 0.001
+      self.dx = self.dx + 0.005
       self.x = self.x + self.dx
    end,
 
    draw = function (self, x, y)
       local frame = sheet[math.floor(self.time / 4) % 6 + 1]
-      love.graphics.draw(img, frame, x, y, 0, 1, 1, 7, 7)
+      love.graphics.draw(img, frame, x, y, 0, 1, 1, 7, 0)
    end,
 }

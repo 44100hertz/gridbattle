@@ -12,7 +12,7 @@ local states = {
    },
    move = {
       anim = {3,4, speed=0.5},
-      iasa = 20,
+      iasa = 12,
       length = 22,
       update = function (self)
 	 if self.statetime == 10 then
@@ -43,14 +43,14 @@ end
 
 return {
    start = function (self)
-      space.occupy(self, self.x, self.y)
+      space.occupy(self, self.x, self.y, "left")
       loadstate(self, states.idle)
    end,
 
    update = function (self)
       if self.statetime >= self.state.iasa then
-	 if input.a == 1 then shoot(self)
-	 elseif input.du>0  then move(self, 0, -1)
+	 if input.a > 0 then shoot(self) end
+	 if input.du>0  then move(self, 0, -1)
 	 elseif input.dd>0  then move(self, 0, 1)
 	 elseif input.dl>0  then move(self, -1, 0)
 	 elseif input.dr>0  then move(self, 1, 0)
@@ -64,7 +64,7 @@ return {
       if self.state.update then self.state.update(self) end
       self.statetime = self.statetime + 1
 
-      self.z = space.getfloor(self.x, self.y)
+      self.z = space.getfloor(self.x, self.y) + 55
    end,
 
    draw = function (self, x, y)
@@ -72,6 +72,6 @@ return {
 	 math.floor(self.statetime * self.anim.speed)
 	 % #self.anim
       local frame = sheet[self.state.anim[frameindex + 1]]
-      love.graphics.draw(img, frame, x, y, 0, 1, 1, 25, 55)
+      love.graphics.draw(img, frame, x, y, 0, 1, 1, 25, 5)
    end,
 }
