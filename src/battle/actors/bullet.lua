@@ -6,7 +6,7 @@ local iwidth, iheight = img:getDimensions()
 local sheet = animation.sheet(0, 0, 16, 16, iwidth, iheight, 6)
 
 return {
-   send=true, recv=true,
+   send=true,
    start = function (self)
       self.time = 0
       self.dx = 0.01

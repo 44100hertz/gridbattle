@@ -1,4 +1,5 @@
 local stage = require "battle/stage"
+local fonts = require "fonts"
 
 local actors
 
@@ -62,13 +63,13 @@ return {
    collide = function ()
       for _,send in ipairs(actors) do
 	 for _,recv in ipairs(actors) do
-	    if send.group ~= recv.group and
+	    if send.class.group ~= recv.class.group and
 	       send.class.send and
 	       recv.class.recv and
 	       math.abs(send.x - recv.x)<0.75 and
 	       math.abs(send.y - recv.y)<0.75
 	    then
-	       recv.class.collide(send)
+	       recv.class.collide(recv, send)
 	    end
 	 end
       end
@@ -89,6 +90,10 @@ return {
 	    local x = stage.offset.x + stage.spacing.x * v.x
 	    local y = stage.offset.y + stage.spacing.y * v.y - v.z
 	    v.class.draw(v, x, y)
+	    if v.hp then
+	       love.graphics.setFont(fonts.tinyhp)
+	       love.graphics.print(v.hp, x-10, y-20)
+	    end
 	 end
       end
    end

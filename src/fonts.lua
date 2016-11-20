@@ -6,4 +6,6 @@ return {
       "img/fonts/standard.png", " " .. letters),
    tiny = love.graphics.newImageFont(
       "img/fonts/tiny.png", " " .. letters .. numbers .. "."),
+   tinyhp = love.graphics.newImageFont(
+      "img/fonts/tinyhp.png", " " .. numbers),
 }
