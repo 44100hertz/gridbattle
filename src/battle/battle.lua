@@ -33,6 +33,8 @@ space = {
    end,
 }
 
+local bg, bgquad
+
 battle = {
    loadset = function (set)
       actors = {}
@@ -60,6 +62,10 @@ battle = {
       table.insert(actors, player)
 
       for _,v in ipairs(set.actors) do table.insert(actors, v) end
+
+      bg = set.bg
+      bg:setWrap("repeat", "repeat")
+      bgquad = love.graphics.newQuad(0, 0, 272, 192, 32, 32)
    end,
 
    addactor = function (newactor)
@@ -67,8 +73,10 @@ battle = {
    end
 }
 
+local time
 return {
    init = function ()
+      time = 0
       battle.loadset(require "battle/sets/test")
       for _,v in ipairs(actors) do
 	 if v.class.start then v.class.start(v) end
@@ -80,6 +88,7 @@ return {
 	 main.pushstate(require "battle/pause")
 	 return
       end
+      time = time + 1
       for _,send in ipairs(actors) do
 	 for _,recv in ipairs(actors) do
 	    if send.class.send and
@@ -97,6 +106,7 @@ return {
 
    draw = function ()
       love.graphics.clear(100, 200, 150, 255)
+      love.graphics.draw(bg, bgquad, (time/2)%32-31.5, (time/2)%32-32)
       table.sort(actors, function(o1, o2)
 		    return (o1.y+(o1.z/40) < o2.y+(o2.z/40))
       end)

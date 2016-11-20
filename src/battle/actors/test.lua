@@ -1,4 +1,4 @@
-local img = love.graphics.newImage("img/testenemy.png")
+local img = love.graphics.newImage("img/battle/testenemy.png")
 local iwidth, iheight = img:getDimensions()
 
 local sheet = animation.sheet(0, 0, 50, 60, iwidth, iheight, 1, 1)
