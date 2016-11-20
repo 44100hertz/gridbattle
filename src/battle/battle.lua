@@ -70,6 +70,7 @@ battle = {
 
    addactor = function (newactor)
       table.insert(actors, newactor)
+      newactor.class.start(newactor)
    end
 }
 
@@ -91,10 +92,12 @@ return {
       time = time + 1
       for _,send in ipairs(actors) do
 	 for _,recv in ipairs(actors) do
-	    if send.class.send and
+	    if send.group ~= recv.group and
+	       send.class.send and
 	       recv.class.recv and
 	       math.abs(send.x - recv.x)<0.75 and
-	    math.abs(send.y - recv.y)<0.75 then
+	       math.abs(send.y - recv.y)<0.75
+	    then
 	       recv.class.collide(send)
 	    end
 	 end

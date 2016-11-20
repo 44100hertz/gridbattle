@@ -1,3 +1,5 @@
+local bullet = require "battle/actors/bullet"
+
 local img = love.graphics.newImage("img/battle/ben.png")
 local iwidth, iheight = img:getDimensions()
 
@@ -35,6 +37,10 @@ local move = function  (self, dx, dy)
    end
 end
 
+local shoot = function (self)
+   battle.addactor({class=bullet, x=self.x, y=self.y, z=40})
+end
+
 return {
    start = function (self)
       space.occupy(self, self.x, self.y)
@@ -43,7 +49,8 @@ return {
 
    update = function (self)
       if self.statetime >= self.state.iasa then
-	 if input.du>0  then move(self, 0, -1)
+	 if input.a == 1 then shoot(self)
+	 elseif input.du>0  then move(self, 0, -1)
 	 elseif input.dd>0  then move(self, 0, 1)
 	 elseif input.dl>0  then move(self, -1, 0)
 	 elseif input.dr>0  then move(self, 1, 0)
