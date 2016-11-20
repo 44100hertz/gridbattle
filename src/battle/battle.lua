@@ -69,7 +69,7 @@ return {
 	       math.abs(send.x - recv.x)<0.75 and
 	       math.abs(send.y - recv.y)<0.75
 	    then
-	       recv.class.collide(recv, send)
+	       recv.class.recv(recv, send)
 	    end
 	 end
       end
@@ -78,6 +78,9 @@ return {
    update = function ()
       for _,v in ipairs(actors) do
 	 if v.class.update then v.class.update(v) end
+      end
+      for k,v in ipairs(actors) do
+	 if v.despawn then table.remove(actors, k) end
       end
    end,
 

@@ -6,7 +6,7 @@ local bullet = require "battle/actors/bullet"
 local img = love.graphics.newImage("img/battle/ben.png")
 local iwidth, iheight = img:getDimensions()
 
-local sheet = animation.sheet(0, 0, 50, 60, iwidth, iheight, 2, 2)
+local sheet = animation.sheet(0, 0, 50, 60, iwidth, iheight, 2, 3)
 
 local states = {
    idle = {
@@ -22,6 +22,16 @@ local states = {
 	    self.x, self.y = self.goalx, self.goaly
 	 end
       end,
+   },
+   shoot = {
+      anim = {5, speed=0},
+      iasa = 30,
+      length = 30,
+      update = function (self)
+	 if self.statetime == 10 then
+	    battle.addactor({class=bullet, x=self.x+0.3, y=self.y, z=40})
+	 end
+      end
    }
 }
 
@@ -41,10 +51,11 @@ local move = function  (self, dx, dy)
 end
 
 local shoot = function (self)
-   battle.addactor({class=bullet, x=self.x, y=self.y, z=40})
+   loadstate(self, states.shoot)
 end
 
 return {
+   height=52,
    start = function (self)
       battle.occupy(self, self.x, self.y)
       loadstate(self, states.idle)
