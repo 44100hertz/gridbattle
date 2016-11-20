@@ -14,7 +14,7 @@ local states = {
       iasa = 0,
    },
    move = {
-      anim = {3,4, speed=0.5},
+      anim = {3,4, speed=0.2},
       iasa = 12,
       length = 22,
       update = function (self)
@@ -24,8 +24,8 @@ local states = {
       end,
    },
    shoot = {
-      anim = {5, speed=0},
-      iasa = 30,
+      anim = {5,6, speed=0.05},
+      iasa = 25,
       length = 30,
       update = function (self)
 	 if self.statetime == 10 then
