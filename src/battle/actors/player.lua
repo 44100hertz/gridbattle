@@ -1,3 +1,6 @@
+local animation = require "animation"
+local input = require "input"
+local battle = require "battle/battle"
 local bullet = require "battle/actors/bullet"
 
 local img = love.graphics.newImage("img/battle/ben.png")
@@ -30,9 +33,9 @@ end
 
 local move = function  (self, dx, dy)
    local goalx, goaly = self.x+dx, self.y+dy
-   if space.occupy(self, goalx, goaly, "left") then
+   if battle.occupy(self, goalx, goaly, "left") then
       self.goalx, self.goaly = goalx, goaly
-      space.free(self.x, self.y)
+      battle.free(self.x, self.y)
       loadstate(self, states.move)
    end
 end
@@ -43,7 +46,7 @@ end
 
 return {
    start = function (self)
-      space.occupy(self, self.x, self.y, "left")
+      battle.occupy(self, self.x, self.y)
       loadstate(self, states.idle)
    end,
 
@@ -64,7 +67,7 @@ return {
       if self.state.update then self.state.update(self) end
       self.statetime = self.statetime + 1
 
-      self.z = space.getfloor(self.x, self.y) + 55
+      self.z = battle.getpanel(self.x, self.y).z + 55
    end,
 
    draw = function (self, x, y)

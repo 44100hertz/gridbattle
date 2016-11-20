@@ -1,19 +1,18 @@
-test = require "test"
-animation = require "animation"
-input = require "input"
-fonts = require "fonts"
+local input = require "input"
+local test = require "test"
 
 local state
 local statestack = {}
-main = {
+
+local main = {
    loadstate = function (mod)
       state = mod
       state.init()
    end,
 
-   pushstate = function (mod)
+   pushstate = function (mod, ...)
       table.insert(statestack, state)
-      mod.init(state)
+      mod.init(state, ...)
       mod.update()
       state = mod
    end,
@@ -83,3 +82,4 @@ love.quit = function ()
    end
 end
 
+return main

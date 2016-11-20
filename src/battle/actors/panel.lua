@@ -1,3 +1,5 @@
+local animation = require "animation"
+
 local img = love.graphics.newImage("img/battle/stage.png")
 local iwidth,iheight = img:getDimensions()
 

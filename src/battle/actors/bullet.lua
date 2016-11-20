@@ -1,3 +1,5 @@
+local animation = require "animation"
+
 local img = love.graphics.newImage("img/battle/bullet.png")
 local iwidth, iheight = img:getDimensions()
 
@@ -7,12 +9,12 @@ return {
    send=true, recv=true,
    start = function (self)
       self.time = 0
-      self.dx = 0.001
+      self.dx = 0.01
    end,
 
    update = function (self)
       self.time = self.time + 1
-      self.dx = self.dx + 0.005
+      self.dx = self.dx * 1.1
       self.x = self.x + self.dx
    end,
 

@@ -1,10 +1,11 @@
-local canvas
+local main = require "main"
 local img = love.graphics.newImage("img/pause.png")
+local input = require "input"
+
 local delay
 local pausedmodule
 return {
    init = function(mod)
-      canvas = pausecanvas
       input.update()
       delay = 20
       pausedmodule = mod

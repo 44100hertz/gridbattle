@@ -1,3 +1,7 @@
+local main = require "main"
+local input = require "input"
+local fonts = require "fonts"
+
 local rootmenu, optionsmenu
 
 local current, sel
@@ -6,7 +10,7 @@ local selstack = {}
 rootmenu = {
    {text = "start demo",
     func = function ()
-       main.pushstate(require "battle/battle")
+       main.pushstate(require "battle/main", require "battle/sets/test")
     end
    },
    {text = "exit",
@@ -61,8 +65,8 @@ return {
       love.graphics.draw(bg)
       counter = counter + 1
       local size = (counter/3 % 5) + 1
+      love.graphics.circle("fill", 70, 67+sel*20, size)
       for k,v in ipairs(current) do
-	 love.graphics.circle("fill", 70, 67+sel*20, size)
 	 love.graphics.print(v.text, 80, 60+k*20)
       end
    end,

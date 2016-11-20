@@ -1,3 +1,6 @@
+local battle = require "battle/battle"
+local animation = require "animation"
+
 local img = love.graphics.newImage("img/battle/testenemy.png")
 local iwidth, iheight = img:getDimensions()
 
@@ -5,11 +8,11 @@ local sheet = animation.sheet(0, 0, 50, 60, iwidth, iheight, 1, 1)
 
 return {
    start = function (self)
-      space.occupy(self, self.x, self.y, "right")
+      battle.occupy(self, self.x, self.y, "right")
    end,
 
    update = function (self)
-      self.z = space.getfloor(self.x, self.y)+45
+      self.z = battle.getpanel(self.x, self.y).z +45
    end,
 
    draw = function (self, x, y)
