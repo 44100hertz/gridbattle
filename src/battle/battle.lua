@@ -8,7 +8,7 @@ local actors
 
 return {
    occupy = function (actor, x, y, side)
-      local panel = data.stage[x][y]
+      local panel = data.stage[x] and data.stage[x][y] or nil
       if panel and
 	 not (side and panel.side ~= side) and
 	 not panel.occupant
