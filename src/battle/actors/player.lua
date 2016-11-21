@@ -1,4 +1,4 @@
-local animation = require "animation"
+local anim = require "anim"
 local input = require "input"
 local battle = require "battle/battle"
 local bullet = require "battle/actors/bullet"
@@ -6,7 +6,7 @@ local bullet = require "battle/actors/bullet"
 local img = love.graphics.newImage("img/battle/ben.png")
 local iw, ih = img:getDimensions()
 
-local sheet = animation.sheet(0, 0, 50, 60, iw, ih, 2, 3)
+local sheet = anim.sheet(0, 0, 50, 60, iw, ih, 2, 3)
 
 local states = {
    idle = {

@@ -1,10 +1,10 @@
 local battle = require "battle/battle"
-local animation = require "animation"
+local anim = require "anim"
 
 local img = love.graphics.newImage("img/battle/testenemy.png")
 local iw, ih = img:getDimensions()
 
-local sheet = animation.sheet(0, 0, 50, 60, iw, ih, 1, 1)
+local sheet = anim.sheet(0, 0, 50, 60, iw, ih, 1, 1)
 
 return {
    group = "enemy",
