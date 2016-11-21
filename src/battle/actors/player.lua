@@ -29,7 +29,9 @@ local states = {
       length = 30,
       update = function (self)
 	 if self.time == 10 then
-	    battle.addactor({class=bullet, x=self.x+0.3, y=self.y, z=40})
+	    battle.addactor(
+	       {class=bullet, x=self.x+0.3, y=self.y, z=40}
+	    )
 	 end
       end
    }

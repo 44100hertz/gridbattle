@@ -1,4 +1,5 @@
 local anim = require "anim"
+local battle = require "battle/battle"
 
 local img = love.graphics.newImage("img/battle/bullet.png")
 local iw, ih = img:getDimensions()
@@ -25,6 +26,7 @@ return {
    end,
 
    recv = function (self, with)
+      battle.signal(self, with, "damage", 10)
       self.despawn = true
    end,
 }

@@ -10,6 +10,7 @@ return {
    group = "enemy",
    send = true, size=20/64,
    height = 40,
+
    start = function (self)
       self.stand = true
       battle.occupy(self, self.x, self.y, "right")
@@ -20,7 +21,7 @@ return {
       love.graphics.draw(img, sheet[1], x, y, 0, 1, 1, 22, 8)
    end,
 
-   recv = function (self, with)
-      self.hp = self.hp - 1
-   end
+   damage = function (self, from, amount)
+      self.hp = self.hp - amount
+   end,
 }

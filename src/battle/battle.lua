@@ -36,6 +36,6 @@ return {
 
    signal = function (from, to, signal, ...)
       fun = to.class[signal]
-      if fun then fun(to, from, unpack(...)) end
+      if fun then fun(to, from, ...) end
    end
 }
