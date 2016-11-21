@@ -33,4 +33,9 @@ return {
       table.insert(data.actors, newactor)
       newactor.class.start(newactor)
    end,
+
+   signal = function (from, to, signal, ...)
+      fun = to.class[signal]
+      if fun then fun(to, from, unpack(...)) end
+   end
 }
