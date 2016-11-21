@@ -63,7 +63,8 @@ love.run = function ()
       love.graphics.setBlendMode("replace", "premultiplied")
       love.graphics.draw( canvas, 0,0,0, screenscale )
       love.graphics.setFont(fonts.tiny)
-      love.graphics.print(math.floor(collectgarbage("count")))
+      local debugstring = string.format("%08.0f", collectgarbage("count"))
+      love.graphics.print(debugstring)
       love.graphics.present()
 
       if arg[2] == "dump" then
