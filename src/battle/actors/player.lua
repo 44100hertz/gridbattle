@@ -4,9 +4,9 @@ local battle = require "battle/battle"
 local bullet = require "battle/actors/bullet"
 
 local img = love.graphics.newImage("img/battle/ben.png")
-local iwidth, iheight = img:getDimensions()
+local iw, ih = img:getDimensions()
 
-local sheet = animation.sheet(0, 0, 50, 60, iwidth, iheight, 2, 3)
+local sheet = animation.sheet(0, 0, 50, 60, iw, ih, 2, 3)
 
 local states = {
    idle = {
@@ -18,7 +18,7 @@ local states = {
       iasa = 12,
       length = 22,
       update = function (self)
-	 if self.statetime == 10 then
+	 if self.time == 10 then
 	    self.x, self.y = self.goalx, self.goaly
 	 end
       end,

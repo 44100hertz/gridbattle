@@ -1,24 +1,24 @@
 return {
    -- x,y = UL corner offset
    -- width, height = size of each frame
-   -- iwidth, iheight = image size
-   sheet = function (x, y, width, height, iwidth, iheight, numx, numy)
+   -- iw, ih = image size
+   sheet = function (x, y, w, h, iw, ih, numx, numy)
       local quads = {}
 
       numy = numy or 1
-      local offsety = y
-      local index = 0
+      local offy = y
+      local i = 0
 
       for _=1,numy do
-	 local offsetx = x
+	 local offx = x
 	 for _=1,numx do
-	    index = index + 1
-	    quads[index] = love.graphics.newQuad(
-	       offsetx, offsety, width, height, iwidth, iheight
+	    i = i + 1
+	    quads[i] = love.graphics.newQuad(
+	       offx, offy, w, h, iw, ih
 	    )
-	    offsetx = offsetx + width
+	    offx = offx + w
 	 end
-	 offsety = offsety + height
+	 offy = offy + h
       end
 
       return quads

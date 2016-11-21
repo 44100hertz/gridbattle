@@ -1,9 +1,9 @@
 local animation = require "animation"
 
 local img = love.graphics.newImage("img/battle/stage.png")
-local iwidth,iheight = img:getDimensions()
+local iw,ih = img:getDimensions()
 
-local sheet = animation.sheet(0, 0, 64, 64, iwidth, iheight, 2, 2)
+local sheet = animation.sheet(0, 0, 64, 64, iw, ih, 2, 2)
 
 return {
    walkable = true,

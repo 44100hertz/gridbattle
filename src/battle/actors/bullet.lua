@@ -1,9 +1,9 @@
 local animation = require "animation"
 
 local img = love.graphics.newImage("img/battle/bullet.png")
-local iwidth, iheight = img:getDimensions()
+local iw, ih = img:getDimensions()
 
-local sheet = animation.sheet(0, 0, 16, 16, iwidth, iheight, 6)
+local sheet = animation.sheet(0, 0, 16, 16, iw, ih, 6)
 
 return {
    send=true, size=8/64,
