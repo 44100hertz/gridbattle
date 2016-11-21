@@ -28,7 +28,7 @@ local states = {
       iasa = 25,
       length = 30,
       update = function (self)
-	 if self.statetime == 10 then
+	 if self.time == 10 then
 	    battle.addactor({class=bullet, x=self.x+0.3, y=self.y, z=40})
 	 end
       end
@@ -37,8 +37,7 @@ local states = {
 
 local loadstate = function (self, state)
    self.state = state
-   self.statetime = 0
-   self.anim = state.anim
+   self.time = 0
 end
 
 local move = function  (self, dx, dy)
@@ -62,7 +61,7 @@ return {
    end,
 
    update = function (self)
-      if self.statetime >= self.state.iasa then
+      if self.time >= self.state.iasa then
 	 if input.a > 0 then shoot(self) end
 	 if input.du>0  then move(self, 0, -1)
 	 elseif input.dd>0  then move(self, 0, 1)
@@ -71,20 +70,20 @@ return {
 	 end
       end
 
-      if self.statetime == self.state.length then
+      if self.time == self.state.length then
 	 loadstate(self, states.idle)
       end
 
       if self.state.update then self.state.update(self) end
-      self.statetime = self.statetime + 1
+      self.time = self.time + 1
 
       self.z = battle.getpanel(self.x, self.y).z + 55
    end,
 
    draw = function (self, x, y)
       local frameindex =
-	 math.floor(self.statetime * self.anim.speed)
-	 % #self.anim
+	 math.floor(self.time * self.state.anim.speed)
+	 % #self.state.anim
       local frame = sheet[self.state.anim[frameindex + 1]]
       love.graphics.draw(img, frame, x, y, 0, 1, 1, 25, 5)
    end,
