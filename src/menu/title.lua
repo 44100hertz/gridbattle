@@ -41,7 +41,6 @@ local bg = love.graphics.newImage("img/menu.png")
 local counter
 return {
    start = function ()
-      love.graphics.setFont(fonts.std15)
       sel = 1
       current = rootmenu
       counter = 0
@@ -66,6 +65,7 @@ return {
       counter = counter + 1
       local size = (counter/3 % 5) + 1
       love.graphics.circle("fill", 110, 67+sel*20, size)
+      love.graphics.setFont(fonts.std15)
       for k,v in ipairs(current) do
 	 love.graphics.print(v.text, 120, 60+k*20)
       end

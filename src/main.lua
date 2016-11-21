@@ -1,5 +1,6 @@
 local input = require "input"
 local test = require "test"
+local fonts = require "fonts"
 
 local state
 local statestack = {}
@@ -27,7 +28,7 @@ local main = {
 
 local gamewidth = 400
 local gameheight = 240
-local screenscale = 3
+local screenscale = 2
 
 love.run = function ()
    if arg[2] == "dump" then screenscale = 1 end
@@ -61,6 +62,8 @@ love.run = function ()
 
       love.graphics.setBlendMode("replace", "premultiplied")
       love.graphics.draw( canvas, 0,0,0, screenscale )
+      love.graphics.setFont(fonts.tiny)
+      love.graphics.print(math.floor(collectgarbage("count")))
       love.graphics.present()
 
       if arg[2] == "dump" then
