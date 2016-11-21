@@ -74,7 +74,7 @@ end
 
 love.quit = function ()
    if arg[2] == "dump" then
-      os.execute("ffmpeg -loglevel warning -framerate 60 -i ~/.local/share/love/src/%03d.tga -vf scale=iw*4:ih*4:sws_flags=neighbor out.mp4")
+      os.execute("ffmpeg -loglevel warning -framerate 60 -i ~/.local/share/love/src/%03d.tga -vf scale=iw*2:ih*2:sws_flags=neighbor -c:v vp8 -qmin 20 -qmax 20 out/vid.webm")
    end
 end
 
