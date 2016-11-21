@@ -72,7 +72,6 @@ return {
       bgquad = love.graphics.newQuad(0, 0, 432, 272, 32, 32)
 
       loadset(set)
-      test.print_table(data)
    end,
 
    update = function ()
