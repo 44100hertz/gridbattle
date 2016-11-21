@@ -79,13 +79,14 @@ return {
 	 main.pushstate(require "battle/pause")
 	 return
       end
-      collide()
       for _,v in ipairs(data.actors) do
 	 if v.class.update then v.class.update(v) end
+	 if v.stand then v.z = battle.getpanel(v.x, v.y).z + v.class.height end
       end
       for k,v in ipairs(data.actors) do
 	 if v.despawn then table.remove(data.actors, k) end
       end
+      collide()
       time = time + 1
    end,
 

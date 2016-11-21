@@ -9,13 +9,11 @@ local sheet = anim.sheet(0, 0, 50, 60, iw, ih, 1, 1)
 return {
    group = "enemy",
    send = true, size=20/64,
+   height = 40,
    start = function (self)
+      self.stand = true
       battle.occupy(self, self.x, self.y, "right")
       self.hp = 100
-   end,
-
-   update = function (self)
-      self.z = battle.getpanel(self.x, self.y).z +45
    end,
 
    draw = function (self, x, y)

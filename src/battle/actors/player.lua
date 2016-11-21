@@ -56,6 +56,7 @@ end
 return {
    height=52,
    start = function (self)
+      self.stand = true
       battle.occupy(self, self.x, self.y)
       loadstate(self, states.idle)
    end,
@@ -76,8 +77,6 @@ return {
 
       if self.state.update then self.state.update(self) end
       self.time = self.time + 1
-
-      self.z = battle.getpanel(self.x, self.y).z + 55
    end,
 
    draw = function (self, x, y)
