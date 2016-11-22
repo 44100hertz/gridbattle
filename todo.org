@@ -6,13 +6,18 @@
 ** TODO multiplayer
 ** TODO battle chips
 ** TODO customize menus
+** TODO implement example chip folders:
+ - Flow folder
+ - Surge folder
 
 * TODO aesthetic
 ** TODO player
 ** TODO enemy
 ** TODO more cool/trippy bg's
 ** TODO sound effects
-** TODO crisp XM playback
+ - Unified sound playback method; limits number of channels intelligently
+ - named sound sources, searchable, etc.
+** DONE crisp XM playback (supposedly)
 ** TODO compose music
 
 * TODO back burner
