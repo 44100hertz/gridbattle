@@ -31,7 +31,7 @@ return {
 
    addactor = function (newactor)
       table.insert(data.actors, newactor)
-      newactor.class.start(newactor)
+      if newactor.class.start then newactor.class.start(newactor) end
    end,
 
    signal = function (from, to, signal, ...)

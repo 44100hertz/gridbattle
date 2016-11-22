@@ -1,15 +1,16 @@
-* TODO graphical
+** TODO drawing statusbar
+** TODO hitbox display
+
+
+* DONE initial game
 ** DONE auto-sorting draw list (z-buffer)
 https://love2d.org/wiki/Skip_list:Drawing_Order
 ** DONE drawing class w/organization
 ** DONE custom fonts
-** TODO drawing statusbar
-** TODO hitbox display
-
-* TODO gameplay
 ** DONE 6x3 grid
 ** DONE movement
-** TODO first enemy
-** TODO [#B] battle objects (bullets, etc.)
-** TODO [#B] hitboxes/collision
 ** DONE debug menus
+** DONE battle objects (bullets, etc.)
+** DONE hitboxes/collision
+** DONE debug menus
+
