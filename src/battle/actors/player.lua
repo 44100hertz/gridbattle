@@ -18,9 +18,9 @@ local states = {
       iasa = 12,
       length = 22,
       update = function (self)
-	 if self.time == 10 then
-	    self.x, self.y = self.goalx, self.goaly
-	 end
+         if self.time == 10 then
+            self.x, self.y = self.goalx, self.goaly
+         end
       end,
    },
    shoot = {
@@ -28,11 +28,11 @@ local states = {
       iasa = 25,
       length = 30,
       update = function (self)
-	 if self.time == 10 then
-	    battle.addactor(
-	       {class=bullet, x=self.x+0.3, y=self.y, z=40}
-	    )
-	 end
+         if self.time == 10 then
+            battle.addactor(
+               {class=bullet, x=self.x+0.3, y=self.y, z=40}
+            )
+         end
       end
    }
 }
@@ -65,16 +65,16 @@ return {
 
    update = function (self)
       if self.time >= self.state.iasa then
-	 if input.a > 0 then shoot(self) end
-	 if input.du>0  then move(self, 0, -1)
-	 elseif input.dd>0  then move(self, 0, 1)
-	 elseif input.dl>0  then move(self, -1, 0)
-	 elseif input.dr>0  then move(self, 1, 0)
-	 end
+         if input.a > 0 then shoot(self) end
+         if input.du>0  then move(self, 0, -1)
+         elseif input.dd>0  then move(self, 0, 1)
+         elseif input.dl>0  then move(self, -1, 0)
+         elseif input.dr>0  then move(self, 1, 0)
+         end
       end
 
       if self.time == self.state.length then
-	 loadstate(self, states.idle)
+         loadstate(self, states.idle)
       end
 
       if self.state.update then self.state.update(self) end
@@ -83,8 +83,8 @@ return {
 
    draw = function (self, x, y)
       local frameindex =
-	 math.floor(self.time * self.state.anim.speed)
-	 % #self.state.anim
+         math.floor(self.time * self.state.anim.speed)
+         % #self.state.anim
       local frame = sheet[self.state.anim[frameindex + 1]]
       love.graphics.draw(img, frame, x, y, 0, 1, 1, 25, 5)
    end,

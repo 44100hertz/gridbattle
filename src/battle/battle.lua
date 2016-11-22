@@ -1,5 +1,5 @@
 --[[
-A set of functions that any given ingame actor can call
+   A set of functions that any given ingame actor can call
 --]]
 
 local data = require "battle/data"
@@ -10,11 +10,11 @@ return {
    occupy = function (actor, x, y, side)
       local panel = data.stage[x] and data.stage[x][y] or nil
       if panel and
-	 not (side and panel.side ~= side) and
-	 not panel.occupant
+         not (side and panel.side ~= side) and
+         not panel.occupant
       then
-	 panel.occupant = actor
-	 return true
+         panel.occupant = actor
+         return true
       end
    end,
 
@@ -25,7 +25,7 @@ return {
    getpanel = function (x, y)
       x,y = math.floor(x+0.5), math.floor(y+0.5)
       if data.stage[x] and data.stage[x][y] then
-	 return data.stage[x][y]
+         return data.stage[x][y]
       end
    end,
 

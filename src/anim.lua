@@ -10,15 +10,15 @@ return {
       local i = 0
 
       for _=1,numy do
-	 local offx = x
-	 for _=1,numx do
-	    i = i + 1
-	    quads[i] = love.graphics.newQuad(
-	       offx, offy, w, h, iw, ih
-	    )
-	    offx = offx + w
-	 end
-	 offy = offy + h
+         local offx = x
+         for _=1,numx do
+            i = i + 1
+            quads[i] = love.graphics.newQuad(
+               offx, offy, w, h, iw, ih
+            )
+            offx = offx + w
+         end
+         offy = offy + h
       end
 
       return quads

@@ -20,8 +20,8 @@ local main = {
 
    popstate = function ()
       if #statestack > 0 then
-	 state = table.remove(statestack)
-	 return true
+         state = table.remove(statestack)
+         return true
       end
    end,
 }
@@ -44,12 +44,12 @@ love.run = function ()
    while true do
       love.event.pump()
       for name, a,b,c,d,e,f in love.event.poll() do
-	 if name == "quit" then
-	    if not love.quit or not love.quit() then
-	       return a
-	    end
-	 end
-	 love.handlers[name](a,b,c,d,e,f)
+         if name == "quit" then
+            if not love.quit or not love.quit() then
+               return a
+            end
+         end
+         love.handlers[name](a,b,c,d,e,f)
       end
 
       input.update()
@@ -57,7 +57,7 @@ love.run = function ()
 
       love.graphics.setBlendMode("alpha", "alphamultiply")
       canvas:renderTo( function()
-	    state.draw()
+            state.draw()
       end)
 
       love.graphics.setBlendMode("replace", "premultiplied")
@@ -68,10 +68,10 @@ love.run = function ()
       love.graphics.present()
 
       if arg[2] == "dump" then
-	 framecounter = framecounter + 1
-	 local screenshot = love.graphics.newScreenshot()
-	 local name = string.format("%3.3d.tga", framecounter)
-	 screenshot:encode("tga", name)
+         framecounter = framecounter + 1
+         local screenshot = love.graphics.newScreenshot()
+         local name = string.format("%3.3d.tga", framecounter)
+         screenshot:encode("tga", name)
       end
    end
 end

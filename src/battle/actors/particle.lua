@@ -22,7 +22,7 @@ return {
       if self.floorz and self.z+self.dz < self.floorz then self.dz = -self.dz end
 
       if self.time == 256 then
-	 self.despawn = true
+         self.despawn = true
       end
 
       self.time = self.time + 1
