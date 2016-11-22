@@ -1,6 +1,25 @@
-** TODO drawing statusbar
-** TODO hitbox display
+* TODO logical next steps
+** TODO joypad
+** TODO keyboard and game configs
+ 1. Readable
+ 2. Writable
+** TODO multiplayer
+** TODO battle chips
+** TODO customize menus
 
+* TODO aesthetic
+** TODO player
+** TODO enemy
+** TODO more cool/trippy bg's
+** TODO sound effects
+** TODO crisp XM playback
+** TODO compose music
+
+* TODO back burner
+** TODO unified actor animation and state model
+
+** TODO player and enemy status/info
+** TODO custom mono fonts via ascii grid style + spritebatch
 
 * DONE initial game
 ** DONE auto-sorting draw list (z-buffer)
