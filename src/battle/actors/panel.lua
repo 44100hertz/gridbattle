@@ -7,10 +7,10 @@ local sheet = anim.sheet(0, 0, 64, 64, iw, ih, 2, 2)
 
 return {
    walkable = true,
-   height = 8,
+   height = 14,
 
    update = function (self)
-      self.z = self.occupant and -10 or -8
+      self.z = -14
    end,
 
    draw = function (self, x, y)

@@ -15,7 +15,7 @@ return {
    start = function (self)
       self.stand = true
       battle.occupy(self, self.x, self.y, "right")
-      self.hp = 100
+      self.hp = 40
    end,
 
    update = function (self)
