@@ -26,7 +26,7 @@ return {
    end,
 
    recv = function (self, with)
-      battle.signal(self, with, "damage", 10)
+      battle.signal(self, with, "damage", 40)
       self.despawn = true
    end,
 }
