@@ -24,7 +24,6 @@ local main = {
 local gamewidth = 400
 local gameheight = 240
 local screenscale = 2
-local titlebg = love.graphics.newImage("img/menu.png")
 
 love.run = function ()
    if arg[2] == "dump" then screenscale = 1 end
@@ -35,7 +34,7 @@ love.run = function ()
    local canvas = love.graphics.newCanvas(gamewidth, gameheight)
 
    love.math.setRandomSeed(os.time())
-   main.pushstate(require "menu/main", require "menu/title", titlebg)
+   main.pushstate(require "menu/main", require "menu/title")
 
    while true do
       love.event.pump()

@@ -2,7 +2,6 @@ local input = require "input"
 local fonts = require "fonts"
 
 local mod, current, sel
-local bg
 local wait, reprate
 
 local directions = {
@@ -15,11 +14,10 @@ local buttons = {
 }
 
 return {
-   start = function (lastmod, newmenu, newbg)
+   start = function (lastmod, newmenu)
       menu = newmenu
       sel = menu[1]
       mod = lastmod
-      bg = newbg
       wait = 1
       reprate = 20
    end,
@@ -53,11 +51,14 @@ return {
 
    draw = function ()
       if mod then mod.draw() end
-      if bg then love.graphics.draw(bg) end
-      love.graphics.circle("fill", sel.x-20, sel.y, 8)
+      if menu.draw then menu.draw() end
+
       for _,v in ipairs(menu) do
-         love.graphics.setFont(fonts.std15)
-         love.graphics.print(v.text, v.x, v.y)
+         if sel.draw then sel:draw() end
+         if v.text then
+            love.graphics.setFont(menu.font)
+            love.graphics.print(v.text, v.x, v.y)
+         end
       end
    end,
 }

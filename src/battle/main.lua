@@ -33,7 +33,6 @@ local collide = function ()
 end
 
 local bg, bgquad
-local pauseimg = love.graphics.newImage("img/pause.png")
 
 return {
    start = function (_, set)
@@ -72,9 +71,7 @@ return {
 
    update = function ()
       if input.start == 1 then
-         main.pushstate(require "menu/main", require "menu/pause",
-                        pauseimg
-         )
+         main.pushstate(require "menu/main", require "menu/pause")
       end
 
       for _,v in ipairs(data.actors) do
