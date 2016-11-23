@@ -6,11 +6,6 @@ local state
 local statestack = {}
 
 local main = {
-   loadstate = function (mod)
-      state = mod
-      state.start()
-   end,
-
    pushstate = function (mod, ...)
       table.insert(statestack, state)
       mod.start(state, ...)
@@ -39,7 +34,7 @@ love.run = function ()
    local canvas = love.graphics.newCanvas(gamewidth, gameheight)
 
    love.math.setRandomSeed(os.time())
-   main.loadstate(require "menu/title")
+   main.pushstate(require "menu/main", require "menu/title")
 
    while true do
       love.event.pump()
