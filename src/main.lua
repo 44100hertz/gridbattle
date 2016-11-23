@@ -9,8 +9,9 @@ local main = {
    pushstate = function (mod, ...)
       table.insert(statestack, state)
       mod.start(state, ...)
-      mod.update()
       state = mod
+      input.update()
+      state.update()
    end,
 
    popstate = function ()

@@ -50,7 +50,7 @@ return {
          for y = 1,data.stage.numy do
             local newpanel = {
                class=panel,
-               x=x, y=y, z=-8,
+               x=x, y=y,
                side = (x <= turf[y]) and "left" or "right"
             }
             data.stage[x][y] = newpanel
@@ -70,8 +70,9 @@ return {
    end,
 
    update = function ()
-      if input.start == 1 then
+      if input.st == 1 then
          main.pushstate(require "menu/main", require "menu/pause")
+         return
       end
 
       for _,v in ipairs(data.actors) do

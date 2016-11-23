@@ -51,10 +51,6 @@ local move = function  (self, dx, dy)
    end
 end
 
-local shoot = function (self)
-   loadstate(self, states.shoot)
-end
-
 return {
    height=52,
    start = function (self)
@@ -65,7 +61,7 @@ return {
 
    update = function (self)
       if self.time >= self.state.iasa then
-         if input.a > 0 then shoot(self) end
+         if input.a > 0 then loadstate(self, states.shoot) end
          if input.du>0  then move(self, 0, -1)
          elseif input.dd>0  then move(self, 0, 1)
          elseif input.dl>0  then move(self, -1, 0)

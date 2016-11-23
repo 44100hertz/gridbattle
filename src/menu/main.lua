@@ -10,7 +10,7 @@ local directions = {
 }
 
 local buttons = {
-   "a", "b", "l", "r", "start", "sel"
+   "a", "b", "l", "r", "st", "sel"
 }
 
 return {

@@ -9,9 +9,13 @@ return {
    walkable = true,
    height = 14,
 
-   update = function (self)
+   start = function (self)
       self.z = -14
    end,
+
+   -- update = function (self)
+   --    self.z = -14
+   -- end,
 
    draw = function (self, x, y)
       local frame = self.side=="left" and sheet[1] or sheet[3]
