@@ -27,7 +27,7 @@ return {
    end,
 
    draw = function ()
-      if lastmod then lastmod.draw() end
+      if mod then mod.draw() end
       if bg then love.graphics.draw(bg) end
       love.graphics.circle("fill", sel.x-20, sel.y, 8)
       for _,v in ipairs(current) do
