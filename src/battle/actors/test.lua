@@ -23,7 +23,7 @@ return {
          self.despawn = true
          for _ = 1,100 do
             battle.addactor(
-               {class=particle, x=self.x, y=self.y, z=self.z}
+               {class=particle, x=self.x, y=self.y, z=self.z-20}
             )
          end
       end
