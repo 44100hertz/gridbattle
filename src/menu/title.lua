@@ -9,21 +9,20 @@ local options
 local root = {}
 root[1] = {
    x=120, y=80, text="start",
-   u = root[3], d = root[2],
+   u=3, d=2,
    a = function ()
       main.pushstate(require "battle/main", require "battle/sets/test")
    end,
 }
 root[2] = {
    x=120, y=100, text="options",
-   u = root[1], d = root[3],
+   u=1, d=3,
    a = function () return optionsmenu end,
 }
 root[3] = {
    x=120, y=120, text="exit",
-   u = root[2], d = root[1],
+   u=2, d=1,
    a = function () love.event.quit() end,
-   draw = function () drawtxt("exit", 120, 100) end,
 }
 
 -- options = {}
@@ -43,13 +42,13 @@ return {
 
    update = function ()
       if input.du == 1 and sel.u then
-	 sel = sel.u
+	 sel = current[sel.u]
       elseif input.dd == 1 and sel.d then
-         sel = sel.d
+         sel = current[sel.d]
       elseif input.dl == 1 and sel.l then
-         sel = sel.l
+         sel = current[sel.l]
       elseif input.dr == 1 and sel.r then
-         sel = sel.r
+         sel = current[sel.r]
       elseif input.a == 1 and sel.a then
 	 sel.a()
       end
@@ -57,6 +56,7 @@ return {
 
    draw = function ()
       love.graphics.draw(bg)
+      love.graphics.circle("fill", sel.x-20, sel.y, 8)
       for _,v in ipairs(current) do
          love.graphics.setFont(fonts.std15)
          love.graphics.print(v.text, v.x, v.y)
