@@ -32,14 +32,11 @@ local collide = function ()
    end
 end
 
-local time
 local bg, bgquad
-
 local pauseimg = love.graphics.newImage("img/pause.png")
 
 return {
    start = function (_, set)
-      time = 0
       data.actors = {}
 
       bg = set.bg
@@ -90,14 +87,11 @@ return {
       end
 
       collide()
-
-      time = time + 1
    end,
 
    draw = function ()
-      love.graphics.draw(bg, bgquad, -- background
-                         math.floor((time/2)%32-31.5), math.floor((time/2)%32-32)
-      )
+      local bgoff = love.timer.getTime() * 30 % 32 - 32
+      love.graphics.draw(bg, bgquad, math.floor(bgoff-0.5), math.floor(bgoff))
 
       table.sort(data.actors, function(o1, o2) -- depth ordering
                     return (o1.y+(o1.z/40) < o2.y+(o2.z/40))
