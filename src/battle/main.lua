@@ -38,11 +38,37 @@ local bg, bgquad
 return {
    start = function (_, set)
       time = 0
-      data.loadset(set)
+      data.actors = {}
 
       bg = set.bg
       bg:setWrap("repeat", "repeat")
       bgquad = love.graphics.newQuad(0, 0, 432, 272, 32, 32)
+
+      -- Stage panels
+      local turf = set.stage.turf
+      local panel = require "battle/actors/panel"
+      for x = 1,data.stage.numx do
+         data.stage[x] = {}
+         for y = 1,data.stage.numy do
+            local newpanel = {
+               class=panel,
+               x=x, y=y, z=-8,
+               side = (x <= turf[y]) and "left" or "right"
+            }
+            data.stage[x][y] = newpanel
+            battle.addactor(newpanel)
+         end
+      end
+
+      -- Player
+      local player = {
+         class=require "battle/actors/player",
+         x=set.stage.spawn.x, y=set.stage.spawn.y, side="left"
+      }
+      battle.addactor(player)
+
+      -- Any actors specified for level; enemies
+      for _,v in ipairs(set.actors) do battle.addactor(v) end
    end,
 
    update = function ()
