@@ -5,10 +5,11 @@ local mod, current, sel
 local bg
 
 return {
-   start = function (lastmod, root, bg)
+   start = function (lastmod, root, newbg)
       mod = lastmod
       current = root
       sel = current[1]
+      bg = newbg
    end,
 
    update = function ()
@@ -28,7 +29,6 @@ return {
    draw = function ()
       if lastmod then lastmod.draw() end
       if bg then love.graphics.draw(bg) end
-
       love.graphics.circle("fill", sel.x-20, sel.y, 8)
       for _,v in ipairs(current) do
          love.graphics.setFont(fonts.std15)
