@@ -35,6 +35,8 @@ end
 local time
 local bg, bgquad
 
+local pauseimg = love.graphics.newImage("img/pause.png")
+
 return {
    start = function (_, set)
       time = 0
@@ -73,8 +75,9 @@ return {
 
    update = function ()
       if input.start == 1 then
-         main.pushstate(require "battle/pause")
-         return
+         main.pushstate(require "menu/main", require "menu/pause",
+                        pauseimg
+         )
       end
 
       for _,v in ipairs(data.actors) do

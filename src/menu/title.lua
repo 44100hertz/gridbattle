@@ -8,7 +8,7 @@ local options = {
    }
 }
 
-local root = {
+return {
    [1] = {
       x=120, y=80, text="start",
       u=3, d=2,
@@ -28,5 +28,3 @@ local root = {
       a = function () love.event.quit() end,
    }
 }
-
-return root
