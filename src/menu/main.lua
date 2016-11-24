@@ -1,9 +1,6 @@
 local input = require "input"
 local fonts = require "fonts"
 
-local mod, current, sel
-local wait, reprate
-
 local directions = {
    du = "u", dd = "d",
    dl = "l", dr = "r",
@@ -13,13 +10,15 @@ local buttons = {
    "a", "b", "l", "r", "st", "sel"
 }
 
+local mod, current, sel
+local wait
+
 return {
    start = function (lastmod, newmenu)
       menu = newmenu
       sel = menu[1]
       mod = lastmod
       wait = 1
-      reprate = 20
    end,
 
    update = function ()
