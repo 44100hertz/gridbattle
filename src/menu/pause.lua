@@ -15,7 +15,7 @@ local pause = {
 local mod
 return {
    start = function (lastmod)
-      menu.start(_, pause)
+      menu.start(pause)
       mod = lastmod
    end,
 
