@@ -71,7 +71,7 @@ return {
 
    update = function ()
       if input.st == 1 then
-         main.pushstate(require "menu/main", require "menu/pause")
+         main.pushstate(require "menu/pause")
          return
       end
 
