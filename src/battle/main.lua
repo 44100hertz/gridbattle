@@ -59,13 +59,6 @@ return {
          end
       end
 
-      -- Player
-      local player = {
-         class=require "res/battle/actors/player",
-         x=set.stage.spawn.x, y=set.stage.spawn.y, side="left"
-      }
-      battle.addactor(player)
-
       -- Any actors specified for level; enemies
       for _,v in ipairs(set.actors) do battle.addactor(v) end
    end,
