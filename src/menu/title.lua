@@ -33,21 +33,21 @@ local root = {
    [1] = {
       x=120, y=80, text="start",
       u=3, d=2,
-      st = function ()
+      a = function ()
          state.push(require "src/battle/main", require "src/battle/sets/test")
       end,
    },
    [2] = {
       x=120, y=100, text="options",
       u=1, d=3,
-      st = function ()
+      a = function ()
          state.push(optionsmenu)
       end,
    },
    [3] = {
       x=120, y=120, text="exit",
       u=2, d=1,
-      st = function () love.event.quit() end,
+      a = function () love.event.quit() end,
    }
 }
 

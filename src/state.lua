@@ -8,7 +8,7 @@ return {
       table.insert(statestack, state)
       mod.start(state, ...)
       state = mod
-      input.update()
+      input.stale()
       state.update()
    end,
 

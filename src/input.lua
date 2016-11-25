@@ -16,14 +16,19 @@ local input = {
    update = function ()
       for k,v in pairs(keyBind) do
 	 if love.keyboard.isScancodeDown(v) then
-	    -- increment length of press for each frame pressed
-	    buttons[k] = buttons[k]+1
+	    if buttons[k] > -1 then
+	       buttons[k] = buttons[k]+1
+	    end
 	 else
 	    -- reset to 0 when released
 	    buttons[k] = 0
 	 end
       end
    end,
+
+   stale = function ()
+      for k,_ in pairs(keyBind) do buttons[k] = -1 end
+   end
 }
 
 -- Bind "input.a", for example, to the value of a
