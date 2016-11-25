@@ -1,4 +1,4 @@
-local test = require "src/battle/actors/test"
+local test = require "res/battle/actors/testenemy"
 
 return {
    stage = {
@@ -16,5 +16,5 @@ return {
       {class=test, x=6, y=2},
       {class=test, x=6, y=3},
    },
-   bg=love.graphics.newImage("img/battle/bg/test.png")
+   bg=love.graphics.newImage("res/bg/test.png")
 }

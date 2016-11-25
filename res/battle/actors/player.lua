@@ -1,9 +1,8 @@
 local anim = require "src/anim"
 local input = require "src/input"
 local battle = require "src/battle/battle"
-local bullet = require "src/battle/actors/bullet"
 
-local img = love.graphics.newImage("img/battle/ben.png")
+local img = love.graphics.newImage("res/battle/actors/ben.png")
 local iw, ih = img:getDimensions()
 
 local sheet = anim.sheet(0, 0, 50, 60, iw, ih, 2, 3)
@@ -30,7 +29,8 @@ local states = {
       update = function (self)
          if self.time == 10 then
             battle.addactor(
-               {class=bullet, x=self.x+0.3, y=self.y, z=40}
+               {class=require "res/battle/actors/bullet",
+		x=self.x+0.3, y=self.y, z=40}
             )
          end
       end

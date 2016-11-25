@@ -5,11 +5,12 @@
 
 local state = require "src/state"
 local input = require "src/input"
-local fonts = require "src/fonts"
 local test = require "src/test"
 
 local battle = require "src/battle/battle"
 local data = require "src/battle/data"
+
+local fonts = require "res/fonts/fonts"
 
 local collide = function ()
    for i = 1, #data.actors do
@@ -44,7 +45,7 @@ return {
 
       -- Stage panels
       local turf = set.stage.turf
-      local panel = require "src/battle/actors/panel"
+      local panel = require "res/battle/actors/panel"
       for x = 1,data.stage.numx do
          data.stage[x] = {}
          for y = 1,data.stage.numy do
@@ -60,7 +61,7 @@ return {
 
       -- Player
       local player = {
-         class=require "src/battle/actors/player",
+         class=require "res/battle/actors/player",
          x=set.stage.spawn.x, y=set.stage.spawn.y, side="left"
       }
       battle.addactor(player)
@@ -71,7 +72,7 @@ return {
 
    update = function ()
       if input.st == 1 then
-         state.push(require "src/menu/pause")
+         state.push(require "res/menu/pause")
          return
       end
 

@@ -1,7 +1,8 @@
 local state = require "src/state"
-local fonts = require "src/fonts"
-local menu = require "src/menu/menu"
-local bg = love.graphics.newImage("img/menu.png")
+local menu = require "src/menu"
+
+local fonts = require "res/fonts/fonts"
+local bg = love.graphics.newImage("res/menu/title.png")
 
 local options = {
    font = fonts.std15,
@@ -34,7 +35,7 @@ local root = {
       x=120, y=80, text="start",
       u=3, d=2,
       a = function ()
-         state.push(require "src/battle/main", require "src/battle/sets/test")
+         state.push(require "src/battle/main", require "res/battle/sets/test")
       end,
    },
    [2] = {

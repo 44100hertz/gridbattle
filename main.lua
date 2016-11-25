@@ -1,7 +1,6 @@
 local state = require "src/state"
 local input = require "src/input"
 local test = require "src/test"
-local fonts = require "src/fonts"
 
 gamewidth = 400
 gameheight = 240
@@ -16,7 +15,7 @@ love.run = function ()
 
    local canvas = love.graphics.newCanvas(gamewidth, gameheight)
 
-   state.push(require "src/menu/title")
+   state.push(require "res/menu/title")
 
    while true do
       love.event.pump()

@@ -1,8 +1,9 @@
 local state = require "src/state"
-local fonts = require "src/fonts"
-local menu = require "src/menu/menu"
+local menu = require "src/menu"
 
-local bg = love.graphics.newImage("img/pause.png")
+local fonts = require "res/fonts/fonts"
+
+local bg = love.graphics.newImage("res/menu/pause.png")
 
 local pause = {
    st = function () state.pop() end,

@@ -3,7 +3,6 @@
 --]]
 
 local data = require "src/battle/data"
-local fonts = require "src/fonts"
 local actors
 
 return {
