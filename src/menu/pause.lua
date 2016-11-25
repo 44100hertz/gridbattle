@@ -1,11 +1,11 @@
-local main = require "main"
-local fonts = require "fonts"
-local menu = require "menu/menu"
+local state = require "src/state"
+local fonts = require "src/fonts"
+local menu = require "src/menu/menu"
 
 local bg = love.graphics.newImage("img/pause.png")
 
 local pause = {
-   st = function () main.popstate() end,
+   st = function () state.pop() end,
    font = fonts.std15,
    [1] = {
       x=100, y=100, text="pause",

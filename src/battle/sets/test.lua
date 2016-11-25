@@ -1,4 +1,4 @@
-local test = require "battle/actors/test"
+local test = require "src/battle/actors/test"
 
 return {
    stage = {

@@ -2,8 +2,8 @@
    A set of functions that any given ingame actor can call
 --]]
 
-local data = require "battle/data"
-local fonts = require "fonts"
+local data = require "src/battle/data"
+local fonts = require "src/fonts"
 local actors
 
 return {

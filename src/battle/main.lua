@@ -3,13 +3,13 @@
    Should be required as module when loading a new state
 --]]
 
-local main = require "main"
-local input = require "input"
-local fonts = require "fonts"
-local test = require "test"
+local state = require "src/state"
+local input = require "src/input"
+local fonts = require "src/fonts"
+local test = require "src/test"
 
-local battle = require "battle/battle"
-local data = require "battle/data"
+local battle = require "src/battle/battle"
+local data = require "src/battle/data"
 
 local collide = function ()
    for i = 1, #data.actors do
@@ -44,7 +44,7 @@ return {
 
       -- Stage panels
       local turf = set.stage.turf
-      local panel = require "battle/actors/panel"
+      local panel = require "src/battle/actors/panel"
       for x = 1,data.stage.numx do
          data.stage[x] = {}
          for y = 1,data.stage.numy do
@@ -60,7 +60,7 @@ return {
 
       -- Player
       local player = {
-         class=require "battle/actors/player",
+         class=require "src/battle/actors/player",
          x=set.stage.spawn.x, y=set.stage.spawn.y, side="left"
       }
       battle.addactor(player)
@@ -71,7 +71,7 @@ return {
 
    update = function ()
       if input.st == 1 then
-         main.pushstate(require "menu/pause")
+         state.push(require "src/menu/pause")
          return
       end
 

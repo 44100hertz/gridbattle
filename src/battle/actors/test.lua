@@ -1,11 +1,11 @@
-local battle = require "battle/battle"
-local anim = require "anim"
+local battle = require "src/battle/battle"
+local anim = require "src/anim"
 
 local img = love.graphics.newImage("img/battle/testenemy.png")
 local iw, ih = img:getDimensions()
 
 local sheet = anim.sheet(0, 0, 50, 60, iw, ih, 1, 1)
-local particle = require "battle/actors/particle"
+local particle = require "src/battle/actors/particle"
 
 return {
    group = "enemy",

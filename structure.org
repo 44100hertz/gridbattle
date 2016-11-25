@@ -12,25 +12,25 @@ another
  - read keyboard and pad configs from a text file
 * Battle
 ** Data
-  - objects is a list of objects always sorted by z-order
-  - objects have state/animation/hitbox systems that run on updates
+  - actors is a list of actors always sorted by z-order
+  - actors have state/animation/hitbox systems that run on updates
   - stage data
 ** Main module
 *** TODO load
   - battle/battles.lua is a file with data for every battle
-  - list of objects is cleared, populated with player and enemies
+  - list of actors is cleared, populated with player and enemies
   - stage, enemies, etc.
 *** TODO update
-   1. check collisions on all objects.
-      Enumerate them, then call collide(object) on both actors
+   1. check collisions on all actors.
+      Enumerate them, then call collide(actor) on both actors
    2. update stage conditions
-   3. call update on all objects
+   3. call update on all actors
 *** TODO draw
-for each object
-  1. transform stage coords (x,y,z vars in object) into screen coords
-  2. call draw(x,y) function on that object
+for each actor
+  1. transform stage coords (x,y,z vars in actor) into screen coords
+  2. call draw(x,y) function on that actor
 ** Functions
-*** TODO add(object, x, y, z)
-  - insert a new object in a given place
+*** TODO add(actor, x, y, z)
+  - insert a new actor in a given place
   - uses that information to sort it by y
-  - calls new() on the given object
+  - calls start() on the given actor

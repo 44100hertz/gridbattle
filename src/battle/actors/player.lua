@@ -1,7 +1,7 @@
-local anim = require "anim"
-local input = require "input"
-local battle = require "battle/battle"
-local bullet = require "battle/actors/bullet"
+local anim = require "src/anim"
+local input = require "src/input"
+local battle = require "src/battle/battle"
+local bullet = require "src/battle/actors/bullet"
 
 local img = love.graphics.newImage("img/battle/ben.png")
 local iw, ih = img:getDimensions()

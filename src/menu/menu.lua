@@ -1,4 +1,4 @@
-local input = require "input"
+local input = require "src/input"
 
 local directions = {
    du = "u", dd = "d",

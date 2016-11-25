@@ -1,14 +1,14 @@
-local main = require "main"
-local fonts = require "fonts"
-local menu = require "menu/menu"
+local state = require "src/state"
+local fonts = require "src/fonts"
+local menu = require "src/menu/menu"
 local bg = love.graphics.newImage("img/menu.png")
 
 local options = {
    font = fonts.std15,
    [1] = {
       x=120, y=80, text="back",
-      a = function () main.popstate() end,
-      b = function () main.popstate() end,
+      a = function () state.pop() end,
+      b = function () state.pop() end,
    }
 }
 
@@ -32,14 +32,14 @@ local root = {
       x=120, y=80, text="start",
       u=3, d=2,
       a = function ()
-         main.pushstate(require "battle/main", require "battle/sets/test")
+         state.push(require "src/battle/main", require "src/battle/sets/test")
       end,
    },
    [2] = {
       x=120, y=100, text="options",
       u=1, d=3,
       a = function ()
-         main.pushstate(optionsmenu)
+         state.push(optionsmenu)
       end,
    },
    [3] = {

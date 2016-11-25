@@ -1,4 +1,4 @@
-local battle = require "battle/battle"
+local battle = require "src/battle/battle"
 local gravity = 0.1
 
 return {
