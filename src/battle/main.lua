@@ -6,6 +6,7 @@
 local state = require "src/state"
 local input = require "src/input"
 local test = require "src/test"
+local bg = require "src/bg"
 
 local battle = require "src/battle/battle"
 local data = require "src/battle/data"
@@ -33,15 +34,9 @@ local collide = function ()
    end
 end
 
-local bg, bgquad
-
 return {
    start = function (_, set)
       data.actors = {}
-
-      bg = set.bg
-      bg:setWrap("repeat", "repeat")
-      bgquad = love.graphics.newQuad(0, 0, 432, 272, 32, 32)
 
       -- Stage panels
       local turf = set.stage.turf
@@ -61,6 +56,8 @@ return {
 
       -- Any actors specified for level; enemies
       for _,v in ipairs(set.actors) do battle.addactor(v) end
+
+      bg.start(set.bg)
    end,
 
    update = function ()
@@ -82,9 +79,7 @@ return {
    end,
 
    draw = function ()
-      local bgoff = love.timer.getTime() * 30 % 32 - 32
-      love.graphics.draw(bg, bgquad, math.floor(bgoff-0.5), math.floor(bgoff))
-
+      bg.draw()
       table.sort(data.actors, function(o1, o2) -- depth ordering
                     return (o1.y+(o1.z/40) < o2.y+(o2.z/40))
       end)
