@@ -1,0 +1,8 @@
+* What is this?
+This software is a re-implementation of some gameplay of the Megaman Battle Network series, using love2d. I plan on putting in just battles and menus for now.
+
+All files are under the zlib open-source license, included in LICENSE. The assets included here are fully original and should be considered open game assets.
+
+* How do I use this?
+Probably don't yet. I'm working toward more consistent code.
+
