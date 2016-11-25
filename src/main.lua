@@ -22,8 +22,8 @@ local main = {
    end,
 }
 
-local gamewidth = 400
-local gameheight = 240
+gamewidth = 400
+gameheight = 240
 local screenscale = 2
 
 love.run = function ()

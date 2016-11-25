@@ -22,7 +22,7 @@ return {
    end,
 
    draw = function (self, x, y)
-      if x < 0 or x > 400 or y > 240 then
+      if x < 0 or x > gamewidth or y > gameheight then
          self.despawn = true
       end
       love.graphics.setColor(169, 53, 197, 255)
