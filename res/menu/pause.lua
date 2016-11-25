@@ -9,7 +9,17 @@ local pause = {
    st = function () state.pop() end,
    font = fonts.std15,
    [1] = {
-      x=100, y=100, text="pause",
+      d = 2, u = 2,
+      x=180, y=150, text="return",
+      a = state.pop,
+   },
+   [2] = {
+      d = 1, u = 1,
+      x=180, y=170, text="main menu",
+      a = function ()
+	 state.pop()
+	 state.pop()
+      end,
    }
 }
 
@@ -27,6 +37,8 @@ return {
    draw = function ()
       mod.draw()
       love.graphics.draw(bg)
+      love.graphics.circle("fill", pause[pause.sel].x-20, pause[pause.sel].y, 8)
+      menu.textdraw(pause)
    end,
 }
 

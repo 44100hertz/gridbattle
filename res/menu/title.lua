@@ -6,8 +6,8 @@ local bg = love.graphics.newImage("res/menu/title.png")
 
 local options = {
    font = fonts.std15,
-   a = function () state.pop() end,
-   b = function () state.pop() end,
+   a = state.pop,
+   b = state.pop,
    [1] = {
       x=120, y=80, text="back",
    }
@@ -48,7 +48,7 @@ local root = {
    [3] = {
       x=120, y=120, text="exit",
       u=2, d=1,
-      a = function () love.event.quit() end,
+      a = love.event.quit,
    }
 }
 
