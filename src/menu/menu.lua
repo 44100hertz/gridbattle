@@ -12,10 +12,9 @@ local buttons = {
 local sel, wait
 
 return {
-   start = function (lastmod, menu)
+   start = function (menu)
       menu.sel = 1
       wait = 1
-      mod = lastmod
    end,
 
    update = function (menu)
@@ -46,7 +45,6 @@ return {
    end,
 
    textdraw = function (menu)
-      if mod then mod.draw() end
       for _,v in ipairs(menu) do
          love.graphics.setFont(menu.font)
          love.graphics.print(v.text, v.x, v.y)
