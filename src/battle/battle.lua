@@ -30,6 +30,7 @@ return {
 
    addactor = function (newactor)
       table.insert(data.actors, newactor)
+      newactor.despawn = false
       if newactor.class.start then newactor.class.start(newactor) end
    end,
 
