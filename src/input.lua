@@ -18,15 +18,12 @@ local joyBind = {
 
 local joy = love.joystick.getJoysticks()[1]
 
-local joy2hat = function (lr, ud)
+local joy2hat = function (lr, ud, check)
    local dz = 0.5 --deadzone
-   if math.abs(lr) > math.abs(ud) then -- left/right
-      if lr < -dz then return "dl" end
-      if lr > dz  then return "dr" end
-   else
-      if ud < -dz then return "du" end
-      if ud > dz  then return "dd" end
-   end
+   if check == "dl" and lr < -dz then return true end
+   if check == "dr" and lr >  dz then return true end
+   if check == "du" and ud < -dz then return true end
+   if check == "dd" and ud >  dz then return true end
 end
 
 -- populate an array of buttons
@@ -35,17 +32,15 @@ for k,_ in pairs(keyBind) do buttons[k] = 0 end
 
 local input = {
    update = function ()
-      local fakehat
       if joy then
-	 fakehat = joy2hat(joy:getAxis(1),joy:getAxis(2))
-      else
-	 fakehat = 0
+	 local lr = joy:getAxis(1)
+	 local ud = joy:getAxis(2)
       end
 
       for k,v in pairs(keyBind) do
 	 if love.keyboard.isScancodeDown(v) or
 	    joy and joy:isGamepadDown(joyBind[k]) or
-	    fakehat == k
+	    joy and joy2hat(lr, ud, k)
 	 then
 	    if buttons[k] > -1 then
 	       buttons[k] = buttons[k]+1

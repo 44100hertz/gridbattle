@@ -21,7 +21,7 @@
 ** TODO compose music
 
 * TODO back burner
-** TODO unified actor animation and state model
+** DONE unified actor animation and state model
 
 ** TODO player and enemy status/info
 ** TODO custom mono fonts via ascii grid style + spritebatch
