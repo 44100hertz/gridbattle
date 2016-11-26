@@ -50,7 +50,7 @@ return {
                side = (x <= turf[y]) and "left" or "right"
             }
             data.stage[x][y] = newpanel
-            battle.addactor(newpanel)
+            battle.addactor_raw(newpanel)
          end
       end
 

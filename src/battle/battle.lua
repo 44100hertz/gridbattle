@@ -28,10 +28,18 @@ return {
       end
    end,
 
-   addactor = function (newactor)
+   addactor_raw = function (newactor)
       table.insert(data.actors, newactor)
-      newactor.despawn = false
       if newactor.class.start then newactor.class.start(newactor) end
+   end,
+
+   addactor = function (newactor)
+      local dupactor = {}
+      for k,v in pairs(newactor) do
+	 dupactor[k] = v
+      end
+      table.insert(data.actors, dupactor)
+      if dupactor.class.start then dupactor.class.start(dupactor) end
    end,
 
    signal = function (from, to, signal, ...)
