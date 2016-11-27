@@ -2,9 +2,8 @@ local anim = require "src/anim"
 local battle = require "src/battle/battle"
 
 local img = love.graphics.newImage("res/battle/actors/bullet.png")
-local iw, ih = img:getDimensions()
-
-local sheet = anim.sheet(0, 0, 16, 16, iw, ih, 6)
+local sheet = anim.sheet(
+   0, 0, 16, 16, img:getWidth(), img:getHeight(), 6)
 
 return {
    send=true, size=8/64,

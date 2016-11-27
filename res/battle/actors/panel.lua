@@ -1,9 +1,8 @@
 local anim = require "src/anim"
 
 local img = love.graphics.newImage("res/battle/actors/panel.png")
-local iw,ih = img:getDimensions()
-
-local sheet = anim.sheet(0, 0, 64, 64, iw, ih, 2, 2)
+local sheet = anim.sheet(
+   0, 0, 64, 64, img:getWidth(), img:getHeight(), 2, 2)
 
 return {
    walkable = true,

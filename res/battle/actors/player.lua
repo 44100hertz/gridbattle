@@ -45,11 +45,8 @@ local move = function  (self, dx, dy)
 end
 
 local img = love.graphics.newImage("res/battle/actors/ben.png")
-local sheet
-do
-   local iw, ih = img:getDimensions()
-   sheet = anim.sheet(0, 0, 50, 60, iw, ih, 2, 3)
-end
+local sheet = anim.sheet(
+   0, 0, 50, 60, img:getWidth(), img:getHeight(), 2, 3)
 
 return {
    height=52,
