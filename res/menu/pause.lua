@@ -37,7 +37,6 @@ return {
    draw = function ()
       mod.draw()
       love.graphics.draw(bg)
-      love.graphics.circle("fill", pause[pause.sel].x-20, pause[pause.sel].y, 8)
       menu.textdraw(pause)
    end,
 }

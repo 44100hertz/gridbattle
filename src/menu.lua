@@ -45,9 +45,11 @@ return {
    end,
 
    textdraw = function (menu)
-      for _,v in ipairs(menu) do
+      for k,v in ipairs(menu) do
          love.graphics.setFont(menu.font)
+	 if k==menu.sel then love.graphics.setColor(255,0,0,255) end
          love.graphics.print(v.text, v.x, v.y)
+	 if k==menu.sel then love.graphics.setColor(255,255,255,255) end
       end
    end,
 

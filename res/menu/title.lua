@@ -39,7 +39,6 @@ return {
 
    draw = function ()
       love.graphics.draw(bg)
-      love.graphics.circle("fill", root[root.sel].x-20, root[root.sel].y, 8)
       menu.textdraw(root)
    end,
 }
