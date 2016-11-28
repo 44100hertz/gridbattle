@@ -11,7 +11,7 @@ local bg = require "src/bg"
 local battle = require "src/battle/battle"
 local data = require "src/battle/data"
 
-local fonts = require "res/fonts/fonts"
+local fonts = require "res/fonts"
 
 local collide = function ()
    for i = 1, #data.actors do

@@ -1,32 +1,8 @@
 local state = require "src/state"
 local menu = require "src/menu"
 
-local fonts = require "res/fonts/fonts"
+local fonts = require "res/fonts"
 local bg = love.graphics.newImage("res/menu/title.png")
-
-local options = {
-   font = fonts.std15,
-   a = state.pop,
-   b = state.pop,
-   [1] = {
-      x=120, y=80, text="back",
-   }
-}
-
-local optionsmenu = {
-   start = function ()
-      menu.start(options)
-   end,
-
-   update = function ()
-      menu.update(options)
-   end,
-
-   draw = function ()
-      love.graphics.draw(bg)
-      menu.textdraw(options)
-   end
-}
 
 local root = {
    font = fonts.std15,
@@ -39,10 +15,10 @@ local root = {
       end,
    },
    [2] = {
-      x=120, y=100, text="options",
+      x=120, y=100, text="input settings",
       u=1, d=3,
       a = function ()
-         state.push(optionsmenu)
+         state.push(require "res/menu/inputbind")
       end,
    },
    [3] = {
@@ -51,7 +27,6 @@ local root = {
       a = love.event.quit,
    }
 }
-
 
 return {
    start = function ()

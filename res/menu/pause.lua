@@ -1,7 +1,7 @@
 local state = require "src/state"
 local menu = require "src/menu"
 
-local fonts = require "res/fonts/fonts"
+local fonts = require "res/fonts"
 
 local bg = love.graphics.newImage("res/menu/pause.png")
 
