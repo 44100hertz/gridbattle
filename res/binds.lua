@@ -1,29 +1,29 @@
 return {
-   friendly = {
+   {  name="friendly",
       a="x", b="z", l="a", r="s",
       st="return", sel="rshift",
       du="up", dd="down",
       dl="left", dr="right"
    },
-   righty = {
+   {  name="righty",
       a="f", b="d", l="e", r="r",
       st="return", sel="'",
       du="i", dd="k",
       dl="j", dr="l"
    },
-   lefty = {
+   {  name="lefty",
       a="j", b="k", l="u", r="i",
       st="g", sel="f",
       du="w", dd="s",
       dl="a", dr="d"
    },
-   ergo = {
+   {  name="ergo",
       a="f", b="d", l="a", r="s",
       st="h", sel="g",
       du="k", dd="j",
       dl="h", dr="l"
    },
-   dos = {
+   {  name="dos",
       a="space", b="lalt",
       l="lctrl", r="rctrl",
       st="escape", sel="tab",

@@ -9,12 +9,12 @@ local pause = {
    st = function () state.pop() end,
    font = fonts.std15,
    [1] = {
-      d = 2, u = 2,
+      dd = 2, du = 2,
       x=180, y=150, text="return",
       a = state.pop,
    },
    [2] = {
-      d = 1, u = 1,
+      dd = 1, du = 1,
       x=180, y=170, text="main menu",
       a = function ()
 	 state.pop()

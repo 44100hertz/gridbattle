@@ -9,21 +9,22 @@ local root = {
    draw = function () love.graphics.draw(bg) end,
    [1] = {
       x=120, y=80, text="start",
-      u=3, d=2,
+      du=3, dd=2,
       a = function ()
-         state.push(require "src/battle/main", require "res/battle/sets/test")
+         state.push(require "src/battle/main",
+		    require "res/battle/sets/test")
       end,
    },
    [2] = {
       x=120, y=100, text="input settings",
-      u=1, d=3,
+      du=1, dd=3,
       a = function ()
          state.push(require "res/menu/inputbind")
       end,
    },
    [3] = {
       x=120, y=120, text="exit",
-      u=2, d=1,
+      du=2, dd=1,
       a = love.event.quit,
    }
 }

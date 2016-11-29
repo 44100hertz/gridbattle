@@ -1,8 +1,7 @@
 local input = require "src/input"
 
 local directions = {
-   du = "u", dd = "d",
-   dl = "l", dr = "r",
+   "dd", "du", "dl", "dr"
 }
 
 local buttons = {
@@ -19,9 +18,9 @@ return {
 
    update = function (menu)
       local isdirpressed = false
-      for k,v in pairs(directions) do
-         if input[k] > 0 then isdirpressed = true end
-         if input[k] == wait and menu[menu.sel][v] then
+      for _,v in pairs(directions) do
+         if input[v] > 0 then isdirpressed = true end
+         if input[v] == wait and menu[menu.sel][v] then
             wait = wait==1 and 20 or wait+8
             menu.sel = menu[menu.sel][v]
             break
