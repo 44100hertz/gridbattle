@@ -19,7 +19,7 @@ return {
    },
    {  name="ergo",
       a="f", b="d", l="a", r="s",
-      st="h", sel="g",
+      st="space", sel="g",
       du="k", dd="j",
       dl="h", dr="l"
    },
