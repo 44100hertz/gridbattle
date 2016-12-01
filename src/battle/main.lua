@@ -5,7 +5,6 @@
 
 local state = require "src/state"
 local input = require "src/input"
-local test = require "src/test"
 local bg = require "src/bg"
 
 local battle = require "src/battle/battle"
