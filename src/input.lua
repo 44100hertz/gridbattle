@@ -1,7 +1,8 @@
 -- keys should be "friendly" names
 -- values must be valid scancodes
 local binds = require "res/binds"
-local keyBind = binds[1]
+--local config = require "config"
+local keyBind = binds.friendly
 
 local joyBind = {
    a="a", b="b",
@@ -26,11 +27,11 @@ local buttons = {}
 for k,_ in pairs(keyBind) do buttons[k] = 0 end
 
 local input = {
-   bindindex = 1,
    update = function ()
+      local lr, ud
       if joy then
-	 local lr = joy:getAxis(1)
-	 local ud = joy:getAxis(2)
+	 lr = joy:getAxis(1)
+	 ud = joy:getAxis(2)
       end
 
       for k,v in pairs(keyBind) do
