@@ -18,11 +18,11 @@ local collide = function ()
       for j = i+1, #data.actors do -- start at i+1 to only check unique collisions
          local o1 = data.actors[i]
          local o2 = data.actors[j]
-         if o1.class.group ~= o2.class.group and
-         (o1.class.recv and o2.class.send) or -- if either can collide
-            (o2.class.recv and o1.class.send)
+         if o1.group ~= o2.group and
+         (o1.recv and o2.send) or -- if either can collide
+            (o2.recv and o1.send)
          then
-            local size = o1.class.size + o2.class.size
+            local size = o1.size + o2.size
             if math.abs(o1.x - o2.x) < size and -- square collisions
                math.abs(o1.y - o2.y) < size
             then
@@ -40,22 +40,24 @@ return {
 
       -- Stage panels
       local turf = set.stage.turf
-      local panel = require "res/battle/actors/panel"
       for x = 1,data.stage.numx do
          data.stage[x] = {}
          for y = 1,data.stage.numy do
             local newpanel = {
-               class=panel,
                x=x, y=y,
                side = (x <= turf[y]) and "left" or "right"
             }
             data.stage[x][y] = newpanel
-            battle.addactor_raw(newpanel)
+            battle.addactor(newpanel, require "res/battle/actors/panel")
          end
       end
 
       -- Any actors specified for level; enemies
-      for _,v in ipairs(set.actors) do battle.addactor(v) end
+      for i = 1,#set.actors,2 do
+         local dup = {}
+         for k,v in pairs(set.actors[i]) do dup[k] = v end
+         battle.addactor(dup, set.actors[i+1])
+      end
 
       bg.start(set.bg)
    end,
@@ -67,8 +69,8 @@ return {
       end
 
       for _,v in ipairs(data.actors) do
-         if v.class.update then v.class.update(v) end
-         if v.stand then v.z = battle.getpanel(v.x, v.y).z + v.class.height end
+         if v.update then v:update() end
+         if v.stand then v.z = battle.getpanel(v.x, v.y).z + v.height end
       end
 
       for k,v in ipairs(data.actors) do
@@ -85,10 +87,10 @@ return {
       end)
 
       for _,v in ipairs(data.actors) do
-         if v.class.draw then
+         if v.draw then
             local x = data.stage.x + data.stage.w * v.x
             local y = data.stage.y + data.stage.h * v.y - v.z
-            v.class.draw(v, x, y)
+            v:draw(x, y)
             if v.hp then
                love.graphics.setFont(fonts.tinyhp)
                love.graphics.print(v.hp, x-15, y-30)
