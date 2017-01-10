@@ -85,15 +85,21 @@ return {
 
       local depth = function (o) return o.y+(o.z/40) end
       local depths = {}
-      for k,v in ipairs(data.actors) do
+      local depth_step = 0.5
+      local min_depth = -100
+      local max_depth = 100
+      for _,v in ipairs(data.actors) do
          local d = depth(v)
-         depths[k] = d
+         min_depth = math.min(min_depth, d)
+         max_depth = math.max(max_depth, d)
+         local index = math.floor(d / depth_step)
+         if not depths[index] then depths[index] = {} end
+         table.insert(depths[index], v)
       end
 
-      local depth_step = 0.5
-      for i=0, 4, depth_step do
-         for k,v in ipairs(data.actors) do
-            if depths[k] and depths[k] >= i and depths[k] < i+depth_step then
+      for i = min_depth,max_depth do
+         if depths[i] then
+            for _,v in ipairs(depths[i]) do
                local x = data.stage.x + data.stage.w * v.x
                local y = data.stage.y + data.stage.h * v.y - v.z
                v:draw(x, y)
