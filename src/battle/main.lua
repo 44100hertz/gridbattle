@@ -82,18 +82,25 @@ return {
 
    draw = function ()
       bg.draw()
-      table.sort(data.actors, function(o1, o2) -- depth ordering
-                    return (o1.y+(o1.z/40) < o2.y+(o2.z/40))
-      end)
 
-      for _,v in ipairs(data.actors) do
-         if v.draw then
-            local x = data.stage.x + data.stage.w * v.x
-            local y = data.stage.y + data.stage.h * v.y - v.z
-            v:draw(x, y)
-            if v.hp then
-               love.graphics.setFont(fonts.tinyhp)
-               love.graphics.print(v.hp, x-15, y-30)
+      local depth = function (o) return o.y+(o.z/40) end
+      local depths = {}
+      for k,v in ipairs(data.actors) do
+         local d = depth(v)
+         depths[k] = d
+      end
+
+      local depth_step = 0.5
+      for i=0, 4, depth_step do
+         for k,v in ipairs(data.actors) do
+            if depths[k] and depths[k] >= i and depths[k] < i+depth_step then
+               local x = data.stage.x + data.stage.w * v.x
+               local y = data.stage.y + data.stage.h * v.y - v.z
+               v:draw(x, y)
+               if v.hp then
+                  love.graphics.setFont(fonts.tinyhp)
+                  love.graphics.print(v.hp, x-15, y-30)
+               end
             end
          end
       end
