@@ -17,7 +17,7 @@ return {
       self.z = self.z + self.dz
 
       local floor = battle.getpanel(self.x, self.y)
-      local floorz = (floor and floor.z) and floor.z+floor.class.height
+      local floorz = (floor and floor.z) and floor.z+floor.height
       if floorz and self.z+self.dz < floorz then self.dz = -self.dz end
    end,
 

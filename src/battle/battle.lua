@@ -28,22 +28,15 @@ return {
       end
    end,
 
-   addactor_raw = function (newactor)
-      table.insert(data.actors, newactor)
-      if newactor.class.start then newactor.class.start(newactor) end
-   end,
-
-   addactor = function (newactor)
-      local dupactor = {}
-      for k,v in pairs(newactor) do
-	 dupactor[k] = v
-      end
-      table.insert(data.actors, dupactor)
-      if dupactor.class.start then dupactor.class.start(dupactor) end
+   addactor = function (actor, class)
+      if not class.__index then class.__index = class end
+      setmetatable(actor, class)
+      table.insert(data.actors, actor)
+      if actor.start then actor:start() end
    end,
 
    signal = function (from, to, signal, ...)
-      fun = to.class[signal]
+      fun = to[signal]
       if fun then fun(to, from, ...) end
    end
 }

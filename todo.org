@@ -1,19 +1,13 @@
 * TODO logical next steps
-** TODO input
-*** DONE Keyboard Binding
-*** TODO Move keyboard binding to separate file in userspace
-*** TODO Joypad binding
-*** TODO Custom Binding
-*** TODO Permanent input configs
-*** TODO More reliable input configs
-*** TODO Local multiplayer input
-** TODO Menu
-*** DONE customize menus - map-based menus make it possible
-*** TODO Make up/down/left/right flexible in menus
-*** TODO Icon-based menus
+** DONE do actually use metatables, not classes
+** DONE subdivided draw depth list
+** TODO joypad
+** TODO keyboard and game configs
+ 1. Readable
+ 2. Writable
 ** TODO multiplayer
-*** Local multiplayer
 ** TODO battle chips
+** TODO [#A] customize menus - map-based menus make it possible
 ** TODO implement example chip folders:
  - Flow folder
  - Surge folder

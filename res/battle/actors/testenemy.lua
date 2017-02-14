@@ -6,8 +6,6 @@ local img = love.graphics.newImage("res/battle/actors/testenemy.png")
 local sheet = anim.sheet(
    0, 0, 50, 60, img:getWidth(), img:getHeight(), 1, 1)
 
-local particle = require "res/battle/actors/particle"
-
 return {
    group = "enemy",
    send = true, size=20/64,
@@ -24,7 +22,8 @@ return {
          self.despawn = true
          for _ = 1,100 do
             battle.addactor(
-               {class=particle, x=self.x, y=self.y, z=self.z-20}
+               {x=self.x, y=self.y, z=self.z-20},
+               require "res/battle/actors/particle"
             )
          end
       end
