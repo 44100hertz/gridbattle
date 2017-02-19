@@ -1,15 +1,18 @@
--- keys should be "friendly" names
--- values must be valid scancodes
-local binds = require "res/binds"
---local config = require "config"
-local keyBind = binds.friendly
+-- I originally wanted to have inputs be rebindable, etc, and I have a
+-- decent amount of assets and code to support that right
+-- now. However, I now think that's jumping the gun, and will rely on
+-- fixed binds during the development process.
 
+-- keys should be friendly names
+-- values are valid scancodes
 local keyBind = {
    a="x", b="z",
    du="up", dd="down",
    dl="left", dr="right"
 }
-
+-- initialize all button states
+local buttons = {}
+for k,_ in pairs(keyBind) do buttons[k] = 0 end
 
 local joyBind = {
    a="b", b="a",
@@ -19,9 +22,10 @@ local joyBind = {
    dl="dpleft", dr="dpright",
 }
 
-local joy = love.joystick.getJoysticks()[1]
+local joy = love.joystick.getJoysticks()[1] -- hard code
 love.joystick.loadGamepadMappings("gamecontrollerdb.txt")
 
+-- Currently only tested on iBuffalo snes controller
 local joy2hat = function (lr, ud, check)
    local dz = 0.5 --deadzone
    if check == "dl" and lr < -dz then return true end
@@ -29,10 +33,6 @@ local joy2hat = function (lr, ud, check)
    if check == "du" and ud < -dz then return true end
    if check == "dd" and ud >  dz then return true end
 end
-
--- populate an array of buttons
-local buttons = {}
-for k,_ in pairs(keyBind) do buttons[k] = 0 end
 
 local input = {
    update = function ()
@@ -43,9 +43,9 @@ local input = {
       end
 
       for k,v in pairs(keyBind) do
-         if love.keyboard.isScancodeDown(v) or
-            joy and joy:isGamepadDown(joyBind[k]) or
-            joy and joy2hat(lr, ud, k)
+         if love.keyboard.isScancodeDown(v) or -- Keyboard
+            joy and joy:isGamepadDown(joyBind[k]) or -- dpad
+            joy and joy2hat(lr, ud, k) -- joystick
          then
             if buttons[k] > -1 then
                buttons[k] = buttons[k]+1
@@ -57,6 +57,8 @@ local input = {
       end
    end,
 
+   -- This is used for things like menu transitions.
+   -- It forces the user to lift any buttons they intend to use.
    stale = function ()
       for k,_ in pairs(keyBind) do buttons[k] = -1 end
    end,
@@ -66,8 +68,9 @@ local input = {
    end
 }
 
--- Bind "input.a", for example, to the value of a
--- but return it; do not allow modification
+-- Bind "input.a", for example, to the value of a, but return it; do
+-- not allow modification. This mostly just serves a syntactic
+-- purpose.
 input.mt = {
    __index = function (_, key)
       return buttons[key]
