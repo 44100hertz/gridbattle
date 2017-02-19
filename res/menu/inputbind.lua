@@ -7,6 +7,8 @@ local binds = require "res/binds"
 local fonts = require "res/fonts"
 local btns = love.graphics.newImage("res/menu/buttons.png")
 
+local bindindex = "friendly"
+
 local sheet = {}
 do
    local iw, ih = btns:getDimensions()
@@ -16,17 +18,9 @@ do
    sheet.lr = anim.sheet(0,56,88,16,iw,ih,1,2)
 end
 
-local bindindex = input.bindindex
-
-local movesel = function (dir)
-   bindindex = (bindindex + dir - 1) % #binds + 1
-end
-
 local inputmenu = {
    font = fonts.std15,
    b = state.pop,
-   l = function () movesel( 1) end,
-   r = function () movesel(-1) end,
    [1] = {
       x=50, y=50, text="back",
       dr=2, dl=2,
@@ -35,7 +29,7 @@ local inputmenu = {
    [2] = {
       x=100, y=50, text="apply",
       dr=1, dl=1,
-      a = function () input.rebind(binds[bindindex]) end,
+--      a = function () input.rebind(binds[bindindex]) end,
    }
 }
 
@@ -75,7 +69,7 @@ return {
       end
       for k,v in pairs(drawlist) do
 	 love.graphics.printf(
-	    "profile: " .. binds[bindindex].name .. " (l/r)", 100, 210,
+	    "profile: " .. bindindex .. " (l/r)", 100, 210,
 	    200, "center")
 	 love.graphics.printf(
 	    binds[bindindex][k], v[6]+offx-50, v[7]+offy,

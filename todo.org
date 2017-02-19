@@ -1,4 +1,6 @@
 * TODO logical next steps
+** DONE do actually use metatables, not classes
+** DONE subdivided draw depth list
 ** TODO joypad
 ** TODO keyboard and game configs
  1. Readable

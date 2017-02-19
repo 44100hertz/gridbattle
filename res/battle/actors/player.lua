@@ -26,10 +26,10 @@ states.shoot = {
    length = 30,
    update = function (self)
       if self.time == 10 then
-	 battle.addactor(
-	    {class=require "res/battle/actors/bullet",
-	     x=self.x+0.3, y=self.y, z=40}
-	 )
+         battle.addactor(
+            {x=self.x+0.3, y=self.y, z=40},
+            require "res/battle/actors/bullet"
+         )
       end
    end,
    finish = states.idle,
