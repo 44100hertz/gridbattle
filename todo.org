@@ -1,6 +1,9 @@
 * TODO logical next steps
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
+** TODO comment everything way more
+** TODO make panels non-OOP
+** TODO unified drawing. No more love.graphics calls directly.
 ** TODO joypad
 ** TODO keyboard and game configs
  1. Readable
@@ -39,4 +42,3 @@ https://love2d.org/wiki/Skip_list:Drawing_Order
 ** DONE battle objects (bullets, etc.)
 ** DONE hitboxes/collision
 ** DONE debug menus
-
