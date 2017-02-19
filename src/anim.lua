@@ -1,3 +1,7 @@
+-- Utility function to generate animation sheets
+-- generating quads in advance puts this into load time
+-- currently fairly sloppy; gets called by classes that want it
+
 return {
    -- x,y = UL corner offset
    -- width, height = size of each frame
