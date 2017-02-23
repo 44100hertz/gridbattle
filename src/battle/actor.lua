@@ -14,7 +14,7 @@ return {
       if self.state.update then self.state.update(self) end
       self.time = self.time + 1
    end,
-   
+
    drawanimated = function (self, x, y)
       local frameindex =
          math.floor(self.time * self.state.anim.speed)
