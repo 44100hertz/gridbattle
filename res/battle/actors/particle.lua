@@ -2,7 +2,7 @@ local battle = require "src/battle/battle"
 local gravity = 0.1
 
 return {
-   start = function (self, img)
+   start = function (self)
       local dr = math.random() / 16 + 1/32
       local theta = math.random() * 2 * math.pi
       self.dx = dr * math.sin(theta)
