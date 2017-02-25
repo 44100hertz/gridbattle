@@ -9,6 +9,7 @@ Signals are dumb because they're really messy
 ** TODO lazy depth calculation
 Calculate depth on each draw call, then update that to be only when
 things move. Maintain a drawn game state, essentially.
+** TODO no more "data"
 * TODO logical next steps
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
