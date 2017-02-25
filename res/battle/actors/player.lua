@@ -46,8 +46,6 @@ return {
    img = "res/battle/actors/ben.png",
    sheet = {0,0,50,60,3},
    start = function (self)
-      self.img = img
-      self.sheet = sheet
       self.stand = true
       battle.occupy(self, self.x, self.y)
       self.state = states.idle
