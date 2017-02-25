@@ -68,6 +68,19 @@ return {
       end
 
       for _,v in ipairs(data.actors) do
+         if v.state then
+            if v.enter_state then
+               v.state = v.enter_state
+               v.time = 0
+            end
+            if v.state.act then v.state.act(v) end
+            if v.state.length and
+               v.time >= v.state.length * 60 / (v.state.speed or 20)
+            then
+               v.state = v.state.finish
+               v.time = 0
+            end
+         end
          if v.update then v:update() end
          if v.stand then v.z = battle.getpanel(v.x, v.y).z + v.height end
       end
@@ -80,18 +93,26 @@ return {
    end,
 
    draw = function ()
+      --[=[
+      drawanimated = function (self, x, y)
+         local frameindex =
+            math.floor(self.time * self.state.anim.speed)
+            % #self.state.anim
+         local frame = self.sheet[self.state.anim[frameindex + 1]]
+         love.graphics.draw(self.img, frame, x, y, 0, 1, 1, 25, 5)
+      end
+      ]=]--
       bg.draw()
 
-      local depth = function (o) return o.y+(o.z/40) end
       local depths = {}
       local depth_step = 0.5
       local min_depth = -100
       local max_depth = 100
       for _,v in ipairs(data.actors) do
-         local d = depth(v)
-         min_depth = math.min(min_depth, d)
-         max_depth = math.max(max_depth, d)
-         local index = math.floor(d / depth_step)
+         local depth = v.y+(v.z/40)
+         min_depth = math.min(min_depth, depth)
+         max_depth = math.max(max_depth, depth)
+         local index = math.floor(depth / depth_step)
          if not depths[index] then depths[index] = {} end
          table.insert(depths[index], v)
       end

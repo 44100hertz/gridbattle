@@ -1,7 +1,5 @@
 local anim = require "src/anim"
 local input = require "src/input"
-
-local actor = require "src/battle/actor"
 local battle = require "src/battle/battle"
 
 local states = {}
@@ -40,7 +38,7 @@ local move = function  (self, dx, dy)
    if battle.occupy(self, goalx, goaly, "left") then
       self.goalx, self.goaly = goalx, goaly
       battle.free(self.x, self.y)
-      actor.loadstate(self, states.move)
+      self.enter_state = states.move
    end
 end
 
@@ -55,23 +53,26 @@ return {
       self.sheet = sheet
       self.stand = true
       battle.occupy(self, self.x, self.y)
-      actor.loadstate(self, states.idle)
+      self.state = states.idle
+      self.time = 0
    end,
 
    update = function (self)
       if self.time >= self.state.iasa then
-         if input.a > 0 then actor.loadstate(self, states.shoot) end
+         if input.a > 0 then self.enter_state = states.shoot end
          if input.du>0  then move(self, 0, -1)
          elseif input.dd>0  then move(self, 0, 1)
          elseif input.dl>0  then move(self, -1, 0)
          elseif input.dr>0  then move(self, 1, 0)
          end
       end
-
-      actor.stateupdate(self)
    end,
 
-   draw = function (self, x, y)
-      actor.drawanimated(self, x, y)
+   draw = function (self)
+      local frameindex =
+         math.floor(self.time * self.state.anim.speed)
+         % #self.state.anim
+      local frame = self.sheet[self.state.anim[frameindex + 1]]
+      love.graphics.draw(self.img, frame, x, y, 0, 1, 1, 25, 5)
    end,
 }
