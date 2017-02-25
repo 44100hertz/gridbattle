@@ -23,7 +23,7 @@ local joyBind = {
 }
 
 local joy = love.joystick.getJoysticks()[1] -- hard code
-love.joystick.loadGamepadMappings("gamecontrollerdb.txt")
+love.joystick.loadGamepadMappings("res/gamecontrollerdb.txt")
 
 -- Currently only tested on iBuffalo snes controller
 local joy2hat = function (lr, ud, check)
