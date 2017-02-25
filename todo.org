@@ -1,9 +1,10 @@
 * TODO rewrite
 ** DONE no more "actor"
+** TODO image asset management
 ** TODO all actors with states
 ** TODO automate things like HP
-** TODO image asset management
 ** TODO non-object panels
+** TODO drawing origins
 ** TODO tighter collision code
 Signals are dumb because they're really messy
 ** TODO lazy depth calculation
