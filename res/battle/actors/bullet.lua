@@ -18,7 +18,7 @@ return {
 
    draw = function (self, x, y)
       local frame = sheet[math.floor(self.time / 4) % 6 + 1]
-      love.graphics.draw(img, frame, x, y, 0, 1, 1, 7, 0)
+      love.graphics.draw(self.image, x, y, 0, 1, 1, 7, 0)
    end,
 
    recv = function (self, with)
