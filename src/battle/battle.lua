@@ -2,6 +2,7 @@
    A set of functions that any given ingame actor can call
 --]]
 
+local anim = require "src/anim"
 local data = require "src/battle/data"
 local actors
 
@@ -33,6 +34,10 @@ return {
       setmetatable(actor, class)
       table.insert(data.actors, actor)
       if actor.start then actor:start() end
+      actor.image = love.graphics.newImage(actor.img)
+      actor.sheet[7] = actor.image:getWidth()
+      actor.sheet[8] = actor.image:getHeight()
+      actor.anim = anim.sheet(unpack(actor.sheet))
    end,
 
    signal = function (from, to, signal, ...)

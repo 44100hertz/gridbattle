@@ -26,7 +26,7 @@ return {
    end,
 
    draw = function (self, x, y)
-      love.graphics.draw(img, sheet[1], x, y, 0, 1, 1, 22, 8)
+      love.graphics.draw(self.image, x, y, 0, 1, 1, 22, 8)
    end,
 
    damage = function (self, from, amount)

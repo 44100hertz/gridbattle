@@ -43,7 +43,7 @@ end
 
 return {
    height=52,
-   img = "res/battle/actors.ben.png",
+   img = "res/battle/actors/ben.png",
    sheet = {0,0,50,60,3},
    start = function (self)
       self.img = img
@@ -66,10 +66,10 @@ return {
    end,
 
    draw = function (self)
-      local frameindex =
-         math.floor(self.time * self.state.anim.speed)
-         % #self.state.anim
-      local frame = self.sheet[self.state.anim[frameindex + 1]]
-      love.graphics.draw(self.img, frame, x, y, 0, 1, 1, 25, 5)
+      -- local frameindex =
+      --    math.floor(self.time * self.state.anim.speed)
+      --    % #self.state.anim
+      -- local frame = self.sheet[self.state.anim[frameindex + 1]]
+      love.graphics.draw(self.image, x, y, 0, 1, 1, 25, 5)
    end,
 }

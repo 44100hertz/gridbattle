@@ -6,7 +6,7 @@ return {
    -- x,y = UL corner offset
    -- width, height = size of each frame
    -- iw, ih = image size
-   sheet = function (x, y, w, h, iw, ih, numx, numy)
+   sheet = function (x, y, w, h, numx, numy, iw, ih)
       local quads = {}
 
       numy = numy or 1
