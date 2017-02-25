@@ -1,4 +1,3 @@
-local anim = require "src/anim"
 local input = require "src/input"
 local battle = require "src/battle/battle"
 
@@ -42,12 +41,10 @@ local move = function  (self, dx, dy)
    end
 end
 
-local img = love.graphics.newImage("res/battle/actors/ben.png")
-local sheet = anim.sheet(
-   0, 0, 50, 60, img:getWidth(), img:getHeight(), 2, 3)
-
 return {
    height=52,
+   img = "res/battle/actors.ben.png",
+   sheet = {0,0,50,60,3},
    start = function (self)
       self.img = img
       self.sheet = sheet
