@@ -112,7 +112,6 @@ return {
                v.despawn = true
             end
          end
-         if v.stand then v.z = battle.getpanel(v.x, v.y).z + v.height end
 
          if v.dx then v.x = v.x + v.dx end
          if v.dy then v.y = v.y + v.dy end
@@ -153,8 +152,10 @@ return {
       for i = min_depth,max_depth do
          if depths[i] then
             for _,v in ipairs(depths[i]) do
+               -- Screen-space transform
                local x = data.stage.x + data.stage.w * v.x
                local y = data.stage.y + data.stage.h * v.y - v.z
+
                -- Despawn offscreen (except top)
                if x < -20 or x > 420 or y < -20 then
                   v.despawn = true
@@ -164,9 +165,10 @@ return {
 
                -- Find animation frame
                if v.frame then
-                  love.graphics.draw(v.image, v.anim[v.frame], x, y)
+                  love.graphics.draw(v.image, v.anim[v.frame],
+                                     x-v.ox, y-v.oy-v.height)
                elseif v.image then
-                  love.graphics.draw(v.image, x, y)
+                  love.graphics.draw(v.image, x-v.ox, y-v.oy-v.height)
                end
 
                -- HP drawing

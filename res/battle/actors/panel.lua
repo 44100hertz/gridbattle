@@ -3,6 +3,7 @@ return {
    sheet = {0,0,64,64,2,2},
    walkable = true,
    height = 14,
+   ox = 32, oy = 0,
 
    start = function (self)
       self.z = -14

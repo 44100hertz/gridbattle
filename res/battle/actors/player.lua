@@ -48,6 +48,8 @@ return {
    height=52,
    img = "res/battle/actors/ben.png",
    sheet = {0,0,50,60,2,6},
+   ox = 24, oy = 4,
+
    start = function (self)
       self.stand = true
       battle.occupy(self, self.x, self.y)

@@ -42,10 +42,11 @@ return {
          actor.sheet[8] = actor.image:getHeight()
          actor.anim = anim.sheet(unpack(actor.sheet))
       end
-      actor.time = 0
       if actor.states and actor.states.idle then
          actor.state = actor.states.idle
       end
+      actor.time = 0
+      actor.z = 0
    end,
 
    signal = function (from, to, signal, ...)

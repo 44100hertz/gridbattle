@@ -9,6 +9,7 @@ return {
    height = 40,
    hp = 80,
    stand = true,
+   ox = 22, oy = 3,
 
    start = function (self)
       battle.occupy(self, self.x, self.y, "right")
