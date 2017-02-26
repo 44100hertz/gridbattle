@@ -93,15 +93,8 @@ return {
    end,
 
    draw = function ()
-      --[=[
-      drawanimated = function (self, x, y)
-         local frameindex =
-            math.floor(self.time * self.state.anim.speed)
-            % #self.state.anim
-         local frame = self.sheet[self.state.anim[frameindex + 1]]
-         love.graphics.draw(self.img, frame, x, y, 0, 1, 1, 25, 5)
-      end
-      ]=]--
+      ---[=[
+      --]=]
       bg.draw()
 
       local depths = {}
@@ -109,6 +102,15 @@ return {
       local min_depth = -100
       local max_depth = 100
       for _,v in ipairs(data.actors) do
+         -- Calculate frame based on state
+         if v.state then
+            local frameindex =
+               math.floor(v.time * v.state.anim.speed)
+               % #v.state.anim
+            v.frame = v.state.anim[frameindex + 1]
+         end
+
+         -- Calculate depth based on position
          local depth = v.y+(v.z/40)
          min_depth = math.min(min_depth, depth)
          max_depth = math.max(max_depth, depth)
@@ -122,7 +124,11 @@ return {
             for _,v in ipairs(depths[i]) do
                local x = data.stage.x + data.stage.w * v.x
                local y = data.stage.y + data.stage.h * v.y - v.z
-               v:draw(x, y)
+               if v.frame then
+                  love.graphics.draw(v.image, v.anim[v.frame], x, y)
+               else
+                  love.graphics.draw(v.image, x, y)
+               end
                if v.hp then
                   love.graphics.setFont(fonts.tinyhp)
                   love.graphics.print(v.hp, x-15, y-30)

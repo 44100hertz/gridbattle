@@ -6,13 +6,10 @@ return {
 
    start = function (self)
       self.z = -14
+      self.frame = self.side == "left" and 1 or 3
    end,
 
    -- update = function (self)
    --    self.z = -14
    -- end,
-
-   draw = function (self, x, y)
-      love.graphics.draw(self.image, x, y, 0, 1, 1, 32, 20)
-   end,
 }

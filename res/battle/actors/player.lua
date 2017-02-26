@@ -62,12 +62,4 @@ return {
          end
       end
    end,
-
-   draw = function (self)
-      -- local frameindex =
-      --    math.floor(self.time * self.state.anim.speed)
-      --    % #self.state.anim
-      -- local frame = self.sheet[self.state.anim[frameindex + 1]]
-      love.graphics.draw(self.image, x, y, 0, 1, 1, 25, 5)
-   end,
 }
