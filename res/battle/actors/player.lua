@@ -3,14 +3,16 @@ local battle = require "src/battle/battle"
 
 local states = {}
 states.idle = {
-   anim = {1, speed=0},
+   anim = {1},
+   speed = 0,
    iasa = 0,
 }
 states.move = {
-   anim = {3,4, speed=0.2},
+   anim = {3,4},
+   speed = 0.2,
    iasa = 12,
    length = 22,
-   update = function (self)
+   act = function (self)
       if self.time == 10 then
 	 self.x, self.y = self.goalx, self.goaly
       end
@@ -18,10 +20,11 @@ states.move = {
    finish = states.idle,
 }
 states.shoot = {
-   anim = {5,6, speed=0.05},
+   anim = {5,6},
+   speed = 0.05,
    iasa = 25,
    length = 30,
-   update = function (self)
+   act = function (self)
       if self.time == 10 then
          battle.addactor(
             {x=self.x+0.3, y=self.y, z=40},
@@ -52,7 +55,7 @@ return {
       self.time = 0
    end,
 
-   update = function (self)
+   act = function (self)
       if self.time >= self.state.iasa then
          if input.a > 0 then self.enter_state = states.shoot end
          if input.du>0  then move(self, 0, -1)
@@ -62,4 +65,6 @@ return {
          end
       end
    end,
+
+   states = states,
 }

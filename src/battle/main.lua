@@ -80,14 +80,22 @@ return {
       for _,v in ipairs(data.actors) do
          -- Handle stateful actors' states
          if v.states then
+            v.time = v.time + 1
+
             if v.enter_state then
                v.state = v.enter_state
                v.time = 0
             end
             if v.state.act then v.state.act(v) end
+
+            if v.state.iasa and
+               v.time >= v.state.iasa * v.state.speed
+            then
+               v:act()
+            end
+
             if v.state.length and
-               -- Default framerate 20
-               v.time >= v.state.length * 60 / (v.state.speed or 20)
+               v.time >= v.state.length * v.state.speed
             then
                v.state = v.state.finish
                v.time = 0
@@ -124,7 +132,7 @@ return {
          -- Calculate frame based on state
          if v.state then
             local frameindex =
-               math.floor(v.time * v.state.anim.speed)
+               math.floor(v.time * v.state.speed)
                % #v.state.anim
             v.frame = v.state.anim[frameindex + 1]
          end
