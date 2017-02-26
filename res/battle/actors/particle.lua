@@ -12,9 +12,6 @@ return {
 
    update = function (self)
       self.dz = self.dz - gravity
-      self.x = self.x + self.dx
-      self.y = self.y + self.dy
-      self.z = self.z + self.dz
 
       local floor = battle.getpanel(self.x, self.y)
       local floorz = (floor and floor.z) and floor.z+floor.height
@@ -22,9 +19,6 @@ return {
    end,
 
    draw = function (self, x, y)
-      if x < 0 or x > gamewidth or y > gameheight then
-         self.despawn = true
-      end
       love.graphics.setColor(169, 53, 197, 255)
       love.graphics.circle("fill", x, y, 5, 4)
       love.graphics.setColor(255, 255, 255, 255)

@@ -4,7 +4,8 @@ return {
    img = "res/battle/actors/testenemy.png",
    sheet = {0,0,50,60,1,1},
    group = "enemy",
-   send = true, size=20/64,
+   tangible = true,
+   size=20/64,
    height = 40,
 
    start = function (self)

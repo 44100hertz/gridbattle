@@ -15,7 +15,7 @@ local fonts = require "res/fonts"
 -- Collision function, assumed to be ran in both directions
 local collide = function (o1, o2)
    if o1.damage and o2.hp then
-      o2.hp = o2.hp - o2.damage
+      o2.hp = o2.hp - o1.damage
    end
    if o1.collide_die and o2.tangible then
       o1.despawn = true;
@@ -29,7 +29,7 @@ local collide_check = function ()
          local o1 = data.actors[i]
          local o2 = data.actors[j]
          if o1.group ~= o2.group and
-            (o1.recv and o2.send) or (o2.recv and o1.send)
+            o1.size and o2.size
          then
             local size = o1.size + o2.size
             if math.abs(o1.x - o2.x) < size and -- square collisions
@@ -113,6 +113,10 @@ return {
             end
          end
          if v.stand then v.z = battle.getpanel(v.x, v.y).z + v.height end
+
+         if v.dx then v.x = v.x + v.dx end
+         if v.dy then v.y = v.y + v.dy end
+         if v.dz then v.z = v.z + v.dz end
       end
 
       for k,v in ipairs(data.actors) do
@@ -151,9 +155,10 @@ return {
             for _,v in ipairs(depths[i]) do
                local x = data.stage.x + data.stage.w * v.x
                local y = data.stage.y + data.stage.h * v.y - v.z
+               if v.draw then v:draw(x, y) end
                if v.frame then
                   love.graphics.draw(v.image, v.anim[v.frame], x, y)
-               else
+               elseif v.image then
                   love.graphics.draw(v.image, x, y)
                end
                if v.hp then

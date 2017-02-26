@@ -34,10 +34,14 @@ return {
       setmetatable(actor, class)
       table.insert(data.actors, actor)
       if actor.start then actor:start() end
-      actor.image = love.graphics.newImage(actor.img)
-      actor.sheet[7] = actor.image:getWidth()
-      actor.sheet[8] = actor.image:getHeight()
-      actor.anim = anim.sheet(unpack(actor.sheet))
+      if actor.img then
+         actor.image = love.graphics.newImage(actor.img)
+      end
+      if actor.sheet then
+         actor.sheet[7] = actor.image:getWidth()
+         actor.sheet[8] = actor.image:getHeight()
+         actor.anim = anim.sheet(unpack(actor.sheet))
+      end
       actor.time = 0
       if actor.states and actor.states.idle then
          actor.state = actor.states.idle
