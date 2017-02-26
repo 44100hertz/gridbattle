@@ -10,5 +10,4 @@ return {
       -- stored by loadset: 2d array stage[x][y] such that x and y
       -- are the position of a given platform
    },
-   actors = {},
 }

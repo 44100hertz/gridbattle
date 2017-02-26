@@ -24,15 +24,17 @@ end
 
 -- Check all collisions.
 local collide_check = function ()
-   for i = 1, #data.actors do
-      for j = i+1, #data.actors do -- triangle iteration
-         local o1 = data.actors[i]
-         local o2 = data.actors[j]
+   for i = 1, #battle.actors do
+      -- Triangle-shaped iteration
+      for j = i+1, #battle.actors do
+         local o1 = battle.actors[i]
+         local o2 = battle.actors[j]
          if o1.group ~= o2.group and
             o1.size and o2.size
          then
             local size = o1.size + o2.size
-            if math.abs(o1.x - o2.x) < size and -- square collisions
+            -- square collisions
+            if math.abs(o1.x - o2.x) < size and
                math.abs(o1.y - o2.y) < size
             then
                collide(o1, o2)
@@ -45,7 +47,7 @@ end
 
 return {
    start = function (_, set)
-      data.actors = {}
+      battle.actors = {}
 
       -- Stage panels
       local turf = set.stage.turf
@@ -77,7 +79,7 @@ return {
          return
       end
 
-      for _,v in ipairs(data.actors) do
+      for _,v in ipairs(battle.actors) do
          -- Handle stateful actors' states
          if v.states then
             v.time = v.time + 1
@@ -118,8 +120,8 @@ return {
          if v.dz then v.z = v.z + v.dz end
       end
 
-      for k,v in ipairs(data.actors) do
-         if v.despawn then table.remove(data.actors, k) end
+      for k,v in ipairs(battle.actors) do
+         if v.despawn then table.remove(battle.actors, k) end
       end
 
       collide_check()
@@ -132,7 +134,7 @@ return {
       local depth_step = 0.5
       local min_depth = -100
       local max_depth = 100
-      for _,v in ipairs(data.actors) do
+      for _,v in ipairs(battle.actors) do
          -- Calculate frame based on state
          if v.state then
             local frameindex =

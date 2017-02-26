@@ -4,9 +4,11 @@
 
 local anim = require "src/anim"
 local data = require "src/battle/data"
-local actors
+local actors = {}
 
 return {
+   actors = actors,
+
    occupy = function (actor, x, y, side)
       local panel = data.stage[x] and data.stage[x][y] or nil
       if panel and
@@ -32,7 +34,7 @@ return {
    addactor = function (actor, class)
       if not class.__index then class.__index = class end
       setmetatable(actor, class)
-      table.insert(data.actors, actor)
+      table.insert(actors, actor)
       if actor.start then actor:start() end
       if actor.img then
          actor.image = love.graphics.newImage(actor.img)
