@@ -1,22 +1,25 @@
 * TODO rewrite
 ** DONE no more "actor"
-** TODO image asset management
+** DONE image asset management
+** TODO nicer animation system
+Have rows, speeds in FPS
+** TODO damage management
+** TODO drawing origins
 ** TODO all actors with states
 ** TODO automate things like HP
 ** TODO non-object panels
-** TODO drawing origins
-** TODO tighter collision code
+** TODO no more signals
 Signals are dumb because they're really messy
+** TODO no more "data"
+* TODO optimize
 ** TODO lazy depth calculation
 Calculate depth on each draw call, then update that to be only when
 things move. Maintain a drawn game state, essentially.
-** TODO no more "data"
+** TODO don't reload loaded images
 * TODO logical next steps
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
 ** TODO comment everything way more
-** TODO make panels non-OOP
-** TODO unified drawing. No more love.graphics calls directly.
 ** TODO joypad
 ** TODO keyboard and game configs
  1. Readable
