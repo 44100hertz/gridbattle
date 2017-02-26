@@ -56,13 +56,11 @@ return {
    end,
 
    act = function (self)
-      if self.time >= self.state.iasa then
-         if input.a > 0 then self.enter_state = states.shoot end
-         if input.du>0  then move(self, 0, -1)
-         elseif input.dd>0  then move(self, 0, 1)
-         elseif input.dl>0  then move(self, -1, 0)
-         elseif input.dr>0  then move(self, 1, 0)
-         end
+      if input.a > 0 then self.enter_state = states.shoot end
+      if input.du>0  then move(self, 0, -1)
+      elseif input.dd>0  then move(self, 0, 1)
+      elseif input.dl>0  then move(self, -1, 0)
+      elseif input.dr>0  then move(self, 1, 0)
       end
    end,
 
