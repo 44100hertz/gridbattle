@@ -155,12 +155,21 @@ return {
             for _,v in ipairs(depths[i]) do
                local x = data.stage.x + data.stage.w * v.x
                local y = data.stage.y + data.stage.h * v.y - v.z
+               -- Despawn offscreen (except top)
+               if x < -20 or x > 420 or y < -20 then
+                  v.despawn = true
+               end
+
                if v.draw then v:draw(x, y) end
+
+               -- Find animation frame
                if v.frame then
                   love.graphics.draw(v.image, v.anim[v.frame], x, y)
                elseif v.image then
                   love.graphics.draw(v.image, x, y)
                end
+
+               -- HP drawing
                if v.hp then
                   love.graphics.setFont(fonts.tinyhp)
                   love.graphics.print(v.hp, x-15, y-30)
