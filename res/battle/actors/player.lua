@@ -4,14 +4,14 @@ local battle = require "src/battle/battle"
 local states = {}
 states.idle = {
    anim = {1},
-   speed = 0,
+   speed = 1000,
    iasa = 0,
 }
 states.move = {
    anim = {3,4},
-   speed = 0.2,
-   iasa = 12,
-   length = 22,
+   speed = 5,
+   iasa = 3,
+   length = 4,
    act = function (self)
       if self.time == 10 then
 	 self.x, self.y = self.goalx, self.goaly
@@ -21,9 +21,9 @@ states.move = {
 }
 states.shoot = {
    anim = {5,6},
-   speed = 0.05,
-   iasa = 25,
-   length = 30,
+   speed = 20,
+   iasa = 2,
+   length = 2,
    act = function (self)
       if self.time == 10 then
          battle.addactor(
@@ -47,20 +47,19 @@ end
 return {
    height=52,
    img = "res/battle/actors/ben.png",
-   sheet = {0,0,50,60,3},
+   sheet = {0,0,50,60,2,6},
    start = function (self)
       self.stand = true
       battle.occupy(self, self.x, self.y)
       self.state = states.idle
-      self.time = 0
    end,
 
    act = function (self)
-      if input.a > 0 then self.enter_state = states.shoot end
-      if input.du>0  then move(self, 0, -1)
-      elseif input.dd>0  then move(self, 0, 1)
-      elseif input.dl>0  then move(self, -1, 0)
-      elseif input.dr>0  then move(self, 1, 0)
+      if     input.a>0  then self.enter_state = states.shoot
+      elseif input.du>0 then move(self, 0, -1)
+      elseif input.dd>0 then move(self, 0, 1)
+      elseif input.dl>0 then move(self, -1, 0)
+      elseif input.dr>0 then move(self, 1, 0)
       end
    end,
 

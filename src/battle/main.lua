@@ -84,6 +84,7 @@ return {
 
             if v.enter_state then
                v.state = v.enter_state
+               v.enter_state = nil
                v.time = 0
             end
             if v.state.act then v.state.act(v) end
@@ -132,8 +133,7 @@ return {
          -- Calculate frame based on state
          if v.state then
             local frameindex =
-               math.floor(v.time * v.state.speed)
-               % #v.state.anim
+               math.floor(v.time / v.state.speed) % #v.state.anim
             v.frame = v.state.anim[frameindex + 1]
          end
 
