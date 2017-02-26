@@ -12,21 +12,31 @@ local data = require "src/battle/data"
 
 local fonts = require "res/fonts"
 
-local collide = function ()
+-- Collision function, assumed to be ran in both directions
+local collide = function (o1, o2)
+   if o1.damage and o2.hp then
+      o2.hp = o2.hp - o2.damage
+   end
+   if o1.collide_die and o2.tangible then
+      o1.despawn = true;
+   end
+end
+
+-- Check all collisions.
+local collide_check = function ()
    for i = 1, #data.actors do
-      for j = i+1, #data.actors do -- start at i+1 to only check unique collisions
+      for j = i+1, #data.actors do -- triangle iteration
          local o1 = data.actors[i]
          local o2 = data.actors[j]
          if o1.group ~= o2.group and
-         (o1.recv and o2.send) or -- if either can collide
-            (o2.recv and o1.send)
+            (o1.recv and o2.send) or (o2.recv and o1.send)
          then
             local size = o1.size + o2.size
             if math.abs(o1.x - o2.x) < size and -- square collisions
                math.abs(o1.y - o2.y) < size
             then
-               battle.signal(o1, o2, "recv")
-               battle.signal(o2, o1, "recv")
+               collide(o1, o2)
+               collide(o2, o1)
             end
          end
       end
@@ -68,20 +78,31 @@ return {
       end
 
       for _,v in ipairs(data.actors) do
-         if v.state then
+         -- Handle stateful actors' states
+         if v.states then
             if v.enter_state then
                v.state = v.enter_state
                v.time = 0
             end
             if v.state.act then v.state.act(v) end
             if v.state.length and
+               -- Default framerate 20
                v.time >= v.state.length * 60 / (v.state.speed or 20)
             then
                v.state = v.state.finish
                v.time = 0
             end
          end
+
          if v.update then v:update() end
+         -- Death
+         if v.hp and v.hp <= 0 then
+            if v.states and v.states.die then
+               v.state = v.states.die
+            else
+               v.despawn = true
+            end
+         end
          if v.stand then v.z = battle.getpanel(v.x, v.y).z + v.height end
       end
 
@@ -89,12 +110,10 @@ return {
          if v.despawn then table.remove(data.actors, k) end
       end
 
-      collide()
+      collide_check()
    end,
 
    draw = function ()
-      ---[=[
-      --]=]
       bg.draw()
 
       local depths = {}

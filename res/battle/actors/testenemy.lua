@@ -24,12 +24,4 @@ return {
          end
       end
    end,
-
-   draw = function (self, x, y)
-      love.graphics.draw(self.image, x, y, 0, 1, 1, 22, 8)
-   end,
-
-   damage = function (self, from, amount)
-      self.hp = self.hp - amount
-   end,
 }
