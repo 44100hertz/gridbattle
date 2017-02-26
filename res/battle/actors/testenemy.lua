@@ -7,11 +7,11 @@ return {
    tangible = true,
    size=20/64,
    height = 40,
+   hp = 80,
+   stand = true,
 
    start = function (self)
-      self.stand = true
       battle.occupy(self, self.x, self.y, "right")
-      self.hp = 40
    end,
 
    update = function (self)
