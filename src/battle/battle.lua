@@ -7,8 +7,6 @@ local data = require "src/battle/data"
 local actors = {}
 
 return {
-   actors = actors,
-
    occupy = function (actor, x, y, side)
       local panel = data.stage[x] and data.stage[x][y] or nil
       if panel and
@@ -34,7 +32,7 @@ return {
    addactor = function (actor, class)
       if not class.__index then class.__index = class end
       setmetatable(actor, class)
-      table.insert(actors, actor)
+      table.insert(data.actors, actor)
       if actor.start then actor:start() end
       if actor.img then
          actor.image = love.graphics.newImage(actor.img)

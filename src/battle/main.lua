@@ -7,6 +7,7 @@ local state = require "src/state"
 local input = require "src/input"
 local bg = require "src/bg"
 
+local depthdraw = require "src/depthdraw"
 local battle = require "src/battle/battle"
 local data = require "src/battle/data"
 
@@ -24,11 +25,11 @@ end
 
 -- Check all collisions.
 local collide_check = function ()
-   for i = 1, #battle.actors do
+   for i = 1, #data.actors do
       -- Triangle-shaped iteration
-      for j = i+1, #battle.actors do
-         local o1 = battle.actors[i]
-         local o2 = battle.actors[j]
+      for j = i+1, #data.actors do
+         local o1 = data.actors[i]
+         local o2 = data.actors[j]
          if o1.group ~= o2.group and
             o1.size and o2.size
          then
@@ -47,7 +48,7 @@ end
 
 return {
    start = function (_, set)
-      battle.actors = {}
+      data.actors = {}
 
       -- Stage panels
       local turf = set.stage.turf
@@ -79,7 +80,7 @@ return {
          return
       end
 
-      for _,v in ipairs(battle.actors) do
+      for _,v in ipairs(data.actors) do
          -- Handle stateful actors' states
          if v.states then
             v.time = v.time + 1
@@ -120,8 +121,8 @@ return {
          if v.dz then v.z = v.z + v.dz end
       end
 
-      for k,v in ipairs(battle.actors) do
-         if v.despawn then table.remove(battle.actors, k) end
+      for k,v in ipairs(data.actors) do
+         if v.despawn then table.remove(data.actors, k) end
       end
 
       collide_check()
@@ -130,11 +131,7 @@ return {
    draw = function ()
       bg.draw()
 
-      local depths = {}
-      local depth_step = 0.5
-      local min_depth = -100
-      local max_depth = 100
-      for _,v in ipairs(battle.actors) do
+      for _,v in ipairs(data.actors) do
          -- Calculate frame based on state
          if v.state then
             local frameindex =
@@ -142,44 +139,20 @@ return {
             v.frame = v.state.anim[frameindex + 1]
          end
 
-         -- Calculate depth based on position
-         local depth = v.y+(v.z/40)
-         min_depth = math.min(min_depth, depth)
-         max_depth = math.max(max_depth, depth)
-         local index = math.floor(depth / depth_step)
-         if not depths[index] then depths[index] = {} end
-         table.insert(depths[index], v)
+         if v then depthdraw.add(v) end
+
+         -- Despawn offscreen (except top)
+         -- if x < -20 or x > 420 or y < -20 then
+         --    v.despawn = true
+         -- end
+
+         -- HP drawing
+         -- if v.hp then
+         --    love.graphics.setFont(fonts.tinyhp)
+         --    love.graphics.print(v.hp, x-15, y-30)
+         -- end
       end
 
-      for i = min_depth,max_depth do
-         if depths[i] then
-            for _,v in ipairs(depths[i]) do
-               -- Screen-space transform
-               local x = data.stage.x + data.stage.w * v.x
-               local y = data.stage.y + data.stage.h * v.y - v.z
-
-               -- Despawn offscreen (except top)
-               if x < -20 or x > 420 or y < -20 then
-                  v.despawn = true
-               end
-
-               if v.draw then v:draw(x, y) end
-
-               -- Find animation frame
-               if v.frame then
-                  love.graphics.draw(v.image, v.anim[v.frame],
-                                     x-v.ox, y-v.oy-v.height)
-               elseif v.image then
-                  love.graphics.draw(v.image, x-v.ox, y-v.oy-v.height)
-               end
-
-               -- HP drawing
-               if v.hp then
-                  love.graphics.setFont(fonts.tinyhp)
-                  love.graphics.print(v.hp, x-15, y-30)
-               end
-            end
-         end
-      end
+      depthdraw.draw(v)
    end,
 }
