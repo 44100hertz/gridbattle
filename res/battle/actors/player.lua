@@ -50,11 +50,6 @@ return {
    sheet = {0,0,50,60,2,6},
    ox = 24, oy = 54,
 
-   start = function (self)
-      stage.occupy(self, self.x, self.y)
-      self.state = states.idle
-   end,
-
    act = function (self)
       if     input.a>0  then self.enter_state = states.shoot
       elseif input.du>0 then move(self, 0, -1)
