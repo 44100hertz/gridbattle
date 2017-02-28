@@ -12,6 +12,7 @@ return {
 
    update = function (self)
       self.dz = self.dz - gravity
+      if self.z < -200 then self.despawn = true end
    end,
 
    draw = function (self, x, y)
