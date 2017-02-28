@@ -1,5 +1,6 @@
 local input = require "src/input"
 local battle = require "src/battle/battle"
+local stage = require "src/battle/stage"
 
 local states = {}
 states.idle = {
@@ -37,9 +38,9 @@ states.shoot = {
 
 local move = function  (self, dx, dy)
    local goalx, goaly = self.x+dx, self.y+dy
-   if battle.occupy(self, goalx, goaly, "left") then
+   if stage.occupy(self, goalx, goaly, "left") then
       self.goalx, self.goaly = goalx, goaly
-      battle.free(self.x, self.y)
+      stage.free(self.x, self.y)
       self.enter_state = states.move
    end
 end
@@ -52,7 +53,7 @@ return {
 
    start = function (self)
       self.stand = true
-      battle.occupy(self, self.x, self.y)
+      stage.occupy(self, self.x, self.y)
       self.state = states.idle
    end,
 

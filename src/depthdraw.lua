@@ -6,7 +6,7 @@ local depth_step = 20
 local min_depth = -100
 local max_depth = 100
 
-reset = function ()
+local reset = function ()
    depths = {}
    for i = min_depth, max_depth, depth_step do
       table.insert(depths, {})
@@ -28,15 +28,10 @@ return {
    draw = function ()
       for _,depth in ipairs(depths) do
          for _,v in ipairs(depth) do
-            local screen_x = data.stage.x + data.stage.w * v.x -
+            local screen_x = STAGE.xoff + STAGE.w * v.x -
                (v.ox or 0)
-            local screen_y = data.stage.y + data.stage.h * v.y -
+            local screen_y = STAGE.yoff + STAGE.h * v.y -
                v.z - (v.oy or 0) - (v.height or 0)
-
-            -- if screen_x < -20 or screen_x > 420 or screen_y < -20 then
-            --    v.despawn = true
-            --    return
-            -- end
 
             if v.draw then v:draw(screen_x, screen_y) end
             if v.frame then

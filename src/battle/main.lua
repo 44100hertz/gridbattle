@@ -10,8 +10,19 @@ local bg = require "src/bg"
 local depthdraw = require "src/depthdraw"
 local battle = require "src/battle/battle"
 local data = require "src/battle/data"
+local stage = require "src/battle/stage"
 
 local fonts = require "res/fonts"
+
+-- Some global vars used throughout battle
+_G.STAGE = {
+   numx = 6,
+   numy = 3,
+   xoff = -24,
+   yoff = 74,
+   w = 64,
+   h = 40,
+}
 
 -- Collision function, assumed to be ran in both directions
 local collide = function (o1, o2)
@@ -50,19 +61,7 @@ return {
    start = function (_, set)
       data.actors = {}
 
-      -- Stage panels
-      local turf = set.stage.turf
-      for x = 1,data.stage.numx do
-         data.stage[x] = {}
-         for y = 1,data.stage.numy do
-            local newpanel = {
-               x=x, y=y,
-               side = (x <= turf[y]) and "left" or "right"
-            }
-            data.stage[x][y] = newpanel
-            battle.addactor(newpanel, require "res/battle/actors/panel")
-         end
-      end
+      stage.start(set.stage.turf)
 
       -- Any actors specified for level; enemies
       for i = 1,#set.actors,2 do
@@ -153,6 +152,7 @@ return {
          -- end
       end
 
-      depthdraw.draw(v)
+      stage.draw()
+      depthdraw.draw()
    end,
 }

@@ -1,4 +1,5 @@
 local battle = require "src/battle/battle"
+local stage = require "src/battle/stage"
 
 return {
    img = "res/battle/actors/testenemy.png",
@@ -12,7 +13,7 @@ return {
    ox = 22, oy = 3,
 
    start = function (self)
-      battle.occupy(self, self.x, self.y, "right")
+      stage.occupy(self, self.x, self.y, "right")
    end,
 
    update = function (self)
