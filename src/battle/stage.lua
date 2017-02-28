@@ -52,10 +52,14 @@ return {
 
    occupy = function (actor, x, y, side)
       local panel = panels[x] and panels[x][y] or nil
-      if panel and
-         not (side and panel.side ~= side) and
-         not panel.occupant
-      then
+      if not panel then return end
+
+      local is_left = x <= turf[y]
+      local off_side =
+         side=="left" and not is_left or
+         side=="right" and is_left
+
+      if not off_side and not panel.occupant then
          panel.occupant = actor
          return true
       end
