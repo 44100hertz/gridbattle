@@ -7,7 +7,7 @@ return {
    group = "enemy",
    tangible = true,
    size=20/64,
-   hp = 80,
+   max_hp = 80,
    ox = 22, oy = 43,
 
    update = function (self)

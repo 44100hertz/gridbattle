@@ -34,6 +34,8 @@ local add = function (actor, class)
    if actor.tangible then
       stage.occupy(actor)
    end
+
+   if actor.max_hp then actor.hp = actor.max_hp end
 end
 
 return {
