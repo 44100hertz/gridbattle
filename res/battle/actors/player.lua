@@ -33,9 +33,10 @@ states.shoot = {
 
 local move = function  (self, dx, dy)
    local goalx, goaly = self.x+dx, self.y+dy
-   if stage.occupy(self, goalx, goaly, "left") then
+   if stage.isfree(goalx, goaly, "left") then
       self.goalx, self.goaly = goalx, goaly
       stage.free(self.x, self.y)
+      stage.occupy(self, goalx, goaly)
       self.enter_state = states.move
    end
 end

@@ -1,8 +1,8 @@
 --[[
-A data and helper for panels and such.
+   A data and helper for panels and such.
 
-Intended both to clean out the battle main loop, and so it doesn't
-have any functions other files would call.
+   Intended both to clean out the battle main loop, and so it doesn't
+   have any functions other files would call.
 --]]
 
 local anim = require "src/anim"
@@ -13,10 +13,6 @@ local sheet = anim.sheet(0, 0, 64, 64, 2, 2,
                          image:getWidth(), image:getHeight())
 
 local turf, panels
-
-local getpanel = function (x, y)
-   return math.floor(x+0.5), math.floor(y+0.5)
-end
 
 return {
    start = function (new_turf)
@@ -57,15 +53,21 @@ return {
       return not off_side
    end,
 
-   occupy = function (actor)
-      local x,y = getpanel(actor.x, actor.y)
-      local panel = panels[x][y]
-      assert(panel, "cannot move to nonexistant panel")
-      if panel then panel.tenant = actor end
-      actor.on_panel = {x=x, y=y}
+   occupy = function (actor, x, y)
+      x = x or actor.x
+      y = y or actor.y
+      new_x, new_y = math.floor(x+0.5), math.floor(y+0.5)
+      local panel = panels[new_x] and panels[new_x][new_y] or nil
+
+      assert(panel, "attempt to occupy nonexistant panel")
+      assert(not panel.tenant, "attempt to occupy occupied space")
+
+      panel.tenant = actor
+      actor.on_panel = {x=new_x, y=new_y}
    end,
 
    free = function (x, y)
+      local x,y = math.floor(x+0.5), math.floor(y+0.5)
       panels[x][y].tenant = nil
    end,
 }

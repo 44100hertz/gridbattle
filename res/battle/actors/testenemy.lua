@@ -10,10 +10,6 @@ return {
    hp = 80,
    ox = 22, oy = 43,
 
-   start = function (self)
-      stage.occupy(self, self.x, self.y, "right")
-   end,
-
    update = function (self)
       if self.hp <= 0 then
          self.despawn = true

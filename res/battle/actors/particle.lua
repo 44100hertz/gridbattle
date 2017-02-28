@@ -12,10 +12,6 @@ return {
 
    update = function (self)
       self.dz = self.dz - gravity
-
-      local floor = stage.getpanel(self.x, self.y)
-      local floorz = (floor and floor.z) and floor.z+floor.height
-      if floorz and self.z+self.dz < floorz then self.dz = -self.dz end
    end,
 
    draw = function (self, x, y)
