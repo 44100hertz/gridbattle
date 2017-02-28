@@ -1,3 +1,10 @@
+--[[
+A data and helper for panels and such.
+
+Intended both to clean out the battle main loop, and so it doesn't
+have any functions other files would call.
+--]]
+
 local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 
@@ -5,12 +12,12 @@ local image = love.graphics.newImage("res/battle/panel.png")
 local sheet = anim.sheet(0, 0, 64, 64, 2, 2,
                          image:getWidth(), image:getHeight())
 
-local turf
-local panels = {}
+local turf, panels
 
 return {
    start = function (new_turf)
       turf = new_turf
+      panels = {}
       for x = 1,STAGE.numx do
          panels[x] = {}
          for y = 1,STAGE.numy do
@@ -26,7 +33,9 @@ return {
                image = image,
                x = x,
                y = y,
-               z = 20,
+               z = -160, height = 160,
+               ox = 30,
+               oy = 20,
                anim = sheet,
                frame = x > turf[y] and 1 or 3,
             }
