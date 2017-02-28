@@ -7,7 +7,7 @@ return {
       bg:setWrap("repeat", "repeat")
       bgsize = bg:getDimensions()
       bgquad = love.graphics.newQuad(
-	 0, 0, gamewidth+bgsize, gameheight+bgsize,
+	 0, 0, GAME.width+bgsize, GAME.height+bgsize,
 	 bgsize, bgsize
       )
    end,

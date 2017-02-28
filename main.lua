@@ -2,9 +2,12 @@ local state = require "src/state"
 local input = require "src/input"
 local config = require "src/config"
 
-gamewidth = 400
-gameheight = 240
-gamescale = 2
+_G.GAME = {
+   width = 400,
+   height = 240,
+}
+
+local gamescale = 2
 
 love.run = function ()
    local outdir
@@ -16,10 +19,10 @@ love.run = function ()
    love.math.setRandomSeed(os.time())
    local time = 0
 
-   love.window.setMode(gamewidth*gamescale, gameheight*gamescale)
+   love.window.setMode(GAME.width*gamescale, GAME.height*gamescale)
    love.graphics.setDefaultFilter("nearest", "nearest")
 
-   local canvas = love.graphics.newCanvas(gamewidth, gameheight)
+   local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
 
    state.push(require "res/menu/title")
 
