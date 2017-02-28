@@ -9,7 +9,6 @@ return {
    size=20/64,
    height = 40,
    hp = 80,
-   stand = true,
    ox = 22, oy = 3,
 
    start = function (self)

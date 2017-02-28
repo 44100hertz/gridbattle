@@ -52,7 +52,6 @@ return {
    ox = 24, oy = 4,
 
    start = function (self)
-      self.stand = true
       stage.occupy(self, self.x, self.y)
       self.state = states.idle
    end,
