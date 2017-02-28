@@ -1,9 +1,14 @@
 * What is this?
-This software is a re-implementation of some gameplay of the Megaman Battle Network series, using love2d. I plan on putting in just battles and menus for now.
+This is a re-implementation of some gameplay of the Megaman Battle Network series, using love2d.
 
-Files are under the zlib open-source license, included in LICENSE. The assets included here are fully original and should be considered open game assets.
-This excludes gamecontrollerdb.txt, which is under LICENSE.gamecontrollerdb.
+Files are under the zlib open-source license, included in LICENSE.
+The assets included here are fully original and should be considered open game assets.
+gamecontrollerdb.txt is under LICENSE.gamecontrollerdb.
 
 * How do I use this?
-Probably don't yet. I'm working toward more consistent code.
+This is an engine, so you'd want to use it to make a game.
 
+Though, it's a bit incomplete and some things are in need of rewrites (see todo).
+However, much of it is actually nearing a final state.
+
+If you are interested in using this, you should contact me about it.
