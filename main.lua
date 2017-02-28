@@ -1,6 +1,5 @@
 local state = require "src/state"
 local input = require "src/input"
-local config = require "src/config"
 
 _G.GAME = {
    width = 240,
