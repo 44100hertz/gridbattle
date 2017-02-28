@@ -2,7 +2,7 @@
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
 ** TODO battle chips
-** TODO [#A] customize menus - map-based menus make it possible
+** TODO make menus nice
 ** TODO implement example chip folders:
  - Flow folder
  - Surge folder
