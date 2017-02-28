@@ -8,7 +8,8 @@
 local keyBind = {
    a="x", b="z",
    du="up", dd="down",
-   dl="left", dr="right"
+   dl="left", dr="right",
+   st="return", sel="rshift"
 }
 -- initialize all button states
 local buttons = {}
