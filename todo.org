@@ -1,8 +1,14 @@
 * TODO logical next steps
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
-** TODO battle chips
 ** TODO make menus nice
+Menus should be primarily graphical.
+menu.lua should create a runnable menu state from a set of data.
+submenus should work as separate states.
+the menu data itself should be as minimal as possible.
+*** TODO menu example file
+*** TODO rewrite existing menus
+** TODO battle chips
 ** TODO implement example chip folders:
  - Flow folder
  - Surge folder
