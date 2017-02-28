@@ -9,7 +9,7 @@ local root = {
    draw = function () love.graphics.draw(bg) end,
    [1] = {
       x=120, y=80, text="start",
-      du=2, dd=1,
+      du=2, dd=2,
       a = function ()
          state.push(require "src/battle/main",
 		    require "res/battle/sets/test")
@@ -17,7 +17,7 @@ local root = {
    },
    [2] = {
       x=120, y=120, text="exit",
-      du=1, dd=2,
+      du=1, dd=1,
       a = love.event.quit,
    }
 }
