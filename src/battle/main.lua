@@ -11,8 +11,6 @@ local depthdraw = require "src/depthdraw"
 local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 
-local fonts = require "res/fonts"
-
 -- Some global vars used throughout battle
 _G.STAGE = {
    numx = 6,   numy = 3,
