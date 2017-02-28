@@ -15,9 +15,9 @@ local fonts = require "res/fonts"
 
 -- Some global vars used throughout battle
 _G.STAGE = {
-   numx = 6, numy = 3,
+   numx = 6,   numy = 3,
    xoff = -24, yoff = 74,
-   w = 64, h = 40,
+   w = 64,     h = 40,
 }
 
 return {
@@ -36,6 +36,7 @@ return {
    end,
 
    draw = function ()
+      -- All of these call depthdraw
       bg.draw()
       actors.draw()
       stage.draw()
