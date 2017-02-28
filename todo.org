@@ -7,10 +7,10 @@ Have rows, speeds in FPS
 ** TODO drawing origins
 ** TODO all actors with states
 ** TODO automate things like HP
-** TODO non-object panels
-** TODO no more signals
+** DONE non-object panels
+** DONE no more signals
 Signals are dumb because they're really messy
-** TODO no more "data"
+** DONE no more "data"
 * TODO optimize
 ** TODO lazy depth calculation
 Calculate depth on each draw call, then update that to be only when
