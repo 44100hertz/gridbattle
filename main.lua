@@ -3,11 +3,11 @@ local input = require "src/input"
 local config = require "src/config"
 
 _G.GAME = {
-   width = 400,
-   height = 240,
+   width = 240,
+   height = 160,
 }
 
-local gamescale = 2
+local gamescale = 3
 
 love.run = function ()
    local outdir

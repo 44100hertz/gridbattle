@@ -9,7 +9,7 @@ local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 
 local image = love.graphics.newImage("res/battle/panel.png")
-local sheet = anim.sheet(0, 0, 64, 64, 2, 2,
+local sheet = anim.sheet(0, 0, 40, 40, 2, 2,
                          image:getWidth(), image:getHeight())
 
 local turf, panels
@@ -32,7 +32,7 @@ return {
             depthdraw.add{
                image = image,
                x=x, y=y, z = -200,
-               ox = 32, oy = 220,
+               ox = 20, oy = 210,
                anim = sheet,
                row = x > turf[y] and 1 or 2,
                frame = 1,
