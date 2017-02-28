@@ -1,5 +1,4 @@
 local actors = require "src/battle/actors"
-local stage = require "src/battle/stage"
 
 return {
    img = "res/battle/actors/testenemy.png",

@@ -1,4 +1,3 @@
-local stage = require "src/battle/stage"
 local gravity = 0.1
 
 return {

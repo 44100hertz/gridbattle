@@ -8,7 +8,7 @@ local buttons = {
    "a", "b", "l", "r", "st", "sel"
 }
 
-local sel, wait
+local wait
 
 return {
    start = function (menu)
@@ -50,8 +50,5 @@ return {
          love.graphics.print(v.text, v.x, v.y)
 	 if k==menu.sel then love.graphics.setColor(255,255,255,255) end
       end
-   end,
-
-   gfxdraw = function (menu)
    end,
 }

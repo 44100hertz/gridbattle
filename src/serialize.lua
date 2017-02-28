@@ -23,7 +23,7 @@ return {
             end
 
             local endbrace = indent=="" and "}" or "},"
-            local str = string.format("%s%s", indent , endbrace) -- End subtable
+            str = string.format("%s%s", indent , endbrace) -- End subtable
             table.insert(strings, str)
 
          else -- If table entry

@@ -56,7 +56,7 @@ return {
    occupy = function (actor, x, y)
       x = x or actor.x
       y = y or actor.y
-      new_x, new_y = math.floor(x+0.5), math.floor(y+0.5)
+      local new_x, new_y = math.floor(x+0.5), math.floor(y+0.5)
       local panel = panels[new_x] and panels[new_x][new_y] or nil
 
       assert(panel, "attempt to occupy nonexistant panel")
@@ -67,7 +67,7 @@ return {
    end,
 
    free = function (x, y)
-      local x,y = math.floor(x+0.5), math.floor(y+0.5)
+      x,y = math.floor(x+0.5), math.floor(y+0.5)
       panels[x][y].tenant = nil
    end,
 }

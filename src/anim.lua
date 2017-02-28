@@ -11,7 +11,6 @@ return {
 
       numy = numy or 1
       local offy = y
-      local i = 0
 
       for iy=1,numy do
          local offx = x

@@ -5,7 +5,7 @@ local max_depth = 100
 
 local reset = function ()
    depths = {}
-   for i = min_depth, max_depth, depth_step do
+   for _ = min_depth, max_depth, depth_step do
       table.insert(depths, {})
    end
 end
