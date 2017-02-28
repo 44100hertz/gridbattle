@@ -6,7 +6,7 @@ return {
    size = 8/64,
    states = {
       idle = {
-         anim = {1,2,3,4,5,6},
+         row=1, anim = {1,2,3,4,5,6},
          speed = 5,
       },
    },

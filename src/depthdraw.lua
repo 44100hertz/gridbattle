@@ -31,7 +31,8 @@ return {
 
             if v.draw then v:draw(screen_x, screen_y) end
             if v.frame then
-               love.graphics.draw(v.image, v.anim[v.frame], screen_x, screen_y)
+               local row = v.state and v.state.row or (v.row or 1)
+               love.graphics.draw(v.image, v.anim[row][v.frame], screen_x, screen_y)
             elseif v.image then
                love.graphics.draw(v.image, screen_x, screen_y)
             end

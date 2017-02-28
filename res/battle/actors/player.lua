@@ -4,11 +4,11 @@ local stage = require "src/battle/stage"
 
 local states = {}
 states.idle = {
-   anim = {1}, speed = 1000,
+   row = 1, anim = {1}, speed = 1000,
    iasa = 0,
 }
 states.move = {
-   anim = {3,4}, speed = 5,
+   row = 2, anim = {1,2}, speed = 5,
    length = 4, iasa = 3,
    act = function (self)
       if self.time == 10 then
@@ -18,7 +18,7 @@ states.move = {
    finish = states.idle,
 }
 states.shoot = {
-   anim = {5,6}, speed = 20,
+   row = 3, anim = {1,2}, speed = 20,
    length = 2, iasa = 2,
    act = function (self)
       if self.time == 10 then
