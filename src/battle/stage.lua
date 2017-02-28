@@ -43,7 +43,7 @@ return {
       end
    end,
 
-   getPanel = function (x, y)
+   getpanel = function (x, y)
       x,y = math.floor(x+0.5), math.floor(y+0.5)
       if panels[x] and panels[x][y] then
          return panels[x][y]

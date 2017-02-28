@@ -1,4 +1,4 @@
-local battle = require "src/battle/battle"
+local stage = require "src/battle/stage"
 local gravity = 0.1
 
 return {
@@ -13,7 +13,7 @@ return {
    update = function (self)
       self.dz = self.dz - gravity
 
-      local floor = battle.getpanel(self.x, self.y)
+      local floor = stage.getpanel(self.x, self.y)
       local floorz = (floor and floor.z) and floor.z+floor.height
       if floorz and self.z+self.dz < floorz then self.dz = -self.dz end
    end,
