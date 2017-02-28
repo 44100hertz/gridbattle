@@ -1,16 +1,17 @@
 * TODO rewrite
 ** DONE no more "actor"
 ** DONE image asset management
-** TODO nicer animation system
-Have rows, speeds in FPS
+** DONE nicer animation system
+Have rows, speeds in FPS.
+FPS speeds were never really needed, I guess.
 ** TODO damage management
-** TODO drawing origins
-** TODO all actors with states
-** TODO automate things like HP
+** DONE drawing origins
+** DONE all actors with states
 ** DONE non-object panels
 ** DONE no more signals
 Signals are dumb because they're really messy
 ** DONE no more "data"
+** TODO 240x160
 * TODO optimize
 ** TODO lazy depth calculation
 Calculate depth on each draw call, then update that to be only when
