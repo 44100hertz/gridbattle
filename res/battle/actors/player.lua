@@ -1,5 +1,5 @@
 local input = require "src/input"
-local battle = require "src/battle/battle"
+local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 
 local states = {}
@@ -27,7 +27,7 @@ states.shoot = {
    length = 2,
    act = function (self)
       if self.time == 10 then
-         battle.addactor(
+         actors.add(
             {x=self.x+0.3, y=self.y, z=40},
             require "res/battle/actors/bullet"
          )

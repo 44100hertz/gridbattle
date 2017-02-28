@@ -1,0 +1,142 @@
+local actors
+local anim = require "src/anim"
+local depthdraw = require "src/depthdraw"
+
+-- Collision function, assumed to be ran in both directions
+local collide = function (o1, o2)
+   if o1.damage and o2.hp then
+      o2.hp = o2.hp - o1.damage
+   end
+   if o1.collide_die and o2.tangible then
+      o1.despawn = true;
+   end
+end
+
+-- Check all collisions.
+local collide_check = function ()
+   for i = 1, #actors do
+      -- Triangle-shaped iteration
+      for j = i+1, #actors do
+         local o1 = actors[i]
+         local o2 = actors[j]
+         if o1.group ~= o2.group and
+            o1.size and o2.size
+         then
+            local size = o1.size + o2.size
+            -- square collisions
+            if math.abs(o1.x - o2.x) < size and
+               math.abs(o1.y - o2.y) < size
+            then
+               collide(o1, o2)
+               collide(o2, o1)
+            end
+         end
+      end
+   end
+end
+
+local add = function (actor, class)
+   if not class.__index then class.__index = class end
+   setmetatable(actor, class)
+   table.insert(actors, actor)
+   if actor.start then actor:start() end
+   if actor.img then
+      actor.image = love.graphics.newImage(actor.img)
+   end
+   if actor.sheet then
+      actor.sheet[7] = actor.image:getWidth()
+      actor.sheet[8] = actor.image:getHeight()
+      actor.anim = anim.sheet(unpack(actor.sheet))
+   end
+   if actor.states and actor.states.idle then
+      actor.state = actor.states.idle
+   end
+   actor.time = 0
+   actor.z = 0
+end
+
+return {
+   start = function (new_actors)
+      actors = {}
+      for i = 1,#new_actors,2 do
+         local dup = {}
+         for k,v in pairs(new_actors[i]) do dup[k] = v end
+         add(dup, new_actors[i+1])
+      end
+   end,
+
+   update = function ()
+      for _,v in ipairs(actors) do
+         -- Handle stateful actors' states
+         if v.states then
+            v.time = v.time + 1
+
+            if v.enter_state then
+               v.state = v.enter_state
+               v.enter_state = nil
+               v.time = 0
+            end
+            if v.state.act then v.state.act(v) end
+
+            if v.state.iasa and
+               v.time >= v.state.iasa * v.state.speed
+            then
+               v:act()
+            end
+
+            if v.state.length and
+               v.time >= v.state.length * v.state.speed
+            then
+               v.state = v.state.finish
+               v.time = 0
+            end
+         end
+
+         if v.update then v:update() end
+         -- Death
+         if v.hp and v.hp <= 0 then
+            if v.states and v.states.die then
+               v.state = v.states.die
+            else
+               v.despawn = true
+            end
+         end
+
+         if v.dx then v.x = v.x + v.dx end
+         if v.dy then v.y = v.y + v.dy end
+         if v.dz then v.z = v.z + v.dz end
+      end
+
+      for k,v in ipairs(actors) do
+         if v.despawn then table.remove(actors, k) end
+      end
+
+      collide_check()
+   end,
+
+   draw = function ()
+      for _,v in ipairs(actors) do
+         -- Calculate frame based on state
+         if v.state then
+            local frameindex =
+               math.floor(v.time / v.state.speed) % #v.state.anim
+            v.frame = v.state.anim[frameindex + 1]
+         end
+
+         if v then depthdraw.add(v) end
+
+         -- Despawn offscreen (except top)
+         -- if x < -20 or x > 420 or y < -20 then
+         --    v.despawn = true
+         -- end
+
+         -- HP drawing
+         -- if v.hp then
+         --    love.graphics.setFont(fonts.tinyhp)
+         --    love.graphics.print(v.hp, x-15, y-30)
+         -- end
+      end
+   end,
+
+   add = add,
+}

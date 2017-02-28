@@ -8,8 +8,7 @@ local input = require "src/input"
 local bg = require "src/bg"
 
 local depthdraw = require "src/depthdraw"
-local battle = require "src/battle/battle"
-local data = require "src/battle/data"
+local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 
 local fonts = require "res/fonts"
@@ -24,52 +23,10 @@ _G.STAGE = {
    h = 40,
 }
 
--- Collision function, assumed to be ran in both directions
-local collide = function (o1, o2)
-   if o1.damage and o2.hp then
-      o2.hp = o2.hp - o1.damage
-   end
-   if o1.collide_die and o2.tangible then
-      o1.despawn = true;
-   end
-end
-
--- Check all collisions.
-local collide_check = function ()
-   for i = 1, #data.actors do
-      -- Triangle-shaped iteration
-      for j = i+1, #data.actors do
-         local o1 = data.actors[i]
-         local o2 = data.actors[j]
-         if o1.group ~= o2.group and
-            o1.size and o2.size
-         then
-            local size = o1.size + o2.size
-            -- square collisions
-            if math.abs(o1.x - o2.x) < size and
-               math.abs(o1.y - o2.y) < size
-            then
-               collide(o1, o2)
-               collide(o2, o1)
-            end
-         end
-      end
-   end
-end
-
 return {
    start = function (_, set)
-      data.actors = {}
-
       stage.start(set.stage.turf)
-
-      -- Any actors specified for level; enemies
-      for i = 1,#set.actors,2 do
-         local dup = {}
-         for k,v in pairs(set.actors[i]) do dup[k] = v end
-         battle.addactor(dup, set.actors[i+1])
-      end
-
+      actors.start(set.actors)
       bg.start(set.bg)
    end,
 
@@ -78,81 +35,14 @@ return {
          state.push(require "res/menu/pause")
          return
       end
-
-      for _,v in ipairs(data.actors) do
-         -- Handle stateful actors' states
-         if v.states then
-            v.time = v.time + 1
-
-            if v.enter_state then
-               v.state = v.enter_state
-               v.enter_state = nil
-               v.time = 0
-            end
-            if v.state.act then v.state.act(v) end
-
-            if v.state.iasa and
-               v.time >= v.state.iasa * v.state.speed
-            then
-               v:act()
-            end
-
-            if v.state.length and
-               v.time >= v.state.length * v.state.speed
-            then
-               v.state = v.state.finish
-               v.time = 0
-            end
-         end
-
-         if v.update then v:update() end
-         -- Death
-         if v.hp and v.hp <= 0 then
-            if v.states and v.states.die then
-               v.state = v.states.die
-            else
-               v.despawn = true
-            end
-         end
-
-         if v.dx then v.x = v.x + v.dx end
-         if v.dy then v.y = v.y + v.dy end
-         if v.dz then v.z = v.z + v.dz end
-      end
-
-      for k,v in ipairs(data.actors) do
-         if v.despawn then table.remove(data.actors, k) end
-      end
-
-      collide_check()
+      actors.update()
    end,
 
    draw = function ()
       bg.draw()
-
-      for _,v in ipairs(data.actors) do
-         -- Calculate frame based on state
-         if v.state then
-            local frameindex =
-               math.floor(v.time / v.state.speed) % #v.state.anim
-            v.frame = v.state.anim[frameindex + 1]
-         end
-
-         if v then depthdraw.add(v) end
-
-         -- Despawn offscreen (except top)
-         -- if x < -20 or x > 420 or y < -20 then
-         --    v.despawn = true
-         -- end
-
-         -- HP drawing
-         -- if v.hp then
-         --    love.graphics.setFont(fonts.tinyhp)
-         --    love.graphics.print(v.hp, x-15, y-30)
-         -- end
-      end
-
+      actors.draw()
       stage.draw()
+
       depthdraw.draw()
    end,
 }

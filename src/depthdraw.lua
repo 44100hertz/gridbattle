@@ -1,5 +1,3 @@
-local data = require "src/battle/data"
-
 local depths
 local levels = 8
 local depth_step = 20

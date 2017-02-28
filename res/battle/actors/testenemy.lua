@@ -1,4 +1,4 @@
-local battle = require "src/battle/battle"
+local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 
 return {
@@ -20,7 +20,7 @@ return {
       if self.hp <= 0 then
          self.despawn = true
          for _ = 1,100 do
-            battle.addactor(
+            actors.add(
                {x=self.x, y=self.y, z=self.z-20},
                require "res/battle/actors/particle"
             )
