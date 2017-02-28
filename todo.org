@@ -1,31 +1,6 @@
-* TODO rewrite
-** DONE no more "actor"
-** DONE image asset management
-** DONE nicer animation system
-Have rows, speeds in FPS.
-FPS speeds were never really needed, I guess.
-** TODO damage management
-** DONE drawing origins
-** DONE all actors with states
-** DONE non-object panels
-** DONE no more signals
-Signals are dumb because they're really messy
-** DONE no more "data"
-** TODO 240x160
-* TODO optimize
-** TODO lazy depth calculation
-Calculate depth on each draw call, then update that to be only when
-things move. Maintain a drawn game state, essentially.
-** TODO don't reload loaded images
 * TODO logical next steps
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
-** TODO comment everything way more
-** TODO joypad
-** TODO keyboard and game configs
- 1. Readable
- 2. Writable
-** TODO multiplayer
 ** TODO battle chips
 ** TODO [#A] customize menus - map-based menus make it possible
 ** TODO implement example chip folders:
@@ -41,12 +16,19 @@ things move. Maintain a drawn game state, essentially.
  - named sound sources, searchable, etc.
 ** DONE crisp XM playback (supposedly)
 ** TODO compose music
-
 * TODO back burner
 ** DONE unified actor animation and state model
-
 ** TODO player and enemy status/info
 ** TODO custom mono fonts via ascii grid style + spritebatch
+** TODO lazy depth calculation
+Calculate depth on each draw call, then update that to be only when
+things move. Maintain a drawn game state, essentially.
+** TODO don't reload loaded images
+** TODO joypad
+** TODO keyboard and game configs
+ 1. Readable
+ 2. Writable
+** TODO multiplayer
 
 * DONE initial game
 ** DONE auto-sorting draw list (z-buffer)
@@ -59,3 +41,17 @@ https://love2d.org/wiki/Skip_list:Drawing_Order
 ** DONE battle objects (bullets, etc.)
 ** DONE hitboxes/collision
 ** DONE debug menus
+* DONE rewrite
+** DONE no more "actor"
+** DONE image asset management
+** DONE nicer animation system
+Have rows, speeds in FPS.
+FPS speeds were never really needed, I guess.
+** DONE damage management
+** DONE drawing origins
+** DONE all actors with states
+** DONE non-object panels
+** DONE no more signals
+Signals are dumb because they're really messy
+** DONE no more "data"
+** DONE 240x160
