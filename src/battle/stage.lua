@@ -33,9 +33,9 @@ return {
                image = image,
                x = x,
                y = y,
-               z = -160, height = 160,
-               ox = 30,
-               oy = 20,
+               z = -200,
+               ox = 32,
+               oy = 220,
                anim = sheet,
                frame = x > turf[y] and 1 or 3,
             }

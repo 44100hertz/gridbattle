@@ -7,9 +7,8 @@ return {
    group = "enemy",
    tangible = true,
    size=20/64,
-   height = 40,
    hp = 80,
-   ox = 22, oy = 3,
+   ox = 22, oy = 43,
 
    start = function (self)
       stage.occupy(self, self.x, self.y, "right")
@@ -20,7 +19,7 @@ return {
          self.despawn = true
          for _ = 1,100 do
             actors.add(
-               {x=self.x, y=self.y, z=self.z-20},
+               {x=self.x, y=self.y, z=20},
                require "res/battle/actors/particle"
             )
          end

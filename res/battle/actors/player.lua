@@ -46,10 +46,9 @@ local move = function  (self, dx, dy)
 end
 
 return {
-   height=52,
    img = "res/battle/actors/ben.png",
    sheet = {0,0,50,60,2,6},
-   ox = 24, oy = 4,
+   ox = 24, oy = 54,
 
    start = function (self)
       stage.occupy(self, self.x, self.y)

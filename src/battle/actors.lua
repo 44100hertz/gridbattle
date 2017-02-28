@@ -52,7 +52,7 @@ local add = function (actor, class)
       actor.state = actor.states.idle
    end
    actor.time = 0
-   actor.z = 0
+   if not actor.z then actor.z = 0 end
 end
 
 return {

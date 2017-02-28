@@ -26,10 +26,8 @@ return {
    draw = function ()
       for _,depth in ipairs(depths) do
          for _,v in ipairs(depth) do
-            local screen_x = STAGE.xoff + STAGE.w * v.x -
-               (v.ox or 0)
-            local screen_y = STAGE.yoff + STAGE.h * v.y -
-               v.z - (v.oy or 0) - (v.height or 0)
+            local screen_x = STAGE.xoff + STAGE.w * v.x - (v.ox or 0)
+            local screen_y = STAGE.yoff + STAGE.h * v.y - v.z - (v.oy or 0)
 
             if v.draw then v:draw(screen_x, screen_y) end
             if v.frame then
