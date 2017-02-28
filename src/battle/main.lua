@@ -15,12 +15,9 @@ local fonts = require "res/fonts"
 
 -- Some global vars used throughout battle
 _G.STAGE = {
-   numx = 6,
-   numy = 3,
-   xoff = -24,
-   yoff = 74,
-   w = 64,
-   h = 40,
+   numx = 6, numy = 3,
+   xoff = -24, yoff = 74,
+   w = 64, h = 40,
 }
 
 return {
