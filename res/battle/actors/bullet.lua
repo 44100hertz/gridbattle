@@ -1,5 +1,3 @@
-local battle = require "src/battle/battle"
-
 return {
    img = "res/battle/actors/bullet.png",
    sheet = {0,0,16,16,6,1},
