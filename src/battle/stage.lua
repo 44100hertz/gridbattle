@@ -31,11 +31,8 @@ return {
          for y = 1,STAGE.numy do
             depthdraw.add{
                image = image,
-               x = x,
-               y = y,
-               z = -200,
-               ox = 32,
-               oy = 220,
+               x=x, y=y, z = -200,
+               ox = 32, oy = 220,
                anim = sheet,
                frame = x > turf[y] and 1 or 3,
             }
