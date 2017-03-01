@@ -1,4 +1,6 @@
 local anim = require "src/anim"
+local state = require "src/state"
+local input = require "src/input"
 
 local img = love.graphics.newImage("res/battle/chips.png")
 local w,h = img:getDimensions()
@@ -17,7 +19,11 @@ return {
       lastmod = new_lastmod
    end,
 
-   update = function () end,
+   update = function ()
+      if input.st==1 then
+         state.pop()
+      end
+   end,
 
    draw = function ()
       lastmod.draw()
