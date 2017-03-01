@@ -29,6 +29,9 @@ return {
       if input.st == 1 then
          state.push(require "res/menu/pause")
          return
+      elseif input.sel == 1 then
+         state.push(require "res/menu/chips")
+         return
       end
       actors.update()
    end,
