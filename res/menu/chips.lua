@@ -7,10 +7,10 @@ local w,h = img:getDimensions()
 
 local sheet = {
    bg = anim.sheet(0,0,128,160,1,1,w,h)[1][1],
-   button = anim.sheet(128,0,24,16,1,2,w,h)[1],
-   chip = anim.sheet(128,16,16,16,1,2,w,h)[1],
-   letter = anim.sheet(128,32,16,8,1,5,w,h)[1],
-   art = anim.sheet(0,160,64,120,1,4,w,h)[1],
+   button = anim.sheet(128,0,24,16,2,1,w,h)[1],
+   chip = anim.sheet(128,16,16,16,6,1,w,h)[1],
+   letter = anim.sheet(128,32,16,8,5,1,w,h)[1],
+   art = anim.sheet(0,160,64,120,4,1,w,h)[1],
 }
 
 local lastmod
@@ -36,7 +36,7 @@ return {
       for _=1,2 do
          x=8
          for _=1,5 do
-            love.graphics.draw(img, sheet.chip[1], x, y)
+            love.graphics.draw(img, sheet.chip[2], x, y)
             love.graphics.draw(img, sheet.letter[1], x, y+16)
             x=x+16
          end
@@ -46,7 +46,7 @@ return {
       -- Queue
       x,y = 104,24
       for _=1,5 do
-         love.graphics.draw(img, sheet.chip[1], x, y)
+         love.graphics.draw(img, sheet.chip[2], x, y)
          y=y+16
       end
    end,
