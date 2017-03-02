@@ -78,13 +78,12 @@ return {
                local letter = chip.letter2num[pal[i][2]]
                love.graphics.draw(img, sheet.letter[letter], x, y+16)
             end
-            if i==sel then
+            if sel==i then
                love.graphics.draw(img, sheet.chipbg[1], x, y)
             end
             x=x+16
             i=i+1
          end
-         y=y+24
       end
 
       -- Queue
@@ -95,5 +94,10 @@ return {
          end
          y=y+16
       end
+
+      -- Selectable button
+      button_sel = sel==0 and 2 or 1
+      love.graphics.draw(img, sheet.button[button_sel], 96, 112)
+      y=y+24
    end,
 }
