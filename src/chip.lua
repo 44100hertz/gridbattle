@@ -10,11 +10,11 @@ local art = anim.sheet(0,16,64,72,4,1,w,h)[1]
 local getchip = function (name)
    if not chips[name] then
       local imgpath = "res/chips/" .. name .. ".png"
---      local srcpath = "res/chips/" .. name .. ".lua"
+      local srcpath = "res/chips/" .. name
 
       chips[name] = {
          img = love.graphics.newImage(imgpath),
---         src = require(srcpath),
+         src = require(srcpath),
       }
    end
    return chips[name]
