@@ -3,7 +3,7 @@ local Deck = {}
 Deck.__index = Deck
 
 -- Copy static deck data into a deck
-function Deck.new(new_Deck)
+function Deck:new(new_Deck)
    self = {chips={}, index=1}
    setmetatable(self, Deck)
    for k,v in ipairs(new_Deck) do self.chips[k] = v end
@@ -31,7 +31,7 @@ function Deck:draw(num, palette)
    palette = palette or {}
    for i=1,num do
       if not palette[i] then
-         palette[i] = self.chips[index]
+         palette[i] = self.chips[self.index]
          self.index = self.index + 1
       end
    end
