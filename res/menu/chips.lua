@@ -18,7 +18,7 @@ local deck, pal, queue
 
 local Deck = require "src/Deck"
 local chip = require "src/chip"
-local sel
+local sel, letter
 
 return {
    start = function (new_lastmod)
@@ -39,12 +39,18 @@ return {
       if     input.dl==1 then sel = (sel-1)%6
       elseif input.dr==1 then sel = (sel+1)%6
       elseif input.a==1 then
-         table.insert(queue, pal[sel])
-         pal[sel] = nil
+         if not pal[sel] then return end
+         if not letter then letter=pal[sel][2] end
+         if pal[sel][2]==letter then
+            table.insert(queue, pal[sel])
+            pal[sel] = nil
+         end
       elseif input.b==1 then
+         if #queue==0 then return end
          local i=1
          while(pal[i]~=nil) do i=i+1 end
          pal[i] = table.remove(queue)
+         if #queue==0 then letter=nil end
       end
    end,
 
