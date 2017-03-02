@@ -39,17 +39,23 @@ return {
       if     input.dl==1 then sel = (sel-1)%6
       elseif input.dr==1 then sel = (sel+1)%6
       elseif input.a==1 then
+         -- don't try to insert nothing
          if not pal[sel] then return end
+         -- set letter
          if not letter then letter=pal[sel][2] end
+         -- match letter
          if pal[sel][2]==letter then
             table.insert(queue, pal[sel])
             pal[sel] = nil
          end
       elseif input.b==1 then
+         -- don't try to remove empty
          if #queue==0 then return end
+         -- find an empty palette slot
          local i=1
          while(pal[i]~=nil) do i=i+1 end
          pal[i] = table.remove(queue)
+         -- reset letter if queue empty
          if #queue==0 then letter=nil end
       end
    end,
