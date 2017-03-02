@@ -1,12 +1,11 @@
 local test = require "res/battle/actors/testenemy"
-local player = require "res/battle/actors/player"
 
 return {
    stage = {
       turf = {3,3,3},
    },
+   playerpos = {x=2, y=2},
    actors = {
-      {x=2, y=2}, player,
       {x=4, y=1}, test,
       {x=4, y=2}, test,
       {x=4, y=3}, test,

@@ -2,7 +2,7 @@
    for most actors to use states, unless they're extremely simple.
 --]]
 
-local actors
+local actors, player
 local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
@@ -40,13 +40,16 @@ local add = function (actor, class)
 end
 
 return {
-   start = function (new_actors)
+   start = function (set)
       actors = {}
-      for i = 1,#new_actors,2 do
+      for i = 1,#set.actors,2 do
          local dup = {}
-         for k,v in pairs(new_actors[i]) do dup[k] = v end
-         add(dup, new_actors[i+1])
+         for k,v in pairs(set.actors[i]) do dup[k] = v end
+         add(dup, set.actors[i+1])
       end
+      add({x=set.playerpos.x,
+           y=set.playerpos.y,
+          }, require "res/battle/actors/player")
    end,
 
    update = function ()

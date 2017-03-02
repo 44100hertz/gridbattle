@@ -21,7 +21,7 @@ _G.STAGE = {
 return {
    start = function (_, set)
       stage.start(set.stage.turf)
-      actors.start(set.actors)
+      actors.start(set)
       bg.start(set.bg)
    end,
 
