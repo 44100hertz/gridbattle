@@ -9,8 +9,16 @@ the menu data itself should be as minimal as possible.
 *** TODO menu example file
 *** TODO rewrite existing menus
 ** TODO battle chips
-*** TODO chip UI
-*** TODO example folder
+*** DONE chip UI
+*** DONE example folder
+*** TODO cleanly interface battle chips with player
+Concept A: Queue.lua file; When the chip UI is brought up, a Queue data
+type is passed to it. When the player wants to do things with this
+queue, there's helper functions attatched to the queue to make it
+work.
+
+Concept B: The player holds the queue, and queue.lua just takes in
+that queue. No functions neccessarily attatched.
 *** TODO bullet
 *** TODO boots
 *** TODO wheel crate
@@ -29,7 +37,7 @@ the menu data itself should be as minimal as possible.
 ** DONE unified actor animation and state model
 ** TODO asset management
 ** TODO status/info for player, enemy
-** TODO custom mono fonts via ascii grid style + spritebatch
+** DONE custom mono fonts via ascii grid style + spritebatch
 ** TODO lazy depth calculation
 Calculate depth on each draw call, then update that to be only when
 things move. Maintain a drawn game state, essentially.
