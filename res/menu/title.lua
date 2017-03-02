@@ -13,6 +13,7 @@ local root = {
       a = function ()
          state.push(require "src/battle/main",
 		    require "res/battle/sets/test")
+         state.push(require "res/menu/chips")
       end,
    },
    [2] = {
