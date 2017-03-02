@@ -11,5 +11,12 @@ return {
          x=x+2
          y=y+2
       end
-   end
+   end,
+
+   use_chip = function (actor)
+      if #actor.queue>0 then
+         local chip = table.remove(actor.queue, 1)
+         print("used: " .. chip[1])
+      end
+   end,
 }
