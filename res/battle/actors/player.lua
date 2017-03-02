@@ -1,6 +1,7 @@
 local input = require "src/input"
 local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
+local queue = require "src/battle/queue"
 
 local states = {}
 states.idle = {
@@ -53,6 +54,10 @@ return {
       elseif input.dl>0 then move(self, -1, 0)
       elseif input.dr>0 then move(self, 1, 0)
       end
+   end,
+
+   draw = function (self, x, y)
+      queue.draw(self.queue, x+self.ox, y-15)
    end,
 
    queue = {},

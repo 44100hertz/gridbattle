@@ -32,7 +32,7 @@ return {
       lastmod = new_lastmod
       pal = deck:draw(5, pal)
       queue = new_queue
-      queue = {}
+      for i,_ in ipairs(queue) do queue[i] = nil end
    end,
 
    update = function ()
