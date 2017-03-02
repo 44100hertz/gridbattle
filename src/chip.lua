@@ -12,7 +12,6 @@ local getchip = function (name)
       local imgpath = "res/chips/" .. name .. ".png"
 --      local srcpath = "res/chips/" .. name .. ".lua"
 
-      if not love.filesystem.exists(imgpath) then return end
       chips[name] = {
          img = love.graphics.newImage(imgpath),
 --         src = require(srcpath),
@@ -34,8 +33,6 @@ return {
 
    draw_icon = function (name, x, y)
       local chip = getchip(name)
-      if chip then
-         love.graphics.draw(chip.img, icon, x, y)
-      end
+      love.graphics.draw(chip.img, icon, x, y)
    end,
 }
