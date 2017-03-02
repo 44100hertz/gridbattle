@@ -23,6 +23,7 @@ that queue. No functions neccessarily attatched.
 *** TODO boots
 *** TODO wheel crate
 *** TODO poison
+** TODO give player HP, death
 * TODO aesthetic
 ** TODO player
 ** TODO enemy
@@ -36,6 +37,8 @@ that queue. No functions neccessarily attatched.
 * TODO back burner
 ** DONE unified actor animation and state model
 ** TODO asset management
+Not really sure what is meant by this, probably better just to null out
+assets when battles end, etc.
 ** TODO status/info for player, enemy
 ** DONE custom mono fonts via ascii grid style + spritebatch
 ** TODO lazy depth calculation
