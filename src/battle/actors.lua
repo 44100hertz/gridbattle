@@ -7,6 +7,16 @@ local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
 local stage = require "src/battle/stage"
+local images = {}
+
+local getimage = function (actor)
+   if not images[actor.img] then
+      local imgpath = "res/battle/actors/" .. actor.img .. ".png"
+      images[actor.img] = love.graphics.newImage(imgpath)
+   end
+   actor.image = images[actor.img]
+   return actor.image
+end
 
 local add = function (actor, class)
    -- the two lines that enable OOP for game actors
@@ -16,15 +26,12 @@ local add = function (actor, class)
    table.insert(actors, actor)
 
    if actor.start then actor:start() end
-   -- TODO: proper asset management
-   if actor.img then
-      actor.image = love.graphics.newImage(actor.img)
-   end
    if actor.sheet then
       -- apparently luaJIT (maybe even vanilla) unpack is weird.
       -- this is arguably the best way to stuff all the arguments in.
-      actor.sheet[7] = actor.image:getWidth()
-      actor.sheet[8] = actor.image:getHeight()
+      local img = getimage(actor)
+      actor.sheet[7] = img:getWidth()
+      actor.sheet[8] = img:getHeight()
       actor.anim = anim.sheet(unpack(actor.sheet))
    end
    if actor.states and actor.states.idle then

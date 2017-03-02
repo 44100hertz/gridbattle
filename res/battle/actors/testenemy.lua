@@ -1,7 +1,7 @@
 local actors = require "src/battle/actors"
 
 return {
-   img = "res/battle/actors/testenemy.png",
+   img = "testenemy",
    sheet = {0,0,50,60,1,1},
    group = "enemy",
    tangible = true,

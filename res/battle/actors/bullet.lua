@@ -1,5 +1,5 @@
 return {
-   img = "res/battle/actors/bullet.png",
+   img = "bullet",
    sheet = {0,0,16,16,6,1},
    damage = 40,
    collide_die = true,

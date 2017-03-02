@@ -43,7 +43,7 @@ local move = function  (self, dx, dy)
 end
 
 return {
-   img = "res/battle/actors/ben.png",
+   img = "ben",
    sheet = {0,0,50,60,2,6},
    ox = 24, oy = 54,
 
