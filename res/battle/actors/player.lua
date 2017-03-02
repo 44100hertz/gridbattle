@@ -55,5 +55,6 @@ return {
       end
    end,
 
+   queue = {},
    states = states,
 }

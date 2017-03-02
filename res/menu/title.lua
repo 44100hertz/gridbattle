@@ -11,9 +11,9 @@ local root = {
       x=120, y=80, text="start",
       du=2, dd=2,
       a = function ()
-         state.push(require "src/battle/main",
-		    require "res/battle/sets/test")
-         state.push(require "res/menu/chips")
+         local bmain = require "src/battle/main"
+         state.push(bmain, require "res/battle/sets/test")
+         bmain.selectchips()
       end,
    },
    [2] = {

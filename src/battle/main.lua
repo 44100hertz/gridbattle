@@ -18,6 +18,10 @@ _G.STAGE = {
    w = 40,     h = 24,
 }
 
+selectchips = function ()
+   state.push(require "res/menu/chips", actors.player().queue)
+end
+
 return {
    start = function (_, set)
       stage.start(set.stage.turf)
@@ -30,7 +34,7 @@ return {
          state.push(require "res/menu/pause")
          return
       elseif input.sel == 1 then
-         state.push(require "res/menu/chips")
+         selectchips()
          return
       end
       actors.update()
@@ -44,4 +48,6 @@ return {
 
       depthdraw.draw()
    end,
+
+   selectchips = selectchips,
 }

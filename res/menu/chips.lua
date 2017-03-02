@@ -21,7 +21,7 @@ local chip = require "src/chip"
 local sel, letter
 
 return {
-   start = function (new_lastmod)
+   start = function (new_lastmod, new_queue)
       letter = nil
       sel = 1
       if not deck then
@@ -31,7 +31,7 @@ return {
       end
       lastmod = new_lastmod
       pal = deck:draw(5, pal)
-      queue = {}
+      queue = new_queue
    end,
 
    update = function ()

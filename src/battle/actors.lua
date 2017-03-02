@@ -47,9 +47,9 @@ return {
          for k,v in pairs(set.actors[i]) do dup[k] = v end
          add(dup, set.actors[i+1])
       end
-      add({x=set.playerpos.x,
-           y=set.playerpos.y,
-          }, require "res/battle/actors/player")
+      player = {x=set.playerpos.x,
+                y=set.playerpos.y,}
+      add(player, require "res/battle/actors/player")
    end,
 
    update = function ()
@@ -159,6 +159,6 @@ return {
       end
    end,
 
-   actors = actors,
+   player = function () return player end,
    add = add,
 }
