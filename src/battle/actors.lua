@@ -150,12 +150,6 @@ return {
                   end
             })
          end
-
-         -- HP drawing
-         -- if v.hp then
-         --    love.graphics.setFont(fonts.tinyhp)
-         --    love.graphics.print(v.hp, x-15, y-30)
-         -- end
       end
    end,
 
