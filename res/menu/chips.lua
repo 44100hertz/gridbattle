@@ -18,6 +18,7 @@ local deck, palette, queue
 
 local Deck = require "src/Deck"
 local chip = require "src/chip"
+local sel = 1
 
 return {
    start = function (new_lastmod)
@@ -32,6 +33,10 @@ return {
    update = function ()
       if input.st==1 then
          state.pop()
+         return
+      end
+      if     input.dl==1 then sel = (sel-1)%6
+      elseif input.dr==1 then sel = (sel+1)%6
       end
    end,
 
@@ -52,6 +57,9 @@ return {
                chip.draw_icon(palette[i][1], x, y)
                local letter = chip.letter2num[palette[i][2]]
                love.graphics.draw(img, sheet.letter[letter], x, y+16)
+            end
+            if i==sel then
+               love.graphics.draw(img, sheet.chipbg[1], x, y)
             end
             x=x+16
             i=i+1
