@@ -18,10 +18,11 @@ local deck, palette, queue
 
 local Deck = require "src/Deck"
 local chip = require "src/chip"
-local sel = 1
+local sel
 
 return {
    start = function (new_lastmod)
+      sel = 3
       local deckdata = require "res/decks/test"
       deck = Deck:new(deckdata)
       deck:shuffle()
@@ -37,6 +38,13 @@ return {
       end
       if     input.dl==1 then sel = (sel-1)%6
       elseif input.dr==1 then sel = (sel+1)%6
+      elseif input.a==1 then
+         table.insert(queue, palette[sel])
+         palette[sel] = nil
+      elseif input.b==1 then
+         local i=1
+         while(palette[i]~=nil) do i=i+1 end
+         palette[i] = table.remove(queue)
       end
    end,
 
@@ -69,8 +77,10 @@ return {
 
       -- Queue
       x,y = 104,24
-      for _=1,5 do
-         love.graphics.draw(img, sheet.chipbg[2], x, y)
+      for i=1,5 do
+         if queue[i] then
+            chip.draw_icon(queue[i][1], x, y)
+         end
          y=y+16
       end
    end,
