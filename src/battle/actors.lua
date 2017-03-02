@@ -7,7 +7,7 @@ local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
 local stage = require "src/battle/stage"
-local images = {}
+local images
 
 local getimage = function (actor)
    if not images[actor.img] then
@@ -49,6 +49,7 @@ end
 return {
    start = function (set)
       actors = {}
+      images = {}
       for i = 1,#set.actors,2 do
          local dup = {}
          for k,v in pairs(set.actors[i]) do dup[k] = v end
