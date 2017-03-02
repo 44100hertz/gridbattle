@@ -22,6 +22,7 @@ local sel, letter
 
 return {
    start = function (new_lastmod)
+      letter = nil
       sel = 3
       local deckdata = require "res/decks/test"
       deck = Deck:new(deckdata)
@@ -32,21 +33,22 @@ return {
    end,
 
    update = function ()
-      if input.st==1 then
-         state.pop()
-         return
-      end
       if     input.dl==1 then sel = (sel-1)%6
       elseif input.dr==1 then sel = (sel+1)%6
       elseif input.a==1 then
          -- don't try to insert nothing
-         if not pal[sel] then return end
-         -- set letter
-         if not letter then letter=pal[sel][2] end
-         -- match letter
-         if pal[sel][2]==letter then
-            table.insert(queue, pal[sel])
-            pal[sel] = nil
+         if sel==0 then
+            if #queue>0 then
+               state.pop()
+            end
+         elseif pal[sel] then
+            -- set letter
+            if not letter then letter=pal[sel][2] end
+            -- match letter
+            if pal[sel][2]==letter then
+               table.insert(queue, pal[sel])
+               pal[sel] = nil
+            end
          end
       elseif input.b==1 then
          -- don't try to remove empty
