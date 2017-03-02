@@ -14,7 +14,7 @@ local sheet = {
 }
 
 local lastmod
-local deck, palette, queue
+local deck, pal, queue
 
 local Deck = require "src/Deck"
 local chip = require "src/chip"
@@ -27,7 +27,7 @@ return {
       deck = Deck:new(deckdata)
       deck:shuffle()
       lastmod = new_lastmod
-      palette = deck:draw(5)
+      pal = deck:draw(5)
       queue = {}
    end,
 
@@ -39,12 +39,12 @@ return {
       if     input.dl==1 then sel = (sel-1)%6
       elseif input.dr==1 then sel = (sel+1)%6
       elseif input.a==1 then
-         table.insert(queue, palette[sel])
-         palette[sel] = nil
+         table.insert(queue, pal[sel])
+         pal[sel] = nil
       elseif input.b==1 then
          local i=1
-         while(palette[i]~=nil) do i=i+1 end
-         palette[i] = table.remove(queue)
+         while(pal[i]~=nil) do i=i+1 end
+         pal[i] = table.remove(queue)
       end
    end,
 
@@ -61,9 +61,9 @@ return {
          x=8
          for _=1,5 do
             local letter
-            if palette[i] then
-               chip.draw_icon(palette[i][1], x, y)
-               local letter = chip.letter2num[palette[i][2]]
+            if pal[i] then
+               chip.draw_icon(pal[i][1], x, y)
+               local letter = chip.letter2num[pal[i][2]]
                love.graphics.draw(img, sheet.letter[letter], x, y+16)
             end
             if i==sel then
