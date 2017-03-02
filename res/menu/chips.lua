@@ -24,11 +24,13 @@ return {
    start = function (new_lastmod)
       letter = nil
       sel = 3
-      local deckdata = require "res/decks/test"
-      deck = Deck:new(deckdata)
-      deck:shuffle()
+      if not deck then
+         local deckdata = require "res/decks/test"
+         deck = Deck:new(deckdata)
+         deck:shuffle()
+      end
       lastmod = new_lastmod
-      pal = deck:draw(5)
+      pal = deck:draw(5, pal)
       queue = {}
    end,
 
@@ -105,4 +107,6 @@ return {
       -- Art
       if pal[sel] then chip.draw_art(pal[sel][1], 8, 24, 1) end
    end,
+
+   queue=queue,
 }
