@@ -15,7 +15,7 @@ function Deck:shuffle()
    local len = #self.chips
    for i=1,len do
       -- Find a random place to put the next card
-      index = love.math.random(len)
+      local index = love.math.random(len)
       -- Move up until a free slot is found
       while(shuffled[index]) do
          index = (index % len) + 1
