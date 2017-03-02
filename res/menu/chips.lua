@@ -18,13 +18,14 @@ sheet.art = anim.sheet(0,24,64,120,4,1,w,h)[1]
 local lastmod
 local palette, queue
 
+local Deck = require "src/Deck"
+local chip = require "src/chip"
+
 return {
    start = function (new_lastmod)
+      deck = Deck:new(require "res/decks/test")
       lastmod = new_lastmod
-      palette = {}
-      for i=1,5 do
-         palette[i] = math.floor(math.random()*4)+3
-      end
+      palette = deck:draw(5)
       queue = {}
    end,
 
@@ -43,11 +44,15 @@ return {
       -- Chip line
       local i=1
       y=104
-      for _=1,2 do
+      for ix=1,2 do
          x=8
          for _=1,5 do
             palchip = palette[i] or 2
-            love.graphics.draw(chips, sheet.chip[palchip], x, y)
+            if palette[ix] then
+               chip.draw_icon(palette[ix], x, y)
+            else
+               love.graphics.draw(chips, sheet.chip[2], x, y)
+            end
             love.graphics.draw(chips, sheet.letter[1], x, y+16)
             x=x+16
             i=i+1
