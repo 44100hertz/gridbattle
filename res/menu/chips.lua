@@ -101,5 +101,8 @@ return {
       button_sel = sel==0 and 2 or 1
       love.graphics.draw(img, sheet.button[button_sel], 96, 112)
       y=y+24
+
+      -- Art
+      if pal[sel] then chip.draw_art(pal[sel][1], 8, 24, 1) end
    end,
 }

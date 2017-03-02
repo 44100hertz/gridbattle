@@ -28,7 +28,7 @@ return {
    draw_art = function (name, x, y, index)
       index = index or 1
       local chip = getchip(name)
-      love.graphics.draw(chip, art[index], x, y)
+      love.graphics.draw(chip.img, art[index], x, y)
    end,
 
    draw_icon = function (name, x, y)
