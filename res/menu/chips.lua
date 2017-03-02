@@ -23,7 +23,7 @@ local sel, letter
 return {
    start = function (new_lastmod)
       letter = nil
-      sel = 3
+      sel = 1
       if not deck then
          local deckdata = require "res/decks/test"
          deck = Deck:new(deckdata)
