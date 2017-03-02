@@ -5,6 +5,7 @@
 local actors
 local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
+local text = require "src/text"
 local stage = require "src/battle/stage"
 
 local add = function (actor, class)
@@ -136,6 +137,17 @@ return {
 
          if v then depthdraw.add(v) end
 
+         if v.hp and not v.hide_hp then
+            depthdraw.add({
+                  x=v.x, y=v.y, z=v.z+50,
+                  draw = function (_, x, y)
+                     local hpstr = tostring(v.hp)
+                     x = x-(#hpstr*4)
+                     text.draw("hpnum", hpstr , x, y)
+                  end
+            })
+         end
+
          -- HP drawing
          -- if v.hp then
          --    love.graphics.setFont(fonts.tinyhp)
@@ -144,5 +156,6 @@ return {
       end
    end,
 
+   actors = actors,
    add = add,
 }
