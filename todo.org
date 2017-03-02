@@ -9,10 +9,12 @@ the menu data itself should be as minimal as possible.
 *** TODO menu example file
 *** TODO rewrite existing menus
 ** TODO battle chips
-** TODO implement example chip folders:
- - Flow folder
- - Surge folder
-
+*** TODO chip UI
+*** TODO example folder
+*** TODO bullet
+*** TODO boots
+*** TODO wheel crate
+*** TODO poison
 * TODO aesthetic
 ** TODO player
 ** TODO enemy
@@ -22,20 +24,21 @@ the menu data itself should be as minimal as possible.
  - named sound sources, searchable, etc.
 ** DONE crisp XM playback (supposedly)
 ** TODO compose music
+** TODO add shine on panels
 * TODO back burner
 ** DONE unified actor animation and state model
-** TODO player and enemy status/info
+** TODO asset management
+** TODO status/info for player, enemy
 ** TODO custom mono fonts via ascii grid style + spritebatch
 ** TODO lazy depth calculation
 Calculate depth on each draw call, then update that to be only when
 things move. Maintain a drawn game state, essentially.
-** TODO don't reload loaded images
 ** TODO joypad
 ** TODO keyboard and game configs
  1. Readable
  2. Writable
 ** TODO multiplayer
-
+Get two players up that can fight each o ther.
 * DONE initial game
 ** DONE auto-sorting draw list (z-buffer)
 https://love2d.org/wiki/Skip_list:Drawing_Order
