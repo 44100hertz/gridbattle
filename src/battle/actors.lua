@@ -18,7 +18,8 @@ local getimage = function (actor)
    return actor.image
 end
 
-local add = function (actor, class)
+local add = function (actor, class_name)
+   local class = require ("res/battle/actors/" .. class_name)
    -- the two lines that enable OOP for game actors
    if not class.__index then class.__index = class end
    setmetatable(actor, class)
@@ -57,7 +58,7 @@ return {
       end
       player = {x=set.playerpos.x,
                 y=set.playerpos.y,}
-      add(player, require "res/battle/actors/player")
+      add(player, "player")
    end,
 
    update = function ()

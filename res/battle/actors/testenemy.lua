@@ -14,8 +14,7 @@ return {
          self.despawn = true
          for _ = 1,100 do
             actors.add(
-               {x=self.x, y=self.y, z=20},
-               require "res/battle/actors/particle"
+               {x=self.x, y=self.y, z=20}, "particle"
             )
          end
       end

@@ -25,7 +25,7 @@ states.shoot = {
       if self.time == 10 then
          actors.add(
             {x=self.x+0.3, y=self.y, z=40},
-            require "res/battle/actors/bullet"
+            "bullet"
          )
       end
    end,
@@ -48,7 +48,7 @@ return {
    ox = 24, oy = 54,
 
    act = function (self)
-      if     input.a==1  then queue.use_chip(self)
+      if input.a==1     then queue.use_chip(self)
       elseif input.du>0 then move(self, 0, -1)
       elseif input.dd>0 then move(self, 0, 1)
       elseif input.dl>0 then move(self, -1, 0)
