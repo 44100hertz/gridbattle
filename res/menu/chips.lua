@@ -40,9 +40,7 @@ return {
       elseif input.a==1 then
          -- don't try to insert nothing
          if sel==0 then
-            if #queue>0 then
-               state.pop()
-            end
+            state.pop()
          elseif pal[sel] then
             -- set letter
             if not letter then letter=pal[sel][2] end
