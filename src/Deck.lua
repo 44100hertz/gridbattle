@@ -28,14 +28,14 @@ end
 
 -- Draw a deck, optionally fill a palette
 function Deck:draw(num, palette)
-   palette = palette or {}
+   pal = palette or {}
    for i=1,num do
-      if not palette[i] then
-         palette[i] = self.chips[self.index]
+      if not pal[i] then
+         pal[i] = self.chips[self.index]
          self.index = self.index + 1
       end
    end
-   return palette
+   return pal
 end
 
 return Deck
