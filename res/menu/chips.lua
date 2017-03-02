@@ -32,6 +32,7 @@ return {
       lastmod = new_lastmod
       pal = deck:draw(5, pal)
       queue = new_queue
+      queue = {}
    end,
 
    update = function ()
