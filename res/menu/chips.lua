@@ -16,23 +16,19 @@ local sheet = {
 local lastmod
 local deck, pal, queue
 
-local Deck = require "src/Deck"
 local chip = require "src/chip"
 local sel, letter
 
 return {
-   start = function (new_lastmod, new_queue)
-      letter = nil
-      sel = 1
-      if not deck then
-         local deckdata = require "res/decks/test"
-         deck = Deck:new(deckdata)
-         deck:shuffle()
-      end
+   start = function (new_lastmod, new_deck, new_queue)
       lastmod = new_lastmod
-      pal = deck:draw(5, pal)
+      deck = new_deck
       queue = new_queue
       for i,_ in ipairs(queue) do queue[i] = nil end
+
+      letter = nil
+      sel = 1
+      pal = deck:draw(5, pal)
    end,
 
    update = function ()

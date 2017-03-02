@@ -10,6 +10,8 @@ local bg = require "src/bg"
 local depthdraw = require "src/depthdraw"
 local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
+local Deck = require "src/Deck"
+local deck
 
 -- Some global vars used throughout battle
 _G.STAGE = {
@@ -19,11 +21,15 @@ _G.STAGE = {
 }
 
 selectchips = function ()
-   state.push(require "res/menu/chips", actors.player().queue)
+   state.push(require "res/menu/chips", deck, actors.player().queue)
 end
 
 return {
    start = function (_, set)
+      local Deck = require "src/Deck"
+      deck = Deck:new(require "res/decks/test")
+      deck:shuffle()
+
       stage.start(set.stage.turf)
       actors.start(set)
       bg.start(set.bg)
