@@ -14,7 +14,7 @@ local getchip = function (name)
 
       chips[name] = {
          img = love.graphics.newImage(imgpath),
-         src = require srcpath,
+         src = require(srcpath),
       }
    end
    return chips[name]
