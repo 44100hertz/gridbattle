@@ -9,7 +9,7 @@ the menu data itself should be as minimal as possible.
 *** TODO menu example file
 *** TODO rewrite existing menus
 ** TODO battle chips
-*** DONE chip UI*
+*** DONE chip UI
 *** DONE example folder
 *** DONE interface battle chips with player
 I chose concept B. queue.lua exists as helper functions, but because queue
@@ -22,10 +22,11 @@ work.
 
 Concept B: The player holds the queue, and queue.lua just takes in
 that queue. No functions neccessarily attatched.
-*** TODO bullet
+*** DONE bullet
 *** TODO boots
 *** TODO wheel crate
 *** TODO poison
+*** TODO allow chip to affect actor state
 ** TODO give player HP, death
 ** TODO battle status info
 * TODO aesthetic
