@@ -8,6 +8,7 @@ submenus should work as separate states.
 the menu data itself should be as minimal as possible.
 *** TODO menu example file
 *** TODO rewrite existing menus
+*** TODO convert current fonts to grid mono
 ** TODO battle chips
 *** DONE chip UI
 *** DONE example folder
