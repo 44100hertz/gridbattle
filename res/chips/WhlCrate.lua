@@ -1,11 +1,27 @@
 local actors = require "src/battle/actors"
+local stage = require "src/battle/stage"
 
 return {
    img="wheel_crate",
    sheet={0,0,45,60,1,1,45,60},
-   tangible=true,
+   tangible=false,
+   z = 200,
+   dz = -5,
    ox=17, oy=35,
    start = function (self)
+      self.tangible=false
       self.x = self.x + 2
+   end,
+   update = function (self)
+      if self.dz<0 and self.z<=0 then
+         self.dz = 0
+         if stage.isfree(self.x, self.y) then
+            self.tangible=true
+            self.z=0
+            stage.occupy(self, self.x, self.y)
+         else
+            self.despawn=true
+         end
+      end
    end,
 }
