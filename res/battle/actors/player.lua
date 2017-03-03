@@ -21,14 +21,6 @@ states.move = {
 states.shoot = {
    row = 3, anim = {1,2}, speed = 20,
    length = 2, iasa = 2,
-   act = function (self)
-      if self.time == 10 then
-         actors.add(
-            {x=self.x+0.3, y=self.y, z=40},
-            "bullet"
-         )
-      end
-   end,
    finish = states.idle,
 }
 
