@@ -66,7 +66,6 @@ return {
    update = function ()
       for _,v in ipairs(actors) do
          -- Handle stateful actors' states
-         v.time = v.time + 1
          if v.states then
             if v.enter_state then
                v.state = v.enter_state
@@ -103,10 +102,15 @@ return {
          if v.dx then v.x = v.x + v.dx end
          if v.dy then v.y = v.y + v.dy end
          if v.dz then v.z = v.z + v.dz end
+
+         v.time = v.time + 1
       end
 
       for k,v in ipairs(actors) do
-         if v.despawn then table.remove(actors, k) end
+         if v.despawn then
+            if v.tangible then stage.free(v.x, v.y) end
+            table.remove(actors, k)
+         end
       end
 
       -- Collision function, to be run in both directions
@@ -149,7 +153,7 @@ return {
             v.frame = v.state.anim[frameindex + 1]
          end
 
-         if v then depthdraw.add(v) end
+         depthdraw.add(v)
 
          if v.hp and not v.hide_hp then
             depthdraw.add({
