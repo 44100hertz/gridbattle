@@ -36,5 +36,6 @@ return {
       love.graphics.draw(chip.img, icon, x, y)
    end,
 
-   letter2num = {a=1,b=2,c=3,d=4,e=5}
+   letter2num = {a=1,b=2,c=3,d=4,e=5},
+   getchip = getchip,
 }
