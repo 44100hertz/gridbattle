@@ -13,9 +13,11 @@ local boot = {
 return {
    lifetime=30,
    update = function (self)
-      if self.time==10 then
+      if self.time==1 then
+         self.parent.enter_state = self.parent.states.shoot
+      elseif self.time==10 then
          actors.add({x=self.x, y=self.y, z=40, frame=1}, boot)
-      elseif self.time==20 then
+      elseif self.time==30 then
          actors.add({x=self.x, y=self.y, z=40, frame=2}, boot)
       end
    end
