@@ -30,7 +30,7 @@ return {
 
             if v.draw then v:draw(screen_x, screen_y) end
             if v.frame then
-               local row = v.state and v.state.row or (v.row or 1)
+               local row = v.state and v.state.row or v.row or 1
                love.graphics.draw(v.image, v.anim[row][v.frame],
                                   screen_x, screen_y)
             elseif v.image then
