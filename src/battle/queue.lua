@@ -16,7 +16,6 @@ return {
    use_chip = function (actor)
       if #actor.queue>0 then
          local removed = table.remove(actor.queue, 1)
-         print("used: " .. removed[1])
          local data = chip.getchip(removed[1])
          if data.src.act then data.src.act(actor) end
       end
