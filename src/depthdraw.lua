@@ -1,7 +1,7 @@
 local depths
-local depth_step = 20
-local min_depth = -100
-local max_depth = 100
+local depth_step = 1
+local min_depth = -10
+local max_depth = 10
 
 local reset = function ()
    depths = {}
