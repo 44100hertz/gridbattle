@@ -99,6 +99,7 @@ return {
                v.despawn = true
             end
          end
+         if v.lifespan and v.time >= v.lifespan then v.despawn=true end
 
          if v.dx then v.x = v.x + v.dx end
          if v.dy then v.y = v.y + v.dy end
