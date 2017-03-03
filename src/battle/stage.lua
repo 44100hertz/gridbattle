@@ -35,6 +35,11 @@ return {
                panel.stat_time = panel.stat_time-1
                if panel.stat_time==0 then panel.stat=nil end
             end
+            if panel.stat=="poison" and
+               panel.tenant and panel.tenant.hp
+            then
+               panel.tenant.hp = panel.tenant.hp-(1/8)
+            end
          end
       end
    end,

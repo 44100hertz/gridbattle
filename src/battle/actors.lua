@@ -159,7 +159,7 @@ return {
             depthdraw.add({
                   x=v.x, y=v.y, z=v.z+50,
                   draw = function (_, x, y)
-                     local hpstr = tostring(v.hp)
+                     local hpstr = tostring(math.floor(v.hp))
                      x = x-(#hpstr*4)
                      text.draw("hpnum", hpstr , x, y)
                   end
