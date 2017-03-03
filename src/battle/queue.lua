@@ -1,5 +1,6 @@
 -- A queue of chips, designed to be used by the player.
 
+local actors = require "src/battle/actors"
 local chip = require "src/chip"
 
 return {
@@ -17,7 +18,7 @@ return {
       if #actor.queue>0 then
          local removed = table.remove(actor.queue, 1)
          local data = chip.getchip(removed[1])
-         if data.src.act then data.src.act(actor) end
+         actors.add({x=actor.x, y=actor.y}, data.src)
       end
    end,
 }

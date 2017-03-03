@@ -1,6 +1,6 @@
 local actors = require "src/battle/actors"
 
-local Triangle = {
+return {
    img = "bullet",
    damage = 80,
    sheet = {0,0,16,16,6,1},
@@ -14,14 +14,9 @@ local Triangle = {
       },
    },
    dx = 0.01,
+   z = 40,
 
    update = function (self)
       self.dx = self.dx * 1.1
    end,
-}
-
-return {
-   act = function (actor)
-      actors.add({x=actor.x, y=actor.y, z=40}, Triangle)
-   end
 }
