@@ -14,10 +14,10 @@ return {
    end,
    update = function (self)
       if self.dz<0 and self.z<=0 then
-         self.dz = 0
          if stage.isfree(self.x, self.y) then
-            self.tangible=true
-            self.z=0
+            self.z = 0
+            self.dz = 0
+            self.tangible = true
             stage.occupy(self, self.x, self.y)
          else
             self.despawn=true
