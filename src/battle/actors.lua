@@ -18,8 +18,10 @@ local getimage = function (actor)
    return actor.image
 end
 
-local add = function (actor, class_name)
-   local class = require ("res/battle/actors/" .. class_name)
+local add = function (actor, class)
+   if type(class)=="string" then
+      class = require ("res/battle/actors/" .. class)
+   end
    -- the two lines that enable OOP for game actors
    if not class.__index then class.__index = class end
    setmetatable(actor, class)
