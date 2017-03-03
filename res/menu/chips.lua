@@ -17,7 +17,7 @@ local lastmod
 local deck, pal, queue
 
 local chip = require "src/chip"
-local sel, letter
+local sel
 
 return {
    start = function (new_lastmod, new_deck, new_queue)
@@ -39,12 +39,16 @@ return {
          if sel==0 then
             state.pop()
          elseif pal[sel] then
-            -- set letter
-            if not letter then letter=pal[sel][2] end
-            -- match letter
-            if pal[sel][2]==letter then
-               table.insert(queue, pal[sel])
+            table.insert(queue, pal[sel])
+            local diff_letter, diff_chip
+            for i=2,#queue do
+               if queue[i][1]~=queue[1][1] then diff_letter=true end
+               if queue[i][2]~=queue[1][2] then diff_chip=true end
+            end
+            if not (diff_letter and diff_chip) then
                pal[sel] = nil
+            else
+               table.remove(queue)
             end
          end
       elseif input.b==1 then
@@ -54,8 +58,6 @@ return {
          local i=1
          while(pal[i]~=nil) do i=i+1 end
          pal[i] = table.remove(queue)
-         -- reset letter if queue empty
-         if #queue==0 then letter=nil end
       end
    end,
 
