@@ -39,7 +39,7 @@ return {
       if input.st == 1 then
          state.push(require "res/menu/pause")
          return
-      elseif input.sel == 1 then
+      elseif input.l==1 or input.r==1 then
          selectchips()
          return
       end

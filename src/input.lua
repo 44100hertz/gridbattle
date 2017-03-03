@@ -7,6 +7,7 @@
 -- values are valid scancodes
 local keyBind = {
    a="x", b="z",
+   l="a", r="s",
    du="up", dd="down",
    dl="left", dr="right",
    st="return", sel="rshift"
