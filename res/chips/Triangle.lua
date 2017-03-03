@@ -16,7 +16,6 @@ local Triangle = {
 
    update = function (self)
       self.dx = self.dx * 1.1
-      self.x = self.x + self.dx
    end,
 }
 
