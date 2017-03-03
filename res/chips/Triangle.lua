@@ -16,6 +16,9 @@ return {
    dx = 0.01,
    z = 40,
 
+   start = function (self)
+      self.parent.enter_state = self.parent.states.shoot
+   end,
    update = function (self)
       self.dx = self.dx * 1.1
    end,
