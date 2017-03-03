@@ -26,16 +26,31 @@ return {
       end
    end,
 
+   update = function ()
+      -- Stat/poison counters
+      for x = 1,STAGE.numx do
+         for y = 1,STAGE.numy do
+            local panel = panels[x][y]
+            if panel.stat then
+               panel.stat_time = panel.stat_time-1
+               if panel.stat_time==0 then panel.stat=nil end
+            end
+         end
+      end
+   end,
+
    draw = function ()
       for x = 1,STAGE.numx do
          for y = 1,STAGE.numy do
+            local frame = 1
+            if panels[x][y].stat == "poison" then frame=2 end
             depthdraw.add{
                image = image,
                x=x, y=y, z = -20,
                ox = 20, oy = 30,
                anim = sheet,
                row = x > turf[y] and 1 or 2,
-               frame = 1,
+               frame = frame,
             }
          end
       end
@@ -69,5 +84,19 @@ return {
    free = function (x, y)
       x,y = math.floor(x+0.5), math.floor(y+0.5)
       panels[x][y].tenant = nil
+   end,
+
+   apply_stat = function (kind, counter, mask, xoff, yoff)
+      -- xoff = xoff or 0
+      -- yoff = yoff or 0
+      -- for x = 1,STAGE.numx do
+      --    for y = 1,STAGE.numy do
+      --       if mask[x] and mask[x][y] then
+      --       end
+      --    end
+      -- end
+
+      panels[xoff][yoff].stat = kind
+      panels[xoff][yoff].stat_time = counter
    end,
 }

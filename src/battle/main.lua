@@ -44,6 +44,7 @@ return {
          return
       end
       actors.update()
+      stage.update()
    end,
 
    draw = function ()
