@@ -66,9 +66,8 @@ return {
    update = function ()
       for _,v in ipairs(actors) do
          -- Handle stateful actors' states
+         v.time = v.time + 1
          if v.states then
-            v.time = v.time + 1
-
             if v.enter_state then
                v.state = v.enter_state
                v.enter_state = nil
