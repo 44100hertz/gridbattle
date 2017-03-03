@@ -11,10 +11,12 @@ local boot = {
 }
 
 return {
-   act = function (actor)
-      actors.add(
-         {x=actor.x+0.3, y=actor.y, z=40, frame=1},
-         boot
-      )
+   lifetime=30,
+   update = function (self)
+      if self.time==10 then
+         actors.add({x=self.x, y=self.y, z=40, frame=1}, boot)
+      elseif self.time==20 then
+         actors.add({x=self.x, y=self.y, z=40, frame=2}, boot)
+      end
    end
 }
