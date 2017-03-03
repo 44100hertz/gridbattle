@@ -10,7 +10,7 @@ local boot = {
    dx=0.1,
 }
 
-return {
+local bootspawner = {
    lifetime=30,
    start = function (self)
       self.parent.enter_state = self.parent.states.shoot
@@ -22,4 +22,8 @@ return {
          actors.add({x=self.x, y=self.y, z=40, frame=2}, boot)
       end
    end
+}
+
+return {
+   ent=bootspawner,
 }

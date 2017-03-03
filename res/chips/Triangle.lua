@@ -1,6 +1,6 @@
 local actors = require "src/battle/actors"
 
-return {
+local ent = {
    img = "bullet",
    damage = 80,
    sheet = {0,0,16,16,6,1},
@@ -22,4 +22,8 @@ return {
    update = function (self)
       self.dx = self.dx * 1.1
    end,
+}
+
+return {
+   ent=ent,
 }

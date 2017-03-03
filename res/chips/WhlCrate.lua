@@ -1,7 +1,7 @@
 local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 
-return {
+local ent = {
    img="wheel_crate",
    sheet={0,0,45,60,1,1,45,60},
    tangible=false,
@@ -24,4 +24,8 @@ return {
          end
       end
    end,
+}
+
+return {
+   ent=ent,
 }
