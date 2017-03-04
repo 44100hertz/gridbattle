@@ -1,6 +1,8 @@
 local anim = require "src/anim"
 local state = require "src/state"
 local input = require "src/input"
+local dialog = require "src/dialog"
+local chip = require "src/chip"
 
 local sheet = {}
 
@@ -58,6 +60,9 @@ return {
          local i=1
          while(pal[i]~=nil) do i=i+1 end
          pal[i] = table.remove(queue)
+      elseif input.sel==1 then
+         local chip = chip.getchip(pal[sel][1])
+         state.push(dialog.popup, chip.src.desc, 132, 16)
       end
    end,
 
