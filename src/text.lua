@@ -48,9 +48,9 @@ return {
             is_split = true
          end
          last = word:sub(i)
-         if is_split or last:len() > line_left then
+         if is_split or last:len() >= line_left then
             table.insert(pieces, "\n" .. last)
-            line_left = width-last:len()
+            line_left = width - last:len()
          else
             if line_left < width then table.insert(pieces, " ") end
             table.insert(pieces, last)
