@@ -31,4 +31,32 @@ return {
       end
       love.graphics.draw(f.sb)
    end,
+
+   wrap = function (text, width)
+      local word_iter = text:gmatch("%g+")
+      local pieces = {} -- Processed parts of words
+      local line_left = width
+
+      for word in word_iter do
+         local i = 1
+         -- Try to split out long words
+         local is_split
+         -- Hyphenate parts that don't fit
+         while(i+width-1 < word:len()) do
+            table.insert(pieces, "\n" .. word:sub(i, i+width-2) .. "-")
+            i=i+width-1
+            is_split = true
+         end
+         last = word:sub(i)
+         if is_split or last:len() > line_left then
+            table.insert(pieces, "\n" .. last)
+            line_left = width-last:len()
+         else
+            if line_left < width then table.insert(pieces, " ") end
+            table.insert(pieces, last)
+            line_left = line_left - last:len()
+         end
+      end
+      return table.concat(pieces)
+   end
 }
