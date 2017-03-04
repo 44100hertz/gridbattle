@@ -1,4 +1,4 @@
-* TODO logical next steps
+* TODO serious time
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
 ** TODO make menus nice
@@ -9,7 +9,7 @@ the menu data itself should be as minimal as possible.
 *** TODO menu example file
 *** TODO rewrite existing menus
 *** TODO convert current fonts to grid mono
-** TODO battle chips
+** DONE battle chips
 *** DONE chip UI
 *** DONE example folder
 *** DONE interface battle chips with player
@@ -24,12 +24,23 @@ work.
 Concept B: The player holds the queue, and queue.lua just takes in
 that queue. No functions neccessarily attatched.
 *** DONE bullet
-*** TODO boots
-*** TODO wheel crate
-*** TODO poison
-*** TODO allow chip to affect actor state
+*** DONE boots
+*** DONE wheel crate
+*** DONE poison
+*** DONE allow chip to affect actor state
+** TODO make chips do more stuff
+*** TODO whlcrate damaging enemies
+*** TODO poisdrop throw animation
+*** TODO boots push whlcrate
+** TODO make enemies use attacks (chips)
 ** TODO give player HP, death
 ** TODO battle status info
+** TODO deck editor
+Select which chips out of your pool of chips
+to put into a given deck.
+** TODO debug stuff
+*** TODO any chip selector
+*** TODO RAM, CPU, video info
 * TODO aesthetic
 ** TODO player
 ** TODO enemy
@@ -59,6 +70,7 @@ things move. Maintain a drawn game state, essentially.
  2. Writable
 ** TODO multiplayer
 Get two players up that can fight each o ther.
+** TODO FPS independance via threads (if stable)
 * DONE initial game
 ** DONE auto-sorting draw list (z-buffer)
 https://love2d.org/wiki/Skip_list:Drawing_Order
