@@ -7,5 +7,6 @@ local ent = {
 }
 
 return {
+   desc="Poison 3 squares ahead",
    ent=ent,
 }

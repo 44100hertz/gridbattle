@@ -25,5 +25,6 @@ local ent = {
 }
 
 return {
+   desc="Shoot out some triangle.",
    ent=ent,
 }
