@@ -27,6 +27,10 @@ local ent = {
 }
 
 return {
-   desc="Occupies a space, attack it to roll over foes.",
+   desc=[[
+Damage it
+to roll
+over foes.
+]],
    ent=ent,
 }

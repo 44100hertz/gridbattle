@@ -25,6 +25,10 @@ local ent = {
 }
 
 return {
-   desc="Shoot out some triangle.",
+   desc=[[
+Shoot out
+some
+triangle.
+]],
    ent=ent,
 }
