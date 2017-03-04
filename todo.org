@@ -41,6 +41,7 @@ to put into a given deck.
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
+** TODO table value to draw previous state no matter what
 * TODO aesthetic
 ** TODO player
 ** TODO enemy
