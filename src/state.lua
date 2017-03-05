@@ -10,7 +10,7 @@ local stack = {}
 return {
    push = function (mod, ...)
       table.insert(stack, mod)
-      mod.start(...)
+      if mod.start then mod.start(...) end
    end,
 
    pop = function ()
@@ -21,7 +21,7 @@ return {
    end,
 
    update = function ()
-      stack[#stack].update()
+      stack[#stack]:update()
    end,
 
    draw = function ()
@@ -30,7 +30,7 @@ return {
          pos = pos - 1
       end
       while(stack[pos]) do
-         stack[pos].draw()
+         stack[pos]:draw()
          pos = pos + 1
       end
    end,

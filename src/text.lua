@@ -42,7 +42,7 @@ return {
             maxw = math.max(w, maxw)
          end
       end
-      return maxw*f.char_w, h*f.char_h
+      return maxw*f.char_w, math.max(1,h)*f.char_h
    end,
 
    draw = function (font, text, ox, oy)
