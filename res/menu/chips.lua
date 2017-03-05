@@ -15,15 +15,14 @@ local sheet = {
    button = anim.sheet(0,184,24,16,3,1,w,h)[1],
 }
 
-local lastmod
 local deck, pal, queue
 
 local chip = require "src/chip"
 local sel
 
 return {
-   start = function (new_lastmod, new_deck, new_queue)
-      lastmod = new_lastmod
+   transparent = true,
+   start = function (new_deck, new_queue)
       deck = new_deck
       queue = new_queue
       for i,_ in ipairs(queue) do queue[i] = nil end
@@ -67,7 +66,6 @@ return {
    end,
 
    draw = function ()
-      lastmod.draw()
       love.graphics.draw(img, sheet.bg)
 
       local x,y

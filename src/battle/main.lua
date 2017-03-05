@@ -25,7 +25,7 @@ selectchips = function ()
 end
 
 return {
-   start = function (_, set)
+   start = function (set)
       local Deck = require "src/Deck"
       deck = Deck:new(require "res/decks/test")
       deck:shuffle()

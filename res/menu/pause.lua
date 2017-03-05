@@ -23,11 +23,9 @@ local pause = {
    }
 }
 
-local mod
 return {
-   start = function (lastmod)
+   start = function ()
       menu.start(pause)
-      mod = lastmod
    end,
 
    update = function ()
@@ -35,7 +33,6 @@ return {
    end,
 
    draw = function ()
-      mod.draw()
       love.graphics.draw(bg)
       menu.textdraw(pause)
    end,

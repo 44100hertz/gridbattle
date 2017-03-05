@@ -13,14 +13,15 @@ local draw_box = function (font, text, x, y, color, border)
    src_text.draw(font, text, x, y)
 end
 
-local lastmod, text, x, y
+local text, x, y
 local font = "flavor"
 return {
-   draw_box = draw_box,
+   transparent = true,
 
+   draw_box = draw_box,
    popup = {
-      start = function (new_lastmod, new_text, new_x, new_y)
-         lastmod, text, x, y = new_lastmod, new_text, new_x, new_y
+      start = function (new_text, new_x, new_y)
+         text, x, y = new_text, new_x, new_y
          w,h = src_text.get_size(font, text)
       end,
       update = function ()
@@ -29,7 +30,6 @@ return {
          end
       end,
       draw = function ()
-         lastmod.draw()
          draw_box(font, text, x, y)
       end,
    }
