@@ -1,6 +1,5 @@
 local state = require "src/state"
 
-local sel
 return {
    y = 100,
    font = "title",
