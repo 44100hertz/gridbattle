@@ -1,7 +1,7 @@
 local state = require "src/state"
 
 return {
-   y = 60, spacing = 12,
+   y = 60, spacing = 16,
    font = "title",
    bg_image = "title",
    {"start",
