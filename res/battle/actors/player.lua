@@ -1,5 +1,4 @@
 local input = require "src/input"
-local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 local queue = require "src/battle/queue"
 
@@ -19,8 +18,11 @@ states.move = {
    finish = states.idle,
 }
 states.shoot = {
-   row = 3, anim = {1,2}, speed = 20,
-   length = 2, iasa = 2,
+   row = 3, anim = {1,2}, speed = 20, length = 2,
+   finish = states.idle,
+}
+states.throw = {
+   row = 4, anim = {1,2}, speed = 20, length = 2,
    finish = states.idle,
 }
 
