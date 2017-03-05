@@ -28,9 +28,9 @@ end
 function Menu:draw ()
    if self.bg_image then love.graphics.draw(self.bg_image) end
    for i,v in ipairs(self.data) do
-      local w,h = text.get_size("title", v[1])
+      local w = text.get_size("title", v[1])
       local x = GAME.width / 2 - w / 2
-      local y = self.data.y + i * h
+      local y = self.data.y + i * self.data.spacing
       if self.sel==i then
          love.graphics.setColor(255, 100, 100)
          text.draw(self.data.font, v[1], x, y)
