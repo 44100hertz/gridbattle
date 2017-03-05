@@ -11,7 +11,7 @@ local gamescale = 3
 love.run = function ()
    local outdir
    if arg[2] == "dump" then
-      outdir = "/out" .. os.time()
+      outdir = "out/" .. os.time()
       love.filesystem.createDirectory(outdir)
    end
 
