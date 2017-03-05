@@ -29,7 +29,7 @@ that queue. No functions neccessarily attatched.
 *** DONE poison
 *** DONE allow chip to affect actor state
 ** TODO make chips do more stuff
-*** TODO whlcrate damaging enemies
+*** DONE whlcrate damaging enemies
 *** DONE poisdrop throw animation
 *** TODO boots push whlcrate
 ** TODO make enemies use attacks (chips)

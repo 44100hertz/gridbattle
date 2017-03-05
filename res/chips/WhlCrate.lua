@@ -14,12 +14,14 @@ local ent = {
    end,
    update = function (self)
       if self.dz<0 and self.z<=0 then
-         if stage.isfree(self.x, self.y) then
+         local isfree, tenant = stage.isfree(self.x, self.y)
+         if isfree then
             self.z = 0
             self.dz = 0
             self.tangible = true
             stage.occupy(self, self.x, self.y)
          else
+            tenant.hp = tenant.hp - 40
             self.despawn=true
          end
       end
