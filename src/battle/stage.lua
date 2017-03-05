@@ -91,17 +91,11 @@ return {
       panels[x][y].tenant = nil
    end,
 
-   apply_stat = function (kind, counter, mask, xoff, yoff)
-      -- xoff = xoff or 0
-      -- yoff = yoff or 0
-      -- for x = 1,STAGE.numx do
-      --    for y = 1,STAGE.numy do
-      --       if mask[x] and mask[x][y] then
-      --       end
-      --    end
-      -- end
-
-      panels[xoff][yoff].stat = kind
-      panels[xoff][yoff].stat_time = counter
+   apply_stat = function (kind, counter, x, y)
+      x,y = math.floor(x+0.5), math.floor(y+0.5)
+      if panels[x] and panels[x][y] then
+         panels[x][y].stat = kind
+         panels[x][y].stat_time = counter
+      end
    end,
 }
