@@ -9,9 +9,10 @@ Menu.__index = Menu
 function Menu:new (new_menu)
    self = new_menu
    setmetatable(self, Menu)
-   if new_menu.bg_image then
+   if new_menu.bg_img then
       self.bg_image =
-         love.graphics.newImage("res/menu/" .. new_menu.bg_image .. ".png")
+         love.graphics.newImage("res/menu/" .. self.bg_img .. ".png")
+      self.bg_img = nil
    end
    return self
 end

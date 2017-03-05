@@ -1,5 +1,5 @@
 local anim = require "src/anim"
-local state = require "src/state"
+local scene = require "src/scene"
 local input = require "src/input"
 local dialog = require "src/dialog"
 local chip = require "src/chip"
@@ -38,7 +38,7 @@ return {
       elseif input.a==1 then
          -- don't try to insert nothing
          if sel==0 then
-            state.pop()
+            scene.pop()
          elseif pal[sel] then
             table.insert(queue, pal[sel])
             local diff_letter, diff_chip
@@ -61,7 +61,7 @@ return {
          pal[i] = table.remove(queue)
       elseif input.sel==1 then
          local chip = chip.getchip(pal[sel][1])
-         state.push(dialog.popup, chip.src.desc, 132, 16)
+         scene.push(dialog.popup, chip.src.desc, 132, 16)
       end
    end,
 

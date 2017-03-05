@@ -1,9 +1,4 @@
---[[
-   The main loop of a battle
-   Should be required as module when loading a new state
---]]
-
-local state = require "src/state"
+local scene = require "src/scene"
 local input = require "src/input"
 local bg = require "src/bg"
 
@@ -21,7 +16,7 @@ _G.STAGE = {
 }
 
 selectchips = function ()
-   state.push(require "res/menu/chips", deck, actors.player().queue)
+   scene.push(require "res/menu/chips", deck, actors.player().queue)
 end
 
 return {
@@ -37,7 +32,7 @@ return {
 
    update = function ()
       if input.st == 1 then
-         state.push((require "src/Menu"):new(require "res/menu/pause"))
+         scene.push((require "src/Menu"):new(require "res/menu/pause"))
       elseif input.l==1 or input.r==1 then
          selectchips()
          return

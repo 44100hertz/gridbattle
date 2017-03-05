@@ -1,14 +1,13 @@
-local state = require "src/state"
+local scene = require "src/scene"
 
 return {
    y=100, spacing=16,
    font = "title",
-   bg_image = "pause",
+   bg_img = "pause",
    transparent = true,
-   {"return", state.pop},
+   {"return", scene.pop},
    {"main menu", function ()
-       state.pop()
-       state.pop()
+       scene.pop()
+       scene.pop()
    end},
 }
-

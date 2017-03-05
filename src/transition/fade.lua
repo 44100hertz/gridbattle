@@ -1,4 +1,4 @@
-local state = require "src/state"
+local scene = require "src/scene"
 
 local is_in, fadetime, starttime
 
@@ -12,7 +12,7 @@ return {
    update = function ()
       -- Framerate-independent ending state
       local elapsed = love.timer.getTime() - starttime
-      if elapsed > fadetime then state.pop() end
+      if elapsed > fadetime then scene.pop() end
    end,
 
    draw = function ()

@@ -1,4 +1,4 @@
-local state = require "src/state"
+local scene = require "src/scene"
 local input = require "src/input"
 
 _G.GAME = {
@@ -22,7 +22,7 @@ love.run = function ()
    love.graphics.setDefaultFilter("nearest", "nearest")
 
    local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
-   state.push((require "src/Menu"):new(require "res/menu/title"))
+   scene.push((require "src/Menu"):new(require "res/menu/title"))
 
    while true do
       love.event.pump()
@@ -36,11 +36,11 @@ love.run = function ()
       end
 
       input.update()
-      state.update()
+      scene.update()
 
       love.graphics.setBlendMode("alpha", "alphamultiply")
       canvas:renderTo( function()
-            state.draw()
+            scene.draw()
       end)
 
       love.graphics.setBlendMode("replace", "premultiplied")

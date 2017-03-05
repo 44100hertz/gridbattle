@@ -1,6 +1,6 @@
 local src_text = require "src/text"
 local input = require "src/input"
-local state = require "src/state"
+local scene = require "src/scene"
 
 local w,h
 local draw_box = function (font, text, x, y, color, border)
@@ -26,7 +26,7 @@ return {
       end,
       update = function ()
          if input.b == 1 then
-            state.pop()
+            scene.pop()
          end
       end,
       draw = function ()
