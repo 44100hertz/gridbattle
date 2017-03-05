@@ -5,10 +5,9 @@ local ent = {
    group = "neutral",
    img="wheel_crate",
    sheet={0,0,45,60,1,1,45,60},
-   tangible=false,
-   z = 200,
-   dz = -5,
    ox=17, oy=35,
+   tangible=false,
+   dx=0, z = 200, dz = -5,
    size = 0.4,
    start = function (self)
       self.tangible=false
@@ -24,13 +23,14 @@ local ent = {
             stage.occupy(self, self.x, self.y)
          else
             actors.damage(tenant, 40)
-            self.despawn=true
+            self.despawn = true
          end
       end
    end,
 
    collide = function (self, with)
       if with.dx and with.dx > 0 then
+         stage.free(self.x, self.y)
          self.damage = 40
          self.dx = 1/16
       end
