@@ -14,6 +14,11 @@ local sheet = anim.sheet(0, 0, 40, 40, 2, 2,
 
 local turf, panels
 
+getpanel = function (x,y)
+   x,y = math.floor(x+0.5), math.floor(y+0.5)
+   if panels[x] then return panels[x][y] end
+end
+
 return {
    start = function (new_turf)
       turf = new_turf
@@ -62,8 +67,9 @@ return {
    end,
 
    isfree = function (x, y, side)
-      local panel = panels[x] and panels[x][y] or nil
-      if (not panel) or panel.tenant then return end
+      local panel = getpanel(x,y)
+      if (not panel) then return end
+      if panel.tenant then return false, panel.tenant end
 
       local is_left = x <= turf[y]
       local off_side =
@@ -76,8 +82,7 @@ return {
    occupy = function (actor, x, y)
       x = x or actor.x
       y = y or actor.y
-      local new_x, new_y = math.floor(x+0.5), math.floor(y+0.5)
-      local panel = panels[new_x] and panels[new_x][new_y] or nil
+      local panel = getpanel(x,y)
 
       assert(panel, "attempt to occupy nonexistant panel")
       assert(not panel.tenant, "attempt to occupy occupied space")
@@ -87,15 +92,14 @@ return {
    end,
 
    free = function (x, y)
-      x,y = math.floor(x+0.5), math.floor(y+0.5)
-      panels[x][y].tenant = nil
+      getpanel(x,y).tenant = nil
    end,
 
    apply_stat = function (kind, counter, x, y)
-      x,y = math.floor(x+0.5), math.floor(y+0.5)
-      if panels[x] and panels[x][y] then
-         panels[x][y].stat = kind
-         panels[x][y].stat_time = counter
+      local panel = getpanel(x, y)
+      if panel then
+         panel.stat = kind
+         panel.stat_time = counter
       end
    end,
 }
