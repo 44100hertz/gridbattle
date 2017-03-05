@@ -92,7 +92,8 @@ return {
    end,
 
    free = function (x, y)
-      getpanel(x,y).tenant = nil
+      local panel = getpanel(x, y)
+      if panel then panel.tenant = nil end
    end,
 
    apply_stat = function (kind, counter, x, y)
