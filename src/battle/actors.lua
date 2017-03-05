@@ -101,6 +101,7 @@ return {
          if v.update then v:update() end
          -- Death
          if v.hp and v.hp <= 0 then
+            if v.die then v:die() end
             if v.states and v.states.die then
                v.state = v.states.die
             else
