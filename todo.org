@@ -1,14 +1,14 @@
 * TODO serious time
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
-** TODO make menus nice
+** DONE make menus nice
 Menus should be primarily graphical.
 menu.lua should create a runnable menu state from a set of data.
 submenus should work as separate states.
 the menu data itself should be as minimal as possible.
-*** TODO menu example file
-*** TODO rewrite existing menus
-*** TODO convert current fonts to grid mono
+*** DONE menu example file
+*** DONE rewrite existing menus
+*** DONE convert current fonts to grid mono
 ** DONE battle chips
 *** DONE chip UI
 *** DONE example folder
@@ -41,27 +41,7 @@ to put into a given deck.
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
-** TODO table value to draw previous state no matter what
-* TODO aesthetic
-** TODO player
-** TODO enemy
-** TODO more cool/trippy bg's
-** TODO sound effects
- - Unified sound playback method; limits number of channels intelligently
- - named sound sources, searchable, etc.
-** DONE crisp XM playback (supposedly)
-** TODO compose music
-** TODO add shine on panels
-* TODO back burner
-** DONE unified actor animation and state model
-** DONE asset management
-Well, now I know. RAM usage or object counts would help, but I think
-that lua now knows when to GC things, and I make sure that images are
-only loaded once.
-
-Not really sure what is meant by this, probably better just to null out
-assets when battles end, etc.
-** DONE custom mono fonts via ascii grid style + spritebatch
+** DONE table value to draw previous state
 ** TODO lazy depth calculation
 Calculate depth on each draw call, then update that to be only when
 things move. Maintain a drawn game state, essentially.
@@ -72,6 +52,26 @@ things move. Maintain a drawn game state, essentially.
 ** TODO multiplayer
 Get two players up that can fight each o ther.
 ** TODO FPS independance via threads (if stable)
+** DONE unified actor animation and state model
+** DONE asset management
+Well, now I know. RAM usage or object counts would help, but I think
+that lua now knows when to GC things, and I make sure that images are
+only loaded once.
+
+Not really sure what is meant by this, probably better just to null out
+assets when battles end, etc.
+** DONE custom mono fonts via ascii grid style + spritebatch
+
+* TODO aesthetic
+** TODO player
+** TODO enemy
+** TODO more cool/trippy bg's
+** TODO sound effects
+ - Unified sound playback method; limits number of channels intelligently
+ - named sound sources, searchable, etc.
+** DONE crisp XM playback (supposedly)
+** TODO compose music
+** TODO add shine on panels
 * DONE initial game
 ** DONE auto-sorting draw list (z-buffer)
 https://love2d.org/wiki/Skip_list:Drawing_Order
