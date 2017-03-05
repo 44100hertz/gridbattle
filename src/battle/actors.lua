@@ -122,6 +122,7 @@ return {
 
       -- Collision function, to be run in both directions
       local collide = function (a, b)
+         if a.collide then a:collide(b) end
          if a.damage and b.hp then
             damage(b, a.damage, a.element)
          end

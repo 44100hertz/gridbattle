@@ -28,10 +28,10 @@ that queue. No functions neccessarily attatched.
 *** DONE wheel crate
 *** DONE poison
 *** DONE allow chip to affect actor state
-** TODO make chips do more stuff
+** DONE make chips do more stuff
 *** DONE whlcrate damaging enemies
 *** DONE poisdrop throw animation
-*** TODO boots push whlcrate
+*** DONE boots push whlcrate
 ** TODO make enemies use attacks (chips)
 ** TODO give player HP, death
 ** TODO battle status info
