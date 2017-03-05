@@ -9,12 +9,12 @@ local text = require "src/text"
 local stage = require "src/battle/stage"
 local images
 
-local getimage = function (actor)
-   if not images[actor.img] then
-      local imgpath = "res/battle/actors/" .. actor.img .. ".png"
-      images[actor.img] = love.graphics.newImage(imgpath)
+local getimage = function (img)
+   if not images[img] then
+      local imgpath = "res/battle/actors/" .. img .. ".png"
+      images[img] = love.graphics.newImage(imgpath)
    end
-   return images[actor.img]
+   return images[img]
 end
 
 local add = function (actor, class)
@@ -28,8 +28,11 @@ local add = function (actor, class)
    table.insert(actors, actor)
 
    if actor.start then actor:start() end
-   local img = getimage(actor)
-   actor.image = img
+   local img
+   if actor.img then
+      img = getimage(actor.img)
+      actor.image = img
+   end
    if actor.sheet then
       -- apparently luaJIT (maybe even vanilla) unpack is weird.
       -- this is arguably the best way to stuff all the arguments in.
