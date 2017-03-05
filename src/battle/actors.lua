@@ -114,30 +114,30 @@ return {
       end
 
       -- Collision function, to be run in both directions
-      local collide = function (o1, o2)
-         if o1.damage and o2.hp then
-            o2.hp = o2.hp - o1.damage
+      local collide = function (a, b)
+         if a.damage and b.hp then
+            b.hp = b.hp - a.damage
          end
-         if o1.collide_die and o2.tangible then
-            o1.despawn = true;
+         if a.collide_die and b.tangible then
+            a.despawn = true;
          end
       end
 
       for i = 1, #actors do
          -- Triangle-shaped iteration
          for j = i+1, #actors do
-            local o1 = actors[i]
-            local o2 = actors[j]
-            if o1.group ~= o2.group and
-               o1.size and o2.size
+            local a = actors[i]
+            local b = actors[j]
+            if a.group ~= b.group and
+               a.size and b.size
             then
-               local size = o1.size + o2.size
+               local size = a.size + b.size
                -- square collisions
-               if math.abs(o1.x - o2.x) < size and
-                  math.abs(o1.y - o2.y) < size
+               if math.abs(a.x - b.x) < size and
+                  math.abs(a.y - b.y) < size
                then
-                  collide(o1, o2)
-                  collide(o2, o1)
+                  collide(a, b)
+                  collide(b, a)
                end
             end
          end
