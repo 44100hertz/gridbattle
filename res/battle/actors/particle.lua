@@ -1,6 +1,7 @@
 local gravity = 0.1
 
 return {
+   color = {169, 53, 197},
    start = function (self)
       local dr = math.random() / 16 + 1/32
       local theta = math.random() * 2 * math.pi
@@ -15,7 +16,7 @@ return {
    end,
 
    draw = function (self, x, y)
-      love.graphics.setColor(169, 53, 197, 255)
+      love.graphics.setColor(unpack(self.color))
       love.graphics.circle("fill", x, y, 5, 4)
       love.graphics.setColor(255, 255, 255, 255)
    end,
