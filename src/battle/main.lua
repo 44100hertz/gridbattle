@@ -37,8 +37,7 @@ return {
 
    update = function ()
       if input.st == 1 then
-         state.push(require "res/menu/pause")
-         return
+         state.push((require "src/Menu"):new(require "res/menu/pause"))
       elseif input.l==1 or input.r==1 then
          selectchips()
          return
