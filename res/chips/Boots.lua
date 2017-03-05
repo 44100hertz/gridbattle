@@ -13,7 +13,7 @@ local boot = {
 local bootspawner = {
    lifetime=30,
    start = function (self)
-      self.parent.enter_state = self.parent.states.shoot
+      self.parent.enter_state = "shoot"
    end,
    update = function (self)
       if self.time==10 then

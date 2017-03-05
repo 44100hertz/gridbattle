@@ -21,6 +21,13 @@ local getimage = function (img)
    return images[img]
 end
 
+local enter_state = function (actor, state)
+   if actor.states and actor.states[state] then
+      actor.state = actor.states[state]
+      actor.time = 0
+   end
+end
+
 local add = function (actor, class)
    if type(class)=="string" then
       class = require ("res/battle/actors/" .. class)
@@ -44,9 +51,7 @@ local add = function (actor, class)
       actor.sheet[8] = img:getHeight()
       actor.anim = anim.sheet(unpack(actor.sheet))
    end
-   if actor.states and actor.states.idle then
-      actor.state = actor.states.idle
-   end
+   enter_state(actor, "idle")
    actor.time = 0
    actor.z = actor.z or 0
    if actor.tangible then
@@ -75,9 +80,8 @@ return {
          -- Handle stateful actors' states
          if v.states then
             if v.enter_state then
-               v.state = v.enter_state
+               enter_state(v, v.enter_state)
                v.enter_state = nil
-               v.time = 0
             end
             if v.state.act then v.state.act(v) end
 
@@ -86,12 +90,10 @@ return {
             then
                v:act()
             end
-
             if v.state.length and
                v.time >= v.state.length * v.state.speed
             then
-               v.state = v.state.finish
-               v.time = 0
+               enter_state(v, (v.state.finish or "idle"))
             end
          end
 

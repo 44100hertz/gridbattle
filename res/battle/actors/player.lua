@@ -2,37 +2,13 @@ local input = require "src/input"
 local stage = require "src/battle/stage"
 local queue = require "src/battle/queue"
 
-local states = {}
-states.idle = {
-   row = 1, anim = {1}, speed = 1000,
-   iasa = 0,
-}
-states.move = {
-   row = 2, anim = {1,2}, speed = 5,
-   length = 4, iasa = 3,
-   act = function (self)
-      if self.time == 10 then
-	 self.x, self.y = self.goalx, self.goaly
-      end
-   end,
-   finish = states.idle,
-}
-states.shoot = {
-   row = 3, anim = {1,2}, speed = 20, length = 2,
-   finish = states.idle,
-}
-states.throw = {
-   row = 4, anim = {1,2}, speed = 20, length = 2,
-   finish = states.idle,
-}
-
 local move = function  (self, dx, dy)
    local goalx, goaly = self.x+dx, self.y+dy
    if stage.isfree(goalx, goaly, "left") then
       self.goalx, self.goaly = goalx, goaly
       stage.free(self.x, self.y)
       stage.occupy(self, goalx, goaly)
-      self.enter_state = states.move
+      self.enter_state = "move"
    end
 end
 
@@ -54,6 +30,20 @@ return {
       queue.draw(self.queue, x+self.ox, y-15)
    end,
 
+   states = {
+      idle = {row = 1, anim = {1}, speed = 1000, iasa = 0},
+      shoot = {row = 3, anim = {1,2}, speed = 20, length = 2},
+      throw = {row = 4, anim = {1,2}, speed = 20, length = 2},
+      move = {
+         row = 2, anim = {1,2}, speed = 5,
+         length = 4, iasa = 3,
+         act = function (self)
+            if self.time == 10 then
+               self.x, self.y = self.goalx, self.goaly
+            end
+         end,
+      },
+   },
+
    queue = {},
-   states = states,
 }

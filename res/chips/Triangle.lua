@@ -17,7 +17,7 @@ local ent = {
    z = 40,
 
    start = function (self)
-      self.parent.enter_state = self.parent.states.shoot
+      self.parent.enter_state = "shoot"
    end,
    update = function (self)
       self.dx = self.dx * 1.1
