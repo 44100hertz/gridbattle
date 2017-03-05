@@ -54,6 +54,7 @@ things move. Maintain a drawn game state, essentially.
 ** TODO multiplayer
 Get two players up that can fight each o ther.
 ** TODO FPS independance via threads (if stable)
+** TODO automate scene transitions
 ** DONE unified actor animation and state model
 ** DONE asset management
 Well, now I know. RAM usage or object counts would help, but I think
