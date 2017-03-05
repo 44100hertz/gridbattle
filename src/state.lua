@@ -11,8 +11,6 @@ return {
    push = function (mod, ...)
       table.insert(stack, mod)
       mod.start(...)
-      input.stale()
-      mod.update()
    end,
 
    pop = function ()

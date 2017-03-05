@@ -14,6 +14,7 @@ local root = {
          local bmain = require "src/battle/main"
          state.push(bmain, require "res/battle/sets/test")
          bmain.selectchips()
+         state.push(require "src/transition/fade", 0.4, true)
       end,
    },
    [2] = {

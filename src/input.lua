@@ -49,20 +49,12 @@ local input = {
             joy and joy:isGamepadDown(joyBind[k]) or -- dpad
             joy and joy2hat(lr, ud, k) -- joystick
          then
-            if buttons[k] > -1 then
-               buttons[k] = buttons[k]+1
-            end
+            buttons[k] = buttons[k]+1
          else
             -- reset to 0 when released
             buttons[k] = 0
          end
       end
-   end,
-
-   -- This is used for things like menu transitions.
-   -- It forces the user to lift any buttons they intend to use.
-   stale = function ()
-      for k,_ in pairs(keyBind) do buttons[k] = -1 end
    end,
 
    rebind = function (binds)
