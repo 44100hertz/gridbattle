@@ -31,7 +31,7 @@ local ent = {
    collide = function (self, with)
       if with.dx and with.dx > 0 then
          stage.free(self.x, self.y)
-         self.damage = 40
+         self.damage = 4
          self.dx = 1/16
       end
    end,
