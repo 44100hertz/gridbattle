@@ -14,8 +14,7 @@ local getimage = function (actor)
       local imgpath = "res/battle/actors/" .. actor.img .. ".png"
       images[actor.img] = love.graphics.newImage(imgpath)
    end
-   actor.image = images[actor.img]
-   return actor.image
+   return images[actor.img]
 end
 
 local add = function (actor, class)
@@ -29,10 +28,11 @@ local add = function (actor, class)
    table.insert(actors, actor)
 
    if actor.start then actor:start() end
+   local img = getimage(actor)
+   actor.image = img
    if actor.sheet then
       -- apparently luaJIT (maybe even vanilla) unpack is weird.
       -- this is arguably the best way to stuff all the arguments in.
-      local img = getimage(actor)
       actor.sheet[7] = img:getWidth()
       actor.sheet[8] = img:getHeight()
       actor.anim = anim.sheet(unpack(actor.sheet))
