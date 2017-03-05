@@ -16,10 +16,9 @@ end
 local text, x, y
 local font = "flavor"
 return {
-   transparent = true,
-
    draw_box = draw_box,
    popup = {
+      transparent = true,
       start = function (new_text, new_x, new_y)
          text, x, y = new_text, new_x, new_y
          w,h = src_text.get_size(font, text)
