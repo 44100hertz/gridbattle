@@ -16,7 +16,7 @@ _G.STAGE = {
 }
 
 selectchips = function ()
-   scene.push(require "res/menu/chips", deck, actors.player().queue)
+   scene.push(require "res/menu/chips", deck, actors.player.queue)
 end
 
 return {
