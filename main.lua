@@ -1,6 +1,5 @@
 local state = require "src/state"
 local input = require "src/input"
-local Menu = require "src/Menu"
 
 _G.GAME = {
    width = 240,
@@ -23,7 +22,7 @@ love.run = function ()
    love.graphics.setDefaultFilter("nearest", "nearest")
 
    local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
-   state.push(Menu:new(require "res/menu/title"))
+   state.push((require "src/Menu"):new(require "res/menu/title"))
 
    while true do
       love.event.pump()
