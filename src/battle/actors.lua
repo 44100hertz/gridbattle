@@ -9,6 +9,10 @@ local text = require "src/text"
 local stage = require "src/battle/stage"
 local images
 
+local damage = function (actor, amount, element)
+   if actor.hp then actor.hp = actor.hp - amount end
+end
+
 local getimage = function (img)
    if not images[img] then
       local imgpath = "res/battle/actors/" .. img .. ".png"
@@ -119,7 +123,7 @@ return {
       -- Collision function, to be run in both directions
       local collide = function (a, b)
          if a.damage and b.hp then
-            b.hp = b.hp - a.damage
+            damage(b, a.damage, a.element)
          end
          if a.collide_die and b.tangible then
             a.despawn = true;
@@ -173,4 +177,5 @@ return {
 
    player = function () return player end,
    add = add,
+   damage = damage,
 }

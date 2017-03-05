@@ -21,7 +21,7 @@ local ent = {
             self.tangible = true
             stage.occupy(self, self.x, self.y)
          else
-            tenant.hp = tenant.hp - 40
+            actors.damage(tenant, 40)
             self.despawn=true
          end
       end
