@@ -34,6 +34,8 @@ that queue. No functions neccessarily attatched.
 *** DONE boots push whlcrate
 ** TODO make enemies use attacks (chips)
 ** TODO give player HP, death
+** TODO allow certain collisions to only happen once
+Have a collide_time variable, and just check if it equals 1
 ** TODO battle status info
 ** TODO deck editor
 Select which chips out of your pool of chips
