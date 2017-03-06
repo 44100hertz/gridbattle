@@ -17,9 +17,15 @@ local bootspawner = {
    end,
    update = function (self)
       if self.time==10 then
-         actors.add({x=self.x, y=self.y, z=40, frame=1}, {ent=boot})
+         actors.add(
+            {x=self.x, y=self.y, z=40, frame=1,
+             group=self.group, side=self.side},
+            {ent=boot})
       elseif self.time==30 then
-         actors.add({x=self.x, y=self.y, z=40, frame=2}, {ent=boot})
+         actors.add(
+            {x=self.x, y=self.y, z=40, frame=2,
+             group=self.group, side=self.side},
+            {ent=boot})
       end
    end
 }
