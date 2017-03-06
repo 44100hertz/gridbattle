@@ -1,8 +1,10 @@
 local bg, bgquad
 local bgsize
+local offset
 
 return {
    start = function (newbg)
+      offset = 0
       bg = newbg
       bg:setWrap("repeat", "repeat")
       bgsize = bg:getDimensions()
@@ -13,7 +15,8 @@ return {
    end,
 
    draw = function ()
-      local bgoff = love.timer.getTime() * 30 % bgsize - bgsize
+      offset = offset + 0.5
+      local bgoff = offset % bgsize - bgsize
       love.graphics.draw(bg, bgquad, math.floor(bgoff-0.5), math.floor(bgoff))
    end,
 }
