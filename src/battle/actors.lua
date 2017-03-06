@@ -10,10 +10,12 @@ local text = require "src/text"
 local stage = require "src/battle/stage"
 local images
 
-local damage = function (actor, amount, element)
+-- In the future, this will use elements and such to calculate damage.
+local damage = function (actor, amount)
    if actor.hp then actor.hp = actor.hp - amount end
 end
 
+-- Resource management for images
 local getimage = function (img)
    if not images[img] then
       local imgpath = "res/battle/actors/" .. img .. ".png"
@@ -22,6 +24,7 @@ local getimage = function (img)
    return images[img]
 end
 
+-- Put a stateful entity into a state by name
 local enter_state = function (actor, state)
    if actor.states and actor.states[state] then
       actor.state = actor.states[state]
@@ -29,17 +32,29 @@ local enter_state = function (actor, state)
    end
 end
 
-local add = function (actor, class)
+-- Prepare and add a new game entity
+local add = function (actor, class, variant)
+   -- Load the class and variant --
    if type(class)=="string" then
       class = require ("res/battle/actors/" .. class)
    end
-   -- the two lines that enable OOP for game actors
-   if not class.__index then class.__index = class end
-   setmetatable(actor, class)
 
-   table.insert(actors, actor)
+   if variant then
+      if type(variant)=="string" then
+         variant = class.variants[variant]
+      end
 
-   if actor.start then actor:start() end
+      -- Variant and class metatables --
+      class.ent.__index = class.ent
+      variant.__index = variant
+      setmetatable(variant, class.ent)
+      setmetatable(actor, variant)
+   else
+      class.__index = class
+      setmetatable(actor, class)
+   end
+
+   -- Load the actor --
    local img
    if actor.img then
       img = getimage(actor.img)
@@ -52,14 +67,18 @@ local add = function (actor, class)
       actor.sheet[8] = img:getHeight()
       actor.anim = anim.sheet(unpack(actor.sheet))
    end
+
+   -- Actor state --
    enter_state(actor, "idle")
+   if actor.start then actor:start() end
    actor.time = 0
    actor.z = actor.z or 0
    if actor.tangible then
       stage.occupy(actor)
    end
-
    if actor.max_hp then actor.hp = actor.max_hp end
+
+   table.insert(actors, actor)
 end
 
 return {
@@ -71,9 +90,10 @@ return {
          for k,v in pairs(set.actors[i]) do dup[k] = v end
          add(dup, set.actors[i+1])
       end
+      player.side = "left"
       player.x=set.playerpos.x
       player.y=set.playerpos.y
-      add(player, "player")
+      add(player, "navi", "player")
    end,
 
    update = function ()
@@ -117,6 +137,7 @@ return {
          v.time = v.time + 1
       end
 
+      -- Despawn before collisions to reduce errors --
       for k,v in ipairs(actors) do
          if v.despawn then
             if v.tangible then stage.free(v.x, v.y) end
@@ -124,7 +145,7 @@ return {
          end
       end
 
-      -- Collision function, to be run in both directions
+      -- Run this in both directions
       local collide = function (a, b)
          if a.collide then a:collide(b) end
          if a.damage and b.hp then
