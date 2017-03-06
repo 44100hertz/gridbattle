@@ -8,7 +8,6 @@ having to manually push a transition.
 ** TODO deck editor
 Select which chips out of your pool of chips
 to put into a given deck.
-** TODO class variants
 ** TODO memory cleanup
 This is best done by keeping all loaded assets in tables. State exit
 functions will be added that nil these tables. Possibly: an asset
@@ -17,6 +16,7 @@ popped.
 ** TODO multiplayer
 Get two players up that can fight each o ther.
 ** TODO ONLINE multiplier (hooooo boy)
+** DONE class variants
 ** DONE table value to draw previous state
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
