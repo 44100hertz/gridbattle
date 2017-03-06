@@ -1,4 +1,16 @@
 * TODO serious time
+** TODO battle status info
+** TODO make enemies use attacks (chips)
+** TODO give player HP, death
+** TODO automate scene transitions
+** TODO deck editor
+Select which chips out of your pool of chips
+to put into a given deck.
+** TODO class variants
+** TODO multiplayer
+Get two players up that can fight each o ther.
+** TODO ONLINE multiplier (hooooo boy)
+** DONE table value to draw previous state
 ** DONE do actually use metatables, not classes
 ** DONE subdivided draw depth list
 ** DONE make menus nice
@@ -32,29 +44,6 @@ that queue. No functions neccessarily attatched.
 *** DONE whlcrate damaging enemies
 *** DONE poisdrop throw animation
 *** DONE boots push whlcrate
-** TODO make enemies use attacks (chips)
-** TODO give player HP, death
-** TODO allow certain collisions to only happen once
-Have a collide_time variable, and just check if it equals 1
-** TODO battle status info
-** TODO deck editor
-Select which chips out of your pool of chips
-to put into a given deck.
-** TODO debug stuff
-*** TODO any chip selector
-*** TODO RAM, CPU, video info
-** DONE table value to draw previous state
-** TODO lazy depth calculation
-Calculate depth on each draw call, then update that to be only when
-things move. Maintain a drawn game state, essentially.
-** TODO joypad
-** TODO keyboard and game configs
- 1. Readable
- 2. Writable
-** TODO multiplayer
-Get two players up that can fight each o ther.
-** TODO FPS independance via threads (if stable)
-** TODO automate scene transitions
 ** DONE unified actor animation and state model
 ** DONE asset management
 Well, now I know. RAM usage or object counts would help, but I think
@@ -64,7 +53,20 @@ only loaded once.
 Not really sure what is meant by this, probably better just to null out
 assets when battles end, etc.
 ** DONE custom mono fonts via ascii grid style + spritebatch
-
+** DONE joypad
+* TODO possibly not needed
+** TODO debug stuff
+*** TODO any chip selector
+*** TODO RAM, CPU, video info
+** TODO keyboard and game configs
+ 1. Readable
+ 2. Writable
+** TODO lazy depth calculation
+Calculate depth on each draw call, then update that to be only when
+things move. Maintain a drawn game state, essentially.
+** TODO allow certain collisions to only happen once
+Have a collide_time variable, and just check if it equals 1
+** TODO FPS independance via threads (if stable)
 * TODO aesthetic
 ** TODO player
 ** TODO enemy
