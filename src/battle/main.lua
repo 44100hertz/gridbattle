@@ -5,8 +5,11 @@ local bg = require "src/bg"
 local depthdraw = require "src/depthdraw"
 local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
+local ui =  require "src/battle/ui"
 local Deck = require "src/Deck"
 local deck
+
+local cust_frames
 
 -- Some global vars used throughout battle
 _G.STAGE = {
@@ -14,6 +17,7 @@ _G.STAGE = {
    xoff = -20, yoff = 64,
    w = 40,     h = 24,
 }
+_G.CUST_TIME = 4*60
 
 selectchips = function ()
    scene.push(require "res/menu/chips", deck, actors.player.queue)
@@ -28,6 +32,7 @@ return {
       stage.start(set.stage.turf)
       actors.start(set)
       bg.start(set.bg)
+      cust_frames = 0
    end,
 
    update = function ()
@@ -39,6 +44,7 @@ return {
       end
       actors.update()
       stage.update()
+      cust_frames = cust_frames + 1
    end,
 
    draw = function ()
@@ -48,6 +54,7 @@ return {
       stage.draw()
 
       depthdraw.draw()
+      ui.draw(actors.player.hp, cust_frames)
    end,
 
    selectchips = selectchips,
