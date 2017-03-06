@@ -14,7 +14,12 @@ return {
       local full_amt = cust_frames / CUST_TIME * bar_width
       local bar_size = math.min(full_amt, bar_width-2)
 
-      love.graphics.setColor(40, 40, 40)
+      local red = 40
+      if cust_frames >= CUST_TIME then
+         red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100
+      end
+
+      love.graphics.setColor(red, 40, 40)
       love.graphics.rectangle("fill", bar_x+1, 8, bar_size, 8)
       love.graphics.setColor(255, 255, 255)
 
