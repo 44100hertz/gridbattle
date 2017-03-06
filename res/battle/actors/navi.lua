@@ -31,6 +31,7 @@ return {
          img = "ben",
          sheet = {0,0,50,60,2,6},
          ox = 24, oy = 54,
+         hp = 300, hide_hp = true,
          act = function (self)
             local move = function  (dx, dy)
                local goalx, goaly = self.x+dx, self.y+dy
@@ -41,12 +42,14 @@ return {
                   self.enter_state = "move"
                end
             end
+            local lr = input.dr - input.dl
+            local ud = input.dd - input.du
 
-            if input.a==1     then queue.use_chip(self)
-            elseif input.du>0 then move(0, -1)
-            elseif input.dd>0 then move(0, 1)
-            elseif input.dl>0 then move(-1, 0)
-            elseif input.dr>0 then move(1, 0)
+            if input.a==1  then queue.use_chip(self)
+            elseif ud<0 then move(0, -1)
+            elseif ud>0 then move(0, 1)
+            elseif lr<0 then move(-1, 0)
+            elseif lr>0 then move(1, 0)
             end
          end,
       }
