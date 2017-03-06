@@ -62,6 +62,11 @@ assets when battles end, etc.
 ** DONE custom mono fonts via ascii grid style + spritebatch
 ** DONE joypad
 * TODO possibly not needed
+** TODO make sheets a bit easier
+** TODO make keyboard input more responsive
+mostly for directions, just make it so the most recently pressed
+direction is what registers, as opposed to just having left/right
+priority, etc.
 ** TODO find a way to separate images nicely
 could maybe just solve this with editor, lol
 ** TODO debug stuff
