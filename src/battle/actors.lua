@@ -54,6 +54,8 @@ local add = function (actor, class, variant)
       setmetatable(actor, class.ent)
    end
 
+--   if actor.side=="right" then actor.ox = -actor.ox end
+
    -- Load the actor --
    local img
    if actor.img then
