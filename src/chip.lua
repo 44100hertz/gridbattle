@@ -1,5 +1,6 @@
 local chips = {}
 
+local actors = require "src/battle/actors"
 local anim = require "src/anim"
 -- Chip graphics are fixed size at 256x256
 -- this enables quads to be computed once only
@@ -34,6 +35,11 @@ return {
    draw_icon = function (name, x, y)
       local chip = getchip(name)
       love.graphics.draw(chip.img, icon, x, y)
+   end,
+
+   use = function (actor, chip, variant)
+      local data = getchip(chip)
+      actors.add({x=actor.x, y=actor.y, parent=actor}, data.src, variant)
    end,
 
    letter2num = {a=1,b=2,c=3,d=4,e=5},

@@ -43,8 +43,12 @@ return {
             table.insert(queue, pal[sel])
             local diff_letter, diff_chip
             for i=2,#queue do
-               if queue[i][1]~=queue[1][1] then diff_letter=true end
-               if queue[i][2]~=queue[1][2] then diff_chip=true end
+               if queue[i][1]~=queue[1][1] or
+                  queue[i][2]~=queue[1][2]
+               then
+                  diff_letter=true
+               end
+               if queue[i].ltr~=queue[1].ltr then diff_chip=true end
             end
             if not (diff_letter and diff_chip) then
                pal[sel] = nil
@@ -79,7 +83,7 @@ return {
             local letter
             if pal[i] then
                chip.draw_icon(pal[i][1], x, y)
-               local letter = chip.letter2num[pal[i][2]]
+               local letter = chip.letter2num[pal[i].ltr]
                love.graphics.draw(img, sheet.letter[letter], x, y+16)
             end
             if sel==i then

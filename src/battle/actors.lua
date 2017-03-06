@@ -50,8 +50,8 @@ local add = function (actor, class, variant)
       setmetatable(variant, class.ent)
       setmetatable(actor, variant)
    else
-      class.__index = class
-      setmetatable(actor, class)
+      class.ent.__index = class.ent
+      setmetatable(actor, class.ent)
    end
 
    -- Load the actor --
@@ -85,10 +85,10 @@ return {
    start = function (set)
       actors = {}
       images = {}
-      for i = 1,#set.actors,2 do
+      for i = 1,#set.actors,3 do
          local dup = {}
          for k,v in pairs(set.actors[i]) do dup[k] = v end
-         add(dup, set.actors[i+1])
+         add(dup, set.actors[i+1], set.actors[i+2])
       end
       player.side = "left"
       player.x=set.playerpos.x

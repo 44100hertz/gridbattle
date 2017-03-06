@@ -17,8 +17,7 @@ return {
    use_chip = function (actor)
       if #actor.queue>0 then
          local removed = table.remove(actor.queue, 1)
-         local data = chip.getchip(removed[1])
-         actors.add({x=actor.x, y=actor.y, parent=actor}, data.src.ent)
+         chip.use(actor, removed[1], removed[2])
       end
    end,
 }

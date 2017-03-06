@@ -1,7 +1,6 @@
 local gravity = 0.1
 
-return {
-   color = {169, 53, 197},
+local ent = {
    start = function (self)
       local dr = math.random() / 16 + 1/32
       local theta = math.random() * 2 * math.pi
@@ -21,3 +20,5 @@ return {
       love.graphics.setColor(255, 255, 255, 255)
    end,
 }
+
+return {ent=ent}
