@@ -3,6 +3,8 @@ local stage = require "src/battle/stage"
 local queue = require "src/battle/queue"
 
 local ent = {
+   tangible = true,
+   size = 0.4,
    draw = function (self, x, y)
       queue.draw(self.queue, x+self.ox, y-15)
    end,
