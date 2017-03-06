@@ -26,7 +26,7 @@ return {
       sb:clear()
       if hp and hp>0 then
          local x,y = 8,8
-         for char in tostring(hp):gmatch(".") do
+         for char in tostring(math.floor(hp)):gmatch(".") do
             sb:add(sheet.numbers[char:byte() - ("0"):byte() + 1], x, y)
             x = x + 8
          end
