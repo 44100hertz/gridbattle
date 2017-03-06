@@ -4,9 +4,7 @@ local anim = require "src/anim"
 local w,h = img:getDimensions()
 local sheet = {
    numbers = anim.sheet(0,0,8,11,10,1,w,h)[1],
-   hp = anim.sheet(0,16,8,4,1,1,w,h)[1][1],
-   time = anim.sheet(0,16,16,4,1,1,w,h)[1][1],
-   bar = anim.sheet(0,24,8,8,3,1,w,h)[1],
+   bar = anim.sheet(0,16,8,8,3,1,w,h)[1],
 }
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
