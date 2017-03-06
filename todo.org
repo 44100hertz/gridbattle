@@ -3,10 +3,17 @@
 ** TODO make enemies use attacks (chips)
 ** TODO give player HP, death
 ** TODO automate scene transitions
+Tell scene.lua that you want a fade, and it just does it without
+having to manually push a transition.
 ** TODO deck editor
 Select which chips out of your pool of chips
 to put into a given deck.
 ** TODO class variants
+** TODO memory cleanup
+This is best done by keeping all loaded assets in tables. State exit
+functions will be added that nil these tables. Possibly: an asset
+manager is passed said tables, and clears them out when states get
+popped.
 ** TODO multiplayer
 Get two players up that can fight each o ther.
 ** TODO ONLINE multiplier (hooooo boy)
@@ -55,6 +62,8 @@ assets when battles end, etc.
 ** DONE custom mono fonts via ascii grid style + spritebatch
 ** DONE joypad
 * TODO possibly not needed
+** TODO find a way to separate images nicely
+could maybe just solve this with editor, lol
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
