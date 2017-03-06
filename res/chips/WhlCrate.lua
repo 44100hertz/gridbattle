@@ -11,7 +11,7 @@ local ent = {
    size = 0.4,
    start = function (self)
       self.tangible=false
-      self.x = self.x + 1
+      self.x = self.x + (self.side=="left" and 1 or -1)
    end,
    update = function (self)
       if self.dz<0 and self.z<=0 then
