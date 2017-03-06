@@ -86,7 +86,7 @@ return {
       actors = {}
       images = {}
       for i = 1,#set.actors,3 do
-         local dup = {}
+         local dup = {side="right"}
          for k,v in pairs(set.actors[i]) do dup[k] = v end
          add(dup, set.actors[i+1], set.actors[i+2])
       end
@@ -130,7 +130,8 @@ return {
          end
          if v.lifespan and v.time >= v.lifespan then v.despawn=true end
 
-         if v.dx then v.x = v.x + v.dx end
+         if v.dx then
+            v.x = v.side=="right" and v.x - v.dx or v.x + v.dx end
          if v.dy then v.y = v.y + v.dy end
          if v.dz then v.z = v.z + v.dz end
 

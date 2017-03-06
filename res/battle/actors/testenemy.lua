@@ -1,4 +1,5 @@
 local actors = require "src/battle/actors"
+local chip = require "src/chip"
 
 local ent = {
    group = "enemy",
@@ -26,6 +27,11 @@ return {
          img = "testenemy2",
          max_hp = 80,
          color = {53, 57, 196},
+         update = function (self)
+            if self.time%60 == 0 then
+               chip.use(self, "Triangle")
+            end
+         end,
       },
    }
 }
