@@ -24,10 +24,12 @@ return {
       love.graphics.setColor(255, 255, 255)
 
       sb:clear()
-      local x,y = 8,8
-      for char in tostring(hp):gmatch(".") do
-         sb:add(sheet.numbers[char:byte() - ("0"):byte() + 1], x, y)
-         x = x + 8
+      if hp and hp>0 then
+         local x,y = 8,8
+         for char in tostring(hp):gmatch(".") do
+            sb:add(sheet.numbers[char:byte() - ("0"):byte() + 1], x, y)
+            x = x + 8
+         end
       end
       local x,y = bar_x, 8
       local segs = bar_width/8 - 2
