@@ -1,7 +1,9 @@
 * TODO serious time
-** TODO battle status info
-** TODO make enemies use attacks (chips)
-** TODO give player HP, death
+** DONE battle status info
+** DONE make enemies use attacks (chips)
+** DONE give player HP, death
+** TODO enemy list
+** TODO make enemies aware of player
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
@@ -62,6 +64,9 @@ assets when battles end, etc.
 ** DONE custom mono fonts via ascii grid style + spritebatch
 ** DONE joypad
 * TODO possibly not needed
+** TODO separate battle actors into category lists
+Ents: All actors are entities, so they're run as well.
+Actors: assume that all actors (player, enemy) are stateful.
 ** TODO make sheets a bit easier
 ** TODO make keyboard input more responsive
 mostly for directions, just make it so the most recently pressed
