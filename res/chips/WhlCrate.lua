@@ -2,16 +2,15 @@ local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 
 local ent = {
-   group = "neutral",
    img="wheel_crate",
-   sheet={0,0,45,60,1,1,45,60},
+   group = "neutral",
+   side = "none",
    ox=17, oy=35,
    tangible=false,
    dx=0, z = 200, dz = -5,
    size = 0.4,
    start = function (self)
-      self.tangible=false
-      self.x = self.x + (self.side=="left" and 1 or -1)
+      self.x = self.x + (self.parent.side=="left" and 1 or -1)
    end,
    update = function (self)
       if self.dz<0 and self.z<=0 then
@@ -21,6 +20,7 @@ local ent = {
             self.dz = 0
             self.tangible = true
             stage.occupy(self, self.x, self.y)
+            self.damage = 4
          else
             actors.damage(tenant, 40)
             self.despawn = true
@@ -29,10 +29,9 @@ local ent = {
    end,
 
    collide = function (self, with)
-      if with.dx and with.dx > 0 then
+      if with.dx and with.dx~=0 then
+         self.dx = with.real_dx>0 and 1/16 or -1/16
          stage.free(self.x, self.y)
-         self.damage = 4
-         self.dx = 1/16
       end
    end,
 }
