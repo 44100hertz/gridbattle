@@ -81,6 +81,7 @@ local add = function (actor, class, variant)
    if actor.max_hp then actor.hp = actor.max_hp end
 
    table.insert(actors, actor)
+   return actor
 end
 
 return {
@@ -133,7 +134,9 @@ return {
          if v.lifespan and v.time >= v.lifespan then v.despawn=true end
 
          if v.dx then
-            v.x = v.side=="right" and v.x - v.dx or v.x + v.dx end
+            v.real_dx = v.side=="right" and -v.dx or v.dx
+            v.x = v.x + v.real_dx
+         end
          if v.dy then v.y = v.y + v.dy end
          if v.dz then v.z = v.z + v.dz end
 

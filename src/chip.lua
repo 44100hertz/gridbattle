@@ -39,10 +39,11 @@ return {
 
    use = function (actor, chip, variant)
       local data = getchip(chip)
-      actors.add({
-            x=actor.x, y=actor.y, side=actor.side, group=actor.group,
-            parent=actor},
+      local added = actors.add(
+         {x=actor.x, y=actor.y, parent=actor},
          data.src, variant)
+      added.group = added.group or actor.group
+      added.side = added.side or actor.side
    end,
 
    letter2num = {a=1,b=2,c=3,d=4,e=5},
