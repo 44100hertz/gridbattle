@@ -43,8 +43,9 @@ love.run = function ()
             scene.draw()
       end)
 
-      love.graphics.setBlendMode("replace", "premultiplied")
+--      love.graphics.setBlendMode("replace", "premultiplied")
       love.graphics.draw( canvas, 0,0,0, gamescale )
+      love.graphics.print(math.floor(collectgarbage("count")))
       love.graphics.present()
 
       if outdir then
