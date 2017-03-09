@@ -80,7 +80,11 @@ could maybe just solve this with editor, lol
 ** TODO keyboard and game configs
  1. Readable
  2. Writable
-** TODO lazy depth calculation
+** DONE lazy depth calculation
+I wanted to do this, I did a decent amount of the work...it's not
+worth it, there's nothing to gain. This can be revived if I actually
+bottleneck again.
+
 Calculate depth on each draw call, then update that to be only when
 things move. Maintain a drawn game state, essentially.
 ** TODO allow certain collisions to only happen once
