@@ -2,8 +2,8 @@
 ** DONE battle status info
 ** DONE make enemies use attacks (chips)
 ** DONE give player HP, death
-** TODO enemy list
-** TODO make enemies aware of player
+** DONE enemy list
+** DONE make enemies aware of player
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
