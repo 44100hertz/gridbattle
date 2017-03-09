@@ -27,10 +27,15 @@ return {
          img = "testenemy2",
          max_hp = 80,
          color = {53, 57, 196},
+         cooldown = 0,
          update = function (self)
-            if self.time%60 == 0 then
+            if math.abs(self.y-actors.player.y) < 1
+               and self.cooldown<1
+            then
+               self.cooldown = 60
                chip.use(self, "Triangle")
             end
+            self.cooldown = self.cooldown - 1
          end,
       },
    }
