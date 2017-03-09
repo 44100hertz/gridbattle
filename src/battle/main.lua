@@ -53,8 +53,8 @@ return {
       actors.draw()
       stage.draw()
 
+      ui.draw(actors.player.hp, cust_frames, actors.getnames())
       depthdraw.draw()
-      ui.draw(actors.player.hp, cust_frames)
    end,
 
    selectchips = selectchips,

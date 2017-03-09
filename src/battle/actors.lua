@@ -54,8 +54,6 @@ local add = function (actor, class, variant)
       setmetatable(actor, class.ent)
    end
 
---   if actor.side=="right" then actor.ox = -actor.ox end
-
    -- Load the actor --
    local img
    if actor.img then
@@ -84,14 +82,31 @@ local add = function (actor, class, variant)
    return actor
 end
 
+local clear = function ()
+   actors = {}
+   images = {}
+end
+
 return {
+   -- data
+   player = player,
+   -- fns
+   add = add,
+   damage = damage,
+   clear = clear,
+
    start = function (set)
       actors = {}
       images = {}
       for i = 1,#set.actors,3 do
-         local dup = {side="right"}
+         -- Duplicate the actors table
+         local dup = {}
          for k,v in pairs(set.actors[i]) do dup[k] = v end
+         -- Add to local actors table
          add(dup, set.actors[i+1], set.actors[i+2])
+         -- Set some default data
+         if not dup.side then dup.side = "right" end
+         if dup.group == "enemy" then dup.name = set.actors[i+1] end
       end
       player.side = "left"
       player.x=set.playerpos.x
@@ -207,7 +222,11 @@ return {
       end
    end,
 
-   player = player,
-   add = add,
-   damage = damage,
+   getnames = function ()
+      local names = {}
+      for _,v in ipairs(actors) do
+         if v.name then table.insert(names, v.name) end
+      end
+      return names
+   end,
 }
