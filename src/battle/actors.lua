@@ -93,6 +93,7 @@ return {
          for k,v in pairs(set.actors[i]) do dup[k] = v end
          add(dup, set.actors[i+1], set.actors[i+2])
       end
+      for k,_ in pairs(player) do player[k] = nil end
       player.side = "left"
       player.x=set.playerpos.x
       player.y=set.playerpos.y
