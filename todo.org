@@ -1,15 +1,16 @@
-* TODO serious time
-** DONE battle status info
-** DONE make enemies use attacks (chips)
-** DONE give player HP, death
-** DONE enemy list
-** DONE make enemies aware of player
-** TODO automate scene transitions
-Tell scene.lua that you want a fade, and it just does it without
-having to manually push a transition.
+* Features
 ** TODO deck editor
-Select which chips out of your pool of chips
-to put into a given deck.
+Select which chips out of your pool of chips to put into a given deck.
+*** TODO reorganize chips/variants
+allchips.lua is a dumb idea. Instead, just have chips.lua build a chip
+db automatically
+** TODO variants and naming
+The current naming scheme doesn't have a great way of dealing with
+varients. In fact, in general, specifying a chip or enemy and its
+variant just more of a hassle. Each name should specify a variant in
+general. I was going to make allChips.lua able to solve this problem
+by creating a database of chips on the fly, but I might also want an
+allEnemies.lua equivalent. Better naming could be in order here.
 ** TODO memory cleanup
 This is best done by keeping all loaded assets in tables. State exit
 functions will be added that nil these tables. Possibly: an asset
@@ -18,6 +19,53 @@ popped.
 ** TODO multiplayer
 Get two players up that can fight each o ther.
 ** TODO ONLINE multiplier (hooooo boy)
+** TODO debug stuff
+*** TODO any chip selector
+*** TODO RAM, CPU, video info
+
+** TODO configuration and saves
+* Steps
+** TODO game over screen, reset the game
+** TODO show name of top chip on queue
+** TODO automate scene transitions
+Tell scene.lua that you want a fade, and it just does it without
+having to manually push a transition.
+** TODO separate battle actors into category lists
+Ents: All actors are entities, so they're run as well.
+Actors: assume that all actors (player, enemy) are stateful.
+** TODO make sheets a bit easier
+** TODO make keyboard input more responsive
+mostly for directions, just make it so the most recently pressed
+direction is what registers, as opposed to just having left/right
+priority, etc.
+** TODO find a way to separate images nicely
+could maybe just solve this with editor, lol
+** TODO allow certain collisions to only happen once
+Have a collide_time variable, and just check if it equals 1
+** TODO FPS independance via threads (if stable)
+** DONE lazy depth calculation
+I wanted to do this, I did a decent amount of the work...it's not
+worth it, there's nothing to gain. This can be revived if I actually
+bottleneck again.
+
+Calculate depth on each draw call, then update that to be only when
+things move. Maintain a drawn game state, essentially.
+* TODO aesthetic
+** TODO player
+** TODO enemy
+** TODO more cool/trippy bg's
+** TODO sound effects
+ - Unified sound playback method; limits number of channels intelligently
+ - named sound sources, searchable, etc.
+** DONE crisp XM playback (supposedly)
+** TODO compose music
+** TODO add shine on panels
+* DONE sorted away progresso
+** DONE make enemies use attacks (chips)
+** DONE give player HP, death
+** DONE enemy list
+** DONE make enemies aware of player
+** DONE battle status info
 ** DONE class variants
 ** DONE table value to draw previous state
 ** DONE do actually use metatables, not classes
@@ -63,54 +111,6 @@ Not really sure what is meant by this, probably better just to null out
 assets when battles end, etc.
 ** DONE custom mono fonts via ascii grid style + spritebatch
 ** DONE joypad
-* TODO possibly not needed
-** TODO separate battle actors into category lists
-Ents: All actors are entities, so they're run as well.
-Actors: assume that all actors (player, enemy) are stateful.
-** TODO make sheets a bit easier
-** TODO make keyboard input more responsive
-mostly for directions, just make it so the most recently pressed
-direction is what registers, as opposed to just having left/right
-priority, etc.
-** TODO find a way to separate images nicely
-could maybe just solve this with editor, lol
-** TODO debug stuff
-*** TODO any chip selector
-*** TODO RAM, CPU, video info
-** TODO keyboard and game configs
- 1. Readable
- 2. Writable
-** DONE lazy depth calculation
-I wanted to do this, I did a decent amount of the work...it's not
-worth it, there's nothing to gain. This can be revived if I actually
-bottleneck again.
-
-Calculate depth on each draw call, then update that to be only when
-things move. Maintain a drawn game state, essentially.
-** TODO allow certain collisions to only happen once
-Have a collide_time variable, and just check if it equals 1
-** TODO FPS independance via threads (if stable)
-* TODO aesthetic
-** TODO player
-** TODO enemy
-** TODO more cool/trippy bg's
-** TODO sound effects
- - Unified sound playback method; limits number of channels intelligently
- - named sound sources, searchable, etc.
-** DONE crisp XM playback (supposedly)
-** TODO compose music
-** TODO add shine on panels
-* DONE initial game
-** DONE auto-sorting draw list (z-buffer)
-https://love2d.org/wiki/Skip_list:Drawing_Order
-** DONE drawing class w/organization
-** DONE custom fonts
-** DONE 6x3 grid
-** DONE movement
-** DONE debug menus
-** DONE battle objects (bullets, etc.)
-** DONE hitboxes/collision
-** DONE debug menus
 * DONE rewrite
 ** DONE no more "actor"
 ** DONE image asset management
@@ -125,3 +125,14 @@ FPS speeds were never really needed, I guess.
 Signals are dumb because they're really messy
 ** DONE no more "data"
 ** DONE 240x160
+* DONE initial game
+** DONE auto-sorting draw list (z-buffer)
+https://love2d.org/wiki/Skip_list:Drawing_Order
+** DONE drawing class w/organization
+** DONE custom fonts
+** DONE 6x3 grid
+** DONE movement
+** DONE debug menus
+** DONE battle objects (bullets, etc.)
+** DONE hitboxes/collision
+** DONE debug menus
