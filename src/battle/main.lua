@@ -6,8 +6,8 @@ local depthdraw = require "src/depthdraw"
 local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 local ui =  require "src/battle/ui"
-local Deck = require "src/Deck"
-local deck
+local Folder = require "src/Folder"
+local folder
 
 local cust_frames
 
@@ -20,14 +20,14 @@ _G.STAGE = {
 _G.CUST_TIME = 4*60
 
 selectchips = function ()
-   scene.push(require "res/menu/chips", deck, actors.player.queue)
+   scene.push(require "res/menu/chips", folder, actors.player.queue)
 end
 
 return {
    start = function (set)
-      local Deck = require "src/Deck"
-      deck = Deck:new(require "res/decks/test")
-      deck:shuffle()
+      local Folder = require "src/Folder"
+      folder = Folder:new(require "res/folders/test")
+      folder:shuffle()
 
       stage.start(set.stage.turf)
       actors.start(set)

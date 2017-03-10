@@ -1,16 +1,16 @@
-local Deck = {}
+local Folder = {}
 
-Deck.__index = Deck
+Folder.__index = Folder
 
--- Copy static deck data into a deck
-function Deck:new(new_Deck)
+-- Copy static folder data into a folder
+function Folder:new(new_Folder)
    self = {chips={}, index=1}
-   setmetatable(self, Deck)
-   for k,v in ipairs(new_Deck) do self.chips[k] = v end
+   setmetatable(self, Folder)
+   for k,v in ipairs(new_Folder) do self.chips[k] = v end
    return self
 end
 
-function Deck:shuffle()
+function Folder:shuffle()
    local shuffled = {}
    local len = #self.chips
    for i=1,len do
@@ -26,8 +26,8 @@ function Deck:shuffle()
    self.chips = shuffled
 end
 
--- Draw a deck, optionally fill a palette
-function Deck:draw(num, palette)
+-- Draw a folder, optionally fill a palette
+function Folder:draw(num, palette)
    pal = palette or {}
    for i=1,num do
       if not pal[i] then
@@ -38,4 +38,4 @@ function Deck:draw(num, palette)
    return pal
 end
 
-return Deck
+return Folder
