@@ -108,6 +108,7 @@ return {
          if not dup.side then dup.side = "right" end
          if dup.group == "enemy" then dup.name = set.actors[i+1] end
       end
+      for k,_ in pairs(player) do player[k] = nil end
       player.side = "left"
       player.x=set.playerpos.x
       player.y=set.playerpos.y

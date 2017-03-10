@@ -1,9 +1,7 @@
 local input = require "src/input"
 local text = require "src/text"
 
-local Menu = {
-   sel = 1,
-}
+local Menu = {}
 Menu.__index = Menu
 
 function Menu:new (new_menu)
@@ -14,6 +12,7 @@ function Menu:new (new_menu)
          love.graphics.newImage("res/menu/" .. self.bg_img .. ".png")
       self.bg_img = nil
    end
+   self.sel = 1
    return self
 end
 
