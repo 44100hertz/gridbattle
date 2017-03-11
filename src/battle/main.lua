@@ -21,6 +21,7 @@ _G.CUST_TIME = 4*60
 
 selectchips = function ()
    scene.push(require "res/menu/chips", folder, actors.player.queue)
+   cust_frames = 0
 end
 
 return {
@@ -32,7 +33,6 @@ return {
       stage.start(set.stage.turf)
       actors.start(set)
       bg.start(set.bg)
-      cust_frames = 0
    end,
 
    update = function (_, input)
@@ -46,7 +46,7 @@ return {
 	 if input.st == 1 then
 	    scene.push((require "src/Menu"):new(require "res/menu/pause"))
 	    return
-	 elseif input.l==1 or input.r==1 then
+	 elseif cust_frames >= CUST_TIME and (input.l==1 or input.r==1) then
 	    selectchips()
 	    return
 	 end
