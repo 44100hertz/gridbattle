@@ -21,7 +21,24 @@ local getchip = function (name)
    return chips[name]
 end
 
+local use = function (actor, chip, variant)
+   local data = getchip(chip)
+   local added = actors.add(
+      {x=actor.x, y=actor.y, parent=actor},
+      data.src, variant)
+   added.group = added.group or actor.group
+   added.side = added.side or actor.side
+end
+
+local draw_icon = function (name, x, y)
+   local chip = getchip(name)
+   love.graphics.draw(chip.img, icon, x, y)
+end
+
 return {
+   use = use,
+   draw_icon = draw_icon,
+
    clear = function ()
       chips = {}
    end,
@@ -32,18 +49,21 @@ return {
       love.graphics.draw(chip.img, art[index], x, y)
    end,
 
-   draw_icon = function (name, x, y)
-      local chip = getchip(name)
-      love.graphics.draw(chip.img, icon, x, y)
+   queue_draw = function (queue, x, y)
+      x = x - #queue - 8
+      y = y - #queue - 8
+      for i=#queue,1,-1 do
+         draw_icon(queue[i][1], x, y)
+         x=x+2
+         y=y+2
+      end
    end,
 
-   use = function (actor, chip, variant)
-      local data = getchip(chip)
-      local added = actors.add(
-         {x=actor.x, y=actor.y, parent=actor},
-         data.src, variant)
-      added.group = added.group or actor.group
-      added.side = added.side or actor.side
+   queue_use = function (actor)
+      if #actor.queue>0 then
+         local removed = table.remove(actor.queue, 1)
+         use(actor, removed[1], removed[2])
+      end
    end,
 
    letter2num = {a=1,b=2,c=3,d=4,e=5},

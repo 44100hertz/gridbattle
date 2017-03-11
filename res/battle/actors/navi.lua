@@ -1,11 +1,11 @@
 local stage = require "src/battle/stage"
-local queue = require "src/battle/queue"
+local chip = require "src/chip"
 
 local ent = {
    tangible = true,
    size = 0.4,
    draw = function (self, x, y)
-      queue.draw(self.queue, x+self.ox, y-15)
+      chip.queue_draw(self.queue, x+self.ox, y-15)
    end,
 
    states = {
@@ -47,7 +47,7 @@ return {
             local lr = input.dr - input.dl
             local ud = input.dd - input.du
 
-            if input.a==1  then queue.use_chip(self)
+            if input.a==1  then chip.queue_use(self)
             elseif ud<0 then move(0, -1)
             elseif ud>0 then move(0, 1)
             elseif lr<0 then move(-1, 0)
