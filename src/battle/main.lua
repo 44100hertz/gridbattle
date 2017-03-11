@@ -14,7 +14,7 @@ local cust_frames
 -- Some global vars used throughout battle
 _G.STAGE = {
    numx = 6,   numy = 3,
-   xoff = -20, yoff = 64,
+   xoff = -20, yoff = 62,
    w = 40,     h = 24,
 }
 _G.CUST_TIME = 4*60
@@ -63,8 +63,9 @@ return {
       actors.draw()
       stage.draw()
 
-      ui.draw(actors.player.hp, cust_frames, actors.names())
+      ui.draw_under(actors.player, cust_frames, actors.names())
       depthdraw.draw()
+      ui.draw_over(actors.player)
    end,
 
    selectchips = selectchips,

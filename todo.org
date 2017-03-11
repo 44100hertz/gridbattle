@@ -25,7 +25,8 @@ Get two players up that can fight each o ther.
 
 ** TODO configuration and saves
 * Steps
-** TODO show name of top chip on queue
+** TODO automatic text align center and right
+** DONE show name of top chip on queue
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.

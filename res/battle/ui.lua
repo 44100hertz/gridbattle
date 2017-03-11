@@ -9,7 +9,7 @@ local bar = anim.sheet(0,0,8,8,3,1,w,h)[1]
 local bar_width = 128
 
 return {
-   draw = function (hp, cust_frames, names)
+   draw_under = function (player, cust_frames, names, top_chip)
       local full_amt = cust_frames / CUST_TIME * bar_width
       local bar_size = math.min(full_amt, bar_width-2)
 
@@ -20,8 +20,8 @@ return {
 
       sb:clear()
       -- HP
-      if hp and hp>0 then
-         text.draw("visible", tostring(math.floor(hp)), 4, 4)
+      if player.hp>0 then
+         text.draw("visible", tostring(math.floor(player.hp)), 4, 4)
       end
 
       -- Enemy names
@@ -50,5 +50,12 @@ return {
       x = x + 8
       sb:add(bar[3], x, y)
       love.graphics.draw(sb)
+   end,
+
+   draw_over = function (player)
+      if #player.queue > 0 then
+	 local top = player.queue[#player.queue][1]
+	 text.draw("visible", top, 0, GAME.height-11)
+      end
    end,
 }
