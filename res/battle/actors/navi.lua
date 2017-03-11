@@ -43,6 +43,7 @@ return {
                   self.enter_state = "move"
                end
             end
+	    if not input then return end
             local lr = input.dr - input.dl
             local ud = input.dd - input.du
 

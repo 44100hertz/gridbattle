@@ -1,10 +1,10 @@
-local input = require "src/input"
 local scene = require "src/scene"
 
 local image
 
 return {
    transparent = true,
+   open = true,
 
    start = function (result)
       if result=="win" then
@@ -14,7 +14,7 @@ return {
       end
    end,
 
-   update = function ()
+   update = function (_, input)
       if input.a==1 then
 	 scene.pop()
 	 scene.pop()

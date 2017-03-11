@@ -36,15 +36,15 @@ return {
 
    update = function (_, input)
       local ending = actors.ending()
-      if ending then
+      if input and ending then
 	 scene.push(require "res/menu/results", ending)
 	 return
       end
 
-      if input.st == 1 then
+      if input and input.st == 1 then
          scene.push((require "src/Menu"):new(require "res/menu/pause"))
 	 return
-      elseif input.l==1 or input.r==1 then
+      elseif input and (input.l==1 or input.r==1) then
          selectchips()
          return
       end

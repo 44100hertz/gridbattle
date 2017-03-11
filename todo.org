@@ -27,7 +27,7 @@ Get two players up that can fight each o ther.
 * Steps
 ** TODO allow states to let the previous state partially update
 *** DONE pass in input as part of the update, rather than including directly
-*** TODO make things that use input handle it not being passed in
+*** DONE make things that use input handle it not being passed in
 ** DONE game over screen, reset the game
 ** TODO show name of top chip on queue
 ** TODO automate scene transitions
