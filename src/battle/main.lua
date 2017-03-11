@@ -38,8 +38,7 @@ return {
    update = function ()
       local ending = actors.ending()
       if ending then
-	 scene.pop()
-	 print(ending)
+	 scene.push(require "res/menu/results", ending)
 	 return
       end
 
