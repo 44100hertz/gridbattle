@@ -21,6 +21,7 @@ return {
    end,
 
    update = function ()
+      input.update()
       stack[#stack]:update()
    end,
 
