@@ -37,9 +37,7 @@ love.run = function ()
       scene.update()
 
       love.graphics.setBlendMode("alpha", "alphamultiply")
-      canvas:renderTo( function()
-            scene.draw()
-      end)
+      canvas:renderTo(scene.draw)
 
 --      love.graphics.setBlendMode("replace", "premultiplied")
       love.graphics.draw( canvas, 0,0,0, gamescale )
