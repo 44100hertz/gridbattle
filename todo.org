@@ -25,7 +25,10 @@ Get two players up that can fight each o ther.
 
 ** TODO configuration and saves
 * Steps
-** TODO game over screen, reset the game
+** TODO allow states to let the previous state partially update
+*** DONE pass in input as part of the update, rather than including directly
+*** TODO make things that use input handle it not being passed in
+** DONE game over screen, reset the game
 ** TODO show name of top chip on queue
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
