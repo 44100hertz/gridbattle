@@ -36,12 +36,21 @@ return {
    end,
 
    update = function ()
+      local ending = actors.ending()
+      if ending then
+	 scene.pop()
+	 print(ending)
+	 return
+      end
+
       if input.st == 1 then
          scene.push((require "src/Menu"):new(require "res/menu/pause"))
+	 return
       elseif input.l==1 or input.r==1 then
          selectchips()
          return
       end
+
       actors.update()
       stage.update()
       cust_frames = cust_frames + 1
@@ -53,7 +62,7 @@ return {
       actors.draw()
       stage.draw()
 
-      ui.draw(actors.player.hp, cust_frames, actors.getnames())
+      ui.draw(actors.player.hp, cust_frames, actors.names())
       depthdraw.draw()
    end,
 

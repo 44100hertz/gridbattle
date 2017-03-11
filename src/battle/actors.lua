@@ -223,11 +223,21 @@ return {
       end
    end,
 
-   getnames = function ()
+   names = function ()
       local names = {}
       for _,v in ipairs(actors) do
          if v.name then table.insert(names, v.name) end
       end
       return names
+   end,
+
+   ending = function ()
+      if player.despawn then return "lose" end
+
+      local enemies_alive
+      for _,v in ipairs(actors) do
+         if v.name then enemies_alive = true end
+      end
+      if not enemies_alive then return "win" end
    end,
 }
