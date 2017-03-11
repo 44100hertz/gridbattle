@@ -5,7 +5,7 @@ local img = love.graphics.newImage("res/battle/ui.png")
 local sb = love.graphics.newSpriteBatch(img, 40, "stream")
 local bar, bar_width, bar_x
 local w,h = img:getDimensions()
-local bar = anim.sheet(0,16,8,8,3,1,w,h)[1]
+local bar = anim.sheet(0,0,8,8,3,1,w,h)[1]
 local bar_width = 128
 
 return {
