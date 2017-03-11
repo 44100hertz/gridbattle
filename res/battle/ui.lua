@@ -25,7 +25,7 @@ return {
       end
 
       -- Enemy names
-      local y=4
+      local y=2
       for _,v in ipairs(names) do
          local w,h = text.get_size("shadow", v)
          local x = GAME.width - w
@@ -35,7 +35,7 @@ return {
 
       -- Status bar
       local bar_x = GAME.width/2 - bar_width/2
-      local bar_y = 4
+      local bar_y = 2
       love.graphics.setColor(red, 40, 40)
       love.graphics.rectangle("fill", bar_x+1, bar_y, bar_size, 8)
       love.graphics.setColor(255, 255, 255)
