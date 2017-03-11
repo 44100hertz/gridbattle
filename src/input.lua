@@ -55,22 +55,12 @@ local input = {
             buttons[k] = 0
          end
       end
+      return buttons
    end,
 
    rebind = function (binds)
       keyBind = binds
    end
 }
-
--- Bind "input.a", for example, to the value of a, but return it; do
--- not allow modification. This mostly just serves a syntactic
--- purpose.
-input.mt = {
-   __index = function (_, key)
-      return buttons[key]
-   end
-}
-
-setmetatable(input, input.mt)
 
 return input

@@ -115,7 +115,7 @@ return {
       add(player, "navi", "player")
    end,
 
-   update = function ()
+   update = function (input)
       for _,v in ipairs(actors) do
          -- Handle stateful actors' states
          if v.states then
@@ -128,7 +128,7 @@ return {
             if v.state.iasa and
                v.time >= v.state.iasa * v.state.speed
             then
-               v:act()
+               v:act(input)
             end
             if v.state.length and
                v.time >= v.state.length * v.state.speed
@@ -137,7 +137,7 @@ return {
             end
          end
 
-         if v.update then v:update() end
+         if v.update then v:update(input) end
          -- Death
          if v.hp and v.hp <= 0 then
             if v.die then v:die() end

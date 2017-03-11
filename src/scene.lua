@@ -21,8 +21,8 @@ return {
    end,
 
    update = function ()
-      input.update()
-      stack[#stack]:update()
+      local inputs = input.update()
+      stack[#stack]:update(inputs)
    end,
 
    draw = function ()

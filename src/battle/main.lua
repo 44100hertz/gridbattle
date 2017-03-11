@@ -1,5 +1,4 @@
 local scene = require "src/scene"
-local input = require "src/input"
 local bg = require "src/bg"
 
 local depthdraw = require "src/depthdraw"
@@ -35,7 +34,7 @@ return {
       cust_frames = 0
    end,
 
-   update = function ()
+   update = function (_, input)
       local ending = actors.ending()
       if ending then
 	 scene.push(require "res/menu/results", ending)
@@ -50,7 +49,7 @@ return {
          return
       end
 
-      actors.update()
+      actors.update(input)
       stage.update()
       cust_frames = cust_frames + 1
    end,

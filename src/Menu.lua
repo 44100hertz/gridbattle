@@ -1,4 +1,3 @@
-local input = require "src/input"
 local text = require "src/text"
 
 local Menu = {}
@@ -16,7 +15,7 @@ function Menu:new (new_menu)
    return self
 end
 
-function Menu:update ()
+function Menu:update (input)
    if input.a==1 then
       self[self.sel][2]() return end
    if input.dd==1 then

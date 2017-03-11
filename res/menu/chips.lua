@@ -32,7 +32,7 @@ return {
       pal = deck:draw(5, pal)
    end,
 
-   update = function ()
+   update = function (_, input)
       if     input.dl==1 then sel = (sel-1)%6
       elseif input.dr==1 then sel = (sel+1)%6
       elseif input.a==1 then

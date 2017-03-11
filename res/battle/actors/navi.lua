@@ -1,4 +1,3 @@
-local input = require "src/input"
 local stage = require "src/battle/stage"
 local queue = require "src/battle/queue"
 
@@ -34,7 +33,7 @@ return {
          sheet = {0,0,50,60,2,6},
          ox = 24, oy = 54,
          hp = 300, hide_hp = true,
-         act = function (self)
+         act = function (self, input)
             local move = function  (dx, dy)
                local goalx, goaly = self.x+dx, self.y+dy
                if stage.isfree(goalx, goaly, self.side) then
