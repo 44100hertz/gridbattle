@@ -36,10 +36,7 @@ local ent = {
 }
 
 return {
-   desc=[[
-Damage it
-to roll
-over foes.
-]],
+   desc={"Damage makes",
+         "it roll."},
    ent=ent,
 }

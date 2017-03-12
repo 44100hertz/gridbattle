@@ -21,10 +21,10 @@ return {
       transparent = true,
       start = function (new_text, new_x, new_y)
          text, x, y = new_text, new_x, new_y
-         w,h = src_text.get_size(font, text)
+         w,h = src_text.getsize(font, text)
       end,
-      update = function ()
-         if input.b == 1 then
+      update = function (_, input)
+         if input.a == 1 or input.b == 1 then
             scene.pop()
          end
       end,

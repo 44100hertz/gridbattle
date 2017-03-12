@@ -28,39 +28,32 @@ local getletter = function (f, char)
    return f.quads[c]
 end
 
-local getsize = function (font, text)
-   local f = getfont(font)
-   local w, maxw = 0,0
-   local h = 0
-   for char in text:gmatch(".") do
-      if char=="\n" then
-         w = 0
-         h = h + 1
-      else
-         w = w + 1
-         maxw = math.max(w, maxw)
-      end
+local getsize = function (font, lines)
+   if type(lines) == "string" then lines = {lines} end
+
+   local maxw = 0
+   for _,line in ipairs(lines) do
+      maxw = math.max(maxw, line:len())
    end
-   return maxw*f.char_w, math.max(1,h)*f.char_h
+
+   local f = getfont(font)
+   return maxw*f.char_w, #lines*f.char_h
 end
 
-local draw = function (font, text, ox, oy, layout)
-   if layout=="right" then
-      ox = ox - getsize(font, text)
-   elseif layout=="center" then
-      ox = ox - getsize(font, text) / 2
-   end
+local draw = function (font, lines, ox, oy, layout)
+   if type(lines) == "string" then lines = {lines} end
 
    local f = getfont(font)
    f.sb:clear()
    local x,y = ox,oy
-   for char in text:gmatch(".") do
-      if char=="\n" then
-         x,y = ox, y+f.char_h
-      else
+   for _,line in ipairs(lines) do
+      if layout=="right" then x = ox - getsize(font, line) end
+      if layout=="center" then x = ox - getsize(font, line)/2 end
+      for char in line:gmatch(".") do
          f.sb:add(getletter(f, char), x, y)
          x = x+f.char_w
       end
+      x,y = ox, y+f.char_h
    end
    love.graphics.draw(f.sb)
 end

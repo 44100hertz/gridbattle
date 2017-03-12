@@ -25,7 +25,6 @@ return {
       end
 
       -- Enemy names
-      local names = table.concat(names, "\n")
       text.draw("shadow", names, GAME.width, 2, "right")
 
       -- Status bar

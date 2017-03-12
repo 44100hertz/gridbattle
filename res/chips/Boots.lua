@@ -31,10 +31,7 @@ local bootspawner = {
 }
 
 return {
-   desc=[[
-Fire off
-a pair
-of boots.
-]],
+   desc={"Fire off a",
+         "pair of boots."},
    ent=bootspawner,
 }

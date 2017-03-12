@@ -17,10 +17,7 @@ local ent = {
 }
 
 return {
-   desc=[[
-Poison
-3 squares
-ahead.
-]],
+   desc={"Poison 3",
+         "spaces ahead."},
    ent=ent,
 }
