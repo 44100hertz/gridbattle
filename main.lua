@@ -1,5 +1,4 @@
 local scene = require "src/scene"
-local input = require "src/input"
 
 _G.GAME = {
    width = 240,
@@ -35,13 +34,10 @@ love.run = function ()
          love.handlers[name](a,b,c,d,e,f)
       end
 
-      input.update()
       scene.update()
 
       love.graphics.setBlendMode("alpha", "alphamultiply")
-      canvas:renderTo( function()
-            scene.draw()
-      end)
+      canvas:renderTo(scene.draw)
 
 --      love.graphics.setBlendMode("replace", "premultiplied")
       love.graphics.draw( canvas, 0,0,0, gamescale )

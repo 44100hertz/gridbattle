@@ -117,7 +117,7 @@ return {
       add(player, "navi", "player")
    end,
 
-   update = function ()
+   update = function (input)
       for _,v in ipairs(actors) do
          -- Handle stateful actors' states
          if v.states then
@@ -130,7 +130,7 @@ return {
             if v.state.iasa and
                v.time >= v.state.iasa * v.state.speed
             then
-               v:act()
+               v:act(input)
             end
             if v.state.length and
                v.time >= v.state.length * v.state.speed
@@ -139,7 +139,7 @@ return {
             end
          end
 
-         if v.update then v:update() end
+         if v.update then v:update(input) end
          -- Death
          if v.hp and v.hp <= 0 then
             if v.die then v:die() end
@@ -225,11 +225,21 @@ return {
       end
    end,
 
-   getnames = function ()
+   names = function ()
       local names = {}
       for _,v in ipairs(actors) do
          if v.name then table.insert(names, v.name) end
       end
       return names
+   end,
+
+   ending = function ()
+      if player.despawn then return "lose" end
+
+      local enemies_alive
+      for _,v in ipairs(actors) do
+         if v.name then enemies_alive = true end
+      end
+      if not enemies_alive then return "win" end
    end,
 }

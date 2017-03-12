@@ -32,7 +32,7 @@ return {
             if math.abs(self.y-actors.player.y) < 1
                and self.cooldown<1
             then
-               self.cooldown = 60
+               self.cooldown = 80
                chip.use(self, "Triangle")
             end
             self.cooldown = self.cooldown - 1

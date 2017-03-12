@@ -21,7 +21,10 @@ return {
    end,
 
    update = function ()
-      stack[#stack]:update()
+      local top = stack[#stack]
+      if top.open then stack[#stack-1]:update() end
+      local inputs = input.update()
+      stack[#stack]:update(inputs)
    end,
 
    draw = function ()
