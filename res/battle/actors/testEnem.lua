@@ -18,12 +18,12 @@ local ent = {
 return {
    ent = ent,
    variants = {
-      purple = {
+      {
          img = "testenemy",
          max_hp = 40,
          color = {169, 53, 197},
       },
-      blue = {
+      {
          img = "testenemy2",
          max_hp = 80,
          color = {53, 57, 196},

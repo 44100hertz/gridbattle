@@ -40,7 +40,7 @@ local add = function (actor, class, variant)
    end
 
    if variant then
-      if type(variant)=="string" then
+      if type(variant)~="table" then
          variant = class.variants[variant]
       end
 
@@ -106,7 +106,9 @@ return {
          add(dup, set.actors[i+1], set.actors[i+2])
          -- Set some default data
          if not dup.side then dup.side = "right" end
-         if dup.group == "enemy" then dup.name = set.actors[i+1] end
+         if dup.group == "enemy" then
+            dup.name = set.actors[i+1] .. tostring(set.actors[i+2])
+         end
       end
       for k,_ in pairs(player) do player[k] = nil end
       player.side = "left"

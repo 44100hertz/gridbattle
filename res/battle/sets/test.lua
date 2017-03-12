@@ -4,10 +4,10 @@ return {
    },
    playerpos = {x=2, y=2},
    actors = {
-      {x=4, y=1}, "testenemy", "purple",
-      {x=4, y=3}, "testenemy", "purple",
-      {x=6, y=1}, "testenemy", "blue",
-      {x=6, y=3}, "testenemy", "blue",
+      {x=4, y=1}, "testEnem", 1,
+      {x=4, y=3}, "testEnem", 1,
+      {x=6, y=1}, "testEnem", 2,
+      {x=6, y=3}, "testEnem", 2,
    },
    bg=love.graphics.newImage("res/bg/test.png")
 }
