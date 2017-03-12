@@ -107,12 +107,12 @@ return {
 
       for k,_ in ipairs(enemy) do enemy[k] = nil end
       for i = 1,#set.enemy,3 do
-	 local idx = (i-1)/3+1
-	 enemy[idx] = {}
-	 for k,v in pairs(set.enemy[i]) do enemy[idx][k] = v end
-	 enemy[idx].name = set.enemy[i+1]
-	 enemy[idx].side = "right"
-         add(enemy[idx], set.enemy[i+1], set.enemy[i+2])
+	 local newenemy = {}
+	 for k,v in pairs(set.enemy[i]) do newenemy[k] = v end
+	 newenemy.name = set.enemy[i+1]
+	 newenemy.side = "right"
+         add(newenemy, set.enemy[i+1], set.enemy[i+2])
+	 table.insert(enemy, newenemy)
       end
    end,
 
