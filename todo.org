@@ -70,6 +70,7 @@ things move. Maintain a drawn game state, essentially.
 *** TODO mess with indexed stuff
 *** TODO posterize filter
 *** TODO palette cycle
+*** TODO pixel upscaling and/or LCD filter
 * DONE sorted away progresso
 ** DONE make enemies use attacks (chips)
 ** DONE give player HP, death
