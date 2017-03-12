@@ -4,6 +4,7 @@
 
 local actors
 local player = {}
+local enemy = {}
 local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
@@ -90,6 +91,7 @@ end
 return {
    -- data
    player = player,
+   enemy = enemy,
    -- fns
    add = add,
    damage = damage,
@@ -98,21 +100,21 @@ return {
    start = function (set)
       actors = {}
       images = {}
-      for i = 1,#set.actors,3 do
-         -- Duplicate the actors table
-         local dup = {}
-         for k,v in pairs(set.actors[i]) do dup[k] = v end
-         -- Add to local actors table
-         add(dup, set.actors[i+1], set.actors[i+2])
-         -- Set some default data
-         if not dup.side then dup.side = "right" end
-         if dup.group == "enemy" then dup.name = set.actors[i+1] end
-      end
-      for k,_ in pairs(player) do player[k] = nil end
+
+      for k,_ in ipairs(player) do player[k] = nil end
+      for k,v in pairs(set.player) do player[k] = v end
       player.side = "left"
-      player.x=set.playerpos.x
-      player.y=set.playerpos.y
       add(player, "navi", "player")
+
+      for k,_ in ipairs(enemy) do enemy[k] = nil end
+      for i = 1,#set.enemy,3 do
+	 local idx = (i-1)/3+1
+	 enemy[idx] = {}
+	 for k,v in pairs(set.enemy[i]) do enemy[idx][k] = v end
+	 enemy[idx].name = set.enemy[i+1]
+	 enemy[idx].side = "right"
+         add(enemy[idx], set.enemy[i+1], set.enemy[i+2])
+      end
    end,
 
    update = function (input)
@@ -221,14 +223,6 @@ return {
             })
          end
       end
-   end,
-
-   names = function ()
-      local names = {}
-      for _,v in ipairs(actors) do
-         if v.name then table.insert(names, v.name) end
-      end
-      return names
    end,
 
    ending = function ()

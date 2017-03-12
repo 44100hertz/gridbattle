@@ -63,7 +63,7 @@ return {
       actors.draw()
       stage.draw()
 
-      ui.draw_under(actors.player, cust_frames, actors.names())
+      ui.draw_under(actors.player, cust_frames, actors.enemy)
       depthdraw.draw()
       ui.draw_over(actors.player)
    end,

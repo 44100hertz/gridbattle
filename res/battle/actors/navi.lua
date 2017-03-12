@@ -13,7 +13,7 @@ local ent = {
       shoot = {row = 3, anim = {1,2}, speed = 10, length = 2},
       throw = {row = 4, anim = {1,2}, speed = 10, length = 2},
       move = {
-         row = 2, anim = {1,2}, speed = 3, length = 5, iasa = 3,
+         row = 2, anim = {1,2}, speed = 3.5, length = 5, iasa = 3,
          act = function (self)
             if self.time == 5 then
                self.x, self.y = self.goalx, self.goaly
