@@ -3,6 +3,7 @@ local scene = require "src/scene"
 local input = require "src/input"
 local dialog = require "src/dialog"
 local chip = require "src/chip"
+local text = require "src/text"
 
 local sheet = {}
 
@@ -15,10 +16,7 @@ local sheet = {
    button = anim.sheet(0,184,24,16,3,1,w,h)[1],
 }
 
-local deck, pal, queue
-
-local chip = require "src/chip"
-local sel
+local deck, pal, queue, sel
 
 return {
    transparent = true,
@@ -109,7 +107,11 @@ return {
       y=y+24
 
       -- Art
-      if pal[sel] then chip.draw_art(pal[sel][1], 8, 24, 1) end
+      if pal[sel] then
+         chip.draw_art(pal[sel][1], 8, 16, 1)
+         local damage = chip.getchip(pal[sel][1]).src.ent.damage
+         text.draw("flavor", tostring(damage), 8, 88)
+      end
    end,
 
    queue=queue,

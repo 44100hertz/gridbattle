@@ -12,6 +12,7 @@ local boot = {
 
 local bootspawner = {
    lifetime=30,
+   damage=40,
    start = function (self)
       self.parent.enter_state = "shoot"
    end,
