@@ -28,36 +28,44 @@ local getletter = function (f, char)
    return f.quads[c]
 end
 
-return {
-   get_size = function (font, text)
-      local f = getfont(font)
-      local w, maxw = 0,0
-      local h = 0
-      for char in text:gmatch(".") do
-         if char=="\n" then
-            w = 0
-            h = h + 1
-         else
-            w = w + 1
-            maxw = math.max(w, maxw)
-         end
+local getsize = function (font, text)
+   local f = getfont(font)
+   local w, maxw = 0,0
+   local h = 0
+   for char in text:gmatch(".") do
+      if char=="\n" then
+         w = 0
+         h = h + 1
+      else
+         w = w + 1
+         maxw = math.max(w, maxw)
       end
-      return maxw*f.char_w, math.max(1,h)*f.char_h
-   end,
+   end
+   return maxw*f.char_w, math.max(1,h)*f.char_h
+end
 
-   draw = function (font, text, ox, oy)
-      local f = getfont(font)
-      f.sb:clear()
-      local x,y = ox,oy
-      for char in text:gmatch(".") do
-         if char=="\n" then
-            x,y = ox, y+f.char_h
-         else
-            -- Make letter quads as needed
-            f.sb:add(getletter(f, char), x, y)
-            x = x+f.char_w
-         end
+local draw = function (font, text, ox, oy, layout)
+   if layout=="right" then
+      ox = ox - getsize(font, text)
+   elseif layout=="center" then
+      ox = ox - getsize(font, text) / 2
+   end
+
+   local f = getfont(font)
+   f.sb:clear()
+   local x,y = ox,oy
+   for char in text:gmatch(".") do
+      if char=="\n" then
+         x,y = ox, y+f.char_h
+      else
+         f.sb:add(getletter(f, char), x, y)
+         x = x+f.char_w
       end
-      love.graphics.draw(f.sb)
-   end,
+   end
+   love.graphics.draw(f.sb)
+end
+
+return {
+   getsize = getsize,
+   draw = draw,
 }

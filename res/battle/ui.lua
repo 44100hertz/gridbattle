@@ -25,13 +25,8 @@ return {
       end
 
       -- Enemy names
-      local y=2
-      for _,v in ipairs(names) do
-         local w,h = text.get_size("shadow", v)
-         local x = GAME.width - w
-         text.draw("shadow", v, x, y)
-         y = y + h
-      end
+      local names = table.concat(names, "\n")
+      text.draw("shadow", names, GAME.width, 2, "right")
 
       -- Status bar
       local bar_x = GAME.width/2 - bar_width/2
