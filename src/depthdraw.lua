@@ -10,6 +10,8 @@ local reset = function ()
    end
 end
 
+local xoff, yoff = -20, 62
+local w, h = 40, 24
 reset()
 
 return {
@@ -25,8 +27,8 @@ return {
    draw = function ()
       for _,depth in ipairs(depths) do
          for _,v in ipairs(depth) do
-            local screen_x = STAGE.xoff + STAGE.w * v.x - (v.ox or 0)
-            local screen_y = STAGE.yoff + STAGE.h * v.y - v.z - (v.oy or 0)
+            local screen_x = xoff + w * v.x - (v.ox or 0)
+            local screen_y = yoff + h * v.y - v.z - (v.oy or 0)
 
             local flip = v.side=="right" and -1 or 1
             if v.frame then

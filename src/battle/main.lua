@@ -10,14 +10,7 @@ local folder
 local ui =  require "res/battle/ui"
 
 local cust_frames
-
--- Some global vars used throughout battle
-_G.STAGE = {
-   numx = 6,   numy = 3,
-   xoff = -20, yoff = 62,
-   w = 40,     h = 24,
-}
-_G.CUST_TIME = 4*60
+local cust_time = 4*60
 
 selectchips = function ()
    scene.push(require "res/menu/chips", folder, actors.player.queue)
@@ -46,7 +39,7 @@ return {
 	 if input.st == 1 then
 	    scene.push((require "src/Menu"):new(require "res/menu/pause"))
 	    return
-	 elseif cust_frames >= CUST_TIME and (input.l==1 or input.r==1) then
+	 elseif cust_frames >= cust_time and (input.l==1 or input.r==1) then
 	    selectchips()
 	    return
 	 end
@@ -63,7 +56,8 @@ return {
       actors.draw()
       stage.draw()
 
-      ui.draw_under(actors.player, cust_frames, actors.names())
+      local cust_amount = cust_frames / cust_time
+      ui.draw_under(actors.player, cust_amount, actors.names())
       depthdraw.draw()
       ui.draw_over(actors.player)
    end,

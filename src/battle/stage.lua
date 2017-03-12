@@ -13,6 +13,7 @@ local sheet = anim.sheet(0, 0, 40, 40, 2, 2,
                          image:getWidth(), image:getHeight())
 
 local turf, panels
+local numx, numy = 6, 3
 
 getpanel = function (x,y)
    x,y = math.floor(x+0.5), math.floor(y+0.5)
@@ -23,9 +24,9 @@ return {
    start = function (new_turf)
       turf = new_turf
       panels = {}
-      for x = 1,STAGE.numx do
+      for x = 1,numx do
          panels[x] = {}
-         for y = 1,STAGE.numy do
+         for y = 1,numy do
             panels[x][y] = {}
          end
       end
@@ -33,8 +34,8 @@ return {
 
    update = function ()
       -- Stat/poison counters
-      for x = 1,STAGE.numx do
-         for y = 1,STAGE.numy do
+      for x = 1,numx do
+         for y = 1,numy do
             local panel = panels[x][y]
             if panel.stat then
                panel.stat_time = panel.stat_time-1
@@ -50,8 +51,8 @@ return {
    end,
 
    draw = function ()
-      for x = 1,STAGE.numx do
-         for y = 1,STAGE.numy do
+      for x = 1,numx do
+         for y = 1,numy do
             local frame = 1
             if panels[x][y].stat == "poison" then frame=2 end
             depthdraw.add{

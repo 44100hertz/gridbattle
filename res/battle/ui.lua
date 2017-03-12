@@ -9,12 +9,12 @@ local bar = anim.sheet(0,0,8,8,3,1,w,h)[1]
 local bar_width = 128
 
 return {
-   draw_under = function (player, cust_frames, names, top_chip)
-      local full_amt = cust_frames / CUST_TIME * bar_width
+   draw_under = function (player, cust_amount, names, top_chip)
+      local full_amt = cust_amount * bar_width
       local bar_size = math.min(full_amt, bar_width-2)
 
       local red = 40
-      if cust_frames >= CUST_TIME then
+      if cust_amount >= 1 then
          red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100
       end
 
