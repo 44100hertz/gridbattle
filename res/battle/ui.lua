@@ -9,7 +9,7 @@ local bar = anim.sheet(0,0,8,8,3,1,w,h)[1]
 local bar_width = 128
 
 return {
-   draw_under = function (player, cust_frames, enemies, top_chip)
+   draw_under = function (player, cust_frames, names, top_chip)
       local full_amt = cust_frames / CUST_TIME * bar_width
       local bar_size = math.min(full_amt, bar_width-2)
 
@@ -26,10 +26,10 @@ return {
 
       -- Enemy names
       local y=2
-      for _,v in ipairs(enemies) do
-         local w,h = text.get_size("shadow", v.name)
+      for _,v in ipairs(names) do
+         local w,h = text.get_size("shadow", v)
          local x = GAME.width - w
-         text.draw("shadow", v.name, x, y)
+         text.draw("shadow", v, x, y)
          y = y + h
       end
 

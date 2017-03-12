@@ -91,7 +91,6 @@ end
 return {
    -- data
    player = player,
-   enemy = enemy,
    -- fns
    add = add,
    damage = damage,
@@ -223,6 +222,12 @@ return {
             })
          end
       end
+   end,
+
+   names = function ()
+      local names = {}
+      for k,v in ipairs(enemy) do names[k] = v.name end
+      return names
    end,
 
    ending = function ()
