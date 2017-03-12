@@ -63,7 +63,14 @@ things move. Maintain a drawn game state, essentially.
  - named sound sources, searchable, etc.
 ** DONE crisp XM playback (supposedly)
 ** TODO compose music
-** TODO add shine on panels
+** TODO shaders, etc.
+*** TODO get love2d shaders working
+*** TODO Add shine on panels
+*** TODO Masked pattern effects
+*** TODO mess with indexed stuff
+*** TODO posterize filter
+*** TODO palette cycle
+*** TODO pixel upscaling and/or LCD filter
 * DONE sorted away progresso
 ** DONE make enemies use attacks (chips)
 ** DONE give player HP, death

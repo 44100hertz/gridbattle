@@ -29,7 +29,6 @@ return {
             local screen_y = STAGE.yoff + STAGE.h * v.y - v.z - (v.oy or 0)
 
             local flip = v.side=="right" and -1 or 1
-            if v.draw then v:draw(screen_x, screen_y) end
             if v.frame then
                local row = v.state and v.state.row or v.row or 1
                love.graphics.draw(v.image, v.anim[row][v.frame],
@@ -37,6 +36,7 @@ return {
             elseif v.image then
                love.graphics.draw(v.image, screen_x, screen_y)
             end
+	    if v.draw then v:draw(screen_x, screen_y) end
          end
       end
       reset()
