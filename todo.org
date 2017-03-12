@@ -1,9 +1,11 @@
 * Features
 ** TODO deck editor
 Select which chips out of your pool of chips to put into a given deck.
-*** TODO reorganize chips/variants
-allchips.lua is a dumb idea. Instead, just have chips.lua build a chip
-db automatically
+*** DONE show chip damage
+*** DONE design deck editor UI
+*** DONE draw UI
+*** TODO program UI
+*** TODO save and load
 ** TODO variants and naming
 The current naming scheme doesn't have a great way of dealing with
 varients. In fact, in general, specifying a chip or enemy and its
