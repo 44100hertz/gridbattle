@@ -10,7 +10,8 @@ end
 
 local scene = require "src/scene"
 local col1 = {
-   [1] = function () scene.pop() end,
+   [1] = scene.pop,
+   [2] = function () print("saving...") end,
 }
 
 return {
@@ -20,7 +21,11 @@ return {
    update = function (_, input)
       if input.dr==1 then col = col%3+1 return end
       if input.dl==1 then col = (col-2)%3+1 return end
-      if col==1 and input.a==1 then col1[sel]() return end
+      if col==1 then
+         if input.a==1 then col1[sel]() return end
+         if input.du==1 then sel = sel % #col1 + 1 return end
+         if input.dd==1 then sel = (sel-2) % #col1 + 1 return end
+      end
    end,
    draw = function ()
       love.graphics.draw(img, sheet.fg)
