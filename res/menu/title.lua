@@ -11,8 +11,9 @@ return {
       bmain.selectchips()
       scene.push(require "src/transition/fade", 0.4, true)
    end},
-   {"options",
+   {"folder editor",
     function ()
+       scene.push(require "res/menu/folder_editor")
    end},
    {"exit", love.event.quit},
 }
