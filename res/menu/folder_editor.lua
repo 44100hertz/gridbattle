@@ -35,7 +35,7 @@ return {
    update = function (_, input)
       -- Check input with repeat
       local repcheck = function (t)
-         return t % math.max(30-t, 4) == 1
+         return t % math.max(20-t, 6) == 1
       end
       if input.dr==1 then col = col%3+1 return end
       if input.dl==1 then col = (col-2)%3+1 return end
