@@ -1,5 +1,8 @@
 * Features
-** TODO 
+** TODO elements
+*** TODO research and duplicate BN-style element behavior
+*** TODO element graphics, give everything an element
+*** TODO draw elements on info panes when possible
 ** TODO deck editor
 Select which chips out of your pool of chips to put into a given deck.
 *** DONE show chip damage
@@ -29,10 +32,45 @@ else's that doesn't suck too much.
 A prerequisite to calling this done might be a configuration
 menu. Best thing currently would just be screen settings, but input
 will matter.
+** TODO FPS independance
+*** TODO optional locking framerate to game speed (hard sync)
+*** TODO FPS independant (timestamp-based) draw code
+*** TODO threading?
+I really don't trust lua to thread properly here, lol. Though, we'll
+have to see what conflicts arise. I don't consider it a requirement,
+this game uses up no CPU.
 * Steps
-** TODO automate scene transitions
+** TODO scene things
+*** DONE scene "exit" command to be run on pop
+*** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
+** TODO reorganization considerations
+*** TODO requirements
+I'm getting a bit tired of using "require" all the time. There's a set
+of keywords that I wouldn't have too much of a problem with reserving,
+maybe it's time that, based on the type of class being used, these
+requires are avoided entirely and the namespaces are just imposed by
+other classes, or things sent back through data.
+*** TODO src/ and res/
+A powerful, more generic engine that's less coupled to the test code
+is what's suggested by this separation, which isn't a bad thing but is
+misleading because res/ and src/ and highly coupled. It could make
+things better just to put say, all of battle/ into the root.
+
+This isn't an engine, it's just a game that contains engine components
+in order to run in the first place. If there's going to be res/ and
+src/, then I need to make sure that res/ is totally interchangeable
+with any other res/ folder. That is to say that res/ doesn't need to
+reinvent any wheels, while src/ doesn't rely on the current specific
+layout of res/. For example, res/game.lua could be a file that's made
+that just tells src/ how to initialize, etc. It would be good to make
+sure your distinctions are as meaningful as possible.
+*** TODO separating scenes from not scenes
+I noticed that at times it can be hard to tell what's just a helper
+library and what's a scene that's going to essentially run the entire
+game state. It could be very helpful to separate these at first glance.
+** TODO draw better info on battle screen
 ** TODO make sheets a bit easier
 I still have to specify the width and height when making quads for
 non-actors. It would be great if this was a bit more automatic, maybe
@@ -49,7 +87,6 @@ direction is what registers, as opposed to just having left/right
 priority, etc.
 ** TODO allow certain collisions to only happen once
 Have a collide_time variable, and just check if it equals 1?
-** TODO FPS independance via threads (if stable)
 ** TODO variants and naming
 What I might want to do is, simply call things by name e.g. testEnem1,
 then detect and separate numerals. The current scheme is just a bit
