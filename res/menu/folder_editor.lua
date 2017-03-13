@@ -33,6 +33,10 @@ return {
    end,
 
    update = function (_, input)
+      -- Check input with repeat
+      local repcheck = function (t)
+         return t % math.max(30-t, 4) == 1
+      end
       if input.dr==1 then col = col%3+1 return end
       if input.dl==1 then col = (col-2)%3+1 return end
       if col==1 then
@@ -44,9 +48,9 @@ return {
             sel = (sel-2) % #col1 + 1
          end
       elseif col==2 then
-         if input.dd==1 then
+         if repcheck(input.dd) then
             pane_left.sel = pane_left.sel % #collection + 1
-         elseif input.du==1 then
+         elseif repcheck(input.du) then
             pane_left.sel = (pane_left.sel-2) % #collection + 1
          end
       end
@@ -67,7 +71,6 @@ return {
 
          text.draw("flavor", v.name, 24, y)
          lg.setColor(255, 255, 255)
-         ::continue::
          y = y + entry_height
          i = i + 1
       end
