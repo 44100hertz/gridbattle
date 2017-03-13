@@ -21,13 +21,37 @@ local col1 = {
 local col, sel
 local num_entries = 12
 local entry_height = 11
+
+local folder_to_list = function (folder)
+   local list = {}
+   for _,folder_entry in ipairs(folder) do
+      local i, entry
+      -- Check if entry already exists
+      for i=1,#list do
+         if list[i].name == folder_entry[1] and
+            list[i].ltr == folder_entry.ltr
+         then
+            entry = list[i]
+            break
+         end
+      end
+      -- Make new entry
+      if not entry then
+         entry = {name = folder_entry[1],
+                  ltr = folder_entry.ltr,
+                  qty = 0}
+         table.insert(list, entry)
+      end
+      entry.qty = entry.qty + 1
+   end
+   return list
+end
+
 local pane_left = {
    list = require "res/test-collection",
-   getname = function (entry) return entry.name end,
 }
 local pane_right = {
-   list = require "res/folders/test",
-   getname = function (entry) return entry[1] end,
+   list = folder_to_list(require "res/folders/test")
 }
 
 return {
@@ -83,7 +107,7 @@ return {
             -- Highlight selection
             if i == pane.sel then lg.setColor(120, 192, 128) end
 
-            text.draw("flavor", pane.getname(v), x, y)
+            text.draw("flavor", v.name, x, y)
             lg.setColor(255, 255, 255)
             y = y + entry_height
             i = i + 1
