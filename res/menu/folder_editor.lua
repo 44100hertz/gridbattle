@@ -5,6 +5,8 @@ local col, sel
 local collection = require "res/test-collection"
 local num_entries = 12
 local entry_height = 11
+local pane_left = {}
+local pane_right = {}
 
 local img = love.graphics.newImage("res/menu/editor.png")
 local sheet = {}
@@ -24,27 +26,41 @@ local col1 = {
 return {
    start = function ()
       col, sel = 2,1
+      pane_left.sel = 1
+      pane_right.sel = 1
    end,
 
    update = function (_, input)
       if input.dr==1 then col = col%3+1 return end
       if input.dl==1 then col = (col-2)%3+1 return end
       if col==1 then
-         if input.a==1 then col1[sel]() return end
-         if input.du==1 then sel = sel % #col1 + 1 return end
-         if input.dd==1 then sel = (sel-2) % #col1 + 1 return end
+         if input.a==1 then
+            col1[sel]()
+         elseif input.du==1 then
+            sel = sel % #col1 + 1
+         elseif input.dd==1 then
+            sel = (sel-2) % #col1 + 1
+         end
+      elseif col==2 then
+         if input.dd==1 then
+            pane_left.sel = pane_left.sel % #collection + 1
+         elseif input.du==1 then
+            pane_left.sel = (pane_left.sel-2) % #collection + 1
+         end
       end
    end,
 
    draw = function ()
       love.graphics.clear(0,0,0)
       local y = 16
-      for i = 1, num_entries do
+      local i = pane_left.sel
+      for _ = 1, num_entries do
          local v = collection[i]
          if not v then goto continue end
          text.draw("flavor", v.name, 24, y)
          y = y + entry_height
          ::continue::
+         i = i + 1
       end
 
       love.graphics.draw(img, sheet.fg)
