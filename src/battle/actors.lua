@@ -226,7 +226,9 @@ return {
 
    names = function ()
       local names = {}
-      for k,v in ipairs(enemy) do names[k] = v.name end
+      for k,v in ipairs(enemy) do
+         if not v.despawn then table.insert(names, v.name) end
+      end
       return names
    end,
 
