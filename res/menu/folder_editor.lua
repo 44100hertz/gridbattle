@@ -2,7 +2,7 @@ local chip = require "src/chip"
 local text = require "src/text"
 
 local col, sel
-local held
+local collection = require "res/test-collection"
 local entry_height = 11
 
 local img = love.graphics.newImage("res/menu/editor.png")
@@ -23,17 +23,6 @@ local col1 = {
 return {
    start = function ()
       col, sel = 2,1
-      chipfolder_list = love.filesystem.getDirectoryItems("res/chips/")
-      held = {}
-      for i,v in ipairs(chipfolder_list) do
-         if v:sub(-4) == ".lua" then
-            local chip_name = v:sub(1, -5)
-            local newchip = chip.getchip(chip_name)
-            table.insert(held, newchip)
-            newchip.amount = 10
-            newchip.name = chip_name
-         end
-      end
    end,
 
    update = function (_, input)
@@ -49,7 +38,7 @@ return {
    draw = function ()
       love.graphics.clear(0,0,0)
       local y = 16
-      for i,v in ipairs(held) do
+      for i,v in ipairs(collection) do
          text.draw("flavor", v.name, 24, y)
          y = y + entry_height
       end
