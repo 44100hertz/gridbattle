@@ -16,16 +16,16 @@ local bootspawner = {
       self.parent.enter_state = "shoot"
    end,
    update = function (self)
-      if self.time==10 then
+      local makeboot = function (frame)
          actors.add(
             {x=self.x, y=self.y, z=40, frame=1,
              group=self.group, side=self.side, damage=self.damage},
             {ent=boot})
+      end
+      if self.time==10 then
+         makeboot(1)
       elseif self.time==30 then
-         actors.add(
-            {x=self.x, y=self.y, z=40, frame=2,
-             group=self.group, side=self.side, damage=self.damage},
-            {ent=boot})
+         makeboot(2)
       end
    end
 }
