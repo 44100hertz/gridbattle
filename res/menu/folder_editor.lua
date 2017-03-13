@@ -72,7 +72,7 @@ return {
          i = i + 1
       end
 
-      love.graphics.draw(img, sheet.fg)
+      lg.draw(img, sheet.fg)
 
       -- Selection rectangle around column
       local draw_col_sel = function (x, selected)
