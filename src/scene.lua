@@ -15,7 +15,8 @@ return {
 
    pop = function ()
       if #stack > 0 then
-         table.remove(stack)
+         local removed = table.remove(stack)
+         if removed.exit then removed:exit() end
          return true
       end
    end,

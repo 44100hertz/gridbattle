@@ -13,7 +13,7 @@ local cust_frames
 local cust_time = 4*60
 
 selectchips = function ()
-   scene.push(require "res/menu/chips", folder, actors.player.queue)
+   scene.push(require "res/battle/chips", folder, actors.player.queue)
    cust_frames = 0
 end
 
@@ -32,12 +32,12 @@ return {
       if input then
 	 local ending = actors.ending()
 	 if ending then
-	    scene.push(require "res/menu/results", ending)
+	    scene.push(require "res/battle/results", ending)
 	    return
 	 end
 
 	 if input.st == 1 then
-	    scene.push((require "src/Menu"):new(require "res/menu/pause"))
+	    scene.push((require "src/Menu"):new(require "res/battle/pause"))
 	    return
 	 elseif cust_frames >= cust_time and (input.l==1 or input.r==1) then
 	    selectchips()

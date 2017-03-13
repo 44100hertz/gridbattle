@@ -7,7 +7,7 @@ local text = require "src/text"
 
 local sheet = {}
 
-local img = love.graphics.newImage("res/menu/chips.png")
+local img = love.graphics.newImage("res/battle/chips.png")
 local w,h = img:getDimensions()
 local sheet = {
    bg = anim.sheet(0,0,128,160,1,1,w,h)[1][1],
