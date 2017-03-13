@@ -1,6 +1,8 @@
 local chip = require "src/chip"
 local text = require "src/text"
 
+local lg = love.graphics
+
 local col, sel
 local collection = require "res/test-collection"
 local num_entries = 12
@@ -8,7 +10,7 @@ local entry_height = 11
 local pane_left = {}
 local pane_right = {}
 
-local img = love.graphics.newImage("res/menu/editor.png")
+local img = lg.newImage("res/menu/editor.png")
 local sheet = {}
 do
    local anim = require "src/anim"
@@ -51,15 +53,22 @@ return {
    end,
 
    draw = function ()
-      love.graphics.clear(0,0,0)
-      local y = 16
-      local i = pane_left.sel
+      lg.clear(0,0,0)
+      local y = 19
+      local i = pane_left.sel - 5
       for _ = 1, num_entries do
          local v = collection[i]
-         if not v then goto continue end
+         if not v then
+            v = collection[(i-1) % #collection+1]
+            lg.setColor(128, 128, 128)
+         end
+         -- Highlight selection
+         if i == pane_left.sel then lg.setColor(120, 192, 128) end
+
          text.draw("flavor", v.name, 24, y)
-         y = y + entry_height
+         lg.setColor(255, 255, 255)
          ::continue::
+         y = y + entry_height
          i = i + 1
       end
 
@@ -67,9 +76,9 @@ return {
 
       -- Selection rectangle around column
       local draw_col_sel = function (x, selected)
-         love.graphics.setColor(120, 192, 128)
-         love.graphics.rectangle("line", x+1.5, 1.5, 109, 157)
-         love.graphics.setColor(255, 255, 255)
+         lg.setColor(120, 192, 128)
+         lg.rectangle("line", x+1.5, 1.5, 109, 157)
+         lg.setColor(255, 255, 255)
       end
       if col==2 then draw_col_sel(16) end
       if col==3 then draw_col_sel(128) end
@@ -77,7 +86,7 @@ return {
       -- Icons on left
       for i,v in ipairs(sheet.icons) do
          is_sel = (col==1 and sel==i) and 2 or 1
-         love.graphics.draw(img, sheet.icons[i][is_sel], 0, i*16)
+         lg.draw(img, sheet.icons[i][is_sel], 0, i*16)
       end
    end,
 }
