@@ -18,7 +18,7 @@ local bootspawner = {
    update = function (self)
       local makeboot = function (frame)
          actors.add(
-            {x=self.x, y=self.y, z=40, frame=1,
+            {x=self.x, y=self.y, z=40, frame=frame,
              group=self.group, side=self.side, damage=self.damage},
             {ent=boot})
       end
