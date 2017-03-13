@@ -100,7 +100,7 @@ return {
       actors = {}
       images = {}
 
-      for k,_ in ipairs(player) do player[k] = nil end
+      for k,_ in pairs(player) do player[k] = nil end
       for k,v in pairs(set.player) do player[k] = v end
       player.side = "left"
       add(player, "navi", "player")
