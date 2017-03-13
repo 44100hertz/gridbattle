@@ -3,6 +3,7 @@ local text = require "src/text"
 
 local col, sel
 local collection = require "res/test-collection"
+local num_entries = 12
 local entry_height = 11
 
 local img = love.graphics.newImage("res/menu/editor.png")
@@ -38,9 +39,12 @@ return {
    draw = function ()
       love.graphics.clear(0,0,0)
       local y = 16
-      for i,v in ipairs(collection) do
+      for i = 1, num_entries do
+         local v = collection[i]
+         if not v then goto continue end
          text.draw("flavor", v.name, 24, y)
          y = y + entry_height
+         ::continue::
       end
 
       love.graphics.draw(img, sheet.fg)
