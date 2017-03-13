@@ -3,7 +3,6 @@ local text = require "src/text"
 
 local col, sel
 local held
-local l_state = {}
 local entry_height = 11
 
 local img = love.graphics.newImage("res/menu/editor.png")
@@ -24,7 +23,6 @@ local col1 = {
 return {
    start = function ()
       col, sel = 2,1
-      l_state.pos, l_state.scroll = 0,0
       chipfolder_list = love.filesystem.getDirectoryItems("res/chips/")
       held = {}
       for i,v in ipairs(chipfolder_list) do
@@ -46,15 +44,11 @@ return {
          if input.du==1 then sel = sel % #col1 + 1 return end
          if input.dd==1 then sel = (sel-2) % #col1 + 1 return end
       end
-      if col == 2 then
-         l_state.scroll = input.dd>0 and 1 or 0
-      end
-      l_state.pos = l_state.pos + l_state.scroll
    end,
 
    draw = function ()
       love.graphics.clear(0,0,0)
-      local y = 16 + l_state.pos
+      local y = 16
       for i,v in ipairs(held) do
          text.draw("flavor", v.name, 24, y)
          y = y + entry_height
