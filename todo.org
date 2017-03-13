@@ -1,4 +1,5 @@
 * Features
+** TODO 
 ** TODO deck editor
 Select which chips out of your pool of chips to put into a given deck.
 *** DONE show chip damage
@@ -19,6 +20,15 @@ Get two players up that can fight each o ther.
 *** TODO RAM, CPU, video info
 
 ** TODO configuration and saves
+In order for the folder editor to be finished, it's needed to
+implement this. Good thing I already have a serialization class just
+sitting around, though it might not hurt to make some kind of custom
+format if it's small and doesn't cause any problems, or to use someone
+else's that doesn't suck too much.
+
+A prerequisite to calling this done might be a configuration
+menu. Best thing currently would just be screen settings, but input
+will matter.
 * Steps
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
