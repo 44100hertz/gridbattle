@@ -1,4 +1,12 @@
 * Features
+** TODO Interchangeable "wads"
+Resources were put into the root for now because I felt like it. I did
+learn a bit about my structure by upending it :P. Anyway, ideally
+there should be a sort of res/ folder that can be swapped out to run
+different games, essentially.
+** TODO better resolution/aspect independance
+Maybe not arbitrary, but supporting 4:3 and 16:9 versions of your res
+could be good. This is mostly just testing if that works at all.
 ** TODO elements
 *** TODO give everything an element, show element in editor and battle
 *** TODO handle elements on collisions
@@ -38,11 +46,6 @@ don't have to code anything pointing to res/ into src/.
 Maybe there should be a dedicated folder for all that, but it feels
 wrong to have chips.lua in src/, and just as wrong to have a chips/
 folder that implements things specific to battle/.
-** TODO Interchangeable wads, resources
-Resources were put into the root for now because I felt like it. I did
-learn a bit about my structure by upending it :P. Anyway, ideally
-there should be a sort of res/ folder that can be swapped out to run
-different games, essentially.
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
