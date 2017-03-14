@@ -23,8 +23,16 @@ local col, sel
 local num_entries = 12
 local entry_height = 11
 
-local move_chip = function (to, from)
-   
+local move_chip = function (from, to)
+   local entry = from.folder:remove(from.sel)
+   if not from.folder[from.sel] then
+      if from.sel < #from.folder then
+         from.sel = from.sel + 1
+      else
+         from.sel = #from.folder
+      end
+   end
+   to.folder:insert(entry)
 end
 
 local pane_left = {
@@ -73,7 +81,7 @@ return {
       elseif col==3 then
          update_pane(pane_right)
          if input.a==1 then
-            move_chip(pane_left, pane_right)
+            move_chip(pane_right, pane_left)
          end
       end
    end,
@@ -95,7 +103,7 @@ return {
 
             text.draw("flavor", v.ltr:upper(), x, y)
             text.draw("flavor", v.name, x+22, y)
-            text.draw("flavor", "\127" .. v.qty, x+84, y)
+            text.draw("flavor", "\127" .. v.qty, x+78, y)
             lg.setColor(255, 255, 255)
             y = y + entry_height
             i = i + 1
