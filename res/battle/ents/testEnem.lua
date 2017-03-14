@@ -1,4 +1,4 @@
-local actors = require "battle/actors"
+local ents = require "battle/ents"
 local chip = require "src/chip"
 
 local ent = {
@@ -9,7 +9,8 @@ local ent = {
    die = function (self)
       self.despawn = true
       for _ = 1,50 do
-         actors.add({x=self.x, y=self.y, z=20, color=self.color},
+         ents.add(
+            {x=self.x, y=self.y, z=20, color=self.color},
             "particle")
       end
    end
@@ -29,7 +30,7 @@ return {
          color = {53, 57, 196},
          cooldown = 0,
          update = function (self)
-            if math.abs(self.y-actors.player.y) < 1
+            if math.abs(self.y-ents.player.y) < 1
                and self.cooldown<1
             then
                self.cooldown = 80

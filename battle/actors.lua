@@ -1,9 +1,3 @@
---[[ Runs game ents and their state machines. It should make sense
-   for most ents to use states, unless they're extremely simple.
---]]
-
--- In the future, this will use elements and such to calculate damage.
-
 -- Put a stateful entity into a state by name
 local enter_state = function (actor, state)
    if actor.states and actor.states[state] then
@@ -13,62 +7,36 @@ local enter_state = function (actor, state)
 end
 
 return {
-   -- data
-   player = player,
-   -- fns
-   add = add,
-   damage = damage,
-   clear = clear,
-
-   start = function (set)
-      --   enter_state(actor, "idle")
+   start = function (actor)
+      enter_state(actor, "idle")
    end,
 
-   update = function (input)
-      for _,v in ipairs(actors) do
-         -- Handle stateful actors' states
-         if v.states then
-            if v.enter_state then
-               enter_state(v, v.enter_state)
-               v.enter_state = nil
-            end
-            if v.state.act then v.state.act(v) end
-
-            if v.state.iasa and
-               v.time >= v.state.iasa * v.state.speed
-            then
-               v:act(input)
-            end
-            if v.state.length and
-               v.time >= v.state.length * v.state.speed
-            then
-               enter_state(v, (v.state.finish or "idle"))
-            end
-         end
-
+   update = function (actor, input)
+      if actor.enter_state then
+         enter_state(actor, actor.enter_state)
+         actor.enter_state = nil
       end
+      if actor.state.act then actor.state.act(actor) end
 
-      -- Despawn before collisions to reduce errors --
-      for k,v in ipairs(actors) do
-         if v.states and v.states.die then
-            v.state = v.states.die
-         else
-            ent.despawn = true
-         end
+      if actor.state.iasa and
+         actor.time >= actor.state.iasa * actor.state.speed
+      then
+         actor:act(input)
+      end
+      if actor.state.length and
+         actor.time >= actor.state.length * actor.state.speed
+      then
+         enter_state(actor, (actor.state.finish or "idle"))
       end
    end,
 
-   draw = function ()
-      for _,v in ipairs(actors) do
-         -- Calculate frame based on state
-         if v.state then
-            local frameindex =
-               math.floor(v.time / v.state.speed) % #v.state.anim
-            v.frame = v.state.anim[frameindex + 1]
-         end
-
-      end
+   update_draw = function (actor)
+      local frameindex =
+         math.floor(actor.time / actor.state.speed) % #actor.state.anim
+      actor.frame = actor.state.anim[frameindex + 1]
    end,
 
-
+   kill = function (actor)
+      enter_state(actor, "die")
+   end,
 }

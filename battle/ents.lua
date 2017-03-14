@@ -11,6 +11,7 @@ local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
 local stage = require "battle/stage"
+local actors = require "battle/actors"
 
 local getimage = function (img)
    if not images[img] then
@@ -43,7 +44,7 @@ local add = function (ent, class, variant)
    local img
    if type(ent.img)=="string" then
       img = getimage(ent.img)
-      ent.img = img
+      ent.image = img
    end
    if ent.sheet then
       ent.sheet[7] = img:getWidth()
@@ -51,6 +52,7 @@ local add = function (ent, class, variant)
       ent.anim = anim.sheet(unpack(ent.sheet))
    end
 
+   if ent.states then actors.start(ent) end
    if ent.start then ent:start() end
    ent.time = 0
    ent.z = ent.z or 0
@@ -85,12 +87,23 @@ local get_ending = function ()
    if not enemies_alive then return "win" end
 end
 
+local kill = function (ent)
+   if ent.states then
+      actors.kill(ent)
+   elseif ent.die then
+      ent:die()
+   else
+      ent.despawn = true
+   end
+end
+
 return {
    -- values
    player = player,
 
    -- functions
    add = add,
+   kill = kill,
    apply_damage = apply_damage,
    get_enemy_names = get_enemy_names,
    get_ending = get_ending,
@@ -114,12 +127,14 @@ return {
 
    update = function (input)
       for _,ent in ipairs(ents) do
+         if ent.states then actors.update(ent, input) end
          if ent.update then ent:update(input) end
-         -- Death
-         if ent.hp and ent.hp <= 0 then
-            if ent.die then ent:die() end
+
+         if ent.hp and ent.hp <= 0 or
+            ent.lifespan and ent.time == ent.lifespan
+         then
+            kill(ent)
          end
-         if ent.lifespan and ent.time >= ent.lifespan then ent.despawn=true end
 
          if ent.dx then
             ent.real_dx = ent.side=="right" and -ent.dx or ent.dx
@@ -134,6 +149,7 @@ return {
       for i,ent in ipairs(ents) do
          if ent.despawn then
             if ent.tangible then stage.free(ent.x, ent.y) end
+            if ent.states then actors.kill(ent) end
             table.remove(ents, i)
          end
       end
@@ -141,10 +157,10 @@ return {
       local collide = function (a, b)
          if a.collide then a:collide(b) end
          if a.damage and b.hp then
-            damage(b, a.damage, a.element)
+            apply_damage(b, a.damage, a.element)
          end
          if a.collide_die and b.tangible then
-            a.despawn = true
+            kill(a)
          end
       end
 
@@ -171,6 +187,7 @@ return {
 
    draw = function ()
       for i,ent in ipairs(ents) do
+         if ent.states then actors.update_draw(ent) end
          depthdraw.add(ent)
 
          if ent.hp and not ent.hide_hp then
