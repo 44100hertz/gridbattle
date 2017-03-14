@@ -9,7 +9,7 @@ _G.BATTLE = {
    xscale = 40,
    yscale = 24,
    -- xoff is calculated
-   yoff = 62,
+   yoff = 62 + 0.5 * (GAME.height-160),
 }
 
 _G.PATHS = {
