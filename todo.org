@@ -1,24 +1,16 @@
 * Features
-** TODO 
-** TODO deck editor
-Select which chips out of your pool of chips to put into a given deck.
-*** DONE show chip damage
-*** DONE design deck editor UI
-*** DONE draw UI
-*** TODO program UI
-*** TODO save and load
-** TODO memory cleanup
-This is best done by keeping all loaded assets in tables. State exit
-functions will be added that nil these tables. Possibly: an asset
-manager is passed said tables, and clears them out when states get
-popped.
+** TODO elements
+*** TODO give everything an element, show element in editor and battle
+*** TODO handle elements on collisions
+*** TODO make panels affect elements
 ** TODO multiplayer
-Get two players up that can fight each o ther.
-** TODO ONLINE multiplier (hooooo boy)
-** TODO debug stuff
-*** TODO any chip selector
-*** TODO RAM, CPU, video info
+Get two players that can fight each other.
 
+This would possibly require more elegant coordinate flipping. Maybe
+built into draw, maybe not. For now, just make a custom flippable
+coord type in the place where it's needed, and I can toy with how to
+implement it elsewhere.
+** TODO ONLINE multiplier (hooooo boy)
 ** TODO configuration and saves
 In order for the folder editor to be finished, it's needed to
 implement this. Good thing I already have a serialization class just
@@ -30,6 +22,18 @@ A prerequisite to calling this done might be a configuration
 menu. Best thing currently would just be screen settings, but input
 will matter.
 * Steps
+** TODO Save/load chip folders from chip editor
+** TODO debug stuff
+*** TODO any chip selector
+*** TODO RAM, CPU, video info
+** TODO memory cleanup
+This is best done by keeping all loaded assets in tables. State exit
+functions will be added that nil these tables. Possibly: an asset
+manager is passed said tables, and clears them out when states get
+popped.
+** TODO res/game.lua
+A file that tells the game what files to run when starting, so that I
+don't have to code anything pointing to res/ into src/.
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
@@ -76,14 +80,14 @@ bottleneck again.
 
 Calculate depth on each draw call, then update that to be only when
 things move. Maintain a drawn game state, essentially.
-* TODO aesthetic
-** TODO player
-** TODO enemy
+** DONE crisp XM playback (supposedly)
+** TODO use Coord in more places
+I've been told this is better. That remains to be seen, though I'm not
+going to reject it.
 ** TODO more cool/trippy bg's
 ** TODO sound effects
  - Unified sound playback method; limits number of channels intelligently
  - named sound sources, searchable, etc.
-** DONE crisp XM playback (supposedly)
 ** TODO compose music
 ** TODO shaders, etc.
 *** TODO get love2d shaders working
@@ -94,6 +98,12 @@ things move. Maintain a drawn game state, essentially.
 *** TODO palette cycle
 *** TODO pixel upscaling and/or LCD filter
 * DONE sorted away progresso
+** DONE deck editor
+Select which chips out of your pool of chips to put into a given deck.
+*** DONE show chip damage
+*** DONE design deck editor UI
+*** DONE draw UI
+*** DONE program UI
 ** DONE make enemies use attacks (chips)
 ** DONE give player HP, death
 ** DONE enemy list
@@ -144,7 +154,7 @@ Not really sure what is meant by this, probably better just to null out
 assets when battles end, etc.
 ** DONE custom mono fonts via ascii grid style + spritebatch
 ** DONE joypad
-* DONE rewrite
+** DONE rewrite
 ** DONE no more "actor"
 ** DONE image asset management
 ** DONE nicer animation system
@@ -158,7 +168,7 @@ FPS speeds were never really needed, I guess.
 Signals are dumb because they're really messy
 ** DONE no more "data"
 ** DONE 240x160
-* DONE initial game
+** DONE initial game
 ** DONE auto-sorting draw list (z-buffer)
 https://love2d.org/wiki/Skip_list:Drawing_Order
 ** DONE drawing class w/organization
