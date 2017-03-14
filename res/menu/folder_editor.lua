@@ -1,3 +1,4 @@
+local Folder = require "src/Folder"
 local chip = require "src/chip"
 local text = require "src/text"
 
@@ -23,14 +24,14 @@ local num_entries = 12
 local entry_height = 11
 
 local move_chip = function (to, from)
-   print("todo: move this chip")
+   
 end
 
 local pane_left = {
-   folder = require "res/test-collection",
+   folder = Folder:new(require "res/test-collection"),
 }
 local pane_right = {
-   folder = folder_to_list(require "res/folders/test"),
+   folder = Folder:new(require "res/folders/test"),
 }
 
 return {
@@ -47,9 +48,9 @@ return {
       end
       local update_pane = function (pane)
          if repcheck(input.dd) then
-            pane.sel = pane.sel % #pane.list + 1
+            pane.sel = pane.sel % #pane.folder + 1
          elseif repcheck(input.du) then
-            pane.sel = (pane.sel-2) % #pane.list + 1
+            pane.sel = (pane.sel-2) % #pane.folder + 1
          end
       end
 
@@ -84,9 +85,9 @@ return {
          local y = 19
          local i = pane.sel - 5
          for _ = 1, num_entries do
-            local v = pane.list[i]
+            local v = pane.folder[i]
             if not v then
-               v = pane.list[(i-1) % #pane.list+1]
+               v = pane.folder[(i-1) % #pane.folder+1]
                lg.setColor(136,144,136)
             end
             -- Highlight selection
@@ -106,8 +107,8 @@ return {
 
       lg.draw(img, sheet.fg)
       text.draw("flavor", "Collection", 24, 8)
-      local right_str = "Folder (" .. #pane_right.list .. "/30" .. ")"
-      text.draw("flavor", "Folder", 136, 8)
+      local right_str = "Folder (" .. pane_right.folder:count() .. "/30" .. ")"
+      text.draw("flavor", right_str, 136, 8)
 
       -- Selection rectangle around column
       local draw_col_sel = function (x, selected)
