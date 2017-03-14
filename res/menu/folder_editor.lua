@@ -37,7 +37,7 @@ local move_chip = function (from, to)
 end
 
 local pane_left = {
-   folder = Folder:new(require "res/test-collection"),
+   folder = Folder:new(require "res/folders/test-collection"),
 }
 local pane_right = {
    folder = Folder:new(require "res/folders/test"),
