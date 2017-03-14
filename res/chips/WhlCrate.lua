@@ -1,4 +1,4 @@
-local actors = require "battle/actors"
+local ents = require "battle/ents"
 local stage = require "battle/stage"
 
 local ent = {
@@ -22,7 +22,7 @@ local ent = {
 	    self.size = 0.4
             stage.occupy(self, self.x, self.y)
          else
-            actors.damage(tenant, 40)
+            ents.damage(tenant, 40)
             self.despawn = true
          end
       end

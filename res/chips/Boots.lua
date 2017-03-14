@@ -1,4 +1,4 @@
-local actors = require "battle/actors"
+local ents = require "battle/ents"
 
 local boot = {
    img="boots",
@@ -17,7 +17,7 @@ local bootspawner = {
    end,
    update = function (self)
       local makeboot = function (frame)
-         actors.add(
+         ents.add(
             {x=self.x, y=self.y, z=40, frame=frame,
              group=self.group, side=self.side, damage=self.damage},
             {ent=boot})

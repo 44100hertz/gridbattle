@@ -7,7 +7,7 @@ local bg = require "src/bg"
 local Folder = require "src/Folder"
 
 local depthdraw = require "src/depthdraw"
-local actors = require "battle/actors"
+local ents = require "battle/ents"
 local stage = require "battle/stage"
 local folder = Folder:new{}
 
@@ -17,7 +17,7 @@ local cust_frames
 local cust_time = 4*60
 
 local selectchips = function ()
-   scene.push(require "battle/chips", folder, actors.player.queue)
+   scene.push(require "battle/chips", folder, ents.player.queue)
    cust_frames = 0
 end
 
@@ -27,7 +27,7 @@ return {
       folder = folder:new(require(PATHS.folders .. folder_name))
 
       stage.start(set.stage.turf)
-      actors.start(set)
+      ents.start(set)
       bg.start(set.bg)
 
       selectchips()
@@ -35,7 +35,7 @@ return {
 
    update = function (_, input)
       if input then
-	 local ending = actors.ending()
+	 local ending = ents.get_ending()
 	 if ending then
 	    scene.push(require "battle/results", ending)
 	    return
@@ -51,19 +51,19 @@ return {
 	 cust_frames = cust_frames + 1
       end
 
-      actors.update(input)
+      ents.update(input)
       stage.update()
    end,
 
    draw = function ()
       -- All of these call depthdraw
       bg.draw()
-      actors.draw()
+      ents.draw()
       stage.draw()
 
       local cust_amount = cust_frames / cust_time
-      ui.draw_under(actors.player, cust_amount, actors.names())
+      ui.draw_under(ents.player, cust_amount, ents.get_enemy_names())
       depthdraw.draw()
-      ui.draw_over(actors.player)
+      ui.draw_over(ents.player)
    end,
 }

@@ -1,6 +1,6 @@
 local chips = {}
 
-local actors = require "battle/actors"
+local ents = require "battle/ents"
 local anim = require "src/anim"
 -- Chip graphics are fixed size at 256x256
 -- this enables quads to be computed once only
@@ -23,7 +23,7 @@ end
 
 local use = function (actor, chip, variant)
    local data = getchip(chip)
-   local added = actors.add(
+   local added = ents.add(
       {x=actor.x, y=actor.y, parent=actor},
       data.src, variant)
    added.group = added.group or actor.group
