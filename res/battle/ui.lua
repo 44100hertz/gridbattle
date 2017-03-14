@@ -1,7 +1,7 @@
 local text = require "src/text"
 local anim = require "src/anim"
 
-local img = love.graphics.newImage("battle/ui.png")
+local img = love.graphics.newImage(PATHS.battle .. "ui.png")
 local sb = love.graphics.newSpriteBatch(img, 40, "stream")
 local bar, bar_width, bar_x
 local w,h = img:getDimensions()

@@ -5,6 +5,7 @@ return {
       chips = "res/chips/",
       folders = "res/folders/",
       menu = "res/menu/",
+      battle = "res/battle/",
       sets = "battle/sets/",
    },
    start = function ()

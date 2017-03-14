@@ -7,7 +7,7 @@ local actors = require "battle/actors"
 local stage = require "battle/stage"
 local folder = Folder:new{}
 
-local ui =  require "battle/ui"
+local ui =  require(PATHS.battle .. "ui")
 
 local cust_frames
 local cust_time = 4*60
