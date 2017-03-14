@@ -31,6 +31,7 @@ function Folder:insert(entry)
    if i then
       self[i].qty = self[i].qty + 1
    else
+      entry.qty = 1
       table.insert(self, entry)
    end
 end
@@ -38,6 +39,7 @@ end
 function Folder:remove(index)
    self.temp_count = nil
    if #self==0 then return end
+
    index = index or love.math.random(#self)
    local entry = self[index]
    entry.qty = entry.qty - 1
