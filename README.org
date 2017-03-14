@@ -10,14 +10,14 @@ gamecontrollerdb.txt is under LICENSE.gamecontrollerdb.
            designed to build the rest of the game.
  - battle/ :: The battle scene; the meat of gameplay.
  - foldedit/ :: The folder editor menu.
- - bg/ :: Background images used by src/bg. Eventually could have
+ - res/bg/ :: Background images used by src/bg. Eventually could have
           background code as well.
- - chips/ :: Implementations of chips for battles, and their descriptions.
- - folders/ :: Chip folders and collections in general. Mostly useful
+ - res/chips/ :: Implementations of chips for battles, and their descriptions.
+ - res/folders/ :: Chip folders and collections in general. Mostly useful
                for debugging, but who knows.
- - fonts/ :: Just the images for fonts, possibly would make sense to
+ - res/fonts/ :: Just the images for fonts, possibly would make sense to
              have metadata.
- - menu/ :: Menus made using the template provided in src/Menu. Menus
+ - res/menu/ :: Menus made using the template provided in src/Menu. Menus
             that don't use it don't go here, even if they're menus.
 
 * Plans
