@@ -22,36 +22,41 @@ local col, sel
 local num_entries = 12
 local entry_height = 11
 
+local find_chip = function (entry, list)
+   for i=1,#list do
+      if list[i].name == entry[1] and
+         list[i].ltr == entry.ltr
+      then
+         return i
+      end
+   end
+end
+
 local folder_to_list = function (folder)
    local list = {}
    for _,folder_entry in ipairs(folder) do
-      local i, entry
-      -- Check if entry already exists
-      for i=1,#list do
-         if list[i].name == folder_entry[1] and
-            list[i].ltr == folder_entry.ltr
-         then
-            entry = list[i]
-            break
-         end
-      end
-      -- Make new entry
-      if not entry then
+      local i = find_chip(folder_entry, list)
+      if not i then
          entry = {name = folder_entry[1],
                   ltr = folder_entry.ltr,
                   qty = 0}
          table.insert(list, entry)
+         i = #list
       end
-      entry.qty = entry.qty + 1
+      list[i].qty = list[i].qty + 1
    end
    return list
+end
+
+local move_chip = function (to, from)
+   print("todo: move this chip")
 end
 
 local pane_left = {
    list = require "res/test-collection",
 }
 local pane_right = {
-   list = folder_to_list(require "res/folders/test")
+   list = folder_to_list(require "res/folders/test"),
 }
 
 return {
@@ -87,8 +92,14 @@ return {
          end
       elseif col==2 then
          update_pane(pane_left)
+         if input.a==1 then
+            move_chip(pane_left, pane_right)
+         end
       elseif col==3 then
          update_pane(pane_right)
+         if input.a==1 then
+            move_chip(pane_left, pane_right)
+         end
       end
    end,
 
@@ -121,7 +132,7 @@ return {
 
       lg.draw(img, sheet.fg)
       text.draw("flavor", "Collection", 24, 8)
---      local right_str = "Folder (" .. #pane_right.list .. "/30" .. ")"
+      local right_str = "Folder (" .. #pane_right.list .. "/30" .. ")"
       text.draw("flavor", "Folder", 136, 8)
 
       -- Selection rectangle around column
