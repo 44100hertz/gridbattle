@@ -31,9 +31,18 @@ This is best done by keeping all loaded assets in tables. State exit
 functions will be added that nil these tables. Possibly: an asset
 manager is passed said tables, and clears them out when states get
 popped.
-** TODO res/game.lua
+** DONE res/game.lua
 A file that tells the game what files to run when starting, so that I
 don't have to code anything pointing to res/ into src/.
+** TODO Do chips belong in battle?
+Maybe there should be a dedicated folder for all that, but it feels
+wrong to have chips.lua in src/, and just as wrong to have a chips/
+folder that implements things specific to battle/.
+** TODO Interchangeable wads, resources
+Resources were put into the root for now because I felt like it. I did
+learn a bit about my structure by upending it :P. Anyway, ideally
+there should be a sort of res/ folder that can be swapped out to run
+different games, essentially.
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
