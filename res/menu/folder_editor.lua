@@ -113,7 +113,7 @@ return {
             local v = pane.list[i]
             if not v then
                v = pane.list[(i-1) % #pane.list+1]
-               lg.setColor(88,96,96)
+               lg.setColor(136,144,136)
             end
             -- Highlight selection
             if i == pane.sel then lg.setColor(120, 192, 128) end
