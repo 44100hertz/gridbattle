@@ -1,4 +1,4 @@
-local game = require "res/game"
+local game = require "game"
 local scene = require "src/scene"
 
 _G.PATHS = game.paths

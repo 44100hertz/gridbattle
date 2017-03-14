@@ -19,7 +19,7 @@ end
 -- Resource management for images
 local getimage = function (img)
    if not images[img] then
-      local imgpath = "res/battle/actors/" .. img .. ".png"
+      local imgpath = "battle/actors/" .. img .. ".png"
       images[img] = love.graphics.newImage(imgpath)
    end
    return images[img]
@@ -37,7 +37,7 @@ end
 local add = function (actor, class, variant)
    -- Load the class and variant --
    if type(class)=="string" then
-      class = require ("res/battle/actors/" .. class)
+      class = require ("battle/actors/" .. class)
    end
 
    if variant then
@@ -175,7 +175,7 @@ return {
             damage(b, a.damage, a.element)
          end
          if a.collide_die and b.tangible then
-            a.despawn = true;
+            a.despawn = true
          end
       end
 

@@ -7,7 +7,7 @@ local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
 local folder
 
-local ui =  require "res/battle/ui"
+local ui =  require "battle/ui"
 
 local cust_frames
 local cust_time = 4*60
@@ -21,7 +21,7 @@ return {
       actors.start(set)
       bg.start(set.bg)
 
-      scene.push(require "res/battle/chips", folder, actors.player.queue)
+      scene.push(require "battle/chips", folder, actors.player.queue)
       cust_frames = 0
    end,
 
