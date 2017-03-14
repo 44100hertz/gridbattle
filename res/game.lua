@@ -1,10 +1,10 @@
 return {
    paths = {
-      bg = "bg/",
-      fonts = "fonts/",
-      chips = "chips/",
-      folders = "folders/",
-      menu = "menu/",
+      bg = "res/bg/",
+      fonts = "res/fonts/",
+      chips = "res/chips/",
+      folders = "res/folders/",
+      menu = "res/menu/",
       sets = "battle/sets/",
    },
    start = function ()
