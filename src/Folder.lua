@@ -15,6 +15,11 @@ function Folder:new(new_Folder)
    return self
 end
 
+function Folder.raw_new(self)
+   setmetatable(self, Folder)
+   return self
+end
+
 function Folder:find(entry)
    for i=1,#self do
       if self[i].name == entry.name and
