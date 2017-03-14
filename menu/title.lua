@@ -10,7 +10,7 @@ return {
    end},
    {"folder editor",
     function ()
-       scene.push(require "res/menu/folder_editor")
+       scene.push(require "foldedit/editor", "test-collection", "test")
    end},
    {"exit", love.event.quit},
 }

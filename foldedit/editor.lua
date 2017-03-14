@@ -4,7 +4,7 @@ local text = require "src/text"
 
 local lg = love.graphics
 
-local img = lg.newImage("res/menu/editor.png")
+local img = lg.newImage("foldedit/editor.png")
 local sheet = {}
 do
    local anim = require "src/anim"
