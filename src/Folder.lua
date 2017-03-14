@@ -40,7 +40,7 @@ function Folder:remove(index)
    local entry = self[index]
    entry.qty = entry.qty - 1
    if entry.qty==0 then table.remove(self, index) end
-   return {[1] = entry.name, ltr = entry.ltr}
+   return {name = entry.name, ltr = entry.ltr}
 end
 
 -- Draw a folder, optionally fill a palette

@@ -53,7 +53,7 @@ return {
       x = x - #queue - 8
       y = y - #queue - 8
       for i=#queue,1,-1 do
-         draw_icon(queue[i][1], x, y)
+         draw_icon(queue[i].name, x, y)
          x=x+2
          y=y+2
       end
@@ -62,7 +62,7 @@ return {
    queue_use = function (actor)
       if #actor.queue>0 then
          local removed = table.remove(actor.queue, 1)
-         use(actor, removed[1], removed[2])
+         use(actor, removed.name, removed.variant)
       end
    end,
 

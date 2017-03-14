@@ -48,7 +48,7 @@ return {
 
    draw_over = function (player)
       if #player.queue > 0 then
-	 local top = player.queue[#player.queue][1]
+	 local top = player.queue[#player.queue].name
 	 text.draw("visible", top, 0, GAME.height-11)
       end
    end,

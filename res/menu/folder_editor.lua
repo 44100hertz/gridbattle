@@ -22,41 +22,15 @@ local col, sel
 local num_entries = 12
 local entry_height = 11
 
-local find_chip = function (entry, list)
-   for i=1,#list do
-      if list[i].name == entry[1] and
-         list[i].ltr == entry.ltr
-      then
-         return i
-      end
-   end
-end
-
-local folder_to_list = function (folder)
-   local list = {}
-   for _,folder_entry in ipairs(folder) do
-      local i = find_chip(folder_entry, list)
-      if not i then
-         entry = {name = folder_entry[1],
-                  ltr = folder_entry.ltr,
-                  qty = 0}
-         table.insert(list, entry)
-         i = #list
-      end
-      list[i].qty = list[i].qty + 1
-   end
-   return list
-end
-
 local move_chip = function (to, from)
    print("todo: move this chip")
 end
 
 local pane_left = {
-   list = require "res/test-collection",
+   folder = require "res/test-collection",
 }
 local pane_right = {
-   list = folder_to_list(require "res/folders/test"),
+   folder = folder_to_list(require "res/folders/test"),
 }
 
 return {

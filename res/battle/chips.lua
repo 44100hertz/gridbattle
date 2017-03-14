@@ -62,7 +62,7 @@ return {
          while(pal[i]~=nil) do i=i+1 end
          pal[i] = table.remove(queue)
       elseif input.sel==1 then
-         local chip = chip.getchip(pal[sel][1])
+         local chip = chip.getchip(pal[sel].name)
          scene.push(dialog.popup, chip.src.desc, 132, 16)
       end
    end,
@@ -80,7 +80,7 @@ return {
          for _=1,5 do
             local letter
             if pal[i] then
-               chip.draw_icon(pal[i][1], x, y)
+               chip.draw_icon(pal[i].name, x, y)
                local letter = chip.letter2num[pal[i].ltr]
                love.graphics.draw(img, sheet.letter[letter], x, y+16)
             end
@@ -96,7 +96,7 @@ return {
       x,y = 104,24
       for i=1,5 do
          if queue[i] then
-            chip.draw_icon(queue[i][1], x, y)
+            chip.draw_icon(queue[i].name, x, y)
          end
          y=y+16
       end
@@ -108,8 +108,8 @@ return {
 
       -- Art
       if pal[sel] then
-         chip.draw_art(pal[sel][1], 8, 16, 1)
-         local damage = chip.getchip(pal[sel][1]).src.ent.damage
+         chip.draw_art(pal[sel].name, 8, 16, 1)
+         local damage = chip.getchip(pal[sel].name).src.ent.damage
          text.draw("flavor", tostring(damage), 8, 88)
       end
    end,

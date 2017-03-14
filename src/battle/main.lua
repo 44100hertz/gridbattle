@@ -4,7 +4,6 @@ local bg = require "src/bg"
 local depthdraw = require "src/depthdraw"
 local actors = require "src/battle/actors"
 local stage = require "src/battle/stage"
-local Folder = require "src/Folder"
 local folder
 
 local ui =  require "res/battle/ui"
