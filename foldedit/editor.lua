@@ -42,9 +42,9 @@ end
 return {
    start = function (collection, folder)
       col, sel = 2,1
-      pane_left.folder = Folder:new(require (PATHS.folders .. collection))
+      pane_left.folder = Folder.new(_, require (PATHS.folders .. collection))
       pane_left.sel = 1
-      pane_right.folder = Folder:new(require (PATHS.folders .. folder))
+      pane_right.folder = Folder.new(_, require (PATHS.folders .. folder))
       pane_right.sel = 1
    end,
 
