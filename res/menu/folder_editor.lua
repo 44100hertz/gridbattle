@@ -93,7 +93,7 @@ return {
    end,
 
    draw = function ()
-      lg.clear(0,0,0)
+      lg.clear(16,24,24)
 
       local draw_list = function (pane, x)
          local y = 19
@@ -102,12 +102,14 @@ return {
             local v = pane.list[i]
             if not v then
                v = pane.list[(i-1) % #pane.list+1]
-               lg.setColor(128, 128, 128)
+               lg.setColor(88,96,96)
             end
             -- Highlight selection
             if i == pane.sel then lg.setColor(120, 192, 128) end
 
-            text.draw("flavor", v.name, x, y)
+            text.draw("flavor", v.ltr:upper(), x, y)
+            text.draw("flavor", v.name, x+22, y)
+            text.draw("flavor", "\127" .. v.qty, x+84, y)
             lg.setColor(255, 255, 255)
             y = y + entry_height
             i = i + 1
@@ -118,6 +120,9 @@ return {
       draw_list(pane_right, 136)
 
       lg.draw(img, sheet.fg)
+      text.draw("flavor", "Collection", 24, 8)
+--      local right_str = "Folder (" .. #pane_right.list .. "/30" .. ")"
+      text.draw("flavor", "Folder", 136, 8)
 
       -- Selection rectangle around column
       local draw_col_sel = function (x, selected)
