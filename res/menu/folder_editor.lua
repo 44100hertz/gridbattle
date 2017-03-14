@@ -98,8 +98,12 @@ return {
          for _ = 1, num_entries do
             local v = pane.folder[i]
             if not v then
-               v = pane.folder[(i-1) % #pane.folder+1]
-               lg.setColor(136,144,136)
+               if #pane.folder>7 then
+                  v = pane.folder[(i-1) % #pane.folder+1]
+                  lg.setColor(136,144,136)
+               else
+                  goto continue
+               end
             end
             -- Highlight selection
             if i == pane.sel then lg.setColor(120, 192, 128) end
@@ -108,6 +112,7 @@ return {
             text.draw("flavor", v.name, x+22, y)
             text.draw("flavor", "\127" .. v.qty, x+78, y)
             lg.setColor(255, 255, 255)
+            ::continue::
             y = y + entry_height
             i = i + 1
          end
