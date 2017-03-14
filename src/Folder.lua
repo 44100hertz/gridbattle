@@ -15,10 +15,10 @@ function Folder:new(new_Folder)
    return self
 end
 
-function Folder:find()
-   for i=1,#list do
-      if list[i].name == entry.name and
-         list[i].ltr == entry.ltr
+function Folder:find(entry)
+   for i=1,#self do
+      if self[i].name == entry.name and
+         self[i].ltr == entry.ltr
       then
          return i
       end
@@ -27,7 +27,7 @@ end
 
 function Folder:insert(entry)
    self.temp_count = nil
-   local i = self:find()
+   local i = self:find(entry)
    if i then
       self[i].qty = self[i].qty + 1
    else
