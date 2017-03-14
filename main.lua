@@ -1,12 +1,5 @@
 local game = require "res/game"
 local scene = require "src/scene"
-
-_G.PATHS = game.paths
-_G.GAME = {
-   width = 240,
-   height = 160,
-}
-
 local gamescale = 3
 
 love.run = function ()
