@@ -21,7 +21,6 @@ return {
    start = function (set)
       local Folder = require "src/Folder"
       folder = Folder:new(require "res/folders/test")
-      folder:shuffle()
 
       stage.start(set.stage.turf)
       actors.start(set)
