@@ -38,10 +38,12 @@ end
 
 function Folder:remove(index)
    self.temp_count = nil
-   if #self==0 then return end
-
    index = index or love.math.random(#self)
    local entry = self[index]
+   if not entry then
+      print("tried to remove nonexistant index:", index)
+      return
+   end
    entry.qty = entry.qty - 1
    if entry.qty==0 then table.remove(self, index) end
    return {name = entry.name, ltr = entry.ltr}

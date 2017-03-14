@@ -25,11 +25,12 @@ local entry_height = 11
 
 local move_chip = function (from, to)
    local entry = from.folder:remove(from.sel)
+   if not entry then return end
    if not from.folder[from.sel] then
       if from.sel < #from.folder then
          from.sel = from.sel + 1
       else
-         from.sel = #from.folder
+         from.sel = math.max(#from.folder, 1)
       end
    end
    to.folder:insert(entry)
@@ -90,6 +91,7 @@ return {
       lg.clear(16,24,24)
 
       local draw_list = function (pane, x)
+         if #pane.folder==0 then return end
          local y = 19
          local i = pane.sel - 5
          for _ = 1, num_entries do
