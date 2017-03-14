@@ -56,6 +56,7 @@ return {
          return t % math.max(20-t, 6) == 1
       end
       local update_pane = function (pane)
+         if #pane.folder==0 then return end
          if repcheck(input.dd) then
             pane.sel = pane.sel % #pane.folder + 1
          elseif repcheck(input.du) then
