@@ -30,6 +30,10 @@ A prerequisite to calling this done might be a configuration
 menu. Best thing currently would just be screen settings, but input
 will matter.
 * Steps
+** TODO Manage cross-path access
+There's quite a bit in src/ that still manages things in other folders
+either without being able to change the path, or just shouldn't use
+that path in general.
 ** TODO Save/load chip folders from chip editor
 ** TODO debug stuff
 *** TODO any chip selector
