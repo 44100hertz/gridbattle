@@ -8,8 +8,6 @@ return {
       sets = "battle/sets/",
    },
    start = function ()
-      (require "src/scene")
-         .push((require "src/Menu")
-               :new(require (PATHS.menu .. "title")))
+      (require "src/scene").push((require "src/Menu"):new("title"))
    end
 }
