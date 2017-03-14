@@ -1,5 +1,6 @@
 local scene = require "src/scene"
 local bg = require "src/bg"
+local Folder = require "src/Folder"
 
 local depthdraw = require "src/depthdraw"
 local actors = require "src/battle/actors"
@@ -11,19 +12,17 @@ local ui =  require "res/battle/ui"
 local cust_frames
 local cust_time = 4*60
 
-selectchips = function ()
-   scene.push(require "res/battle/chips", folder, actors.player.queue)
-   cust_frames = 0
-end
-
 return {
-   start = function (set)
-      local Folder = require "src/Folder"
-      folder = Folder:new(require "res/folders/test")
+   start = function (set, folder)
+      set = require(PATHS.sets .. set)
+      folder = Folder:new(require(PATHS.folders .. folder))
 
       stage.start(set.stage.turf)
       actors.start(set)
       bg.start(set.bg)
+
+      scene.push(require "res/battle/chips", folder, actors.player.queue)
+      cust_frames = 0
    end,
 
    update = function (_, input)
@@ -59,6 +58,4 @@ return {
       depthdraw.draw()
       ui.draw_over(actors.player)
    end,
-
-   selectchips = selectchips,
 }

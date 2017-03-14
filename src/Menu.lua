@@ -8,7 +8,7 @@ function Menu:new (new_menu)
    setmetatable(self, Menu)
    if new_menu.bg_img then
       self.bg_image =
-         love.graphics.newImage("res/menu/" .. self.bg_img .. ".png")
+         love.graphics.newImage(PATHS.menu .. self.bg_img .. ".png")
       self.bg_img = nil
    end
    self.sel = 1

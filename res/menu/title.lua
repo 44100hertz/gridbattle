@@ -6,10 +6,7 @@ return {
    bg_img = "title",
    {"start",
     function ()
-      local bmain = require "src/battle/main"
-      scene.push(bmain, require "res/battle/sets/test")
-      bmain.selectchips()
-      scene.push(require "src/transition/fade", 0.4, true)
+       scene.push((require "src/battle/main"), "test", "test")
    end},
    {"folder editor",
     function ()

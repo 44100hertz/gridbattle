@@ -5,7 +5,7 @@ local offset
 return {
    start = function (newbg)
       offset = 0
-      bg = newbg
+      bg = love.graphics.newImage(PATHS.bg .. newbg .. ".png")
       bg:setWrap("repeat", "repeat")
       bgsize = bg:getDimensions()
       bgquad = love.graphics.newQuad(

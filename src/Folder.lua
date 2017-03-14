@@ -3,10 +3,10 @@ local Folder = {}
 Folder.__index = Folder
 
 -- Copy static folder data into a folder
-function Folder:new(new_Folder)
+function Folder:new(folder)
    self = {}
    setmetatable(self, Folder)
-   for i,entry in ipairs(new_Folder) do
+   for i,entry in ipairs(folder) do
       self[i] = {}
       for k,v in pairs(entry) do
          self[i][k] = v

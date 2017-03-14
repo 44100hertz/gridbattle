@@ -1,5 +1,7 @@
+local game = require "res/game"
 local scene = require "src/scene"
 
+_G.PATHS = game.paths
 _G.GAME = {
    width = 240,
    height = 160,
@@ -21,7 +23,7 @@ love.run = function ()
    love.graphics.setDefaultFilter("nearest", "nearest")
 
    local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
-   scene.push((require "src/Menu"):new(require "res/menu/title"))
+   game.start()
 
    while true do
       love.event.pump()

@@ -19,6 +19,9 @@ local col1 = {
    [2] = function () print("saving...") end,
 }
 
+local pane_left = {}
+local pane_right = {}
+
 local col, sel
 local num_entries = 12
 local entry_height = 11
@@ -36,17 +39,12 @@ local move_chip = function (from, to)
    to.folder:insert(entry)
 end
 
-local pane_left = {
-   folder = Folder:new(require "res/folders/test-collection"),
-}
-local pane_right = {
-   folder = Folder:new(require "res/folders/test"),
-}
-
 return {
-   start = function ()
+   start = function (collection, folder)
       col, sel = 2,1
+      pane_left.folder = Folder:new(require (PATHS.folders .. collection))
       pane_left.sel = 1
+      pane_right.folder = Folder:new(require (PATHS.folders .. folder))
       pane_right.sel = 1
    end,
 
