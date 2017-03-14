@@ -58,6 +58,23 @@ Have a collide_time variable, and just check if it equals 1?
 What I might want to do is, simply call things by name e.g. testEnem1,
 then detect and separate numerals. The current scheme is just a bit
 awkward, though servicable.
+** TODO use Coord in more places
+I've been told this is better. That remains to be seen, though I'm not
+going to reject it.
+** TODO more cool/trippy bg's
+** TODO sound effects
+ - Unified sound playback method; limits number of channels intelligently
+ - named sound sources, searchable, etc.
+** TODO compose music
+** TODO shaders, etc.
+*** TODO get love2d shaders working
+*** TODO Add shine on panels
+*** TODO Masked pattern effects
+*** TODO mess with indexed stuff
+*** TODO posterize filter
+*** TODO palette cycle
+*** TODO pixel upscaling and/or LCD filter
+* Done
 ** DONE automatic text align center and right
 ** DONE show name of top chip on queue
 ** DONE separate battle actors into category lists
@@ -81,23 +98,7 @@ bottleneck again.
 Calculate depth on each draw call, then update that to be only when
 things move. Maintain a drawn game state, essentially.
 ** DONE crisp XM playback (supposedly)
-** TODO use Coord in more places
-I've been told this is better. That remains to be seen, though I'm not
-going to reject it.
-** TODO more cool/trippy bg's
-** TODO sound effects
- - Unified sound playback method; limits number of channels intelligently
- - named sound sources, searchable, etc.
-** TODO compose music
-** TODO shaders, etc.
-*** TODO get love2d shaders working
-*** TODO Add shine on panels
-*** TODO Masked pattern effects
-*** TODO mess with indexed stuff
-*** TODO posterize filter
-*** TODO palette cycle
-*** TODO pixel upscaling and/or LCD filter
-* DONE sorted away progresso
+
 ** DONE deck editor
 Select which chips out of your pool of chips to put into a given deck.
 *** DONE show chip damage
