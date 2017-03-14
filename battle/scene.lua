@@ -1,3 +1,7 @@
+-- Center the stage unless specified
+_G.BATTLE.xoff = BATTLE.xoff or
+   math.floor(GAME.width/2 - (BATTLE.xscale * (BATTLE.numx + 1) * 0.5))
+
 local scene = require "src/scene"
 local bg = require "src/bg"
 local Folder = require "src/Folder"

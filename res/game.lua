@@ -3,6 +3,15 @@ _G.GAME = {
    height = 160,
 }
 
+_G.BATTLE = {
+   numx = 6,
+   numy = 3,
+   xscale = 40,
+   yscale = 24,
+   -- xoff is calculated
+   yoff = 62,
+}
+
 _G.PATHS = {
    bg = "res/bg/",
    fonts = "res/fonts/",
