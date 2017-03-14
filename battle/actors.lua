@@ -8,7 +8,7 @@ local enemy = {}
 local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
-local stage = require "src/battle/stage"
+local stage = require "battle/stage"
 local images
 
 -- In the future, this will use elements and such to calculate damage.

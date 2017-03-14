@@ -4,7 +4,7 @@ Folder.__index = Folder
 
 -- Copy static folder data into a folder
 function Folder:new(folder)
-   self = {}
+   self = self or {}
    setmetatable(self, Folder)
    for i,entry in ipairs(folder) do
       self[i] = {}

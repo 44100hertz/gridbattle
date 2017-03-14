@@ -1,4 +1,4 @@
-local stage = require "src/battle/stage"
+local stage = require "battle/stage"
 local chip = require "src/chip"
 
 local ent = {

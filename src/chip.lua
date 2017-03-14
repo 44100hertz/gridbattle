@@ -1,6 +1,6 @@
 local chips = {}
 
-local actors = require "src/battle/actors"
+local actors = require "battle/actors"
 local anim = require "src/anim"
 -- Chip graphics are fixed size at 256x256
 -- this enables quads to be computed once only

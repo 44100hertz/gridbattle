@@ -1,4 +1,4 @@
-local actors = require "src/battle/actors"
+local actors = require "battle/actors"
 
 local ent = {
    img = "bullet",

@@ -6,7 +6,7 @@ return {
    bg_img = "title",
    {"start",
     function ()
-       scene.push((require "src/battle/main"), "test", "test")
+       scene.push((require "battle/scene"), "test", "test")
    end},
    {"folder editor",
     function ()

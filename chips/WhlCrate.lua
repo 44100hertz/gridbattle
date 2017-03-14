@@ -1,5 +1,5 @@
-local actors = require "src/battle/actors"
-local stage = require "src/battle/stage"
+local actors = require "battle/actors"
+local stage = require "battle/stage"
 
 local ent = {
    img="wheel_crate",
