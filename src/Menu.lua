@@ -5,9 +5,7 @@ local Menu = {}
 Menu.__index = Menu
 
 function Menu:new (menu)
-   if type(menu) == "string" then
-      menu = require(PATHS.menu .. menu)
-   end
+   menu = require(PATHS.menu .. menu)
    self = menu
    setmetatable(self, Menu)
    if menu.bg_img then
