@@ -44,12 +44,8 @@ return {
             table.insert(queue, pal[sel])
             local diff_letter, diff_chip
             for i=2,#queue do
-               if queue[i][1]~=queue[1][1] or
-                  queue[i][2]~=queue[1][2]
-               then
-                  diff_letter=true
-               end
-               if queue[i].ltr~=queue[1].ltr then diff_chip=true end
+               diff_letter = queue[i].name ~= queue[1].name
+               diff_chip = queue[i].ltr~=queue[1].ltr
             end
             if not (diff_letter and diff_chip) then
                pal[sel] = nil
