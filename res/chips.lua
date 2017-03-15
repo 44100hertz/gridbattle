@@ -4,12 +4,12 @@ return {
    Triangle = {
       desc={"Shoot out",
             "some triangle."},
-      class = "bullet", variant = "triangle"
+      class = "bullet", variant = "triangle",
    },
    Boots = {
       desc={"Fire off a",
             "pair of boots."},
-      class = "Boots",
+      class = "multi-bullet", variant = "boots",
    },
    WhlCrate = {
       desc={"Damage makes",

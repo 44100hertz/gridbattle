@@ -29,9 +29,10 @@ return {
          },
       },
       boot = {
+         start=false,
          img="boots",
          sheet={0,0,24,16,2,1},
-         lifespan=120,
+         lifespan = 120,
          dx=0.1,
       }
    }
