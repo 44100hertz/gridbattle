@@ -1,9 +1,5 @@
 local stage = require "battle/stage"
 
-local class = {
-
-}
-
 return {
    class = {
       dx = 3/60,
