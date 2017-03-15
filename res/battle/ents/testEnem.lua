@@ -1,5 +1,5 @@
 local ents = require "battle/ents"
-local chip = require "src/chip"
+local chip = require "battle/chip_wrangler"
 
 local class = {
    group = "enemy",

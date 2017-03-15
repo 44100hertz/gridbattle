@@ -1,6 +1,5 @@
-local chip = require "src/chip"
-
 local stage = require "battle/stage"
+local chip = require "battle/chip_wrangler"
 local chip_artist = require "battle/chip_artist"
 
 local class = {
