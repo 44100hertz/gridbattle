@@ -21,14 +21,6 @@ else's that doesn't suck too much.
 A prerequisite to calling this done might be a configuration
 menu. Best thing currently would just be screen settings, but input
 will matter.
-** DONE Interchangeable "wads"
-Resources were put into the root for now because I felt like it. I did
-learn a bit about my structure by upending it :P. Anyway, ideally
-there should be a sort of res/ folder that can be swapped out to run
-different games, essentially.
-** DONE better resolution/aspect independance
-Maybe not arbitrary, but supporting 4:3 and 16:9 versions of your res
-could be good. This is mostly just testing if that works at all.
 * Steps
 ** TODO Save/load chip folders from chip editor
 ** TODO debug stuff
@@ -75,6 +67,7 @@ going to reject it.
 *** TODO posterize filter
 *** TODO palette cycle
 *** TODO pixel upscaling and/or LCD filter
+* Done
 ** DONE Manage cross-path access
 There's quite a bit in src/ that still manages things in other folders
 either without being able to change the path, or just shouldn't use
@@ -90,7 +83,16 @@ don't have to code anything pointing to res/ into src/.
 Maybe there should be a dedicated folder for all that, but it feels
 wrong to have chips.lua in src/, and just as wrong to have a chips/
 folder that implements things specific to battle/.
-* Done
+
+** DONE Interchangeable "wads"
+Resources were put into the root for now because I felt like it. I did
+learn a bit about my structure by upending it :P. Anyway, ideally
+there should be a sort of res/ folder that can be swapped out to run
+different games, essentially.
+** DONE better resolution/aspect independance
+Maybe not arbitrary, but supporting 4:3 and 16:9 versions of your res
+could be good. This is mostly just testing if that works at all.
+
 ** DONE automatic text align center and right
 ** DONE show name of top chip on queue
 ** DONE separate battle actors into category lists
