@@ -1,5 +1,5 @@
-local xoff, yoff = -20, 62
-local xscale, yscale = 40, 24
+local xoff, yoff = BATTLE.xoff, BATTLE.yoff
+local xscale, yscale = BATTLE.xscale, BATTLE.yscale
 
 local Coord = {}
 

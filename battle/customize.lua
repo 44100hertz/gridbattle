@@ -1,31 +1,34 @@
-local anim = require "src/anim"
 local scene = require "src/scene"
-local input = require "src/input"
 local dialog = require "src/dialog"
-local chip = require "src/chip"
 local text = require "src/text"
 
-local sheet = {}
+local lg = love.graphics
 
-local img = love.graphics.newImage("res/battle/chips.png")
-local w,h = img:getDimensions()
-local sheet = {
-   bg = anim.sheet(0,0,128,160,1,1,w,h)[1][1],
-   chipbg = anim.sheet(0,160,16,16,6,1,w,h)[1],
-   letter = anim.sheet(0,176,16,8,5,1,w,h)[1],
-   button = anim.sheet(0,184,24,16,3,1,w,h)[1],
-}
+local chip_artist = require "battle/chip_artist"
+local chips = require(PATHS.root .. "chips")
+
+local img = lg.newImage(PATHS.battle .. "chips.png")
+local sheet = {}
+do
+   local w,h = img:getDimensions()
+   local anim = require "src/anim"
+   sheet.bg = anim.sheet(0,0,128,160,1,1,w,h)[1][1]
+   sheet.chipbg = anim.sheet(0,160,16,16,6,1,w,h)[1]
+   sheet.letter = anim.sheet(0,176,16,8,5,1,w,h)[1]
+   sheet.button = anim.sheet(0,184,24,16,3,1,w,h)[1]
+end
 
 local deck, pal, queue, sel
 
 return {
    transparent = true,
+   queue = queue,
    start = function (new_deck, new_queue)
       deck = new_deck
       queue = new_queue
       for i,_ in ipairs(queue) do queue[i] = nil end
 
-      letter = nil
+      local letter = nil
       sel = 1
       pal = deck:draw(5, pal)
    end,
@@ -41,12 +44,8 @@ return {
             table.insert(queue, pal[sel])
             local diff_letter, diff_chip
             for i=2,#queue do
-               if queue[i][1]~=queue[1][1] or
-                  queue[i][2]~=queue[1][2]
-               then
-                  diff_letter=true
-               end
-               if queue[i].ltr~=queue[1].ltr then diff_chip=true end
+               diff_letter = queue[i].name ~= queue[1].name
+               diff_chip = queue[i].ltr~=queue[1].ltr
             end
             if not (diff_letter and diff_chip) then
                pal[sel] = nil
@@ -62,13 +61,13 @@ return {
          while(pal[i]~=nil) do i=i+1 end
          pal[i] = table.remove(queue)
       elseif input.sel==1 then
-         local chip = chip.getchip(pal[sel][1])
-         scene.push(dialog.popup, chip.src.desc, 132, 16)
+         local chip = chips[pal[sel].name]
+         scene.push(dialog.popup, chip.desc, 132, 16)
       end
    end,
 
    draw = function ()
-      love.graphics.draw(img, sheet.bg)
+      lg.draw(img, sheet.bg)
 
       local x,y
 
@@ -78,14 +77,13 @@ return {
       for _=1,2 do
          x=8
          for _=1,5 do
-            local letter
             if pal[i] then
-               chip.draw_icon(pal[i][1], x, y)
-               local letter = chip.letter2num[pal[i].ltr]
-               love.graphics.draw(img, sheet.letter[letter], x, y+16)
+               chip_artist.draw_icon(pal[i].name, x, y)
+               local letter = pal[i].ltr:byte() - ("a"):byte() + 1
+               lg.draw(img, sheet.letter[letter], x, y+16)
             end
             if sel==i then
-               love.graphics.draw(img, sheet.chipbg[1], x, y)
+               lg.draw(img, sheet.chipbg[1], x, y)
             end
             x=x+16
             i=i+1
@@ -96,23 +94,20 @@ return {
       x,y = 104,24
       for i=1,5 do
          if queue[i] then
-            chip.draw_icon(queue[i][1], x, y)
+            chip_artist.draw_icon(queue[i].name, x, y)
          end
          y=y+16
       end
 
       -- Selectable button
-      button_sel = sel==0 and 2 or 1
-      love.graphics.draw(img, sheet.button[button_sel], 96, 112)
-      y=y+24
+      local button_sel = sel==0 and 2 or 1
+      lg.draw(img, sheet.button[button_sel], 96, 112)
 
       -- Art
       if pal[sel] then
-         chip.draw_art(pal[sel][1], 8, 16, 1)
-         local damage = chip.getchip(pal[sel][1]).src.ent.damage
-         text.draw("flavor", tostring(damage), 8, 88)
+         chip_artist.draw_art(pal[sel].name, 8, 16, 1)
+--         local damage = chips[pal[sel].name].class.damage
+--         text.draw("flavor", tostring(damage), 8, 88)
       end
    end,
-
-   queue=queue,
 }

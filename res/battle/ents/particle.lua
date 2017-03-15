@@ -1,6 +1,6 @@
 local gravity = 0.1
 
-local ent = {
+local class = {
    start = function (self)
       local dr = math.random() / 16 + 1/32
       local theta = math.random() * 2 * math.pi
@@ -21,4 +21,4 @@ local ent = {
    end,
 }
 
-return {ent=ent}
+return {class=class}

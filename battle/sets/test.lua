@@ -9,5 +9,5 @@ return {
       {x=6, y=1}, "testEnem", 2,
       {x=6, y=3}, "testEnem", 2,
    },
-   bg=love.graphics.newImage("res/bg/test.png")
+   bg="test"
 }

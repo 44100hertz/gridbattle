@@ -1,14 +1,16 @@
 local text = require "src/text"
+local lg = love.graphics
 
 local Menu = {}
 Menu.__index = Menu
 
-function Menu:new (new_menu)
-   self = new_menu
+function Menu:new (menu)
+   menu = require(PATHS.menu .. menu)
+   self = menu
    setmetatable(self, Menu)
-   if new_menu.bg_img then
+   if menu.bg_img then
       self.bg_image =
-         love.graphics.newImage("res/menu/" .. self.bg_img .. ".png")
+         lg.newImage(PATHS.menu .. self.bg_img .. ".png")
       self.bg_img = nil
    end
    self.sel = 1
@@ -25,7 +27,7 @@ function Menu:update (input)
 end
 
 function Menu:draw ()
-   if self.bg_image then love.graphics.draw(self.bg_image) end
+   if self.bg_image then lg.draw(self.bg_image) end
    for i,v in ipairs(self) do
       local y = self.y + i * self.spacing
 
@@ -34,9 +36,9 @@ function Menu:draw ()
       end
 
       if self.sel==i then
-         love.graphics.setColor(255, 100, 100)
+         lg.setColor(255, 100, 100)
          drawtext()
-         love.graphics.setColor(255, 255, 255)
+         lg.setColor(255, 255, 255)
       else
          drawtext()
       end

@@ -5,10 +5,20 @@ Files are under the zlib open-source license, included in LICENSE.
 The assets included here are fully original and should be considered open game assets.
 gamecontrollerdb.txt is under LICENSE.gamecontrollerdb.
 
-* How do I use this?
-This is an engine, so you'd want to use it to make a game.
+* What are the folders?
+ - src/ :: The game engine; tries to be fairly generic, but is
+           designed to build the rest of the game.
+ - battle/ :: The battle scene; the meat of gameplay.
+ - foldedit/ :: The folder editor menu.
+ - res/bg/ :: Background images used by src/bg. Eventually could have
+          background code as well.
+ - res/chips/ :: Implementations of chips for battles, and their descriptions.
+ - res/folders/ :: Chip folders and collections in general. Mostly useful
+               for debugging, but who knows.
+ - res/fonts/ :: Just the images for fonts, possibly would make sense to
+             have metadata.
+ - res/menu/ :: Menus made using the template provided in src/Menu. Menus
+            that don't use it don't go here, even if they're menus.
 
-Though, it's a bit incomplete and some things are in need of rewrites (see todo).
-However, much of it is actually nearing a final state.
-
-If you are interested in using this, you should contact me about it.
+* Plans
+See TODO (view raw, not github) for exact details.

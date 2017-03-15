@@ -1,7 +1,7 @@
-local actors = require "src/battle/actors"
-local chip = require "src/chip"
+local ents = require "battle/ents"
+local chip = require "battle/chip_wrangler"
 
-local ent = {
+local class = {
    group = "enemy",
    tangible = true,
    size=20/64,
@@ -9,14 +9,14 @@ local ent = {
    die = function (self)
       self.despawn = true
       for _ = 1,50 do
-         actors.add({x=self.x, y=self.y, z=20, color=self.color},
-            "particle")
+         ents.add("particle", nil,
+            {x=self.x, y=self.y, z=20, color=self.color})
       end
    end
 }
 
 return {
-   ent = ent,
+   class = class,
    variants = {
       {
          img = "testenemy",
@@ -29,7 +29,7 @@ return {
          color = {53, 57, 196},
          cooldown = 0,
          update = function (self)
-            if math.abs(self.y-actors.player.y) < 1
+            if math.abs(self.y-ents.player.y) < 1
                and self.cooldown<1
             then
                self.cooldown = 80

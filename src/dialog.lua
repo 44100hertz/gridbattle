@@ -1,5 +1,4 @@
 local src_text = require "src/text"
-local input = require "src/input"
 local scene = require "src/scene"
 
 local w,h

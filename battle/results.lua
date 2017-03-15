@@ -8,9 +8,9 @@ return {
 
    start = function (result)
       if result=="win" then
-	 image = love.graphics.newImage("res/battle/win.png")
+	 image = love.graphics.newImage(PATHS.battle .. "win.png")
       else
-	 image = love.graphics.newImage("res/battle/lose.png")
+	 image = love.graphics.newImage(PATHS.battle .. "lose.png")
       end
    end,
 

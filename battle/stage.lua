@@ -8,14 +8,14 @@
 local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 
-local image = love.graphics.newImage("res/battle/panel.png")
+local image = love.graphics.newImage("battle/panel.png")
 local sheet = anim.sheet(0, 0, 40, 40, 2, 2,
                          image:getWidth(), image:getHeight())
 
 local turf, panels
 local numx, numy = 6, 3
 
-getpanel = function (x,y)
+local getpanel = function (x,y)
    x,y = math.floor(x+0.5), math.floor(y+0.5)
    if panels[x] then return panels[x][y] end
 end
@@ -89,7 +89,7 @@ return {
       assert(not panel.tenant, "attempt to occupy occupied space")
 
       panel.tenant = actor
-      actor.on_panel = {x=new_x, y=new_y}
+      actor.on_panel = {x=x, y=y}
    end,
 
    free = function (x, y)

@@ -4,7 +4,7 @@ local fonts = {}
 
 local getfont = function (font)
    if not fonts[font] then
-      img = love.graphics.newImage("res/fonts/" .. font .. ".png")
+      local img = love.graphics.newImage(PATHS.fonts .. font .. ".png")
       fonts[font] = {
          img=img,
          quads = {},
@@ -17,7 +17,7 @@ local getfont = function (font)
 end
 
 local getletter = function (f, char)
-   c = string.byte(char)
+   local c = string.byte(char)
    if not f.quads[c] then
       f.quads[c] = love.graphics.newQuad(
          c%16*f.char_w, math.floor(c/16)*f.char_h,
