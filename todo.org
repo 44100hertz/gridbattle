@@ -1,12 +1,4 @@
 * Features
-** TODO Interchangeable "wads"
-Resources were put into the root for now because I felt like it. I did
-learn a bit about my structure by upending it :P. Anyway, ideally
-there should be a sort of res/ folder that can be swapped out to run
-different games, essentially.
-** TODO better resolution/aspect independance
-Maybe not arbitrary, but supporting 4:3 and 16:9 versions of your res
-could be good. This is mostly just testing if that works at all.
 ** TODO elements
 *** TODO give everything an element, show element in editor and battle
 *** TODO handle elements on collisions
@@ -29,11 +21,15 @@ else's that doesn't suck too much.
 A prerequisite to calling this done might be a configuration
 menu. Best thing currently would just be screen settings, but input
 will matter.
+** DONE Interchangeable "wads"
+Resources were put into the root for now because I felt like it. I did
+learn a bit about my structure by upending it :P. Anyway, ideally
+there should be a sort of res/ folder that can be swapped out to run
+different games, essentially.
+** DONE better resolution/aspect independance
+Maybe not arbitrary, but supporting 4:3 and 16:9 versions of your res
+could be good. This is mostly just testing if that works at all.
 * Steps
-** TODO Manage cross-path access
-There's quite a bit in src/ that still manages things in other folders
-either without being able to change the path, or just shouldn't use
-that path in general.
 ** TODO Save/load chip folders from chip editor
 ** TODO debug stuff
 *** TODO any chip selector
@@ -43,13 +39,6 @@ This is best done by keeping all loaded assets in tables. State exit
 functions will be added that nil these tables. Possibly: an asset
 manager is passed said tables, and clears them out when states get
 popped.
-** DONE res/game.lua
-A file that tells the game what files to run when starting, so that I
-don't have to code anything pointing to res/ into src/.
-** TODO Do chips belong in battle?
-Maybe there should be a dedicated folder for all that, but it feels
-wrong to have chips.lua in src/, and just as wrong to have a chips/
-folder that implements things specific to battle/.
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
@@ -70,10 +59,6 @@ priority, etc.
 ** TODO allow certain collisions to only happen once
 Have a collide_time variable, and just check if it equals 1?
 ** TODO FPS independance via threads (if stable)
-** TODO variants and naming
-What I might want to do is, simply call things by name e.g. testEnem1,
-then detect and separate numerals. The current scheme is just a bit
-awkward, though servicable.
 ** TODO use Coord in more places
 I've been told this is better. That remains to be seen, though I'm not
 going to reject it.
@@ -90,6 +75,21 @@ going to reject it.
 *** TODO posterize filter
 *** TODO palette cycle
 *** TODO pixel upscaling and/or LCD filter
+** DONE Manage cross-path access
+There's quite a bit in src/ that still manages things in other folders
+either without being able to change the path, or just shouldn't use
+that path in general.
+** DONE variants and naming
+What I might want to do is, simply call things by name e.g. testEnem1,
+then detect and separate numerals. The current scheme is just a bit
+awkward, though servicable.
+** DONE res/game.lua
+A file that tells the game what files to run when starting, so that I
+don't have to code anything pointing to res/ into src/.
+** DONE Do chips belong in battle?
+Maybe there should be a dedicated folder for all that, but it feels
+wrong to have chips.lua in src/, and just as wrong to have a chips/
+folder that implements things specific to battle/.
 * Done
 ** DONE automatic text align center and right
 ** DONE show name of top chip on queue
