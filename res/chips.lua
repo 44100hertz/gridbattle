@@ -1,6 +1,11 @@
 -- All ingame chips and their "headers"
 
 return {
+   Triangle = {
+      desc={"Shoot out",
+            "some triangle."},
+      class = "bullet", variant = "triangle"
+   },
    Boots = {
       desc={"Fire off a",
             "pair of boots."},
@@ -15,10 +20,5 @@ return {
       desc={"Poison 3",
             "spaces ahead."},
       class = "PoisDrop",
-   },
-   Triangle = {
-      desc={"Shoot out",
-            "some triangle."},
-      class = "bullet", variant = "triangle"
    },
 }
