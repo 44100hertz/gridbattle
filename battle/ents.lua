@@ -87,7 +87,7 @@ local get_ending = function ()
 end
 
 local kill = function (ent)
-   if ent.states then
+   if ent.states and ent.states.die then
       actors.kill(ent)
    elseif ent.die then
       ent:die()
@@ -146,11 +146,7 @@ return {
       end
 
       for i,ent in ipairs(ents) do
-         if ent.despawn then
-            if ent.tangible then stage.free(ent.x, ent.y) end
-            if ent.states then actors.kill(ent) end
-            table.remove(ents, i)
-         end
+         if ent.despawn then table.remove(ents, i) end
       end
 
       local collide = function (a, b)
