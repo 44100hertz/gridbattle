@@ -14,7 +14,7 @@ end
 clear()
 
 local player = {}
-local enemy = {}
+local enemies = {}
 
 local getimage = function (img)
    if not images[img] then
@@ -73,7 +73,7 @@ end
 
 local get_enemy_names = function ()
    local names = {}
-   for _,v in ipairs(enemy) do
+   for _,v in ipairs(enemies) do
       if not v.despawn then table.insert(names, v.name) end
    end
    return names
@@ -116,14 +116,15 @@ return {
       player.side = "left"
       add("navi", "player", player)
 
-      for k,_ in ipairs(enemy) do enemy[k] = nil end
+      for k,_ in ipairs(enemies) do enemies[k] = nil end
       for _,set_enemy in ipairs(set.enemy) do
 	 local newenemy = {}
          local enemy_header = enemydb[set_enemy.name]
 	 for k,v in pairs(set_enemy.ent) do newenemy[k] = v end
 	 newenemy.side = "right"
+         newenemy.name = set_enemy.name
          add(enemy_header.class, enemy_header.variant, newenemy)
-	 table.insert(enemy, newenemy)
+	 table.insert(enemies, newenemy)
       end
    end,
 
