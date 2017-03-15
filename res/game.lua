@@ -20,7 +20,7 @@ _G.PATHS = {
    folders = "res/folders/",
    menu = "res/menu/",
    battle = "res/battle/",
-   sets = "battle/sets/",
+   sets = "res/battle/sets/",
 }
 
 return {

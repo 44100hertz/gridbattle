@@ -30,6 +30,10 @@ different games, essentially.
 Maybe not arbitrary, but supporting 4:3 and 16:9 versions of your res
 could be good. This is mostly just testing if that works at all.
 * Steps
+** TODO automatic path solving given a root folder
+You shouldn't have to put all those paths into game.lua. It's a bunch
+of extra work. Ideally instead of path globals, just use a resource
+class.
 ** TODO Save/load chip folders from chip editor
 ** TODO debug stuff
 *** TODO any chip selector
