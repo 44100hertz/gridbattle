@@ -1,11 +1,13 @@
-local stage = require "battle/stage"
 local chip = require "src/chip"
+
+local stage = require "battle/stage"
+local chip_artist = require "battle/chip_artist"
 
 local class = {
    tangible = true,
    size = 0.4,
    draw = function (self, x, y)
-      chip.queue_draw(self.queue, x+self.ox, y-15)
+      chip_artist.draw_icon_queue(self.queue, x+self.ox, y-15)
    end,
 
    states = {

@@ -2,9 +2,9 @@ local anim = require "src/anim"
 local scene = require "src/scene"
 local input = require "src/input"
 local dialog = require "src/dialog"
-local chip = require "src/chip"
 local text = require "src/text"
 
+local chip_artist = require "battle/chip_artist"
 local chips = require(PATHS.root .. "chips")
 
 local sheet = {}
@@ -82,7 +82,7 @@ return {
          for _=1,5 do
             local letter
             if pal[i] then
-               chip.draw_icon(pal[i].name, x, y)
+               chip_artist.draw_icon(pal[i].name, x, y)
                local letter = pal[i].ltr:byte() - ("a"):byte() + 1
                love.graphics.draw(img, sheet.letter[letter], x, y+16)
             end
@@ -98,7 +98,7 @@ return {
       x,y = 104,24
       for i=1,5 do
          if queue[i] then
-            chip.draw_icon(queue[i].name, x, y)
+            chip_artist.draw_icon(queue[i].name, x, y)
          end
          y=y+16
       end
@@ -110,7 +110,7 @@ return {
 
       -- Art
       if pal[sel] then
-         chip.draw_art(pal[sel].name, 8, 16, 1)
+         chip_artist.draw_art(pal[sel].name, 8, 16, 1)
 --         local damage = chips[pal[sel].name].class.damage
          text.draw("flavor", tostring(damage), 8, 88)
       end
