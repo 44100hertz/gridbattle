@@ -21,13 +21,14 @@ local getimage = function (img)
    return images[img]
 end
 
-local add = function (ent, class, variant)
-   class = require (PATHS.battle .. "ents/" .. class)
+local add = function (class_name, variant_name, ent)
+   ent = ent or {}
+   class = require (PATHS.battle .. "ents/" .. class_name)
 
    -- Chain metatables for variants
    class.class.__index = class.class
-   if variant then
-      variant = class.variants[variant]
+   if variant_name then
+      variant = class.variants[variant_name]
       if not variant then
          print("variant not found:", variant)
          return
@@ -110,7 +111,7 @@ return {
       for k,_ in pairs(player) do player[k] = nil end
       for k,v in pairs(set.player) do player[k] = v end
       player.side = "left"
-      add(player, "navi", "player")
+      add("navi", "player", player)
 
       for k,_ in ipairs(enemy) do enemy[k] = nil end
       for i = 1,#set.enemy,3 do
@@ -118,7 +119,7 @@ return {
 	 for k,v in pairs(set.enemy[i]) do newenemy[k] = v end
 	 newenemy.name = set.enemy[i+1] .. set.enemy[i+2]
 	 newenemy.side = "right"
-         add(newenemy, set.enemy[i+1], set.enemy[i+2])
+         add(set.enemy[i+1], set.enemy[i+2], newenemy)
 	 table.insert(enemy, newenemy)
       end
    end,

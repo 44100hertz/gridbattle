@@ -10,8 +10,8 @@ local class = {
       self.despawn = true
       for _ = 1,50 do
          ents.add(
-            {x=self.x, y=self.y, z=20, color=self.color},
-            "particle")
+            "particle", nil,
+            {x=self.x, y=self.y, z=20, color=self.color})
       end
    end
 }

@@ -1,14 +1,5 @@
 local ents = require "battle/ents"
 
-local boot = {
-   img="boots",
-   sheet={0,0,24,16,2,1},
-   collide_die=true,
-   lifespan=120,
-   size=0.1,
-   dx=0.1,
-}
-
 local bootspawner = {
    lifetime=30,
    damage=40,
@@ -18,11 +9,11 @@ local bootspawner = {
    update = function (self)
       local makeboot = function (frame)
          ents.add(
+            "bullet", "boot",
             {x=self.x, y=self.y, z=40,
              group=self.group, side=self.side, damage=self.damage,
              parent=self.parent,
-            },
-            "Triangle")
+            })
       end
       if self.time==10 then
          makeboot(1)
@@ -32,4 +23,4 @@ local bootspawner = {
    end
 }
 
-return {class=bootspawner}
+return {class=class}
