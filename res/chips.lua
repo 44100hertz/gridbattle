@@ -14,7 +14,7 @@ return {
    WhlCrate = {
       desc={"Damage makes",
             "it roll."},
-      class = "WhlCrate",
+      class = "crate", variant = "wheeled",
    },
    PoisDrop = {
       desc={"Poison 3",
