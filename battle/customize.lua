@@ -83,7 +83,7 @@ return {
             local letter
             if pal[i] then
                chip.draw_icon(pal[i].name, x, y)
-               local letter = chip.letter2num[pal[i].ltr]
+               local letter = pal[i].ltr:byte() - ("a"):byte() + 1
                love.graphics.draw(img, sheet.letter[letter], x, y+16)
             end
             if sel==i then

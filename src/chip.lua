@@ -64,5 +64,4 @@ return {
    draw_art = draw_art,
    queue_draw = queue_draw,
    queue_use = queue_use,
-   letter2num = {a=1,b=2,c=3,d=4,e=5},
 }
