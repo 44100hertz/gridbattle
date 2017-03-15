@@ -1,8 +1,11 @@
 local ents = require "battle/ents"
+local chips = require(PATHS.root .. "chips")
 
-local use = function (actor, chip, variant)
+local use = function (actor, chip_name)
+   local chip = chips[chip_name]
    local added = ents.add(
-      {x=actor.x, y=actor.y, parent=actor}, chip, variant)
+      chip.class, chip.variant,
+      {x=actor.x, y=actor.y, parent=actor})
    added.group = added.group or actor.group
    added.side = added.side or actor.side
 end
