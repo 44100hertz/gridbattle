@@ -1,5 +1,4 @@
 local Folder = require "src/Folder"
-local chip = require "src/chip"
 local text = require "src/text"
 
 local lg = love.graphics
@@ -42,9 +41,9 @@ end
 return {
    start = function (collection, folder)
       col, sel = 2,1
-      pane_left.folder = Folder.new(_, require (PATHS.folders .. collection))
+      pane_left.folder = Folder.new({}, require (PATHS.folders .. collection))
       pane_left.sel = 1
-      pane_right.folder = Folder.new(_, require (PATHS.folders .. folder))
+      pane_right.folder = Folder.new({}, require (PATHS.folders .. folder))
       pane_right.sel = 1
    end,
 
@@ -125,7 +124,7 @@ return {
       text.draw("flavor", right_str, 136, 8)
 
       -- Selection rectangle around column
-      local draw_col_sel = function (x, selected)
+      local draw_col_sel = function (x)
          lg.setColor(120, 192, 128)
          lg.rectangle("line", x+1.5, 1.5, 109, 157)
          lg.setColor(255, 255, 255)
@@ -135,8 +134,8 @@ return {
 
       -- Icons on left
       for i,v in ipairs(sheet.icons) do
-         is_sel = (col==1 and sel==i) and 2 or 1
-         lg.draw(img, sheet.icons[i][is_sel], 0, i*16)
+         local is_sel = (col==1 and sel==i) and 2 or 1
+         lg.draw(img, v[is_sel], 0, i*16)
       end
    end,
 }

@@ -23,12 +23,12 @@ end
 
 local add = function (class_name, variant_name, ent)
    ent = ent or {}
-   class = require (PATHS.battle .. "ents/" .. class_name)
+   local class = require (PATHS.battle .. "ents/" .. class_name)
 
    -- Chain metatables for variants
    class.class.__index = class.class
    if variant_name then
-      variant = class.variants[variant_name]
+      local variant = class.variants[variant_name]
       if not variant then
          print("variant not found:", variant)
          return
@@ -70,7 +70,7 @@ end
 
 local get_enemy_names = function ()
    local names = {}
-   for k,v in ipairs(enemy) do
+   for _,v in ipairs(enemy) do
       if not v.despawn then table.insert(names, v.name) end
    end
    return names
@@ -181,7 +181,7 @@ return {
    end,
 
    draw = function ()
-      for i,ent in ipairs(ents) do
+      for _,ent in ipairs(ents) do
          if ent.states then actors.update_draw(ent) end
          depthdraw.add(ent)
 

@@ -1,5 +1,3 @@
-local ents = require "battle/ents"
-
 local class = {
    collide_die = true,
    size = 8/64,
