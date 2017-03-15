@@ -22,23 +22,21 @@ local getimage = function (img)
 end
 
 local add = function (ent, class, variant)
-   if type(class)=="string" then
-      class = require (PATHS.battle .. "ents/" .. class)
-   end
+   class = require (PATHS.battle .. "ents/" .. class)
 
    -- Chain metatables for variants
+   class.class.__index = class.class
    if variant then
-      if type(variant)~="table" then
-         variant = class.variants[variant]
+      variant = class.variants[variant]
+      if not variant then
+         print("variant not found:", variant)
+         return
       end
-
-      class.ent.__index = class.ent
       variant.__index = variant
-      setmetatable(variant, class.ent)
+      setmetatable(variant, class.class)
       setmetatable(ent, variant)
    else
-      class.ent.__index = class.ent
-      setmetatable(ent, class.ent)
+      setmetatable(ent, class.class)
    end
 
    local img
@@ -51,7 +49,7 @@ local add = function (ent, class, variant)
       ent.sheet[8] = img:getHeight()
       ent.anim = anim.sheet(unpack(ent.sheet))
    end
-
+p
    if ent.states then actors.start(ent) end
    if ent.start then ent:start() end
    ent.time = 0

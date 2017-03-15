@@ -13,6 +13,7 @@ _G.BATTLE = {
 }
 
 _G.PATHS = {
+   root = "res/",
    bg = "res/bg/",
    fonts = "res/fonts/",
    chips = "res/chips/",

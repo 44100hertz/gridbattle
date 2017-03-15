@@ -1,7 +1,7 @@
 local ents = require "battle/ents"
 local stage = require "battle/stage"
 
-local ent = {
+local class = {
    img="wheel_crate",
    group = "neutral",
    side = "none",
@@ -35,8 +35,4 @@ local ent = {
    end,
 }
 
-return {
-   desc={"Damage makes",
-         "it roll."},
-   ent=ent,
-}
+return {class=class}

@@ -1,7 +1,7 @@
 local stage = require "battle/stage"
 local chip = require "src/chip"
 
-local ent = {
+local class = {
    tangible = true,
    size = 0.4,
    draw = function (self, x, y)
@@ -26,7 +26,7 @@ local ent = {
 }
 
 return {
-   ent = ent,
+   class = class,
    variants = {
       player = {
          img = "ben",

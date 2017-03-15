@@ -5,6 +5,8 @@ local dialog = require "src/dialog"
 local chip = require "src/chip"
 local text = require "src/text"
 
+local chips = require(PATHS.root .. "chips")
+
 local sheet = {}
 
 local img = love.graphics.newImage(PATHS.battle .. "chips.png")
@@ -62,8 +64,8 @@ return {
          while(pal[i]~=nil) do i=i+1 end
          pal[i] = table.remove(queue)
       elseif input.sel==1 then
-         local chip = chip.getchip(pal[sel].name)
-         scene.push(dialog.popup, chip.src.desc, 132, 16)
+         local chip = chips[pal[sel].name]
+         scene.push(dialog.popup, chip.desc, 132, 16)
       end
    end,
 
@@ -109,7 +111,7 @@ return {
       -- Art
       if pal[sel] then
          chip.draw_art(pal[sel].name, 8, 16, 1)
-         local damage = chip.getchip(pal[sel].name).src.ent.damage
+--         local damage = chips[pal[sel].name].class.damage
          text.draw("flavor", tostring(damage), 8, 88)
       end
    end,

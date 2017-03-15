@@ -1,6 +1,6 @@
 local ents = require "battle/ents"
 
-local ent = {
+local class = {
    img = "bullet",
    damage = 80,
    sheet = {0,0,16,16,6,1},
@@ -25,7 +25,5 @@ local ent = {
 }
 
 return {
-   desc={"Shoot out",
-         "some triangle."},
-   ent=ent,
+   class=class,
 }

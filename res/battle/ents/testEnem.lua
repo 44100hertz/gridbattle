@@ -1,7 +1,7 @@
 local ents = require "battle/ents"
 local chip = require "src/chip"
 
-local ent = {
+local class = {
    group = "enemy",
    tangible = true,
    size=20/64,
@@ -17,7 +17,7 @@ local ent = {
 }
 
 return {
-   ent = ent,
+   class = class,
    variants = {
       {
          img = "testenemy",

@@ -1,6 +1,6 @@
 local stage = require "battle/stage"
 
-local ent = {
+local class = {
    img = "poisdrop",
    lifespan = 60,
    dx = 3/60,
@@ -17,7 +17,5 @@ local ent = {
 }
 
 return {
-   desc={"Poison 3",
-         "spaces ahead."},
-   ent=ent,
+   class=class
 }
