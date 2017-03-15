@@ -15,7 +15,7 @@ return {
       end,
    },
    variants = {
-      poison_drop = {
+      poison = {
          img = "poisdrop",
          z=40, dz = 1,
          hit_ground = function (self)
