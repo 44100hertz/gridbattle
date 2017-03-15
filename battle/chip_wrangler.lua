@@ -1,8 +1,8 @@
 local ents = require "battle/ents"
-local chips = require(PATHS.root .. "chips")
+local chipdb = require(PATHS.root .. "chipdb")
 
 local use = function (actor, chip_name)
-   local chip = chips[chip_name]
+   local chip = chipdb[chip_name]
    local added = ents.add(
       chip.class, chip.variant,
       {x=actor.x, y=actor.y, parent=actor})

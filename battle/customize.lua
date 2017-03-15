@@ -5,7 +5,7 @@ local text = require "src/text"
 local lg = love.graphics
 
 local chip_artist = require "battle/chip_artist"
-local chips = require(PATHS.root .. "chips")
+local chipdb = require(PATHS.root .. "chipdb")
 
 local img = lg.newImage(PATHS.battle .. "chips.png")
 local sheet = {}
@@ -61,7 +61,7 @@ return {
          while(pal[i]~=nil) do i=i+1 end
          pal[i] = table.remove(queue)
       elseif input.sel==1 then
-         local chip = chips[pal[sel].name]
+         local chip = chipdb[pal[sel].name]
          scene.push(dialog.popup, chip.desc, 132, 16)
       end
    end,
@@ -106,7 +106,7 @@ return {
       -- Art
       if pal[sel] then
          chip_artist.draw_art(pal[sel].name, 8, 16, 1)
---         local damage = chips[pal[sel].name].class.damage
+--         local damage = chipdb[pal[sel].name].class.damage
 --         text.draw("flavor", tostring(damage), 8, 88)
       end
    end,
