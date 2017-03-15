@@ -19,6 +19,6 @@ return {
    Triangle = {
       desc={"Shoot out",
             "some triangle."},
-      class = "Triangle",
+      class = "bullet", variant = "triangle"
    },
 }
