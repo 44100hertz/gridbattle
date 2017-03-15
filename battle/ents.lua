@@ -49,7 +49,7 @@ local add = function (ent, class, variant)
       ent.sheet[8] = img:getHeight()
       ent.anim = anim.sheet(unpack(ent.sheet))
    end
-p
+
    if ent.states then actors.start(ent) end
    if ent.start then ent:start() end
    ent.time = 0
