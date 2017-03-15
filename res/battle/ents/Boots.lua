@@ -18,9 +18,11 @@ local bootspawner = {
    update = function (self)
       local makeboot = function (frame)
          ents.add(
-            {x=self.x, y=self.y, z=40, frame=frame,
-             group=self.group, side=self.side, damage=self.damage},
-            {ent=boot})
+            {x=self.x, y=self.y, z=40,
+             group=self.group, side=self.side, damage=self.damage,
+             parent=self.parent,
+            },
+            "Triangle")
       end
       if self.time==10 then
          makeboot(1)

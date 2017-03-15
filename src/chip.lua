@@ -1,10 +1,8 @@
 local ents = require "battle/ents"
 
 local use = function (actor, chip, variant)
-   local data = getchip(chip)
    local added = ents.add(
-      {x=actor.x, y=actor.y, parent=actor},
-      data.src, variant)
+      {x=actor.x, y=actor.y, parent=actor}, chip, variant)
    added.group = added.group or actor.group
    added.side = added.side or actor.side
 end
