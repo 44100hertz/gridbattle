@@ -9,8 +9,7 @@ local class = {
    die = function (self)
       self.despawn = true
       for _ = 1,50 do
-         ents.add(
-            "particle", nil,
+         ents.add("particle", nil,
             {x=self.x, y=self.y, z=20, color=self.color})
       end
    end
