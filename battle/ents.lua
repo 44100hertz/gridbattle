@@ -112,7 +112,11 @@ return {
 
    start = function (set)
       for k,_ in pairs(player) do player[k] = nil end
-      for k,v in pairs(set.player) do player[k] = v end
+      if set.player then
+         player.x, player.y = set.player.x, set.player.y
+      else
+         player.x, player.y = 2,2
+      end
       player.side = "left"
       add("navi", "player", player)
 
