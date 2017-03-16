@@ -19,7 +19,7 @@ end
 
 function Menu:update (input)
    if input.a==1 then
-      self[self.sel][2]() return end
+      self[self.sel][2](self[self.sel]) return end
    if input.dd==1 then
       self.sel = self.sel % #self + 1 end
    if input.du==1 then
