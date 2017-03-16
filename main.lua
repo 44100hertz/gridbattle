@@ -1,7 +1,7 @@
 local game = require "res/game"
 local scene = require "src/scene"
 local config = require "src/config"
-config.reload("settings.conf")
+config.reload(love.filesystem.getSaveDirectory() .. "/settings.conf")
 
 love.run = function ()
    local outdir
