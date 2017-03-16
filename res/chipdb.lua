@@ -19,6 +19,6 @@ return {
    PoisDrop = {
       desc={"Poison 3",
             "spaces ahead."},
-      class = "PoisDrop",
+      class = "throwable", variant = "poison",
    },
 }

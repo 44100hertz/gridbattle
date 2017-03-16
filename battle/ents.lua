@@ -1,3 +1,11 @@
+local anim = require "src/anim"
+local depthdraw = require "src/depthdraw"
+local text = require "src/text"
+local stage = require "battle/stage"
+local actors = require "battle/actors"
+
+local enemydb = require(PATHS.root .. "enemydb")
+
 local ents, images
 local clear = function ()
    ents = {}
@@ -6,12 +14,7 @@ end
 clear()
 
 local player = {}
-local enemy = {}
-local anim = require "src/anim"
-local depthdraw = require "src/depthdraw"
-local text = require "src/text"
-local stage = require "battle/stage"
-local actors = require "battle/actors"
+local enemies = {}
 
 local getimage = function (img)
    if not images[img] then
@@ -70,7 +73,7 @@ end
 
 local get_enemy_names = function ()
    local names = {}
-   for _,v in ipairs(enemy) do
+   for _,v in ipairs(enemies) do
       if not v.despawn then table.insert(names, v.name) end
    end
    return names
@@ -113,14 +116,15 @@ return {
       player.side = "left"
       add("navi", "player", player)
 
-      for k,_ in ipairs(enemy) do enemy[k] = nil end
-      for i = 1,#set.enemy,3 do
+      for k,_ in ipairs(enemies) do enemies[k] = nil end
+      for _,set_enemy in ipairs(set.enemy) do
 	 local newenemy = {}
-	 for k,v in pairs(set.enemy[i]) do newenemy[k] = v end
-	 newenemy.name = set.enemy[i+1] .. set.enemy[i+2]
+         local enemy_header = enemydb[set_enemy.name]
+	 for k,v in pairs(set_enemy.ent) do newenemy[k] = v end
 	 newenemy.side = "right"
-         add(set.enemy[i+1], set.enemy[i+2], newenemy)
-	 table.insert(enemy, newenemy)
+         newenemy.name = set_enemy.name
+         add(enemy_header.class, enemy_header.variant, newenemy)
+	 table.insert(enemies, newenemy)
       end
    end,
 

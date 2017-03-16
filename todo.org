@@ -22,6 +22,10 @@ A prerequisite to calling this done might be a configuration
 menu. Best thing currently would just be screen settings, but input
 will matter.
 * Steps
+** TODO automatic path solving given a root folder
+You shouldn't have to put all those paths into game.lua. It's a bunch
+of extra work. Ideally instead of path globals, just use a resource
+class.
 ** TODO Save/load chip folders from chip editor
 ** TODO debug stuff
 *** TODO any chip selector
