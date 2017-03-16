@@ -1,6 +1,7 @@
 local game = require "res/game"
 local scene = require "src/scene"
-local gamescale = 3
+local config = require "src/config"
+config.reload("settings.conf")
 
 love.run = function ()
    local outdir
@@ -12,7 +13,8 @@ love.run = function ()
    love.math.setRandomSeed(os.time())
    local time = 0
 
-   love.window.setMode(GAME.width*gamescale, GAME.height*gamescale)
+   love.window.setMode(GAME.width * config.c.gamescale,
+                       GAME.height * config.c.gamescale)
    love.graphics.setDefaultFilter("nearest", "nearest")
 
    local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
@@ -35,7 +37,7 @@ love.run = function ()
       canvas:renderTo(scene.draw)
 
 --      love.graphics.setBlendMode("replace", "premultiplied")
-      love.graphics.draw( canvas, 0,0,0, gamescale )
+      love.graphics.draw( canvas, 0,0,0, config.c.gamescale )
       love.graphics.print(math.floor(collectgarbage("count")))
       love.graphics.present()
 
