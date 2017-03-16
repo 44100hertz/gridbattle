@@ -118,12 +118,14 @@ return {
 
       for k,_ in ipairs(enemies) do enemies[k] = nil end
       for _,set_enemy in ipairs(set.enemy) do
-	 local newenemy = {}
-         local enemy_header = enemydb[set_enemy.name]
-	 for k,v in pairs(set_enemy.ent) do newenemy[k] = v end
-	 newenemy.side = "right"
-         newenemy.name = set_enemy.name
-         add(enemy_header.class, enemy_header.variant, newenemy)
+	 local newenemy = {
+            name = set_enemy.name,
+            x = set_enemy.x,
+            y = set_enemy.y,
+            side = "right",
+         }
+         local db_enemy = enemydb[set_enemy.name]
+         add(db_enemy.class, db_enemy.variant, newenemy)
 	 table.insert(enemies, newenemy)
       end
    end,
