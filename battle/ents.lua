@@ -105,6 +105,7 @@ return {
 
    -- functions
    add = add,
+   exit = clear,
    kill = kill,
    apply_damage = apply_damage,
    get_enemy_names = get_enemy_names,

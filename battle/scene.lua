@@ -66,4 +66,8 @@ return {
       depthdraw.draw()
       ui.draw_over(ents.player)
    end,
+
+   exit = function ()
+      ents.exit()
+   end
 }
