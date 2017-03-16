@@ -27,7 +27,11 @@ function Menu:update (input)
 end
 
 function Menu:draw ()
-   if self.bg_image then lg.draw(self.bg_image) end
+   if self.bg_image then
+      lg.draw(self.bg_image)
+   else
+      lg.clear(0,0,0)
+   end
    for i,v in ipairs(self) do
       local y = self.y + i * self.spacing
 

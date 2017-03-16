@@ -12,5 +12,9 @@ return {
     function ()
        scene.push(require "foldedit/editor", "test-collection", "test")
    end},
+   {"config",
+    function ()
+       scene.push((require "src/Menu"):new("settings"))
+   end},
    {"exit", love.event.quit},
 }

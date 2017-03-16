@@ -1,7 +1,7 @@
 local game = require "res/game"
 local scene = require "src/scene"
 local config = require "src/config"
-config.reload(love.filesystem.getSaveDirectory() .. "/settings.conf")
+config.load()
 
 love.run = function ()
    local outdir
@@ -13,8 +13,6 @@ love.run = function ()
    love.math.setRandomSeed(os.time())
    local time = 0
 
-   love.window.setMode(GAME.width * config.c.gamescale,
-                       GAME.height * config.c.gamescale)
    love.graphics.setDefaultFilter("nearest", "nearest")
 
    local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
