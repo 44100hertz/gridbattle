@@ -1,10 +1,10 @@
 local bg, bgquad
 local bgsize
-local offset
+local start_time
 
 return {
    start = function (newbg)
-      offset = 0
+      start_time = love.timer.getTime()
       bg = love.graphics.newImage(PATHS.bg .. newbg .. ".png")
       bg:setWrap("repeat", "repeat")
       bgsize = bg:getDimensions()
@@ -15,8 +15,9 @@ return {
    end,
 
    draw = function ()
-      offset = offset + 0.5
-      local bgoff = offset % bgsize - bgsize
-      love.graphics.draw(bg, bgquad, math.floor(bgoff-0.5), math.floor(bgoff))
+      local offset = love.timer.getTime() - start_time
+      local bgoff_y = offset*30 % bgsize - bgsize
+      local bgoff_x = (offset + math.sin(offset))*30 % bgsize - bgsize
+      love.graphics.draw(bg, bgquad, math.floor(bgoff_x), math.floor(bgoff_y))
    end,
 }
