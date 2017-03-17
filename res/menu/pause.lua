@@ -5,8 +5,8 @@ return {
    font = "title",
    bg_img = "pause",
    transparent = true,
-   {"return", scene.pop},
-   {"main menu", function ()
+   {"return", a = scene.pop},
+   {"main menu", a = function ()
        scene.pop()
        scene.pop()
    end},

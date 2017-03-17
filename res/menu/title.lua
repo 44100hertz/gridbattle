@@ -5,16 +5,16 @@ return {
    font = "title",
    bg_img = "title",
    {"start",
-    function ()
+    a = function ()
        scene.push((require "battle/scene"), "test", "test")
    end},
    {"folder editor",
-    function ()
+    a = function ()
        scene.push(require "foldedit/editor", "test-collection", "test")
    end},
    {"config",
-    function ()
+    a = function ()
        scene.push((require "src/Menu"):new("settings"))
    end},
-   {"exit", love.event.quit},
+   {"exit", a = love.event.quit},
 }

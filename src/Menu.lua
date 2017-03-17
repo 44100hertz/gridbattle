@@ -18,12 +18,18 @@ function Menu:new (menu)
 end
 
 function Menu:update (input)
-   if input.a==1 then
-      self[self.sel][2](self[self.sel]) return end
-   if input.dd==1 then
-      self.sel = self.sel % #self + 1 end
-   if input.du==1 then
-      self.sel = (self.sel-2) % #self + 1 end
+   local entry = self[self.sel]
+   if input.a==1 and entry.a then
+      entry:a()
+   elseif input.dl==1 and entry.dl then
+      entry:dl()
+   elseif input.dr==1 and entry.dr then
+      entry:dr()
+   elseif input.dd==1 then
+      self.sel = self.sel % #self + 1
+   elseif input.du==1 then
+      self.sel = (self.sel-2) % #self + 1
+   end
 end
 
 function Menu:draw ()
