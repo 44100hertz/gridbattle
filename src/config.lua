@@ -1,7 +1,7 @@
 local path = love.filesystem.getSaveDirectory() .. "/settings.conf"
 
 local config = {
-   gamescale = 3
+   gamescale = 3,
 }
 
 set_gamescale = function (scale)
