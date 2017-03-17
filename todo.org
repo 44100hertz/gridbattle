@@ -11,22 +11,10 @@ built into draw, maybe not. For now, just make a custom flippable
 coord type in the place where it's needed, and I can toy with how to
 implement it elsewhere.
 ** TODO ONLINE multiplier (hooooo boy)
-** TODO configuration and saves
-In order for the folder editor to be finished, it's needed to
-implement this. Good thing I already have a serialization class just
-sitting around, though it might not hurt to make some kind of custom
-format if it's small and doesn't cause any problems, or to use someone
-else's that doesn't suck too much.
-
-A prerequisite to calling this done might be a configuration
-menu. Best thing currently would just be screen settings, but input
-will matter.
+** TODO saving/loading chip folders
+*** TODO file save/load menu
+*** TODO save/load chip folders
 * Steps
-** TODO automatic path solving given a root folder
-You shouldn't have to put all those paths into game.lua. It's a bunch
-of extra work. Ideally instead of path globals, just use a resource
-class.
-** TODO Save/load chip folders from chip editor
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
@@ -54,8 +42,6 @@ direction is what registers, as opposed to just having left/right
 priority, etc.
 ** TODO allow certain collisions to only happen once
 Have a collide_time variable, and just check if it equals 1?
-** DONE FPS independance via threads (if stable)
-NO threads here, thanks.
 ** TODO use Coord in more places
 I've been told this is better. That remains to be seen, though I'm not
 going to reject it.
@@ -73,6 +59,26 @@ going to reject it.
 *** TODO palette cycle
 *** TODO pixel upscaling and/or LCD filter
 * Done
+** DONE configuration and saves
+In order for the folder editor to be finished, it's needed to
+implement this. Good thing I already have a serialization class just
+sitting around, though it might not hurt to make some kind of custom
+format if it's small and doesn't cause any problems, or to use someone
+else's that doesn't suck too much.
+
+A prerequisite to calling this done might be a configuration
+menu. Best thing currently would just be screen settings, but input
+will matter.
+*** DONE config menu
+*** DONE saving config
+** DONE automatic path solving given a root folder
+You shouldn't have to put all those paths into game.lua. It's a bunch
+of extra work. Ideally instead of path globals, just use a resource
+class.
+
+Actually I don't think this is needed.
+** DONE FPS independance via threads (if stable)
+NO threads here, thanks.
 ** DONE Manage cross-path access
 There's quite a bit in src/ that still manages things in other folders
 either without being able to change the path, or just shouldn't use
