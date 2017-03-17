@@ -54,7 +54,8 @@ direction is what registers, as opposed to just having left/right
 priority, etc.
 ** TODO allow certain collisions to only happen once
 Have a collide_time variable, and just check if it equals 1?
-** TODO FPS independance via threads (if stable)
+** DONE FPS independance via threads (if stable)
+NO threads here, thanks.
 ** TODO use Coord in more places
 I've been told this is better. That remains to be seen, though I'm not
 going to reject it.
