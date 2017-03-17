@@ -6,6 +6,7 @@ local input = require "src/input"
 local time = 0
 config.load()
 love.graphics.setDefaultFilter("nearest", "nearest")
+local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
 
 local poll = function ()
    love.event.pump()
@@ -20,10 +21,8 @@ local poll = function ()
    input.poll()
 end
 
-local tick = scene.update
-
-local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
-local draw = function ()
+love.update = scene.update
+love.draw = function ()
    love.graphics.setBlendMode("alpha", "alphamultiply")
    canvas:renderTo(scene.draw)
 
@@ -51,7 +50,7 @@ love.run = function ()
 
    while true do
       if poll() then return end
-      tick()
-      draw()
+      love.update()
+      love.draw()
    end
 end
