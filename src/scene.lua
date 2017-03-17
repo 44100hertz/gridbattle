@@ -24,7 +24,7 @@ return {
    update = function ()
       local top = stack[#stack]
       if top.open then stack[#stack-1]:update() end
-      local inputs = input.update()
+      local inputs = input.resolve()
       stack[#stack]:update(inputs)
    end,
 

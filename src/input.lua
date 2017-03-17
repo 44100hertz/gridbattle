@@ -14,7 +14,7 @@ local keyBind = {
 }
 -- initialize all button states
 local buttons = {}
-for k,_ in pairs(keyBind) do buttons[k] = 0 end
+local resolved = {}
 
 local joyBind = {
    a="b", b="a",
@@ -37,7 +37,8 @@ local joy2hat = function (lr, ud, check)
 end
 
 local input = {
-   update = function ()
+   poll = function (time)
+      time = time or love.timer.getTime()
       local lr, ud
       if joy then
          lr = joy:getAxis(1)
@@ -49,13 +50,26 @@ local input = {
             joy and joy:isGamepadDown(joyBind[k]) or -- dpad
             joy and joy2hat(lr, ud, k) -- joystick
          then
-            buttons[k] = buttons[k]+1
+            if not buttons[k] then
+               buttons[k] = time
+            end
          else
-            -- reset to 0 when released
-            buttons[k] = 0
+            buttons[k] = false
          end
       end
       return buttons
+   end,
+
+   resolve = function (time)
+      time = time or love.timer.getTime()
+      for k,v in pairs(buttons) do
+         if not v then
+            resolved[k] = 0
+         else
+            resolved[k] = math.floor((time - v) * 60 + 0.5)
+         end
+      end
+      return resolved
    end,
 
    rebind = function (binds)
