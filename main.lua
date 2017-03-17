@@ -7,6 +7,7 @@ local time = 0
 config.load()
 love.graphics.setDefaultFilter("nearest", "nearest")
 local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
+GAME.tickperiod = (1/GAME.tickrate)
 
 local poll = function ()
    love.event.pump()
@@ -47,10 +48,14 @@ love.run = function ()
 
    love.math.setRandomSeed(os.time())
    game.start()
+   local next_tick = love.timer.getTime() + GAME.tickperiod
 
    while true do
       if poll() then return end
       love.update()
-      love.draw()
+      while(love.timer.getTime() < next_tick) do
+         love.draw(love.timer.getTime())
+      end
+      next_tick = next_tick + GAME.tickperiod
    end
 end

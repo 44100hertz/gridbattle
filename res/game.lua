@@ -1,6 +1,7 @@
 _G.GAME = {
    width = 240,
    height = 160,
+   tickrate = 60,
 }
 
 _G.BATTLE = {
