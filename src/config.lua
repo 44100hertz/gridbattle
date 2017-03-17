@@ -21,6 +21,8 @@ save = function ()
    serialize.to_config(path, config)
 end
 
+if not pcall(function () io.input(path) end) then save() end
+
 return {
    c = config,
    set_path = function (new_path) path = new_path end,
