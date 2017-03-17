@@ -13,11 +13,13 @@ end
 
 local serialize = require "src/serialize"
 load = function ()
+   print("loading config:", path)
    serialize.from_config(path, config)
    set_gamescale()
 end
 
 save = function ()
+   print("saving config:", path)
    serialize.to_config(path, config)
 end
 
