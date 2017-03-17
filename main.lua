@@ -51,6 +51,7 @@ love.run = function ()
    local next_tick = love.timer.getTime() + GAME.tickperiod
 
    while true do
+      love.timer.sleep(config.c.polldelay)
       if poll() then return end
       love.update()
       while(love.timer.getTime() < next_tick) do
