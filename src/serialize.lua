@@ -2,11 +2,14 @@ return {
    -- Turn a shallow table into a config file
    to_config = function (filename, tab)
       local o = io.output(filename)
-      o:write("# This file has been automatically generated\n")
+      o:write([[
+# This file has been automatically generated\n
+# If you edit it, know what you're doing.\n
+]])
       for k,v in pairs(tab) do
          o:write(k," = ",v,"\n")
       end
-      io.close(o)
+      o:close()
    end,
 
    from_config = function (filename, tab)
@@ -19,7 +22,7 @@ return {
          tab[k] = v
          ::continue::
       end
-      io.close(i)
+      i:close()
       return tab
    end,
 }
