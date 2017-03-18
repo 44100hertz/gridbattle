@@ -45,8 +45,8 @@ return {
          if not v:match("[^%d]") then v = tonumber(v) end
          if v=="{" then
             upper_scope = scope
+            scope[k] = {}
             scope = scope[k]
-            scope = {}
             goto continue
          end
          scope[k] = v

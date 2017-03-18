@@ -1,16 +1,15 @@
 local serialize = require "src/serialize"
 
 return {
-   load_folder = function (name, data)
-      local out = love.filesystem.getWorkingDirectory() .. "/folders/" .. name
-      data = data or {}
-      serialize.from_config(out, data)
-      return data
+   save_folder = function (name, data)
+      local outdir = "folders/"
+      local success = love.filesystem.createDirectory(outdir)
+      serialize.to_config(love.filesystem.getSaveDirectory()
+                             .. "/" .. outdir .. name, data)
    end,
 
-   save_folder = function (name, data)
-      local outdir = love.filesystem.getWorkingDirectory() .. "/folders/"
-      love.filesystem.createDirectory(outdir)
-      serialize.to_config(outdir .. name, data)
+   load_folder = function (name)
+      local out = love.filesystem.getSaveDirectory() .. "/folders/" .. name
+      return serialize.from_config(out)
    end,
 }

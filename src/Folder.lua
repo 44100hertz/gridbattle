@@ -30,7 +30,6 @@ function Folder:find(entry)
 end
 
 function Folder:insert(entry)
-   self.temp_count = nil
    local i = self:find(entry)
    if i then
       self[i].qty = self[i].qty + 1
@@ -41,7 +40,6 @@ function Folder:insert(entry)
 end
 
 function Folder:remove(index)
-   self.temp_count = nil
    index = index or love.math.random(#self)
    local entry = self[index]
    if not entry then
@@ -54,13 +52,11 @@ function Folder:remove(index)
 end
 
 function Folder:count()
-   if not self.temp_count then
-      self.temp_count = 0
-      for _,v in ipairs(self) do
-         self.temp_count = self.temp_count + v.qty
-      end
+   local count = 0
+   for _,v in ipairs(self) do
+      count = count + v.qty
    end
-   return self.temp_count
+   return count
 end
 
 -- Draw a folder, optionally fill a palette

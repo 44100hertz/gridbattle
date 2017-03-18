@@ -1,5 +1,6 @@
 local Folder = require "src/Folder"
 local text = require "src/text"
+local savedata = require "src/savedata"
 
 local lg = love.graphics
 
@@ -9,17 +10,24 @@ do
    local anim = require "src/anim"
    local w,h = img:getDimensions()
    sheet.fg = anim.sheet(0,0,240,160,1,1,w,h)[1][1]
-   sheet.icons = anim.sheet(0,160,16,16,2,2,w,h)
+   sheet.icons = anim.sheet(0,160,16,16,2,3,w,h)
 end
+
+local pane_left = {}
+local pane_right = {}
 
 local scene = require "src/scene"
 local col1 = {
    [1] = scene.pop,
-   [2] = function () print("saving...") end,
+   [2] = function ()
+      savedata.save_folder("leftpane", pane_left.folder)
+      savedata.save_folder("rightpane", pane_right.folder)
+   end,
+   [3] = function ()
+      pane_left.folder = Folder.raw_new(savedata.load_folder("leftpane"))
+      pane_right.folder = Folder.raw_new(savedata.load_folder("rightpane"))
+   end,
 }
-
-local pane_left = {}
-local pane_right = {}
 
 local col, sel
 local num_entries = 12
@@ -67,9 +75,9 @@ return {
       if col==1 then
          if input.a==1 then
             col1[sel]()
-         elseif input.du==1 then
-            sel = sel % #col1 + 1
          elseif input.dd==1 then
+            sel = sel % #col1 + 1
+         elseif input.du==1 then
             sel = (sel-2) % #col1 + 1
          end
       elseif col==2 then
