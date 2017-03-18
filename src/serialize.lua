@@ -1,12 +1,13 @@
 return {
-   -- Writes things to a config file. These files are limited in that
-   -- you cannot have string keys or values that consist entirely of
-   -- numbers, and line breaks are required (no commas or semicolons).
-   -- For syntax, look at program output, or look over this file.
+   -- Writes things to a custom config format. These files are limited
+   -- in that you cannot have string keys or values that consist
+   -- entirely of numbers, and line breaks are required (no commas or
+   -- semicolons). For syntax, look at program output, or look over
+   -- this file.
    to_config = function (filename, tab)
       local o = io.output(filename)
       o:write([[
-# This file has been automatically generated
+# This file has been automatically generated.
 # If you edit it, know what you're doing.
 ]])
       local print_table
