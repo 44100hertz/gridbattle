@@ -41,8 +41,8 @@ return {
             goto continue
          end
          local k,v = line:match("%s*([^ =]+)[ ]?=[ ]?([^ =]+)")
-         if not k:match("%a") then k = tonumber(k) end
-         if not v:match("%a") then v = tonumber(v) end
+         if not k:match("[^%d]") then k = tonumber(k) end
+         if not v:match("[^%d]") then v = tonumber(v) end
          if v=="{" then
             upper_scope = scope
             scope = scope[k]
