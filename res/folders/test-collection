@@ -1,0 +1,37 @@
+# This file has been automatically generated
+# If you edit it, know what you're doing.
+1 = {
+    ltr = a
+    name = Boots
+    qty = 3
+}
+2 = {
+    ltr = b
+    name = Boots
+    qty = 5
+}
+3 = {
+    ltr = a
+    name = Triangle
+    qty = 5
+}
+4 = {
+    ltr = b
+    name = Triangle
+    qty = 5
+}
+5 = {
+    ltr = a
+    name = PoisDrop
+    qty = 5
+}
+6 = {
+    ltr = b
+    name = PoisDrop
+    qty = 5
+}
+7 = {
+    ltr = b
+    name = WhlCrate
+    qty = 6
+}

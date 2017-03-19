@@ -1,22 +1,34 @@
+local serialize = require "src/serialize"
 local Folder = {}
 
 Folder.__index = Folder
 
--- Copy static folder data into a folder
-function Folder:new(folder)
+function Folder:new()
    setmetatable(self, Folder)
-   for i,entry in ipairs(folder) do
-      self[i] = {}
-      for k,v in pairs(entry) do
-         self[i][k] = v
-      end
-   end
    return self
 end
 
-function Folder.raw_new(self)
+-- Copy static folder data into a folder
+function Folder.load(name)
+   self = {}
+   self.name = name
+   local input = love.filesystem.getSaveDirectory() ..
+      "/folders/" .. name
+   if not pcall(function () io.input(input) end) then
+      input = PATHS.folders .. name
+   end
+   serialize.from_config(input, self)
    setmetatable(self, Folder)
    return self
+end
+
+function Folder:save(name)
+   if name then self.name = name end
+   local outdir = "folders/"
+   love.filesystem.createDirectory(outdir)
+   serialize.to_config(
+      love.filesystem.getSaveDirectory()
+         .. "/" .. outdir .. self.name, self)
 end
 
 function Folder:find(entry)
