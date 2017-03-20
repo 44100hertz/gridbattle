@@ -21,9 +21,12 @@ end
 
 function Folder:sort(method, is_ascending)
    local sortfn
+   is_ascending = is_ascending or self.lastsort == method
    if is_ascending then
+      self.lastsort = method .. " ascending"
       sortfn = self.asc_sort[method]
    else
+      self.lastsort = method
       sortfn = self.desc_sort[method]
    end
    table.sort(self.data, sortfn)

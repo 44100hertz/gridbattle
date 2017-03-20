@@ -23,8 +23,12 @@ local col1 = {
       pane_right.folder:save()
    end,
    [3] = function ()
-      pane_left.folder = Folder:load("leftpane")
-      pane_right.folder = Folder:load("rightpane")
+      pane_left.folder:load("leftpane")
+      pane_right.folder:load("rightpane")
+   end,
+   [4] = function ()
+      pane_left.folder:sort("letter")
+      pane_right.folder:sort("letter")
    end,
 }
 
