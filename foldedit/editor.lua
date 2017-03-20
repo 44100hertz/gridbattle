@@ -8,8 +8,8 @@ local sheet = {}
 do
    local anim = require "src/anim"
    local w,h = img:getDimensions()
-   sheet.fg = anim.sheet(0,0,240,160,1,1,w,h)[1][1]
-   sheet.icons = anim.sheet(0,160,16,16,2,6,w,h)
+   sheet.fg = anim.sheet(32,0,224,160,1,1,w,h)[1][1]
+   sheet.icons = anim.sheet(0,0,16,16,2,6,w,h)
 end
 
 local pane_left = {}
@@ -139,7 +139,7 @@ return {
       draw_list(pane_left, 24)
       draw_list(pane_right, 136)
 
-      lg.draw(img, sheet.fg)
+      lg.draw(img, sheet.fg, 16)
       text.draw("flavor", "Collection", 24, 8)
       local right_str = "Folder (" .. pane_right.folder:count() .. "/30" .. ")"
       text.draw("flavor", right_str, 136, 8)
