@@ -4,20 +4,21 @@ local Folder = {}
 Folder.__index = Folder
 
 function Folder:new()
+   self.data = {}
    setmetatable(self, Folder)
    return self
 end
 
 -- Copy static folder data into a folder
-function Folder.load(name)
-   self = {}
+function Folder:load(name)
    self.name = name
    local input = love.filesystem.getSaveDirectory() ..
       "/folders/" .. name
    if not pcall(function () io.input(input) end) then
       input = PATHS.folders .. name
    end
-   serialize.from_config(input, self)
+   self.data = {}
+   serialize.from_config(input, self.data)
    setmetatable(self, Folder)
    return self
 end
@@ -28,13 +29,13 @@ function Folder:save(name)
    love.filesystem.createDirectory(outdir)
    serialize.to_config(
       love.filesystem.getSaveDirectory()
-         .. "/" .. outdir .. self.name, self)
+         .. "/" .. outdir .. self.name, self.data)
 end
 
 function Folder:find(entry)
-   for i=1,#self do
-      if self[i].name == entry.name and
-         self[i].ltr == entry.ltr
+   for i=1,#self.data do
+      if self.data[i].name == entry.name and
+         self.data[i].ltr == entry.ltr
       then
          return i
       end
@@ -44,7 +45,7 @@ end
 function Folder:insert(entry)
    local i = self:find(entry)
    if i then
-      self[i].qty = self[i].qty + 1
+      self.data[i].qty = self.data[i].qty + 1
    else
       entry.qty = 1
       table.insert(self, entry)
@@ -52,20 +53,20 @@ function Folder:insert(entry)
 end
 
 function Folder:remove(index)
-   index = index or love.math.random(#self)
-   local entry = self[index]
+   index = index or love.math.random(#self.data)
+   local entry = self.data[index]
    if not entry then
       print("tried to remove nonexistant index:", index)
       return
    end
    entry.qty = entry.qty - 1
-   if entry.qty==0 then table.remove(self, index) end
+   if entry.qty==0 then table.remove(self.data, index) end
    return {name = entry.name, ltr = entry.ltr}
 end
 
 function Folder:count()
    local count = 0
-   for _,v in ipairs(self) do
+   for _,v in ipairs(self.data) do
       count = count + v.qty
    end
    return count
