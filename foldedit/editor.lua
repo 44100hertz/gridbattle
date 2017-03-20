@@ -23,8 +23,8 @@ local col1 = {
       pane_right.folder:save()
    end,
    [3] = function ()
-      pane_left.folder = Folder.load("leftpane")
-      pane_right.folder = Folder.load("rightpane")
+      pane_left.folder = Folder:load("leftpane")
+      pane_right.folder = Folder:load("rightpane")
    end,
 }
 
@@ -35,11 +35,11 @@ local entry_height = 11
 local move_chip = function (from, to)
    local entry = from.folder:remove(from.sel)
    if not entry then return end
-   if not from.folder[from.sel] then
-      if from.sel < #from.folder then
+   if not from.folder.data[from.sel] then
+      if from.sel < #from.folder.data then
          from.sel = from.sel + 1
       else
-         from.sel = math.max(#from.folder, 1)
+         from.sel = math.max(#from.folder.data, 1)
       end
    end
    to.folder:insert(entry)
@@ -48,10 +48,10 @@ end
 return {
    start = function (collection, folder)
       col, sel = 2,1
-      pane_left.folder = Folder.load("test-collection")
+      pane_left.folder = Folder.load({}, "test-collection")
       pane_left.folder.name = "leftpane"
       pane_left.sel = 1
-      pane_right.folder = Folder.load("test-folder")
+      pane_right.folder = Folder.load({}, "test-folder")
       pane_right.folder.name = "rightpane"
       pane_right.sel = 1
    end,
@@ -62,11 +62,11 @@ return {
          return t % math.max(20-t, 6) == 1
       end
       local update_pane = function (pane)
-         if #pane.folder==0 then return end
+         if #pane.folder.data==0 then return end
          if repcheck(input.dd) then
-            pane.sel = pane.sel % #pane.folder + 1
+            pane.sel = pane.sel % #pane.folder.data + 1
          elseif repcheck(input.du) then
-            pane.sel = (pane.sel-2) % #pane.folder + 1
+            pane.sel = (pane.sel-2) % #pane.folder.data + 1
          end
       end
 
@@ -98,14 +98,14 @@ return {
       lg.clear(16,24,24)
 
       local draw_list = function (pane, x)
-         if #pane.folder==0 then return end
+         if #pane.folder.data==0 then return end
          local y = 19
          local i = pane.sel - 5
          for _ = 1, num_entries do
-            local v = pane.folder[i]
+            local v = pane.folder.data[i]
             if not v then
-               if #pane.folder>7 then
-                  v = pane.folder[(i-1) % #pane.folder+1]
+               if #pane.folder.data>7 then
+                  v = pane.folder.data[(i-1) % #pane.folder.data+1]
                   lg.setColor(136,144,136)
                else
                   goto continue

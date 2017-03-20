@@ -9,7 +9,7 @@ local Folder = require "src/Folder"
 local depthdraw = require "src/depthdraw"
 local ents = require "battle/ents"
 local stage = require "battle/stage"
-local folder = Folder:new{}
+local folder = Folder.new{}
 
 local ui =  require(PATHS.battle .. "ui")
 
@@ -24,7 +24,7 @@ end
 return {
    start = function (set, folder_name)
       set = require(PATHS.sets .. set)
-      folder = folder.load("test-folder")
+      folder:load("test-folder")
 
       stage.start(set.stage.turf)
       ents.start(set)

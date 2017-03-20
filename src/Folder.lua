@@ -4,7 +4,6 @@ local Folder = {}
 Folder.__index = Folder
 
 function Folder:new()
-   self.data = {}
    setmetatable(self, Folder)
    return self
 end
@@ -17,8 +16,7 @@ function Folder:load(name)
    if not pcall(function () io.input(input) end) then
       input = PATHS.folders .. name
    end
-   self.data = {}
-   serialize.from_config(input, self.data)
+   self.data = serialize.from_config(input)
    setmetatable(self, Folder)
    return self
 end
@@ -48,7 +46,7 @@ function Folder:insert(entry)
       self.data[i].qty = self.data[i].qty + 1
    else
       entry.qty = 1
-      table.insert(self, entry)
+      table.insert(self.data, entry)
    end
 end
 
