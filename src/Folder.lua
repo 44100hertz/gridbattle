@@ -1,14 +1,7 @@
 local serialize = require "src/serialize"
+
 local Folder = {
-   asc_sort = {
-      letter = function (a,b) return a.ltr > b.ltr end,
-      name = function (a,b) return a.name > b.name end,
-      quantity = function (a,b) return a.qty > b.qty end,
-   },
-   desc_sort = {
-      letter = function (a,b) return a.ltr < b.ltr end,
-      name = function (a,b) return a.name < b.name end,
-      quantity = function (a,b) return a.qty < b.qty end,
+   compare_lists = {
    }
 }
 
@@ -19,17 +12,31 @@ function Folder:new()
    return self
 end
 
+local compare_lists = {
+   letter = {"ltr", "name"},
+   name = {"name", "ltr"},
+   quantity = {"qty", "ltr", "name"},
+}
+
 function Folder:sort(method, is_ascending)
-   local sortfn
-   is_ascending = is_ascending or self.lastsort == method
-   if is_ascending then
-      self.lastsort = method .. " ascending"
-      sortfn = self.asc_sort[method]
+   if self.lastsort == method then
+      is_ascending = true
+      self.lastsort = nil
    else
       self.lastsort = method
-      sortfn = self.desc_sort[method]
    end
-   table.sort(self.data, sortfn)
+
+   local sort_list = compare_lists[method]
+   local compare = function (a,b)
+      if is_ascending then a,b = b,a end
+      for _,sortby in ipairs(sort_list) do
+         if a[sortby] < b[sortby] then return true end
+         if a[sortby] > b[sortby] then return false end
+      end
+      return false
+   end
+
+   table.sort(self.data, compare)
 end
 
 function Folder:condense()
