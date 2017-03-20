@@ -9,7 +9,7 @@ do
    local anim = require "src/anim"
    local w,h = img:getDimensions()
    sheet.fg = anim.sheet(0,0,240,160,1,1,w,h)[1][1]
-   sheet.icons = anim.sheet(0,160,16,16,2,3,w,h)
+   sheet.icons = anim.sheet(0,160,16,16,2,6,w,h)
 end
 
 local pane_left = {}
@@ -29,6 +29,14 @@ local col1 = {
    [4] = function ()
       pane_left.folder:sort("letter")
       pane_right.folder:sort("letter")
+   end,
+   [5] = function ()
+      pane_left.folder:sort("name")
+      pane_right.folder:sort("name")
+   end,
+   [6] = function ()
+      pane_left.folder:sort("quantity")
+      pane_right.folder:sort("quantity")
    end,
 }
 

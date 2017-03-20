@@ -2,12 +2,12 @@ local serialize = require "src/serialize"
 local Folder = {
    asc_sort = {
       letter = function (a,b) return a.ltr > b.ltr end,
-      alpha = function (a,b) return a.name > b.name end,
+      name = function (a,b) return a.name > b.name end,
       quantity = function (a,b) return a.qty > b.qty end,
    },
    desc_sort = {
       letter = function (a,b) return a.ltr < b.ltr end,
-      alpha = function (a,b) return a.name < b.name end,
+      name = function (a,b) return a.name < b.name end,
       quantity = function (a,b) return a.qty < b.qty end,
    }
 }
