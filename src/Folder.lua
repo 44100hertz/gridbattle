@@ -1,11 +1,49 @@
 local serialize = require "src/serialize"
-local Folder = {}
+local Folder = {
+   asc_sort = {
+      letter = function (a,b) return a.ltr > b.ltr end,
+      alpha = function (a,b) return a.name > b.name end,
+      quantity = function (a,b) return a.qty > b.qty end,
+   },
+   desc_sort = {
+      letter = function (a,b) return a.ltr < b.ltr end,
+      alpha = function (a,b) return a.name < b.name end,
+      quantity = function (a,b) return a.qty < b.qty end,
+   }
+}
 
 Folder.__index = Folder
 
 function Folder:new()
    setmetatable(self, Folder)
    return self
+end
+
+function Folder:sort(method, is_ascending)
+   local sortfn
+   if is_ascending then
+      sortfn = self.asc_sort[method]
+   else
+      sortfn = self.desc_sort[method]
+   end
+   table.sort(self.data, sortfn)
+end
+
+function Folder:condense()
+   for i,a in ipairs(self.data) do
+      for j = i+1,b do
+         b = self.data[b]
+         if a.name == b.name and
+            a.ltr == b.ltr
+         then
+            a.qty = a.qty + b.qty
+            b.qty = 0
+         end
+      end
+   end
+   for i,v in ipairs(self.data) do
+      if v.qty == 0 then table.remove(self.data, v) end
+   end
 end
 
 -- Copy static folder data into a folder
