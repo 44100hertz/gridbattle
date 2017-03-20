@@ -1,4 +1,8 @@
 * Features
+** TODO Image class that handles images, assets, and sheets
+*** TODO move all images into unified locations
+*** TODO identify all use of images and change them into image class calls
+*** TODO attach sheets to images directly
 ** TODO elements
 *** TODO give everything an element, show element in editor and battle
 *** TODO handle elements on collisions
@@ -11,18 +15,7 @@ built into draw, maybe not. For now, just make a custom flippable
 coord type in the place where it's needed, and I can toy with how to
 implement it elsewhere.
 ** TODO ONLINE multiplier (hooooo boy)
-** TODO saving/loading chip folders
-*** TODO file save/load menu
-*** TODO save/load chip folders
 * Steps
-** TODO debug stuff
-*** TODO any chip selector
-*** TODO RAM, CPU, video info
-** TODO memory cleanup
-This is best done by keeping all loaded assets in tables. State exit
-functions will be added that nil these tables. Possibly: an asset
-manager is passed said tables, and clears them out when states get
-popped.
 ** TODO automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
@@ -36,6 +29,14 @@ This would ideally be done just by feeding a sheet into
 the sheet generator, or possibly by creating a sheet object that just
 fetches quads as needed. It might not be bad just to unify drawing in
 general for this stuff.
+** TODO debug stuff
+*** TODO any chip selector
+*** TODO RAM, CPU, video info
+** TODO memory cleanup
+This is best done by keeping all loaded assets in tables. State exit
+functions will be added that nil these tables. Possibly: an asset
+manager is passed said tables, and clears them out when states get
+popped.
 ** TODO make keyboard input more responsive
 mostly for directions, just make it so the most recently pressed
 direction is what registers, as opposed to just having left/right
@@ -59,6 +60,9 @@ going to reject it.
 *** TODO palette cycle
 *** TODO pixel upscaling and/or LCD filter
 * Done
+** DONE saving/loading chip folders
+*** TODO file save/load menu
+*** TODO save/load chip folders
 ** DONE configuration and saves
 In order for the folder editor to be finished, it's needed to
 implement this. Good thing I already have a serialization class just
