@@ -1,6 +1,5 @@
 local Folder = require "src/Folder"
 local text = require "src/text"
-local savedata = require "src/savedata"
 
 local lg = love.graphics
 
@@ -20,12 +19,12 @@ local scene = require "src/scene"
 local col1 = {
    [1] = scene.pop,
    [2] = function ()
-      savedata.save_folder("leftpane", pane_left.folder)
-      savedata.save_folder("rightpane", pane_right.folder)
+      pane_left.folder:save()
+      pane_right.folder:save()
    end,
    [3] = function ()
-      pane_left.folder = Folder.raw_new(savedata.load_folder("leftpane"))
-      pane_right.folder = Folder.raw_new(savedata.load_folder("rightpane"))
+      pane_left.folder = Folder.load("leftpane")
+      pane_right.folder = Folder.load("rightpane")
    end,
 }
 
@@ -49,9 +48,11 @@ end
 return {
    start = function (collection, folder)
       col, sel = 2,1
-      pane_left.folder = Folder.new({}, require (PATHS.folders .. collection))
+      pane_left.folder = Folder.load("test-collection")
+      pane_left.folder.name = "leftpane"
       pane_left.sel = 1
-      pane_right.folder = Folder.new({}, require (PATHS.folders .. folder))
+      pane_right.folder = Folder.load("test-folder")
+      pane_right.folder.name = "rightpane"
       pane_right.sel = 1
    end,
 

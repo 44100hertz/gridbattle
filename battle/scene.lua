@@ -24,7 +24,7 @@ end
 return {
    start = function (set, folder_name)
       set = require(PATHS.sets .. set)
-      folder = folder:new(require(PATHS.folders .. folder_name))
+      folder = folder.new("test-folder")
 
       stage.start(set.stage.turf)
       ents.start(set)
@@ -56,10 +56,9 @@ return {
    end,
 
    draw = function ()
-      -- All of these call depthdraw
       bg.draw()
-      ents.draw()
-      stage.draw()
+      ents.draw() -- calls depthdraw
+      stage.draw() -- calls depthdraw
 
       local cust_amount = cust_frames / cust_time
       ui.draw_under(ents.player, cust_amount, ents.get_enemy_names())
