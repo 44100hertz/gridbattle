@@ -17,15 +17,21 @@ function Menu:new (menu)
    return self
 end
 
+local input_check = {
+   "a", "b", "dl", "dr", "l", "r"
+}
+
 function Menu:update (input)
    local entry = self[self.sel]
-   if input.a==1 and entry.a then
-      entry:a()
-   elseif input.dl==1 and entry.dl then
-      entry:dl()
-   elseif input.dr==1 and entry.dr then
-      entry:dr()
-   elseif input.dd==1 then
+   for _,button in ipairs(input_check) do
+      if input[button] == 1 and
+         entry[button]
+      then
+         entry[button](entry)
+         return
+      end
+   end
+   if input.dd==1 then
       self.sel = self.sel % #self + 1
    elseif input.du==1 then
       self.sel = (self.sel-2) % #self + 1
