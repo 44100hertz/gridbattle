@@ -1,4 +1,6 @@
-local game = require "res/game"
+_G.RES_PATH = arg[2] or "res/"
+local game = require(RES_PATH .. "game")
+
 local scene = require "src/scene"
 local config = require "src/config"
 local input = require "src/input"
