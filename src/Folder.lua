@@ -13,7 +13,7 @@ local chipdb = require(PATHS.chipdb)
 local fetch_methods = {
    ltr = function (o) return o.ltr end,
    name = function (o) return o.name end,
-   qty = function (o) return o.qty end,
+   qty = function (o) return -o.qty end,
    elem = function (o) return chipdb[o.name].elem end,
 }
 local compare_lists = {
