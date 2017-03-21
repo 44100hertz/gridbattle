@@ -13,19 +13,19 @@ _G.BATTLE = {
    yoff = 62 + 0.5 * (GAME.height-160),
 }
 
-_G.PATHS = {
-   root = "res/",
-   bg = "res/bg/",
-   fonts = "res/fonts/",
-   chips = "res/chips/",
-   folders = "res/folders/",
-   menu = "res/menu/",
-   battle = "res/battle/",
-   sets = "res/battle/sets/",
-}
-
 return {
+   paths = {
+      chipdb = "chipdb",
+      enemydb = "enemydb",
+      chips = "chips/",
+      bg = "bg/",
+      fonts = "fonts/",
+      folders = "folders/",
+      menu = "menu/",
+      battle = "battle/",
+      sets = "battle/sets/",
+   },
    start = function ()
       (require "src/scene").push((require "src/Menu"):new("title"))
-   end
+   end,
 }

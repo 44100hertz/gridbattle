@@ -1,5 +1,9 @@
 _G.RES_PATH = arg[2] or "res/"
 local game = require(RES_PATH .. "game")
+_G.PATHS = {}
+for k,v in pairs(game.paths) do
+   _G.PATHS[k] = RES_PATH .. v
+end
 
 local scene = require "src/scene"
 local config = require "src/config"
