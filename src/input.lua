@@ -66,7 +66,7 @@ local input = {
          if not v then
             resolved[k] = 0
          else
-            resolved[k] = math.floor((time - v) * GAME.tickrate + 0.5)
+            resolved[k] = math.floor((time - v) * GAME.tickrate + 0.51)
          end
       end
       return resolved
