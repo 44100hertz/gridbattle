@@ -5,7 +5,7 @@ local text = require "src/text"
 local lg = love.graphics
 
 local chip_artist = require "battle/chip_artist"
-local chipdb = require(PATHS.root .. "chipdb")
+local chipdb = require(PATHS.chipdb)
 
 local img = lg.newImage(PATHS.battle .. "chips.png")
 local sheet = {}

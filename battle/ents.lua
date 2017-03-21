@@ -4,7 +4,7 @@ local text = require "src/text"
 local stage = require "battle/stage"
 local actors = require "battle/actors"
 
-local enemydb = require(PATHS.root .. "enemydb")
+local enemydb = require(PATHS.enemydb)
 
 local ents, images
 local clear = function ()

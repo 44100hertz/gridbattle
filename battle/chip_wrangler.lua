@@ -1,5 +1,5 @@
 local ents = require "battle/ents"
-local chipdb = require(PATHS.root .. "chipdb")
+local chipdb = require(PATHS.chipdb)
 
 local use = function (actor, chip_name)
    local chip = chipdb[chip_name]
