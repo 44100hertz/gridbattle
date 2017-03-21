@@ -58,6 +58,7 @@ end
 
 -- Copy static folder data into a folder
 function Folder:load(name)
+   self.temp_count = nil
    self.name = name
    local input = love.filesystem.getSaveDirectory() ..
       "/folders/" .. name
@@ -89,6 +90,7 @@ function Folder:find(entry)
 end
 
 function Folder:insert(entry)
+   self.temp_count = nil
    local i = self:find(entry)
    if i then
       self.data[i].qty = self.data[i].qty + 1
@@ -99,6 +101,7 @@ function Folder:insert(entry)
 end
 
 function Folder:remove(index)
+   self.temp_count = nil
    index = index or love.math.random(#self.data)
    local entry = self.data[index]
    if not entry then
@@ -111,11 +114,13 @@ function Folder:remove(index)
 end
 
 function Folder:count()
-   local count = 0
-   for _,v in ipairs(self.data) do
-      count = count + v.qty
+   if not self.temp_count then
+      self.temp_count = 0
+      for _,v in ipairs(self.data) do
+         self.temp_count = self.temp_count + v.qty
+      end
    end
-   return count
+   return self.temp_count
 end
 
 -- Draw a folder, optionally fill a palette
