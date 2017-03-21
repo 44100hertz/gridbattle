@@ -40,6 +40,7 @@ return {
          -- don't try to insert nothing
          if sel==0 then
             scene.pop()
+            scene.push(require(PATHS.battle .. "go_screen"))
          elseif pal[sel] then
             table.insert(queue, pal[sel])
             local diff_letter, diff_chip
