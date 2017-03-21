@@ -1,8 +1,16 @@
+-- Append the root path to paths in the game definiton
 _G.RES_PATH = arg[2] or "res/"
 local game = require(RES_PATH .. "game")
 _G.PATHS = {}
 for k,v in pairs(game.paths) do
    _G.PATHS[k] = RES_PATH .. v
+end
+
+-- Index chips by name or by index interchangeably
+local chipdb = require(PATHS.chipdb)
+for i,v in ipairs(chipdb) do
+   v.index = i
+   chipdb[v[1]] = v
 end
 
 local scene = require "src/scene"
