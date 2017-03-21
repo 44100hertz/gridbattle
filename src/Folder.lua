@@ -1,9 +1,6 @@
 local serialize = require "src/serialize"
 
-local Folder = {
-   compare_lists = {
-   }
-}
+local Folder = {}
 
 Folder.__index = Folder
 
@@ -12,10 +9,18 @@ function Folder:new()
    return self
 end
 
+local chipdb = require(PATHS.chipdb)
+local fetch_methods = {
+   ltr = function (o) return o.ltr end,
+   name = function (o) return o.name end,
+   qty = function (o) return o.qty end,
+   elem = function (o) return chipdb[o.name].elem end,
+}
 local compare_lists = {
    letter = {"ltr", "name"},
    name = {"name", "ltr"},
    quantity = {"qty", "ltr", "name"},
+   element = {"elem", "ltr", "name"},
 }
 
 function Folder:sort(method, is_ascending)
@@ -30,8 +35,10 @@ function Folder:sort(method, is_ascending)
    local compare = function (a,b)
       if is_ascending then a,b = b,a end
       for _,sortby in ipairs(sort_list) do
-         if a[sortby] < b[sortby] then return true end
-         if a[sortby] > b[sortby] then return false end
+         fetchval = fetch_methods[sortby]
+         local a_val,b_val = fetchval(a), fetchval(b)
+         if a_val < b_val then return true end
+         if a_val > b_val then return false end
       end
       return false
    end

@@ -1,5 +1,6 @@
 local Folder = require "src/Folder"
 local text = require "src/text"
+local chipdb = require(PATHS.chipdb)
 
 local lg = love.graphics
 
@@ -9,7 +10,7 @@ do
    local anim = require "src/anim"
    local w,h = img:getDimensions()
    sheet.fg = anim.sheet(32,0,224,160,1,1,w,h)[1][1]
-   sheet.icons = anim.sheet(0,0,16,16,2,6,w,h)
+   sheet.icons = anim.sheet(0,0,16,16,2,7,w,h)
 end
 
 local pane_left = {}
@@ -37,6 +38,10 @@ local col1 = {
    [6] = function ()
       pane_left.folder:sort("quantity")
       pane_right.folder:sort("quantity")
+   end,
+   [7] = function ()
+      pane_left.folder:sort("element")
+      pane_right.folder:sort("element")
    end,
 }
 
@@ -114,6 +119,7 @@ return {
          local y = 19
          local i = pane.sel - 5
          for _ = 1, num_entries do
+            local line
             local v = pane.folder.data[i]
             if not v then
                if #pane.folder.data>7 then
@@ -126,8 +132,9 @@ return {
             -- Highlight selection
             if i == pane.sel then lg.setColor(120, 192, 128) end
 
-            text.draw("flavor", v.ltr:upper(), x, y)
-            text.draw("flavor", v.name, x+22, y)
+            line = string.char(chipdb[v.name].elem) ..
+               v.ltr:upper() .. " " .. v.name
+            text.draw("flavor", line, x, y)
             text.draw("flavor", "\127" .. v.qty, x+78, y)
             lg.setColor(255, 255, 255)
             ::continue::
