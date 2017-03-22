@@ -1,9 +1,10 @@
-local Coord = require "src/Coord"
-
 local depths
 local depth_step = 1
 local min_depth = -10
 local max_depth = 10
+
+local xoff, yoff = BATTLE.xoff, BATTLE.yoff
+local xscale, yscale = BATTLE.xscale, BATTLE.yscale
 
 local reset = function ()
    depths = {}
@@ -16,8 +17,7 @@ reset()
 
 return {
    add = function (obj)
-      obj.pos = Coord:new(obj.x, obj.y, obj.z)
-      local depth = obj.pos.depth
+      local depth = obj.y + obj.z / yscale
       if depth < min_depth then depth = min_depth end
       if depth > max_depth then depth = max_depth end
 
@@ -29,8 +29,8 @@ return {
       for _,depth in ipairs(depths) do
          for _,v in ipairs(depth) do
             local flip = v.side=="right" and -1 or 1
-            local x = v.pos.screen_x - (v.ox or 0)
-            local y = v.pos.screen_y - (v.oy or 0)
+            local x = xoff + xscale * v.x - (v.ox or 0)
+            local y = yoff + yscale * v.y - v.z - (v.oy or 0)
             if v.frame then
                local row = v.state and v.state.row or v.row or 1
                love.graphics.draw(v.image, v.anim[row][v.frame],
