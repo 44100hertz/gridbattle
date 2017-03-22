@@ -31,6 +31,7 @@ return {
       bg.start(set.bg)
 
       selectchips()
+      scene.push(require "src/transition/fade", 0.5, true)
    end,
 
    update = function (_, input)
