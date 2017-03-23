@@ -7,25 +7,38 @@ local input = require "src/input"
 
 local stack = {}
 
+local push = function (mod, ...)
+   table.insert(stack, mod)
+   if mod.start then mod.start(...) end
+end
+
+local pop = function ()
+   if #stack > 0 then
+      local removed = table.remove(stack)
+      if removed.exit then removed:exit() end
+      return true
+   end
+end
+
+local push_fade = function (fadeopts, mod, a,b,c,d,e)
+   local length = fadeopts.length or 0.25
+   local fadein = function ()
+      pop()
+      push(mod, a,b,c,d,e)
+      push(require"src/scenes/fade", length, true, pop)
+   end
+   push(require"src/scenes/fade", length, false, fadein)
+end
+
 return {
-   push = function (mod, ...)
-      table.insert(stack, mod)
-      if mod.start then mod.start(...) end
-   end,
-
-   pop = function ()
-      if #stack > 0 then
-         local removed = table.remove(stack)
-         if removed.exit then removed:exit() end
-         return true
-      end
-   end,
-
+   push = push,
+   push_fade = push_fade,
+   pop = pop,
    update = function ()
       local top = stack[#stack]
-      if top.open then stack[#stack-1]:update() end
+      if top.open and stack[#stack-1].update then stack[#stack-1]:update() end
       local inputs = input.resolve()
-      stack[#stack]:update(inputs)
+      if stack[#stack].update then stack[#stack]:update(inputs) end
    end,
 
    draw = function ()
@@ -34,7 +47,7 @@ return {
          pos = pos - 1
       end
       while(stack[pos]) do
-         stack[pos]:draw()
+         if stack[pos].draw then stack[pos]:draw() end
          pos = pos + 1
       end
    end,

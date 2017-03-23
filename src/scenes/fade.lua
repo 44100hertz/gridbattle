@@ -1,23 +1,21 @@
-local scene = require "src/scene"
-
-local is_in, fadetime, starttime
+local is_in, length, starttime, after
 
 return {
    transparent = true,
-   start = function (new_fadetime, new_is_in)
-      is_in, fadetime = new_is_in, new_fadetime
+   start = function (new_length, new_is_in, new_after)
+      is_in, length, after = new_is_in, new_length, new_after
       starttime = love.timer.getTime()
    end,
 
    update = function ()
-      -- Framerate-independent ending state
-      local elapsed = love.timer.getTime() - starttime
-      if elapsed > fadetime then scene.pop() end
+      if love.timer.getTime() - starttime > length then
+         after()
+      end
    end,
 
    draw = function ()
       local elapsed = love.timer.getTime() - starttime
-      local darkness = 255 * elapsed / fadetime
+      local darkness = 255 * elapsed / length
       if is_in then darkness = 255 - darkness end
 
       love.graphics.setColor(0, 0, 0, darkness)
