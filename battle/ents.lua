@@ -7,6 +7,7 @@ local stage = require "battle/stage"
 local actors = require "battle/actors"
 
 local enemydb = require(PATHS.enemydb)
+local elements = require(PATHS.battle .. "elements")
 
 local ents, images
 local clear = function ()
@@ -69,8 +70,15 @@ local add = function (class_name, variant_name, ent)
    return ent
 end
 
-local apply_damage = function (ent, amount, element)
-   if ent.hp then ent.hp = ent.hp - amount end
+local apply_damage = function (send, recv)
+   local recv_elem
+   local panel_elem = stage.getpanel(recv.x, recv.y).stat
+   if panel_elem and elements.by_name[panel_elem] then
+      recv_elem = panel_elem
+   else
+      recv_elem = recv.elem
+   end
+   elements.interact(send.elem, recv_elem, send.damage, recv)
 end
 
 local get_enemy_names = function ()
@@ -166,7 +174,7 @@ return {
       local collide = function (a, b)
          if a.collide then a:collide(b) end
          if a.damage and b.hp then
-            apply_damage(b, a.damage, a.element)
+            apply_damage(a, b)
          end
          if a.collide_die and b.tangible then
             kill(a)
