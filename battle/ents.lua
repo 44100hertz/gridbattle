@@ -1,3 +1,5 @@
+local lg = love.graphics
+
 local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
@@ -195,17 +197,23 @@ return {
    draw = function ()
       for _,ent in ipairs(ents) do
          if ent.states then actors.update_draw(ent) end
-         depthdraw.add(ent)
-
-         if ent.hp and not ent.hide_hp then
-            depthdraw.add{
-               x=ent.x, y=ent.y, z=ent.z+50,
-               draw = function (_, x, y)
-                  local hpstr = tostring(math.floor(ent.hp))
-                  text.draw("hpnum", hpstr , x, y, "center")
-               end
-            }
+         local draw = function (raw_x, raw_y)
+            x = raw_x - (ent.ox or 0)
+            y = raw_y - (ent.oy or 0)
+            local flip = ent.side=="right" and -1 or 1
+            if ent.frame then
+               local row = ent.state and ent.state.row or ent.row or 1
+               lg.draw(ent.image, ent.anim[row][ent.frame], x, y, 0, flip, 1)
+            elseif ent.image then
+               lg.draw(ent.image, x, y)
+            end
+            if ent.draw then ent:draw(x, y) end
+            if ent.hp and not ent.hide_hp then
+               local hpstr = tostring(math.floor(ent.hp))
+               text.draw("hpnum", hpstr, raw_x, y-10, "center")
+            end
          end
+         depthdraw.add(draw, ent.x, ent.y, ent.z)
       end
    end,
 }

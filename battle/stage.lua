@@ -5,6 +5,7 @@
    have any functions other files would call.
 --]]
 
+local lg = love.graphics
 local anim = require "src/anim"
 local depthdraw = require "src/depthdraw"
 
@@ -53,16 +54,12 @@ return {
    draw = function ()
       for x = 1,numx do
          for y = 1,numy do
-            local frame = 1
-            if panels[x][y].stat == "poison" then frame=2 end
-            depthdraw.add{
-               image = image,
-               x=x, y=y, z = -20,
-               ox = 20, oy = 30,
-               anim = sheet,
-               row = x > turf[y] and 1 or 2,
-               frame = frame,
-            }
+            local row = x > turf[y] and 1 or 2
+            local col = panels[x][y].stat == "poison" and 2 or 1
+            local draw = function (x, y)
+               lg.draw(image, sheet[row][col], x-BATTLE.xscale/2, y-30)
+            end
+            depthdraw.add(draw, x, y, -20)
          end
       end
    end,

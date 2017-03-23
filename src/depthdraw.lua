@@ -16,30 +16,20 @@ end
 reset()
 
 return {
-   add = function (obj)
-      local depth = obj.y + obj.z / yscale
+   add = function (drawfn, x, y, z)
+      local depth = y + z / yscale
       if depth < min_depth then depth = min_depth end
       if depth > max_depth then depth = max_depth end
+      local screen_x = xoff + xscale * x
+      local screen_y = yoff + yscale * y - z
 
       local index = math.floor((depth-min_depth) / depth_step) + 1
-      table.insert(depths[index], obj)
+      table.insert(depths[index], {drawfn, screen_x, screen_y})
    end,
 
    draw = function ()
       for _,depth in ipairs(depths) do
-         for _,v in ipairs(depth) do
-            local flip = v.side=="right" and -1 or 1
-            local x = xoff + xscale * v.x - (v.ox or 0)
-            local y = yoff + yscale * v.y - v.z - (v.oy or 0)
-            if v.frame then
-               local row = v.state and v.state.row or v.row or 1
-               love.graphics.draw(v.image, v.anim[row][v.frame],
-                                  x, y, 0, flip, 1)
-            elseif v.image then
-               love.graphics.draw(v.image, x, y)
-            end
-	    if v.draw then v:draw(x, y) end
-         end
+         for _,v in ipairs(depth) do v[1](v[2], v[3]) end
       end
       reset()
    end,
