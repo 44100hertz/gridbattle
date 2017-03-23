@@ -8,6 +8,6 @@ return {
       {name="test2", x=6, y=1},
       {name="test2", x=6, y=3},
    },
-   bg={"scroll"},
+   bg="scroll",
    bg_args={"test"},
 }

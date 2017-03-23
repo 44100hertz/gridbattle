@@ -28,7 +28,7 @@ return {
 
       stage.start(set.stage.turf)
       ents.start(set)
-      bg = require(PATHS.bg .. set.bg[1])
+      bg = require(PATHS.bg .. set.bg)
       bg.start(unpack(set.bg_args))
 
       selectchips()
