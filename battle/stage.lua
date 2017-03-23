@@ -22,6 +22,7 @@ local getpanel = function (x,y)
 end
 
 return {
+   getpanel = getpanel,
    start = function (new_turf)
       turf = new_turf
       panels = {}
