@@ -3,14 +3,14 @@ _G.BATTLE.xoff = BATTLE.xoff or
    math.floor(GAME.width/2 - (BATTLE.xscale * (BATTLE.numx + 1) * 0.5))
 
 local scene = require "src/scene"
-local bg = require "src/bg"
 local Folder = require "src/Folder"
-
+local bg = require "src/bg"
 local depthdraw = require "src/depthdraw"
 local ents = require "battle/ents"
 local stage = require "battle/stage"
 local folder = Folder.new{}
 
+local savedata = require(RES_PATH .. "savedata")
 local ui =  require(PATHS.battle .. "ui")
 
 local cust_frames
@@ -22,9 +22,9 @@ local selectchips = function ()
 end
 
 return {
-   start = function (set, folder_name)
+   start = function (set)
       set = require(PATHS.sets .. set)
-      folder:load(folder_name)
+      folder:load(savedata.player.folder)
 
       stage.start(set.stage.turf)
       ents.start(set)
