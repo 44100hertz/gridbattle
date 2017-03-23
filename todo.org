@@ -1,8 +1,4 @@
 * Features
-** TODO Image class that handles images, assets, and sheets
-*** TODO move all images into unified locations
-*** TODO identify all use of images and change them into image class calls
-*** TODO attach sheets to images directly
 ** TODO elements
 *** TODO give everything an element, show element in editor and battle
 *** TODO handle elements on collisions
@@ -16,6 +12,11 @@ coord type in the place where it's needed, and I can toy with how to
 implement it elsewhere.
 ** TODO ONLINE multiplier (hooooo boy)
 * Steps
+** TODO make a stub assets folder
+This should have the absolute minimum required to make things not
+crash. It will help me to decide what matters for src/, res/, or in
+essence, what should be under user control without modifying the
+source.
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
@@ -43,7 +44,11 @@ Have a collide_time variable, and just check if it equals 1?
 *** TODO posterize filter
 *** TODO palette cycle
 *** TODO pixel upscaling and/or LCD filter
-* Done
+* Nope'd
+** DONE Image class that handles images, assets, and sheets
+*** TODO move all images into unified locations
+*** TODO identify all use of images and change them into image class calls
+*** TODO attach sheets to images directly
 ** DONE make sheets a bit easier
 This would require too much restructuring so I'm giving up on it.
 
@@ -62,6 +67,9 @@ This would require too much restructuring so I'm giving up on it.
 I've been told this is better. That remains to be seen, though I'm not
 going to reject it.
 
+** DONE FPS independance via threads (if stable)
+NO threads here, thanks.
+* Done
 ** DONE automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
@@ -86,8 +94,6 @@ of extra work. Ideally instead of path globals, just use a resource
 class.
 
 Actually I don't think this is needed.
-** DONE FPS independance via threads (if stable)
-NO threads here, thanks.
 ** DONE Manage cross-path access
 There's quite a bit in src/ that still manages things in other folders
 either without being able to change the path, or just shouldn't use
