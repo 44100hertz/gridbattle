@@ -16,19 +16,6 @@ coord type in the place where it's needed, and I can toy with how to
 implement it elsewhere.
 ** TODO ONLINE multiplier (hooooo boy)
 * Steps
-** TODO automate scene transitions
-Tell scene.lua that you want a fade, and it just does it without
-having to manually push a transition.
-** TODO make sheets a bit easier
-I still have to specify the width and height when making quads for
-non-actors. It would be great if this was a bit more automatic, maybe
-making quads for actors would end up being so little work that I
-wouldn't have to do it implicitly.
-
-This would ideally be done just by feeding a sheet into
-the sheet generator, or possibly by creating a sheet object that just
-fetches quads as needed. It might not be bad just to unify drawing in
-general for this stuff.
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
@@ -43,9 +30,6 @@ direction is what registers, as opposed to just having left/right
 priority, etc.
 ** TODO allow certain collisions to only happen once
 Have a collide_time variable, and just check if it equals 1?
-** TODO use Coord in more places
-I've been told this is better. That remains to be seen, though I'm not
-going to reject it.
 ** TODO more cool/trippy bg's
 ** TODO sound effects
  - Unified sound playback method; limits number of channels intelligently
@@ -60,6 +44,27 @@ going to reject it.
 *** TODO palette cycle
 *** TODO pixel upscaling and/or LCD filter
 * Done
+** DONE make sheets a bit easier
+This would require too much restructuring so I'm giving up on it.
+
+I still have to specify the width and height when making quads for
+non-actors. It would be great if this was a bit more automatic, maybe
+making quads for actors would end up being so little work that I
+wouldn't have to do it implicitly.
+
+This would ideally be done just by feeding a sheet into
+the sheet generator, or possibly by creating a sheet object that just
+fetches quads as needed. It might not be bad just to unify drawing in
+general for this stuff.
+** DONE use Coord in more places
+This would require too much restructuring so I'm giving up on it.
+
+I've been told this is better. That remains to be seen, though I'm not
+going to reject it.
+
+** DONE automate scene transitions
+Tell scene.lua that you want a fade, and it just does it without
+having to manually push a transition.
 ** DONE saving/loading chip folders
 *** TODO file save/load menu
 *** TODO save/load chip folders
