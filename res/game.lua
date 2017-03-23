@@ -14,18 +14,6 @@ _G.BATTLE = {
 }
 
 return {
-   paths = {
-      chipdb = "chipdb",
-      enemydb = "enemydb",
-      chips = "chips/",
-      bg = "bg/",
-      fonts = "fonts/",
-      foldedit = "foldedit/",
-      folders = "folders/",
-      menu = "menu/",
-      battle = "battle/",
-      sets = "battle/sets/",
-   },
    start = function ()
       (require "src/scene").push((require "src/Menu"):new("title"))
    end,
