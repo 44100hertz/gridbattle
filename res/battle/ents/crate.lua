@@ -6,14 +6,12 @@ return {
       dx=0, z = 200, dz = -5,
       group = "neutral",
       side = "none",
-      tangible=false,
-      spawn_offset=1,
+      tangible = false,
+      spawn_offset = 1,
       start = function (self)
-         if self.parent.side=="left" then
-            self.x = self.x + self.spawn_offset
-         else
-            self.x = self.x - self.spawn_offset
-         end
+         local mirror = self.parent.side=="left" and 1 or -1
+         self.x = self.x + self.spawn_offset * mirror
+         self.parent.enter_state = "shoot"
       end,
       update = function (self)
          if self.dz<0 and self.z<=0 then
