@@ -90,6 +90,7 @@ local get_ending = function ()
 end
 
 local kill = function (ent)
+   if ent.tangible then stage.free(ent.x, ent.y) end
    if ent.states and ent.states.die then
       actors.kill(ent)
    elseif ent.die then
