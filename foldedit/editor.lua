@@ -4,7 +4,7 @@ local chipdb = require(PATHS.chipdb)
 
 local lg = love.graphics
 
-local img = lg.newImage("foldedit/editor.png")
+local img = lg.newImage(PATHS.foldedit .. "editor.png")
 local sheet = {}
 do
    local anim = require "src/anim"

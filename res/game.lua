@@ -20,6 +20,7 @@ return {
       chips = "chips/",
       bg = "bg/",
       fonts = "fonts/",
+      foldedit = "foldedit/",
       folders = "folders/",
       menu = "menu/",
       battle = "battle/",
