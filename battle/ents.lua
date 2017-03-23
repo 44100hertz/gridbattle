@@ -198,8 +198,8 @@ return {
       for _,ent in ipairs(ents) do
          if ent.states then actors.update_draw(ent) end
          local draw = function (raw_x, raw_y)
-            x = raw_x - (ent.ox or 0)
-            y = raw_y - (ent.oy or 0)
+            local x = raw_x - (ent.ox or 0)
+            local y = raw_y - (ent.oy or 0)
             local flip = ent.side=="right" and -1 or 1
             if ent.frame then
                local row = ent.state and ent.state.row or ent.row or 1

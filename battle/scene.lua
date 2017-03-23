@@ -24,7 +24,7 @@ end
 return {
    start = function (set, folder_name)
       set = require(PATHS.sets .. set)
-      folder:load("test-folder")
+      folder:load(folder_name)
 
       stage.start(set.stage.turf)
       ents.start(set)

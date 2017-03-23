@@ -35,7 +35,7 @@ function Folder:sort(method, is_ascending)
    local compare = function (a,b)
       if is_ascending then a,b = b,a end
       for _,sortby in ipairs(sort_list) do
-         fetchval = fetch_methods[sortby]
+         local fetchval = fetch_methods[sortby]
          local a_val,b_val = fetchval(a), fetchval(b)
          if a_val < b_val then return true end
          if a_val > b_val then return false end
@@ -48,8 +48,8 @@ end
 
 function Folder:condense()
    for i,a in ipairs(self.data) do
-      for j = i+1,b do
-         b = self.data[b]
+      for _ = i+1,#self.data do
+         local b = self.data[b]
          if a.name == b.name and
             a.ltr == b.ltr
          then
@@ -58,7 +58,7 @@ function Folder:condense()
          end
       end
    end
-   for i,v in ipairs(self.data) do
+   for _,v in ipairs(self.data) do
       if v.qty == 0 then table.remove(self.data, v) end
    end
 end

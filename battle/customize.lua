@@ -1,6 +1,5 @@
 local scene = require "src/scene"
 local dialog = require "src/dialog"
-local text = require "src/text"
 
 local lg = love.graphics
 
@@ -27,8 +26,6 @@ return {
       deck = new_deck
       queue = new_queue
       for i,_ in ipairs(queue) do queue[i] = nil end
-
-      local letter = nil
       sel = 1
       pal = deck:draw(5, pal)
    end,

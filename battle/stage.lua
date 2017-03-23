@@ -56,8 +56,8 @@ return {
          for y = 1,numy do
             local row = x > turf[y] and 1 or 2
             local col = panels[x][y].stat == "poison" and 2 or 1
-            local draw = function (x, y)
-               lg.draw(image, sheet[row][col], x-BATTLE.xscale/2, y-30)
+            local draw = function (sx, sy)
+               lg.draw(image, sheet[row][col], sx-BATTLE.xscale/2, sy-30)
             end
             depthdraw.add(draw, x, y, -20)
          end

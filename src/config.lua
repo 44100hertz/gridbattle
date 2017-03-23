@@ -5,7 +5,7 @@ local config = {
    polldelay = 0,
 }
 
-set_gamescale = function (scale)
+local set_gamescale = function (scale)
    if not scale then scale = config.gamescale end
    config.gamescale = scale
    love.window.setMode(GAME.width * scale,
@@ -13,13 +13,13 @@ set_gamescale = function (scale)
 end
 
 local serialize = require "src/serialize"
-load = function ()
+local load = function ()
    print("loading config:", path)
    serialize.from_config(path, config)
    set_gamescale()
 end
 
-save = function ()
+local save = function ()
    print("saving config:", path)
    serialize.to_config(path, config)
 end

@@ -3,7 +3,7 @@ local game = require(RES_PATH .. "game")
 
 do
    _G.PATHS = {}
-   paths = {
+   local paths = {
       chipdb = "chipdb",
       enemydb = "enemydb",
       chips = "chips/",
@@ -78,7 +78,7 @@ love.run = function ()
    love.math.setRandomSeed(os.time())
    game.start()
    local next_tick = love.timer.getTime() + GAME.tickperiod
-   polldelay = config.c.polldelay/1000
+   local polldelay = config.c.polldelay/1000
 
    while true do
       love.timer.sleep(polldelay)

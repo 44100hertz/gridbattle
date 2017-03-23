@@ -6,7 +6,7 @@ return {
    bg_img = "title",
    {"start",
     a = function ()
-       scene.push_fade({}, (require "battle/scene"), "test", "test")
+       scene.push_fade({}, (require "battle/scene"), "test", "test-folder")
    end},
    {"folder editor",
     a = function ()
