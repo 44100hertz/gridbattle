@@ -1,8 +1,9 @@
 * Features
 ** TODO elements
-*** TODO give everything an element, show element in editor and battle
-*** TODO handle elements on collisions
-*** TODO make panels affect elements
+*** DONE give everything an element, show element in editor and battle
+*** DONE handle elements on collisions
+*** DONE make panels affect elements
+*** TODO test some elemental interactions
 ** TODO multiplayer
 Get two players that can fight each other.
 
@@ -12,11 +13,6 @@ coord type in the place where it's needed, and I can toy with how to
 implement it elsewhere.
 ** TODO ONLINE multiplier (hooooo boy)
 * Steps
-** TODO make a stub assets folder
-This should have the absolute minimum required to make things not
-crash. It will help me to decide what matters for src/, res/, or in
-essence, what should be under user control without modifying the
-source.
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
@@ -70,6 +66,11 @@ going to reject it.
 ** DONE FPS independance via threads (if stable)
 NO threads here, thanks.
 * Done
+** DONE make a stub assets folder
+This should have the absolute minimum required to make things not
+crash. It will help me to decide what matters for src/, res/, or in
+essence, what should be under user control without modifying the
+source.
 ** DONE automate scene transitions
 Tell scene.lua that you want a fade, and it just does it without
 having to manually push a transition.
