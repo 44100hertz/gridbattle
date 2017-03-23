@@ -2,9 +2,9 @@
 _G.BATTLE.xoff = BATTLE.xoff or
    math.floor(GAME.width/2 - (BATTLE.xscale * (BATTLE.numx + 1) * 0.5))
 
+local bg
 local scene = require "src/scene"
 local Folder = require "src/Folder"
-local bg = require "src/bg"
 local depthdraw = require "src/depthdraw"
 local ents = require "battle/ents"
 local stage = require "battle/stage"
@@ -28,7 +28,8 @@ return {
 
       stage.start(set.stage.turf)
       ents.start(set)
-      bg.start(set.bg)
+      bg = require(PATHS.bg .. set.bg[1])
+      bg.start(unpack(set.bg_args))
 
       selectchips()
    end,
