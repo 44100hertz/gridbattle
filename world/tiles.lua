@@ -44,8 +44,8 @@ return {
                local index = layer.data[count]
                local flip = 1
                local flipoff = 0
-               if index >= 2147483648 then
-                  index = index - 2147483648
+               if index >= 0x80000000 then
+                  index = index - 0x80000000
                   flip = -1
                   flipoff = data.tilewidth
                end
