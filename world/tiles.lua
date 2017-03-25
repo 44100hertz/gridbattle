@@ -34,6 +34,8 @@ return {
    end,
 
    draw = function ()
+      local band = bit.band
+      local bxor = bit.bxor
       local draw_tile = function (x, y, index, flip)
          lg.draw(tileset.img, tileset.sheet[index], x, y, 0, flip, 1)
       end
@@ -44,8 +46,8 @@ return {
                local index = layer.data[count]
                local flip = 1
                local flipoff = 0
-               if index >= 0x80000000 then
-                  index = index - 0x80000000
+               if band(index, 0x80000000) ~= 0 then
+                  index = bxor(index, 0x80000000)
                   flip = -1
                   flipoff = data.tilewidth
                end
