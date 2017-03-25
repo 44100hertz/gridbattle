@@ -17,6 +17,7 @@ return {
       if input.dd>0 then _G.GAME.yoff = _G.GAME.yoff - 1 end
       if input.dl>0 then _G.GAME.xoff = _G.GAME.xoff + 1 end
       if input.dr>0 then _G.GAME.xoff = _G.GAME.xoff - 1 end
+      if input.b==1 then (require "src/scene").pop() end
    end,
 
    draw = function ()
