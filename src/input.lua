@@ -27,7 +27,9 @@ local joyBind = {
 local joy = love.joystick.getJoysticks()[1] -- hard code
 love.joystick.loadGamepadMappings("src/gamecontrollerdb.txt")
 
--- Currently only tested on iBuffalo snes controller
+-- Funny thing about this function: it makes a joystick act like a
+-- d-pad, in that you can't easily go straight to a diagonal. This is
+-- actually fine to me.
 local joy2hat = function (lr, ud, check)
    local dz = 0.5 --deadzone
    if check == "dl" and lr < -dz then return true end
