@@ -34,17 +34,17 @@ return {
    end,
 
    draw = function ()
+      local draw_tile = function (x,y,index)
+         lg.draw(tileset.img, tileset.sheet[index], x, y)
+      end
       for _,layer in ipairs(data.layers) do
          local count = 1
          for y = 1,layer.width do
             for x = 1,layer.height do
                local index = layer.data[count]
                if index > 0 then
-                  local frame = tileset.sheet[index]
                   depthdraw.add(
-                     function (x, y)
-                        lg.draw(tileset.img, frame, x, y)
-                     end,
+                     function (x,y) draw_tile(x,y,index) end,
                      x-y, x+y, -layer.offsety
                   )
                end
