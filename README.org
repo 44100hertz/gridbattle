@@ -1,24 +1,23 @@
 * What is this?
-This is a re-implementation of some gameplay of the Megaman Battle Network series, using love2d.
+This is a re-implementation of gameplay from the Megaman Battle
+Network series, using love2d.
+
+You can run it by installing love2d and running it in this folder. The
+second argument is a path to custom resources, default "res/".
 
 Files are under the zlib open-source license, included in LICENSE.
-The assets included here are fully original and should be considered open game assets.
-gamecontrollerdb.txt is under LICENSE.gamecontrollerdb.
+The assets included here are fully original and should be considered
+free to use. gamecontrollerdb.txt is under LICENSE.gamecontrollerdb.
 
-* What are the folders?
- - src/ :: The game engine; tries to be fairly generic, but is
-           designed to build the rest of the game.
- - battle/ :: The battle scene; the meat of gameplay.
- - foldedit/ :: The folder editor menu.
- - res/bg/ :: Background images used by src/bg. Eventually could have
-          background code as well.
- - res/chips/ :: Implementations of chips for battles, and their descriptions.
- - res/folders/ :: Chip folders and collections in general. Mostly useful
-               for debugging, but who knows.
- - res/fonts/ :: Just the images for fonts, possibly would make sense to
-             have metadata.
- - res/menu/ :: Menus made using the template provided in src/Menu. Menus
-            that don't use it don't go here, even if they're menus.
+* Project structure
+ - src/ :: The game engine; the most generic part of all this.
+ - battle/ :: Battles, the fun part.
+ - world/ :: The overworld.
+ - foldedit/ :: A folder editor.
+ - res/ :: Default game data.
+ - stub/ :: The minimum game data in order to run without a crash.
 
 * Plans
-See TODO (view raw, not github) for exact details.
+See TODO (ideally raw, not github) for exact details. I'm about to
+enter some real game development that will be done in private (sorry!)
+using this software as a base.
