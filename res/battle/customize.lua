@@ -7,15 +7,13 @@ local chip_artist = require "battle/chip_artist"
 local chipdb = require(PATHS.chipdb)
 
 local img = lg.newImage(PATHS.battle .. "chips.png")
-local sheet = {}
-do
-   local w,h = img:getDimensions()
-   local anim = require "src/anim"
-   sheet.bg = anim.sheet(0,0,128,160,1,1,w,h)[1][1]
-   sheet.chipbg = anim.sheet(0,160,16,16,6,1,w,h)[1]
-   sheet.letter = anim.sheet(0,176,16,8,5,1,w,h)[1]
-   sheet.button = anim.sheet(0,184,24,16,3,1,w,h)[1]
-end
+local sheet = (require "src/quads").multi_sheet{
+   img = img,
+   bg = {0,0,128,160},
+   chipbg = {0,160,16,16,6},
+   letter = {0,176,16,8,5},
+   button = {0,184,24,16,3},
+}
 
 local deck, pal, queue, sel
 

@@ -4,9 +4,9 @@ local img = love.graphics.newImage(PATHS.battle .. "ui.png")
 local sb = love.graphics.newSpriteBatch(img, 40, "stream")
 local sheet = {}
 do
-   local anim = require "src/anim"
+   local quads = require "src/quads"
    local w,h = img:getDimensions()
-   sheet.bar = anim.sheet(0,0,8,8,3,1,w,h)[1]
+   sheet.bar = quads.sheet(0,0,8,8,3,1,w,h)[1]
 end
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2

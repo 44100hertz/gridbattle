@@ -1,6 +1,6 @@
 local lg = love.graphics
 
-local anim = require "src/anim"
+local quads = require "src/quads"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
 local stage = require "battle/stage"
@@ -54,7 +54,7 @@ local add = function (class_name, variant_name, ent)
    if ent.sheet then
       ent.sheet[7] = img:getWidth()
       ent.sheet[8] = img:getHeight()
-      ent.anim = anim.sheet(unpack(ent.sheet))
+      ent.anim = quads.sheet(unpack(ent.sheet))
    end
 
    if ent.states then actors.start(ent) end

@@ -6,11 +6,11 @@
 --]]
 
 local lg = love.graphics
-local anim = require "src/anim"
+local quads = require "src/quads"
 local depthdraw = require "src/depthdraw"
 
 local image = love.graphics.newImage(PATHS.battle .. "panels.png")
-local sheet = anim.sheet(0, 0, 40, 40, 2, 2,
+local sheet = quads.sheet(0, 0, 40, 40, 2, 2,
                          image:getWidth(), image:getHeight())
 
 local turf, panels

@@ -6,9 +6,9 @@ local lg = love.graphics
 local icon, art
 do
    local w,h = 256,256
-   local anim = require "src/anim"
-   icon = anim.sheet(0,0,16,16,1,1,w,h)[1][1]
-   art = anim.sheet(0,16,64,72,4,1,w,h)[1]
+   local quads = require "src/quads"
+   icon = quads.sheet(0,0,16,16,1,1,w,h)[1][1]
+   art = quads.sheet(0,16,64,72,4,1,w,h)[1]
 end
 
 local getimage = function (name)

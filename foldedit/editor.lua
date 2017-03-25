@@ -5,13 +5,11 @@ local chipdb = require(PATHS.chipdb)
 local lg = love.graphics
 
 local img = lg.newImage(PATHS.foldedit .. "editor.png")
-local sheet = {}
-do
-   local anim = require "src/anim"
-   local w,h = img:getDimensions()
-   sheet.fg = anim.sheet(32,0,224,160,1,1,w,h)[1][1]
-   sheet.icons = anim.sheet(0,0,16,16,2,7,w,h)
-end
+local sheet = (require "src/quads").multi_sheet{
+   img = img,
+   fg = {32,0,224,160},
+   icons = {0,0,16,16,2,7},
+}
 
 local pane_left = {}
 local pane_right = {}
