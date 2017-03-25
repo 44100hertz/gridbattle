@@ -80,13 +80,11 @@ love.run = function ()
    love.math.setRandomSeed(os.time())
    game.start()
    local next_tick = lt.getTime() + GAME.tickperiod
-   local polldelay = config.c.polldelay/1000
 
    while true do
-      lt.sleep(polldelay)
-      if poll() then return end
       love.update()
       while(lt.getTime() < next_tick) do
+         if poll() then return end
          love.draw(lt.getTime())
       end
       next_tick = next_tick + GAME.tickperiod
