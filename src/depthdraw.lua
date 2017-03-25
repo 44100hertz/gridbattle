@@ -33,7 +33,9 @@ return {
       for i = min_depth, max_depth, depth_step do
          depth = depths[i]
          if depth then
-            for _,v in ipairs(depth) do v[1](v[2], v[3]) end
+            for _,v in ipairs(depth) do
+               v[1](math.floor(v[2]), math.floor(v[3]))
+            end
          end
       end
       reset()
