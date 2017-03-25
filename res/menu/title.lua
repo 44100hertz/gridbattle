@@ -12,6 +12,10 @@ return {
     a = function ()
        scene.push(require "foldedit/editor", "test-collection", "test")
    end},
+   {"worldmap test",
+    a = function ()
+       scene.push(require "world/world")
+   end},
    {"config",
     a = function ()
        scene.push((require "src/Menu"):new("settings"))
