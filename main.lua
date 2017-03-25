@@ -82,9 +82,9 @@ love.run = function ()
    local next_tick = lt.getTime() + GAME.tickperiod
 
    while true do
+      if poll() then return end
       love.update()
       while(lt.getTime() < next_tick) do
-         if poll() then return end
          love.draw(lt.getTime())
       end
       next_tick = next_tick + GAME.tickperiod
