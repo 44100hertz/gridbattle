@@ -20,10 +20,10 @@ end
 return {
    start = function ()
       data = dofile("res/world/testmap/map1.lua")
-      _G.GAME.xscale = data.tilewidth
-      _G.GAME.yscale = data.tileheight
-      _G.GAME.xoff = -800
-      _G.GAME.yoff = 250
+      _G.GAME.xscale = data.tilewidth / 2
+      _G.GAME.yscale = data.tileheight / 2
+      _G.GAME.xoff = 0
+      _G.GAME.yoff = 0
 
       local set = data.tilesets[1]
       tileset = {}
@@ -58,7 +58,7 @@ return {
                      function (x, y)
                         lg.draw(tileset.img, frame, x, y)
                      end,
-                     x + y/2, -x + y/2, -layer.offsety
+                     x-y, x+y, -layer.offsety
                   )
                end
                count = count + 1
