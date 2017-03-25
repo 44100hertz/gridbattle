@@ -1,5 +1,7 @@
 _G.RES_PATH = arg[2] or "res/"
 local game = require(RES_PATH .. "game")
+local lg = love.graphics
+local lt = love.timer
 
 do
    _G.PATHS = {}
@@ -34,8 +36,8 @@ local input = require "src/input"
 
 local time = 0
 config.load()
-love.graphics.setDefaultFilter("nearest", "nearest")
-local canvas = love.graphics.newCanvas(GAME.width, GAME.height)
+lg.setDefaultFilter("nearest", "nearest")
+local canvas = lg.newCanvas(GAME.width, GAME.height)
 GAME.tickperiod = (1/GAME.tickrate)
 
 local poll = function ()
@@ -53,13 +55,13 @@ end
 
 love.update = scene.update
 love.draw = function ()
-   love.graphics.setBlendMode("alpha", "alphamultiply")
+   --lg.setBlendMode("alpha", "alphamultiply")
    canvas:renderTo(scene.draw)
 
-   --      love.graphics.setBlendMode("replace", "premultiplied")
-   love.graphics.draw( canvas, 0,0,0, config.c.gamescale )
-   love.graphics.print(math.floor(collectgarbage("count")))
-   love.graphics.present()
+   --lg.setBlendMode("replace", "premultiplied")
+   lg.draw( canvas, 0,0,0, config.c.gamescale )
+   lg.print(math.floor(collectgarbage("count")))
+   lg.present()
 
    if outdir then
       time = time + 1
@@ -77,15 +79,15 @@ love.run = function ()
 
    love.math.setRandomSeed(os.time())
    game.start()
-   local next_tick = love.timer.getTime() + GAME.tickperiod
+   local next_tick = lt.getTime() + GAME.tickperiod
    local polldelay = config.c.polldelay/1000
 
    while true do
-      love.timer.sleep(polldelay)
+      lt.sleep(polldelay)
       if poll() then return end
       love.update()
-      while(love.timer.getTime() < next_tick) do
-         love.draw(love.timer.getTime())
+      while(lt.getTime() < next_tick) do
+         love.draw(lt.getTime())
       end
       next_tick = next_tick + GAME.tickperiod
    end
