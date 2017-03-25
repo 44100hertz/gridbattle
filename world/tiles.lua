@@ -34,17 +34,24 @@ return {
    end,
 
    draw = function ()
-      local draw_tile = function (x,y,index)
-         lg.draw(tileset.img, tileset.sheet[index], x, y)
+      local draw_tile = function (x, y, index, flip)
+         lg.draw(tileset.img, tileset.sheet[index], x, y, 0, flip, 1)
       end
       for _,layer in ipairs(data.layers) do
          local count = 1
          for y = 1,layer.width do
             for x = 1,layer.height do
                local index = layer.data[count]
+               local flip = 1
+               local flipoff = 0
+               if index >= 2147483648 then
+                  index = index - 2147483648
+                  flip = -1
+                  flipoff = data.tilewidth
+               end
                if index > 0 then
                   depthdraw.add(
-                     function (x,y) draw_tile(x,y,index) end,
+                     function (x,y) draw_tile(x+flipoff, y, index, flip) end,
                      x-y, x+y, -layer.offsety
                   )
                end
