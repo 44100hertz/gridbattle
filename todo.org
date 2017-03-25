@@ -27,7 +27,6 @@ direction is what registers, as opposed to just having left/right
 priority, etc.
 ** TODO allow certain collisions to only happen once
 Have a collide_time variable, and just check if it equals 1?
-** TODO more cool/trippy bg's
 ** TODO sound effects
  - Unified sound playback method; limits number of channels intelligently
  - named sound sources, searchable, etc.
@@ -66,6 +65,9 @@ going to reject it.
 ** DONE FPS independance via threads (if stable)
 NO threads here, thanks.
 * Done
+** DONE more cool/trippy bg's
+It's now possible to do this, so I'm going to go ahead and mark it
+done. I can make more BG's when I actually start developing a game.
 ** DONE make a stub assets folder
 This should have the absolute minimum required to make things not
 crash. It will help me to decide what matters for src/, res/, or in
