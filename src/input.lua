@@ -37,8 +37,7 @@ local joy2hat = function (lr, ud, check)
 end
 
 local input = {
-   poll = function (time)
-      time = time or love.timer.getTime()
+   resolve = function ()
       local lr, ud
       if joy then
          lr = joy:getAxis(1)
@@ -50,26 +49,12 @@ local input = {
             joy and joy:isGamepadDown(joyBind[k]) or -- dpad
             joy and joy2hat(lr, ud, k) -- joystick
          then
-            if not buttons[k] then
-               buttons[k] = time
-            end
+            buttons[k] = buttons[k] + 1
          else
-            buttons[k] = false
+            buttons[k] = 0
          end
       end
       return buttons
-   end,
-
-   resolve = function (time)
-      time = time or love.timer.getTime()
-      for k,v in pairs(buttons) do
-         if not v then
-            resolved[k] = 0
-         else
-            resolved[k] = math.floor((time - v) * GAME.tickrate + 0.51)
-         end
-      end
-      return resolved
    end,
 
    rebind = function (binds)

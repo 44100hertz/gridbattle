@@ -50,7 +50,6 @@ local poll = function ()
       end
       love.handlers[name](a,b,c,d,e,f)
    end
-   input.poll()
 end
 
 love.update = scene.update
