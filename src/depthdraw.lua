@@ -3,9 +3,6 @@ local depth_step = 1
 local min_depth = -10
 local max_depth = 10
 
-local xoff, yoff = BATTLE.xoff, BATTLE.yoff
-local xscale, yscale = BATTLE.xscale, BATTLE.yscale
-
 local reset = function ()
    depths = {}
    for _ = min_depth, max_depth, depth_step do
@@ -17,11 +14,11 @@ reset()
 
 return {
    add = function (drawfn, x, y, z)
-      local depth = y + z / yscale
+      local depth = y + z / GAME.yscale
       if depth < min_depth then depth = min_depth end
       if depth > max_depth then depth = max_depth end
-      local screen_x = xoff + xscale * x
-      local screen_y = yoff + yscale * y - z
+      local screen_x = GAME.xoff + GAME.xscale * x
+      local screen_y = GAME.yoff + GAME.yscale * y - z
 
       local index = math.floor((depth-min_depth) / depth_step) + 1
       table.insert(depths[index], {drawfn, screen_x, screen_y})

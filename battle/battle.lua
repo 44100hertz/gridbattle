@@ -1,8 +1,4 @@
 -- Center the stage unless specified
-_G.BATTLE.xoff = BATTLE.xoff or
-   math.floor(GAME.width/2 - (BATTLE.xscale * (BATTLE.numx + 1) * 0.5))
-
-local bg
 local scene = require "src/scene"
 local Folder = require "src/Folder"
 local depthdraw = require "src/depthdraw"
@@ -13,6 +9,7 @@ local folder = Folder.new{}
 local savedata = require(RES_PATH .. "savedata")
 local ui =  require(PATHS.battle .. "ui")
 
+local bg
 local cust_frames
 local cust_time = 4*60
 
@@ -23,6 +20,11 @@ end
 
 return {
    start = function (set)
+      _G.GAME.xscale = BATTLE.xscale
+      _G.GAME.yscale = BATTLE.yscale
+      _G.GAME.xoff = BATTLE.xoff
+      _G.GAME.yoff = BATTLE.yoff
+
       set = require(PATHS.sets .. set)
       folder:load(savedata.player.folder)
 
