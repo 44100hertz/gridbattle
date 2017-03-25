@@ -20,10 +20,11 @@ end
 
 return {
    start = function (set)
-      _G.GAME.xscale = BATTLE.xscale
-      _G.GAME.yscale = BATTLE.yscale
-      _G.GAME.xoff = BATTLE.xoff
-      _G.GAME.yoff = BATTLE.yoff
+      local tform = depthdraw.tform
+      tform.xscale = BATTLE.xscale
+      tform.yscale = BATTLE.yscale
+      tform.xoff = BATTLE.xoff
+      tform.yoff = BATTLE.yoff
 
       set = require(PATHS.sets .. set)
       folder:load(savedata.player.folder)
