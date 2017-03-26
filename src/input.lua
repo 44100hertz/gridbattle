@@ -40,7 +40,7 @@ end
 local check_joy = function (count, joy, bind)
    local emu_hat = joy2hat(joy, 0.5)
    for k,v in pairs(bind) do
-      count[k] = joy:isGamePadDown(v) or emu_hat[k] and count[k]+1 or 0
+      count[k] = (joy:isGamepadDown(v) or emu_hat[k]) and count[k]+1 or 0
    end
    return count
 end
