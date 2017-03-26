@@ -1,11 +1,10 @@
 local ents = require "battle/ents"
-local chip = require "battle/chip_wrangler"
 
 local class = {
    group = "enemy",
    tangible = true,
    size=20/64,
-   ox = 22, oy = 43,
+   ox = 22, oy = 50,
    die = function (self)
       self.despawn = true
       for _ = 1,50 do
