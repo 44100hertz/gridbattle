@@ -72,6 +72,7 @@ return {
    end,
 
    update = function (_, input)
+      input = input[1]
       -- Check input with repeat
       local repcheck = function (t)
          return t % math.max(20-t, 6) == 1

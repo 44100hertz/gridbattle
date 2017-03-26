@@ -14,6 +14,7 @@ return {
    end,
 
    update = function (_, input)
+      input = input[1]
       if input.du>0 then tform.yoff = tform.yoff + 1 end
       if input.dd>0 then tform.yoff = tform.yoff - 1 end
       if input.dl>0 then tform.xoff = tform.xoff + 1 end
