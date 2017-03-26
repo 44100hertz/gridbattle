@@ -23,8 +23,7 @@ return {
             ents.add(
                "bullet", "boot",
                {x=self.x, y=self.y, z=40, frame=self.count,
-                group=self.group, side=self.side, damage=self.damage,
-                parent=self.parent,
+                side=self.side, damage=self.damage, parent=self.parent,
             })
             self.count = self.count + 1
          end,

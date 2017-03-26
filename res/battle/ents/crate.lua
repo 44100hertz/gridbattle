@@ -4,7 +4,6 @@ local stage = require "battle/stage"
 return {
    class={
       dx=0, z = 200, dz = -5,
-      group = "neutral",
       side = "none",
       tangible = false,
       spawn_offset = 1,

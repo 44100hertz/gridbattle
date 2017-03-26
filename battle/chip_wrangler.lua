@@ -6,7 +6,6 @@ local use = function (actor, chip_name)
    local added = ents.add(
       chip.class, chip.variant,
       {x=actor.x, y=actor.y, parent=actor})
-   added.group = added.group or actor.group
    added.side = added.side or actor.side
 end
 

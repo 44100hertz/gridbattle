@@ -3,7 +3,6 @@ local ai = require "battle/ai"
 local chip = require "battle/chip_wrangler"
 
 local class = {
-   group = "enemy",
    tangible = true,
    size=20/64,
    ox = 22, oy = 50,

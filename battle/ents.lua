@@ -176,7 +176,7 @@ return {
          for j = i+1, #ents do
             local a = ents[i]
             local b = ents[j]
-            if a.group ~= b.group and
+            if a.side ~= b.side and
                a.size and b.size
             then
                local size = a.size + b.size
@@ -197,17 +197,20 @@ return {
          if ent.states then actors.update_draw(ent) end
          local draw = function (raw_x, raw_y)
             local flip = (ent.side=="right" and not ent.noflip)
-            local x = raw_x
+            local x,y = raw_x, raw_y
             if ent.ox then x = raw_x + (flip and ent.ox or -ent.ox) end
-            local y = raw_y - (ent.oy or 0)
+            if ent.oy then y = y - ent.oy end
             local sx = flip and  -1 or 1
+
             if ent.frame then
                local row = ent.state and ent.state.row or ent.row or 1
                lg.draw(ent.image, ent.anim[row][ent.frame], x, y, 0, sx, 1)
             elseif ent.image then
                lg.draw(ent.image, x, y, 0, sx, 1)
             end
+
             if ent.draw then ent:draw(x, y) end
+
             if ent.hp and not ent.hide_hp then
                local hpstr = tostring(math.floor(ent.hp))
                text.draw("hpnum", hpstr, raw_x, y, "center")
