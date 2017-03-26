@@ -22,6 +22,7 @@ local input_check = {
 }
 
 function Menu:update (input)
+   local input = input[1]
    local entry = self[self.sel]
    for _,button in ipairs(input_check) do
       if input[button] == 1 and

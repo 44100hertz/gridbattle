@@ -19,9 +19,6 @@ local joybind = {
    du="dpup", dd="dpdown",
    dl="dpleft", dr="dpright",
 }
-local count1 = {}
-local count2 = {}
-
 local joy1 = love.joystick.getJoysticks()[1]
 local joy2 = love.joystick.getJoysticks()[2]
 love.joystick.loadGamepadMappings("src/gamecontrollerdb.txt")
@@ -44,13 +41,14 @@ local check_joy = function (joy, k)
    return joy:isGamepadDown(joybind[k])
 end
 
-local methods1 = {}
+local count1, methods1 = {}, {}
+local count2, methods2 = {}, {}
+
 if joy1 then
    methods1[1] = function (k) return check_joy(joy1, k) end
 end
 table.insert(methods1, function (k) return check_key(keybind1, k) end)
 
-local methods2 = {}
 if joy2 then
    methods2[2] = function (k) return check_joy(joy2, k) end
 end
@@ -76,7 +74,7 @@ return {
    joybind = joybind,
 
    resolve = function ()
-      return check_all(count1, methods1)
+      return {check_all(count1, methods1), check_all(count2, methods2)}
    end,
 
    rebind = function (binds)
