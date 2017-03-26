@@ -204,15 +204,15 @@ return {
       for _,ent in ipairs(ents) do
          if ent.states then actors.update_draw(ent) end
          local draw = function (raw_x, raw_y)
-            local ox = ent.side=="right" and -ent.ox or ent.ox
-            local x = raw_x - (ox or 0)
+            local flip = (ent.side=="right" and not ent.noflip)
+            local x = raw_x + (flip and ent.ox or -ent.ox)
             local y = raw_y - (ent.oy or 0)
-            local flip = ent.side=="right" and -1 or 1
+            local sx = flip and  -1 or 1
             if ent.frame then
                local row = ent.state and ent.state.row or ent.row or 1
-               lg.draw(ent.image, ent.anim[row][ent.frame], x, y, 0, flip, 1)
+               lg.draw(ent.image, ent.anim[row][ent.frame], x, y, 0, sx, 1)
             elseif ent.image then
-               lg.draw(ent.image, x, y, 0, flip, 1)
+               lg.draw(ent.image, x, y, 0, sx, 1)
             end
             if ent.draw then ent:draw(x, y) end
             if ent.hp and not ent.hide_hp then

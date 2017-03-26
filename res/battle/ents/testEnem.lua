@@ -5,6 +5,7 @@ local class = {
    tangible = true,
    size=20/64,
    ox = 22, oy = 50,
+   noflip = true,
    die = function (self)
       self.despawn = true
       for _ = 1,50 do
