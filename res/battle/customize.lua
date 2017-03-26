@@ -20,15 +20,16 @@ local deck, pal, queue, sel
 return {
    transparent = true,
    queue = queue,
-   start = function (new_deck, new_queue)
-      deck = new_deck
-      queue = new_queue
+   start = function (_deck, set)
+      deck = _deck
+      queue = set.left.queue
       for i,_ in ipairs(queue) do queue[i] = nil end
       sel = 1
       pal = deck:draw(5, pal)
    end,
 
    update = function (_, input)
+      input = input[1]
       if     input.dl==1 then sel = (sel-1)%6
       elseif input.dr==1 then sel = (sel+1)%6
       elseif input.a==1 then
