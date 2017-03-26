@@ -1,67 +1,81 @@
--- I originally wanted to have inputs be rebindable, etc, and I have a
--- decent amount of assets and code to support that right
--- now. However, I now think that's jumping the gun, and will rely on
--- fixed binds during the development process.
-
--- keys should be friendly names
--- values are valid scancodes
-local keyBind = {
+local keybind1 = {
    a="x", b="z",
    l="a", r="s",
-   du="up", dd="down",
-   dl="left", dr="right",
-   st="return", sel="rshift"
+   du="i", dd="k",
+   dl="j", dr="l",
+   st="g", sel="h"
 }
--- initialize all button states
-local buttons = {}
-local resolved = {}
-
-local joyBind = {
+local keybind2 = {
+   a="right", b="down",
+   l="left", r="up",
+   du="kp8", dd="kp5",
+   dl="kp4", dr="kp6",
+   st="kpenter", sel="kp+"
+}
+local joybind = {
    a="b", b="a",
    l="leftshoulder", r="rightshoulder",
    st="start", sel="back",
    du="dpup", dd="dpdown",
    dl="dpleft", dr="dpright",
 }
+local count1 = {}
+local count2 = {}
 
-local joy = love.joystick.getJoysticks()[1] -- hard code
+local joy1 = love.joystick.getJoysticks()[1]
+local joy2 = love.joystick.getJoysticks()[2]
 love.joystick.loadGamepadMappings("src/gamecontrollerdb.txt")
 
--- Funny thing about this function: it makes a joystick act like a
--- d-pad, in that you can't easily go straight to a diagonal. This is
--- actually fine to me.
-local joy2hat = function (lr, ud, check)
-   local dz = 0.5 --deadzone
-   if check == "dl" and lr < -dz then return true end
-   if check == "dr" and lr >  dz then return true end
-   if check == "du" and ud < -dz then return true end
-   if check == "dd" and ud >  dz then return true end
+local joy2hat = function (joy, deadzone)
+   local lr = joy:getAxis(1)
+   local ud = joy:getAxis(2)
+   return {
+      dl = (lr < -deadzone),
+      dr = (lr > deadzone),
+      du = (ud < -deadzone),
+      dd = (ud > deadzone),
+   }
 end
 
-local input = {
-   resolve = function ()
-      local lr, ud
-      if joy then
-         lr = joy:getAxis(1)
-         ud = joy:getAxis(2)
-      end
+local check_joy = function (count, joy, bind)
+   local emu_hat = joy2hat(joy, 0.5)
+   for k,v in pairs(bind) do
+      count[k] = joy:isGamePadDown(v) or emu_hat[k] and count[k]+1 or 0
+   end
+   return count
+end
 
-      for k,v in pairs(keyBind) do
-         if love.keyboard.isScancodeDown(v) or -- Keyboard
-            joy and joy:isGamepadDown(joyBind[k]) or -- dpad
-            joy and joy2hat(lr, ud, k) -- joystick
-         then
-            buttons[k] = buttons[k] + 1
-         else
-            buttons[k] = 0
-         end
-      end
-      return buttons
+local check_keys = function (count, bind)
+   for k,v in pairs(bind) do
+      count[k] = love.keyboard.isScancodeDown(v) and count[k]+1 or 0
+   end
+   return count
+end
+
+local check1, check2
+if joy1 then
+   check1 = function () return check_joy(count1, joy1, joybind) end
+else
+   check1 = function () return check_keys(count1, keybind1) end
+end
+if joy2 then
+   check2 = function () return check_joy(count2, joy2, joybind) end
+elseif joy1 then
+   check2 = function () return check_keys(count2, keybind1) end
+else
+   check2 = function () return check_keys(count2, keybind2) end
+end
+
+return {
+   keybind1 = keybind1,
+   keybind2 = keybind2,
+   joybind = joybind,
+
+   resolve = function ()
+      return check1()
    end,
 
    rebind = function (binds)
       keyBind = binds
    end
 }
-
-return input
