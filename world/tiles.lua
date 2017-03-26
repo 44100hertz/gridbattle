@@ -4,6 +4,10 @@ local quads = require "src/quads"
 local depthdraw = require "src/depthdraw"
 local data
 local tileset
+local band = bit.band
+local bxor = bit.bxor
+local bor = bit.bor
+local BIT_XFLIP = 0x80000000
 
 make_1d = function (array2d)
    local array1d = {}
@@ -34,8 +38,6 @@ return {
    end,
 
    draw = function ()
-      local band = bit.band
-      local bxor = bit.bxor
       local draw_tile = function (x, y, index, flip)
          lg.draw(tileset.img, tileset.sheet[index], x, y, 0, flip, 1)
       end
@@ -46,8 +48,8 @@ return {
                local index = layer.data[count]
                local flip = 1
                local flipoff = 0
-               if band(index, 0x80000000) ~= 0 then
-                  index = bxor(index, 0x80000000)
+               if band(index, BIT_XFLIP) ~= 0 then
+                  index = bxor(index, BIT_XFLIP)
                   flip = -1
                   flipoff = data.tilewidth
                end
