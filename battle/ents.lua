@@ -5,6 +5,7 @@ local depthdraw = require "src/depthdraw"
 local text = require "src/text"
 local stage = require "battle/stage"
 local actors = require "battle/actors"
+local chip_artist = require "battle/chip_artist"
 
 local enemydb = require(PATHS.enemydb)
 local elements = require(PATHS.battle .. "elements")
@@ -197,10 +198,9 @@ return {
          if ent.states then actors.update_draw(ent) end
          local draw = function (raw_x, raw_y)
             local flip = (ent.side=="right" and not ent.noflip)
-            local x,y = raw_x, raw_y
-            if ent.ox then x = raw_x + (flip and ent.ox or -ent.ox) end
-            if ent.oy then y = y - ent.oy end
-            local sx = flip and  -1 or 1
+            local sx = flip and -1 or 1
+            local x = raw_x + (ent.ox and (flip and ent.ox or -ent.ox) or 0)
+            local y = raw_y - (ent.oy or 0)
 
             if ent.frame then
                local row = ent.state and ent.state.row or ent.row or 1
@@ -214,6 +214,10 @@ return {
             if ent.hp and not ent.hide_hp then
                local hpstr = tostring(math.floor(ent.hp))
                text.draw("hpnum", hpstr, raw_x, y, "center")
+            end
+
+            if ent.queue then
+               chip_artist.draw_icon_queue(ent.queue, raw_x, y-15)
             end
          end
          depthdraw.add(draw, ent.x, ent.y, ent.z)

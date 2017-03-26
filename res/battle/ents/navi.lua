@@ -5,10 +5,6 @@ local chip_artist = require "battle/chip_artist"
 local class = {
    tangible = true,
    size = 0.4,
-   draw = function (self, x, y)
-      chip_artist.draw_icon_queue(self.queue, x+self.ox, y-15)
-   end,
-
    states = {
       idle = {row = 1, anim = {1}, speed = 1000, iasa = 0},
       shoot = {row = 3, anim = {1,2}, speed = 10, length = 2},
