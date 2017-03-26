@@ -15,7 +15,7 @@ local cust_frames
 local cust_time = 4*60
 
 local selectchips = function ()
---   scene.push(require(PATHS.battle .. "customize"), folder, ents.player.queue)
+   scene.push(require(PATHS.battle .. "customize"), folder, set)
    cust_frames = 0
 end
 
