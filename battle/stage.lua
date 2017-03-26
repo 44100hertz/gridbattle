@@ -23,8 +23,6 @@ end
 
 return {
    getpanel = getpanel,
-   see_enemy = see_enemy,
-   see_line = see_line,
 
    start = function (new_turf)
       turf = new_turf
