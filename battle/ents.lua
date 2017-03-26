@@ -79,14 +79,6 @@ local apply_damage = function (send, recv)
    elements.interact(send.elem, recv_elem, send.damage, recv)
 end
 
-local get_names = function ()
-   local names = {}
-   for _,v in ipairs(enemies) do
-      if not v.despawn then table.insert(names, v.name) end
-   end
-   return names
-end
-
 local get_ending = function ()
    if player.despawn then return "left" end
 
@@ -217,7 +209,7 @@ return {
             if ent.draw then ent:draw(x, y) end
             if ent.hp and not ent.hide_hp then
                local hpstr = tostring(math.floor(ent.hp))
-               text.draw("hpnum", hpstr, raw_x, y-10, "center")
+               text.draw("hpnum", hpstr, raw_x, y, "center")
             end
          end
          depthdraw.add(draw, ent.x, ent.y, ent.z)

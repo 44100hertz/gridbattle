@@ -10,25 +10,41 @@ do
 end
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
-
+local gamewidth = GAME.width
 
 return {
-   draw_under = function (player, cust_amount, names)
+   draw = function (set, cust_amount)
       local full_amt = cust_amount * bar_width
       local bar_size = math.min(full_amt, bar_width-2)
+
+      local draw_enemy_names = function (list, side)
+         local names = {}
+         for _,v in ipairs(list) do
+            if not v.despawn then
+               table.insert(names, v.name)
+            end
+         end
+         local x = side=="right" and GAME.width or 0
+         text.draw("shadow", names, x, 2, side)
+      end
+      local draw_hp = function (hp, side)
+         local x = side=="right" and gamewidth-4 or 4
+         text.draw("visible", tostring(math.floor(hp)), x, 4, side)
+      end
+      local draw_side = function (kind, side)
+         if kind == "player" then
+            draw_hp(set[side].hp, side)
+         else
+            draw_enemy_names(set[side], side)
+         end
+      end
+      draw_side(set.left_kind, "left")
+      draw_side(set.right_kind, "right")
 
       local red = 40
       if cust_amount >= 1 then
          red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100
       end
-
-      -- HP
-      if player.hp>0 then
-         text.draw("visible", tostring(math.floor(player.hp)), 4, 4)
-      end
-
-      -- Enemy names
-      text.draw("shadow", names, GAME.width, 2, "right")
 
       -- Status bar
       local bar_y = 2
@@ -47,12 +63,10 @@ return {
       x = x + 8
       sb:add(sheet.bar[3], x, y)
       love.graphics.draw(sb)
-   end,
 
-   draw_over = function (player)
-      if #player.queue > 0 then
-	 local top = player.queue[#player.queue].name
-	 text.draw("visible", top, 0, GAME.height-11)
-      end
+      -- if #player.queue > 0 then
+      --    local top = player.queue[#player.queue].name
+      --    text.draw("visible", top, 0, GAME.height-11)
+      -- end
    end,
 }

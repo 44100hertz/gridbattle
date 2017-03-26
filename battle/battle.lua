@@ -10,6 +10,7 @@ local savedata = require(RES_PATH .. "savedata")
 local ui =  require(PATHS.battle .. "ui")
 
 local bg
+local set
 local cust_frames
 local cust_time = 4*60
 
@@ -19,14 +20,14 @@ local selectchips = function ()
 end
 
 return {
-   start = function (set)
+   start = function (set_name)
       local tform = depthdraw.tform
       tform.xscale = BATTLE.xscale
       tform.yscale = BATTLE.yscale
       tform.xoff = BATTLE.xoff
       tform.yoff = BATTLE.yoff
 
-      local set = dofile(PATHS.sets .. set .. ".lua")
+      set = dofile(PATHS.sets .. set_name .. ".lua")
       folder:load(savedata.player.folder)
 
       stage.start(set.stage.turf)
@@ -66,9 +67,8 @@ return {
       stage.draw() -- calls depthdraw
 
       local cust_amount = cust_frames / cust_time
---      ui.draw_under(ents.player, cust_amount, ents.get_enemy_names())
       depthdraw.draw()
---      ui.draw_over(ents.player)
+      ui.draw(set, cust_amount)
    end,
 
    exit = function ()
