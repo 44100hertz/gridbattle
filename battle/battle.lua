@@ -50,7 +50,11 @@ return {
 	 if input.st == 1 then
 	    scene.push((require "src/Menu"):new("pause"))
 	    return
-	 elseif cust_frames >= cust_time and (input.l==1 or input.r==1) then
+	 elseif cust_frames >= cust_time and
+            set.left.selectchips or set.right.selectchips
+         then
+            set.left.selectchips = false
+            set.right.selectchips = false
 	    selectchips()
 	    return
 	 end

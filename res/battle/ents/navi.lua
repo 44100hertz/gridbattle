@@ -35,6 +35,12 @@ return {
          ox = 24, oy = 54,
          hp = 300, hide_hp = true,
          act = function (self, input)
+            input = self.side=="left" and input[1] or input[2]
+
+            if input.l==1 or input.r==1 then
+               self.selectchips = true
+               return
+            end
             local move = function  (dx, dy)
                local goalx, goaly = self.x+dx, self.y+dy
                if stage.isfree(goalx, goaly, self.side) then
