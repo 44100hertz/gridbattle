@@ -37,33 +37,37 @@ local joy2hat = function (joy, deadzone)
    }
 end
 
-local check_joy = function (count, joy, bind)
-   local emu_hat = joy2hat(joy, 0.5)
-   for k,v in pairs(bind) do
-      count[k] = (joy:isGamepadDown(v) or emu_hat[k]) and count[k]+1 or 0
-   end
-   return count
+local check_key = function (keybind, k)
+   return love.keyboard.isScancodeDown(keybind[k])
+end
+local check_joy = function (joy, k)
+   return joy:isGamepadDown(joybind[k])
 end
 
-local check_keys = function (count, bind)
-   for k,v in pairs(bind) do
-      count[k] = love.keyboard.isScancodeDown(v) and count[k]+1 or 0
-   end
-   return count
-end
-
-local check1, check2
+local methods1 = {}
 if joy1 then
-   check1 = function () return check_joy(count1, joy1, joybind) end
-else
-   check1 = function () return check_keys(count1, keybind1) end
+   methods1[1] = function (k) return check_joy(joy1, k) end
 end
+table.insert(methods1, function (k) return check_key(keybind1, k) end)
+
+local methods2 = {}
 if joy2 then
-   check2 = function () return check_joy(count2, joy2, joybind) end
-elseif joy1 then
-   check2 = function () return check_keys(count2, keybind1) end
-else
-   check2 = function () return check_keys(count2, keybind2) end
+   methods2[2] = function (k) return check_joy(joy2, k) end
+end
+table.insert(methods2, function (k) return check_key(keybind2, k) end)
+
+local check_all = function (count, methods)
+   local check_defer = function (k)
+      for _,v in ipairs(methods) do
+         if v(k) then return true end
+      end
+      return false
+   end
+   local pressed
+   for k,_ in pairs(joybind) do
+      count[k] = check_defer(k) and count[k]+1 or 0
+   end
+   return count
 end
 
 return {
@@ -72,7 +76,7 @@ return {
    joybind = joybind,
 
    resolve = function ()
-      return check1()
+      return check_all(count1, methods1)
    end,
 
    rebind = function (binds)
