@@ -46,7 +46,7 @@ end
 table.insert(methods1, function (k) return check_key(keybind1, k) end)
 
 if joy2 then
-   methods2[2] = function (k) return check_joy(joy2, k) end
+   methods2[1] = function (k) return check_joy(joy2, k) end
 end
 table.insert(methods2, function (k) return check_key(keybind2, k) end)
 
