@@ -66,7 +66,7 @@ return {
 
       local draw_queue_top = function (queue, x)
          if queue and #queue > 0 then
-            local top = queue[queue].name
+            local top = queue[#queue].name
             text.draw("visible", top, x, GAME.height-11)
          end
       end
