@@ -8,6 +8,7 @@ local actors = require "battle/actors"
 
 local enemydb = require(PATHS.enemydb)
 local elements = require(PATHS.battle .. "elements")
+local set, left, right
 
 local ents, images
 local clear = function ()
@@ -15,9 +16,6 @@ local clear = function ()
    images = {}
 end
 clear()
-
-local player = {}
-local enemies = {}
 
 local getimage = function (img)
    if not images[img] then
@@ -81,7 +79,7 @@ local apply_damage = function (send, recv)
    elements.interact(send.elem, recv_elem, send.damage, recv)
 end
 
-local get_enemy_names = function ()
+local get_names = function ()
    local names = {}
    for _,v in ipairs(enemies) do
       if not v.despawn then table.insert(names, v.name) end
@@ -90,13 +88,13 @@ local get_enemy_names = function ()
 end
 
 local get_ending = function ()
-   if player.despawn then return "lose" end
+   if player.despawn then return "left" end
 
    local enemies_alive
    for _,v in ipairs(ents) do
       if v.name then enemies_alive = true end
    end
-   if not enemies_alive then return "win" end
+   if not enemies_alive then return "right" end
 end
 
 local kill = function (ent)
@@ -111,10 +109,6 @@ local kill = function (ent)
 end
 
 return {
-   -- values
-   player = player,
-
-   -- functions
    add = add,
    exit = clear,
    kill = kill,
@@ -122,27 +116,31 @@ return {
    get_enemy_names = get_enemy_names,
    get_ending = get_ending,
 
-   start = function (set)
-      for k,_ in pairs(player) do player[k] = nil end
-      if set.player then
-         player.x, player.y = set.player.x, set.player.y
-      else
-         player.x, player.y = 2,2
+   start = function (new_set)
+      set = new_set
+      local init_player = function (data, side)
+         data.side = side
+         add("navi", "player", data)
+         return data
       end
-      player.side = "left"
-      add("navi", "player", player)
+      local init_enemies = function (data, side)
+         for i,enemy in ipairs(data) do
+            enemy.side = side
+            local db_enemy = enemydb[enemy.name]
+            add(db_enemy.class, db_enemy.variant, enemy)
+         end
+         return data
+      end
 
-      for k,_ in ipairs(enemies) do enemies[k] = nil end
-      for _,set_enemy in ipairs(set.enemy) do
-	 local newenemy = {
-            name = set_enemy.name,
-            x = set_enemy.x,
-            y = set_enemy.y,
-            side = "right",
-         }
-         local db_enemy = enemydb[set_enemy.name]
-         add(db_enemy.class, db_enemy.variant, newenemy)
-	 table.insert(enemies, newenemy)
+      if set.left_kind == "player" then
+         left = init_player(set.left, "left")
+      elseif set.left_kind == "enemy" then
+         left = init_enemies(set.left, "left")
+      end
+      if set.right_kind == "player" then
+         right = init_player(set.right, "right")
+      elseif set.right_kind == "enemy" then
+         right = init_enemies(set.right, "right")
       end
    end,
 
