@@ -1,16 +1,16 @@
 local keybind1 = {
    a="x", b="z",
    l="a", r="s",
+   st="h", sel="g",
    du="i", dd="k",
    dl="j", dr="l",
-   st="h", sel="g"
 }
 local keybind2 = {
    a="right", b="down",
    l="left", r="up",
+   st="kpenter", sel="kp+",
    du="kp8", dd="kp5",
    dl="kp4", dr="kp6",
-   st="kpenter", sel="kp+"
 }
 local joybind = {
    a="b", b="a",
