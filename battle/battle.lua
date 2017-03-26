@@ -13,13 +13,10 @@ local bg
 local set
 local cust_frames
 local cust_time = 4*60
-local is_cust
 
 local selectchips = function ()
-   if is_cust then
-      scene.push(require(PATHS.battle .. "customize"), folder, set)
-      cust_frames = 0
-   end
+   scene.push(require(PATHS.battle .. "customize"), folder, set)
+   cust_frames = 0
 end
 
 return {
@@ -31,8 +28,6 @@ return {
       tform.yoff = BATTLE.yoff
 
       set = dofile(PATHS.sets .. set_name .. ".lua")
-
-      is_cust = set.left_kind == "player" or set.right_kind == "player"
 
       folder:load(savedata.player.folder)
 
@@ -78,7 +73,7 @@ return {
 
       local cust_amount = cust_frames / cust_time
       depthdraw.draw()
-      ui.draw(set, is_cust, cust_amount)
+      ui.draw(set, cust_amount)
    end,
 
    exit = function ()
