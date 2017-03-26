@@ -2,6 +2,7 @@ _G.RES_PATH = arg[2] or "res/"
 local game = require(RES_PATH .. "game")
 local lg = love.graphics
 local lt = love.timer
+local outdir
 
 do
    _G.PATHS = {}
@@ -70,8 +71,7 @@ love.draw = function ()
 end
 
 love.run = function ()
-   local outdir
-   if arg[2] == "dump" then
+   if arg[3] == "dump" then
       outdir = "out/" .. os.time()
       love.filesystem.createDirectory(outdir)
    end
