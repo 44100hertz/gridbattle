@@ -8,7 +8,7 @@ local actors = require "battle/actors"
 
 local enemydb = require(PATHS.enemydb)
 local elements = require(PATHS.battle .. "elements")
-local set, left, right
+local set
 
 local ents, images
 local clear = function ()
@@ -124,7 +124,7 @@ return {
          return data
       end
       local init_enemies = function (data, side)
-         for i,enemy in ipairs(data) do
+         for _,enemy in ipairs(data) do
             enemy.side = side
             local db_enemy = enemydb[enemy.name]
             add(db_enemy.class, db_enemy.variant, enemy)
@@ -212,7 +212,7 @@ return {
                local row = ent.state and ent.state.row or ent.row or 1
                lg.draw(ent.image, ent.anim[row][ent.frame], x, y, 0, flip, 1)
             elseif ent.image then
-               lg.draw(ent.image, x, y)
+               lg.draw(ent.image, x, y, 0, flip, 1)
             end
             if ent.draw then ent:draw(x, y) end
             if ent.hp and not ent.hide_hp then
