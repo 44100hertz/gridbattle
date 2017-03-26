@@ -79,16 +79,6 @@ local apply_damage = function (send, recv)
    elements.interact(send.elem, recv_elem, send.damage, recv)
 end
 
-local get_ending = function ()
-   if player.despawn then return "left" end
-
-   local enemies_alive
-   for _,v in ipairs(ents) do
-      if v.name then enemies_alive = true end
-   end
-   if not enemies_alive then return "right" end
-end
-
 local kill = function (ent)
    if ent.tangible then stage.free(ent.x, ent.y) end
    if ent.states and ent.states.die then
@@ -98,6 +88,16 @@ local kill = function (ent)
    else
       ent.despawn = true
    end
+end
+
+local get_ending = function ()
+   if player.despawn then return "left" end
+
+   local enemies_alive
+   for _,v in ipairs(ents) do
+      if v.name then enemies_alive = true end
+   end
+   if not enemies_alive then return "right" end
 end
 
 return {
@@ -197,7 +197,8 @@ return {
          if ent.states then actors.update_draw(ent) end
          local draw = function (raw_x, raw_y)
             local flip = (ent.side=="right" and not ent.noflip)
-            local x = raw_x + (flip and ent.ox or -ent.ox)
+            local x = raw_x
+            if ent.ox then x = raw_x + (flip and ent.ox or -ent.ox) end
             local y = raw_y - (ent.oy or 0)
             local sx = flip and  -1 or 1
             if ent.frame then

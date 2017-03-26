@@ -21,8 +21,22 @@ local getpanel = function (x,y)
    if panels[x] then return panels[x][y] end
 end
 
+local see_enemy = function (x, y, side)
+   local opp_side = side=="left" and "right" or "left"
+   repeat
+      x = x + (side=="left" and 1 or -1)
+      panel = getpanel(x,y)
+      if panel and panel.tenant and panel.tenant.side==opp_side then
+         return panel.tenant
+      end
+   until not panel
+   return false
+end
+
 return {
    getpanel = getpanel,
+   see_enemy = see_enemy,
+
    start = function (new_turf)
       turf = new_turf
       panels = {}

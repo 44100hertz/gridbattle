@@ -1,4 +1,6 @@
 local ents = require "battle/ents"
+local stage = require "battle/stage"
+local chip = require "battle/chip_wrangler"
 
 local class = {
    group = "enemy",
@@ -29,13 +31,13 @@ return {
          color = {53, 57, 196},
          cooldown = 0,
          update = function (self)
-            -- if math.abs(self.y-ents.player.y) < 1
-            --    and self.cooldown<1
-            -- then
-            --    self.cooldown = 80
-            --    chip.use(self, "Triangle")
-            -- end
-            -- self.cooldown = self.cooldown - 1
+            if stage.see_enemy(self.x, self.y, self.side) and
+               self.cooldown<1
+            then
+               self.cooldown = 80
+               chip.use(self, "Triangle")
+            end
+            self.cooldown = self.cooldown - 1
          end,
       },
    }
