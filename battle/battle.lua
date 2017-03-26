@@ -48,7 +48,7 @@ return {
 	 --    return
 	 -- end
 
-	 if input.st == 1 then
+	 if input[1].st == 1 or input[2].st == 1 then
 	    scene.push((require "src/Menu"):new("pause"))
 	    return
 	 elseif cust_frames >= cust_time and
