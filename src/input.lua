@@ -3,7 +3,7 @@ local keybind1 = {
    l="a", r="s",
    du="i", dd="k",
    dl="j", dr="l",
-   st="g", sel="h"
+   st="h", sel="g"
 }
 local keybind2 = {
    a="right", b="down",
