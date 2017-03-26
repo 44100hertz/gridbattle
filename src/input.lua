@@ -23,21 +23,17 @@ local joy1 = love.joystick.getJoysticks()[1]
 local joy2 = love.joystick.getJoysticks()[2]
 love.joystick.loadGamepadMappings("src/gamecontrollerdb.txt")
 
-local joy2hat = function (joy, deadzone)
-   local lr = joy:getAxis(1)
-   local ud = joy:getAxis(2)
-   return {
-      dl = (lr < -deadzone),
-      dr = (lr > deadzone),
-      du = (ud < -deadzone),
-      dd = (ud > deadzone),
-   }
-end
-
+local deadzone = 0.5
 local check_key = function (keybind, k)
    return love.keyboard.isScancodeDown(keybind[k])
 end
 local check_joy = function (joy, k)
+   local lr = joy:getAxis(1)
+   local ud = joy:getAxis(2)
+   if k=="dl" and (lr < -deadzone) then return true end
+   if k=="dr" and (lr > deadzone) then return true end
+   if k=="du" and (ud < -deadzone) then return true end
+   if k=="dd" and (ud > deadzone) then return true end
    return joy:isGamepadDown(joybind[k])
 end
 
