@@ -56,7 +56,7 @@ function Side:update(input_list)
       local i=1
       while(self.pal[i]~=nil) do i=i+1 end
       self.pal[i] = table.remove(self.queue)
-   elseif input.sel==1 and not two_player then
+   elseif input.l==1 and not two_player then
       local chip = chipdb[sel.name]
       scene.push(dialog.popup, chip.desc, 132, 16)
    end
