@@ -95,6 +95,7 @@ return {
          lg.draw(img, sheet.button[button_sel], 96, 112)
 
          -- Art
+         local sel = side.pal[side.sel]
          if sel then
             chip_artist.draw_art(sel.name, 8, 16, 1)
             --         local damage = chipdb[sel.name].class.damage
