@@ -14,15 +14,16 @@ return {
    end},
    {"folder editor",
     a = function ()
-       scene.push(require "foldedit/editor", "test-collection", "test")
+       scene.push_fade({}, require "foldedit/editor",
+          "test-collection", "test")
    end},
    {"worldmap test",
     a = function ()
-       scene.push(require "world/world")
+       scene.push_fade({}, require "world/world")
    end},
    {"config",
     a = function ()
-       scene.push((require "src/Menu"):new("settings"))
+       scene.push_fade({}, (require "src/Menu"):new("settings"))
    end},
    {"exit", a = love.event.quit},
 }
