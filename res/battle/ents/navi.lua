@@ -18,8 +18,6 @@ local class = {
          end,
       },
    },
-
-   queue = {},
 }
 
 return {

@@ -32,9 +32,11 @@ return {
       set = dofile(PATHS.sets .. set_name .. ".lua")
 
       if set.left_kind == "player" then
+         set.left.queue = {}
          folder_left:load(savedata.player.folder)
       end
       if set.right_kind == "player" then
+         set.right.queue = {}
          folder_right:load(savedata.player.folder)
       end
 
