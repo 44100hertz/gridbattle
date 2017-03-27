@@ -4,7 +4,8 @@ local Folder = require "src/Folder"
 local depthdraw = require "src/depthdraw"
 local ents = require "battle/ents"
 local stage = require "battle/stage"
-local folder = Folder.new{}
+local folder_left = Folder.new{}
+local folder_right = Folder.new{}
 
 local savedata = require(RES_PATH .. "savedata")
 local ui =  require(PATHS.battle .. "ui")
@@ -15,7 +16,8 @@ local cust_frames
 local cust_time = 4*60
 
 local selectchips = function ()
-   scene.push(require(PATHS.battle .. "customize"), set, folder)
+   scene.push(require(PATHS.battle .. "customize"), set,
+              folder_left, folder_right)
    cust_frames = 0
 end
 
@@ -29,7 +31,12 @@ return {
 
       set = dofile(PATHS.sets .. set_name .. ".lua")
 
-      folder:load(savedata.player.folder)
+      if set.left_kind == "player" then
+         folder_left:load(savedata.player.folder)
+      end
+      if set.right_kind == "player" then
+         folder_right:load(savedata.player.folder)
+      end
 
       stage.start(set.stage.turf)
       ents.start(set)
