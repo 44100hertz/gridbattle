@@ -1,3 +1,5 @@
+* Demo
+** TODO determine whether to focus on pvp or pve
 * Features
 ** TODO elements
 *** DONE give everything an element, show element in editor and battle
@@ -6,7 +8,27 @@
 *** TODO test some elemental interactions
 ** TODO ONLINE multiplier (hooooo boy)
 * Steps
-** TODO 
+** TODO rewrite occupancy system
+make it so that, when it needs to be known whether an object is in a
+space, the game will solve it for that particular instance. Occupy and
+free would simply be replaced with whether "tangible" is true.
+** TODO consider using Actor or Entity base class
+Instead of having a bunch of checks for actor properties that override
+default behavior, just make all classes implement a base class.
+*** TODO interfaces/type system?
+It could be beneficial to have all actors implement an interface. This
+would be checked using tests, not at runtime.
+** TODO use submodules for wad(s)
+This will enable me to use a private submodule for mainline game
+development.
+** TODO pvp features
+*** TODO cust delay
+When one player wants to cust, display a timer on the other players'
+cust menu; give them 10 seconds to finish before the game autostarts.
+** TODO make some wad features less intimidating
+If it's possible to automatically implement anything, especially in
+customize, go ahead and do it in src/. For example, try love2d
+coordinate transforms instead of just adding an offset value.
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
