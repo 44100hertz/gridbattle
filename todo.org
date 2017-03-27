@@ -4,15 +4,9 @@
 *** DONE handle elements on collisions
 *** DONE make panels affect elements
 *** TODO test some elemental interactions
-** TODO multiplayer
-Get two players that can fight each other.
-
-This would possibly require more elegant coordinate flipping. Maybe
-built into draw, maybe not. For now, just make a custom flippable
-coord type in the place where it's needed, and I can toy with how to
-implement it elsewhere.
 ** TODO ONLINE multiplier (hooooo boy)
 * Steps
+** TODO 
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
@@ -65,6 +59,13 @@ going to reject it.
 ** DONE FPS independance via threads (if stable)
 NO threads here, thanks.
 * Done
+** DONE multiplayer
+Get two players that can fight each other.
+
+This would possibly require more elegant coordinate flipping. Maybe
+built into draw, maybe not. For now, just make a custom flippable
+coord type in the place where it's needed, and I can toy with how to
+implement it elsewhere.
 ** DONE more cool/trippy bg's
 It's now possible to do this, so I'm going to go ahead and mark it
 done. I can make more BG's when I actually start developing a game.
