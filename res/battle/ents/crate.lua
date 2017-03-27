@@ -22,7 +22,7 @@ return {
                self.size = 20/64
                stage.occupy(self, self.x, self.y)
             else
-               ents.apply_damage(tenant, self.conflict_damage)
+               ents.apply_damage(self, tenant, 40)
                self.despawn = true
             end
          end

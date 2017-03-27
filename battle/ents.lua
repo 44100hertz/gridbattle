@@ -69,7 +69,8 @@ local add = function (class_name, variant_name, ent)
    return ent
 end
 
-local apply_damage = function (send, recv)
+local apply_damage = function (send, recv, amount)
+   amount = amount or send.damage
    local recv_elem
    local panel_elem = stage.getpanel(recv.x, recv.y).stat
    if panel_elem and elements.by_name[panel_elem] then
@@ -77,7 +78,7 @@ local apply_damage = function (send, recv)
    else
       recv_elem = recv.elem
    end
-   elements.interact(send.elem, recv_elem, send.damage, recv)
+   elements.interact(send.elem, recv_elem, amount, recv)
 end
 
 local kill = function (ent)
