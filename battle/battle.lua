@@ -51,11 +51,11 @@ return {
 
    update = function (_, input)
       if input then
-	 -- local ending = ents.get_ending()
-	 -- if ending then
-	 --    scene.push(require "battle/results", ending)
-	 --    return
-	 -- end
+	 local ending = ents.get_ending()
+	 if ending then
+	    scene.push(require "battle/results", ending)
+	    return
+	 end
 
 	 if input[1].st == 1 or input[2].st == 1 then
 	    scene.push((require "src/Menu"):new("pause"))

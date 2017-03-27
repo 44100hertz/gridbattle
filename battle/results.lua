@@ -1,5 +1,4 @@
 local scene = require "src/scene"
-
 local image
 
 return {
@@ -7,15 +6,11 @@ return {
    open = true,
 
    start = function (result)
-      if result=="win" then
-	 image = love.graphics.newImage(PATHS.battle .. "win.png")
-      else
-	 image = love.graphics.newImage(PATHS.battle .. "lose.png")
-      end
+      image = love.graphics.newImage(PATHS.battle .. result .. ".png")
    end,
 
    update = function (_, input)
-      if input.a==1 then
+      if input[1].a==1 then
 	 scene.pop()
 	 scene.pop()
       end

@@ -92,14 +92,28 @@ local kill = function (ent)
    end
 end
 
+local result_tree = {
+   "p2win", "p1win", "win", "lose",
+   "lose", "win", "p2win", "p1win",
+}
 local get_ending = function ()
-   if player.despawn then return "left" end
-
-   local enemies_alive
-   for _,v in ipairs(ents) do
-      if v.name then enemies_alive = true end
+   local side_alive = function (tab, kind)
+      if kind == "player" then
+         return not tab.despawn
+      else
+         for _,v in ipairs(tab) do
+            if not v.despawn then return true end
+         end
+      end
    end
-   if not enemies_alive then return "right" end
+   local index = 1
+   index = index + (set.left_kind=="player" and 4 or 0)
+   index = index + (set.right_kind=="player" and 2 or 0)
+   if not side_alive(set.right, set.right_kind) then
+      return result_tree[index+1]
+   elseif not side_alive(set.left, set.left_kind) then
+      return result_tree[index]
+   end
 end
 
 return {

@@ -29,6 +29,7 @@ return {
          ox = 24, oy = 54,
          hp = 300, hide_hp = true,
          act = function (self, input)
+            if not input then return end
             input = self.side=="left" and input[1] or input[2]
 
             if input.l==1 or input.r==1 then
@@ -44,7 +45,6 @@ return {
                   self.enter_state = "move"
                end
             end
-	    if not input then return end
             local lr = input.dr - input.dl
             local ud = input.dd - input.du
 
