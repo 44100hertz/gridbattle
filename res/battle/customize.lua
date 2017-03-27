@@ -14,18 +14,24 @@ local sheet = (require "src/quads").multi_sheet{
    button = {0,184,24,16,3},
 }
 
-local left = {}
+local left = {
+   input_index = 1,
+   bg_x = 0,
+   bg_sx = 1,
+   pal_x = 8,
+   queue_x = 104,
+   art_x = 8,
+}
 local deck, pal, queue, sel
 
 return {
    transparent = true,
    queue = queue,
    start = function (set, left_deck, right_deck)
-      left = {deck = left_deck,
-              queue = set.left.queue,
-              pal = left_deck:draw(5, left.pal),
-              sel = 1,
-              input_index = 1}
+      left.deck = left_deck
+      left.queue = set.left.queue
+      left.pal = left_deck:draw(5, left.pal)
+      left.sel = 1
    end,
 
    update = function (_, input_list)
@@ -67,10 +73,10 @@ return {
 
    draw = function ()
       local draw_side = function (side)
-         lg.draw(img, sheet.bg)
+         lg.draw(img, sheet.bg, side.bg_x, 0, 0, side.bg_sx, 1)
 
-         for i=1,10 do
-            local x = 8 + 16*(i-1%5)
+         for i=1,10 do -- Palette
+            local x = side.pal_x + 16*(i-1%5)
             local y = i<=5 and 104 or 128
             if side.pal[i] then
                chip_artist.draw_icon(side.pal[i].name, x, y)
@@ -82,8 +88,8 @@ return {
             end
          end
 
-         for i=1,5 do
-            local x = 104
+         for i=1,5 do -- Queue
+            local x = side.queue_x
             local y = 24 + 16*(i-1)
             if side.queue[i] then
                chip_artist.draw_icon(side.queue[i].name, x, y)
@@ -97,7 +103,7 @@ return {
          -- Art
          local sel = side.pal[side.sel]
          if sel then
-            chip_artist.draw_art(sel.name, 8, 16, 1)
+            chip_artist.draw_art(sel.name, side.art_x, 16, 1)
             --         local damage = chipdb[sel.name].class.damage
             --         text.draw("flavor", tostring(damage), 8, 88)
          end
