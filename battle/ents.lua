@@ -214,7 +214,7 @@ return {
 
             if ent.hp and not ent.hide_hp then
                local hpstr = tostring(math.floor(ent.hp))
-               text.draw("hpnum", hpstr, raw_x, y, "center")
+               text.draw("hpnum", hpstr, raw_x, y-4, "center")
             end
 
             if ent.queue then
