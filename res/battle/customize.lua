@@ -23,25 +23,26 @@ function Side:start(sidestr, deck)
    self.queue = {}
    self.pal = deck:draw(5, self.pal)
    self.sel = 1
+   self.ready = false
+end
+
+local check_queue_valid = function (queue)
+   local diff_letter, diff_chip
+   for i=2,#queue do
+      diff_letter = queue[i].name ~= queue[1].name
+      diff_chip = queue[i].ltr ~= queue[1].ltr
+   end
+   return not (diff_letter and diff_chip)
 end
 function Side:update(input_list)
-   local check_queue_valid = function (queue)
-      local diff_letter, diff_chip
-      for i=2,#queue do
-         diff_letter = queue[i].name ~= queue[1].name
-         diff_chip = queue[i].ltr ~= queue[1].ltr
-      end
-      return not (diff_letter and diff_chip)
-   end
-   if not self.enable then return end
+   if not self.enable or self.ready then return end
    local input = input_list[self.input_index]
    local sel = self.pal[self.sel]
 
    if     input.dl==1 then self.sel = (self.sel-1)%6
    elseif input.dr==1 then self.sel = (self.sel+1)%6
    elseif input.a==1 and self.sel==0 then
-      scene.pop()
-      scene.push(require(PATHS.battle .. "go_screen"))
+      self.ready = true
    elseif input.a==1 and sel then
       table.insert(self.queue, sel) -- Try adding to queue
       if check_queue_valid(self.queue) then
@@ -84,7 +85,9 @@ function Side:draw()
    end
 
    -- Selectable button
-   local button_sel = self.sel==0 and 2 or 1
+   local button_sel = 1
+   if self.sel==0 then button_sel = 2 end
+   if self.ready then button_sel = 3 end
    lg.draw(img, sheet.button[button_sel], 96 + self.offset, 112)
 
    -- Art
@@ -121,6 +124,12 @@ return {
    update = function (_, input)
       left:update(input)
       right:update(input)
+      if (not left.enable or left.ready) and
+         (not right.enable or right.ready)
+      then
+         scene.pop()
+         scene.push(require(PATHS.battle .. "go_screen"))
+      end
    end,
 
    draw = function ()
