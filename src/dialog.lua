@@ -22,7 +22,8 @@ return {
          text, x, y = new_text, new_x, new_y
          w,h = src_text.getsize(font, text)
       end,
-      update = function (_, input)
+      update = function (_, input_list)
+         local input = input_list[1]
          if input.a == 1 or input.b == 1 then
             scene.pop()
          end
