@@ -101,7 +101,7 @@ function Side:draw()
    if sel then
       chip_artist.draw_art(sel.name, 8 + self.offset, 16, 1)
       local damage = chipdb[sel.name].damage
-      text.draw("flavor", tostring(damage), 8, 88)
+      text.draw("flavor", tostring(damage), 8+self.offset, 88)
    end
 end
 
