@@ -68,34 +68,26 @@ return {
    draw = function ()
       local draw_side = function (side)
          lg.draw(img, sheet.bg)
-         local x,y
 
-         -- Chip line
-         local i=1
-         y=104
-         for _=1,2 do
-            x=8
-            for _=1,5 do
-               if side.pal[i] then
-                  chip_artist.draw_icon(side.pal[i].name, x, y)
-                  local letter = side.pal[i].ltr:byte() - ("a"):byte() + 1
-                  lg.draw(img, sheet.letter[letter], x, y+16)
-               end
-               if side.sel==i then
-                  lg.draw(img, sheet.chipbg[1], x, y)
-               end
-               x=x+16
-               i=i+1
+         for i=1,10 do
+            local x = 8 + 16*(i-1%5)
+            local y = i<=5 and 104 or 128
+            if side.pal[i] then
+               chip_artist.draw_icon(side.pal[i].name, x, y)
+               local letter = side.pal[i].ltr:byte() - ("a"):byte() + 1
+               lg.draw(img, sheet.letter[letter], x, y+16)
+            end
+            if side.sel==i then
+               lg.draw(img, sheet.chipbg[1], x, y)
             end
          end
 
-         -- Queue
-         x,y = 104,24
          for i=1,5 do
+            local x = 104
+            local y = 24 + 16*(i-1)
             if side.queue[i] then
                chip_artist.draw_icon(side.queue[i].name, x, y)
             end
-            y=y+16
          end
 
          -- Selectable button
