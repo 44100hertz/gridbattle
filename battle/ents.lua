@@ -92,9 +92,8 @@ local kill = function (ent)
    end
 end
 
-local result_tree = {
-   "p2win", "p1win", "win", "lose",
-   "lose", "win", "p2win", "p1win",
+local results = {
+   "p1win", "win", "lose", "p2win",
 }
 local get_ending = function ()
    local side_alive = function (tab, kind)
@@ -106,13 +105,13 @@ local get_ending = function ()
          end
       end
    end
-   local index = 1
-   index = index + (set.left_kind=="player" and 4 or 0)
-   index = index + (set.right_kind=="player" and 2 or 0)
+   local index = 1 +
+      (set.left_kind=="player" and 2 or 0) +
+      (set.right_kind=="player" and 1 or 0)
    if not side_alive(set.right, set.right_kind) then
-      return result_tree[index+1]
+      return results[5-index]
    elseif not side_alive(set.left, set.left_kind) then
-      return result_tree[index]
+      return results[index]
    end
 end
 
