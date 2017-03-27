@@ -8,19 +8,15 @@ local chipdb = require(PATHS.chipdb)
 local img = lg.newImage(PATHS.battle .. "chips.png")
 local sheet = (require "src/quads").multi_sheet{
    img = img,
-   bg = {0,0,128,160},
+   bg = {0,0,120,160},
    chipbg = {0,160,16,16,6},
    letter = {0,176,16,8,5},
-   button = {0,184,24,16,3},
+   button = {0,184,16,16,3},
 }
 
 local left = {
    input_index = 1,
-   bg_x = 0,
-   bg_sx = 1,
-   pal_x = 8,
-   queue_x = 104,
-   art_x = 8,
+   offset = 120,
 }
 local deck, pal, queue, sel
 
@@ -73,10 +69,10 @@ return {
 
    draw = function ()
       local draw_side = function (side)
-         lg.draw(img, sheet.bg, side.bg_x, 0, 0, side.bg_sx, 1)
+         lg.draw(img, sheet.bg, side.offset)
 
          for i=1,10 do -- Palette
-            local x = side.pal_x + 16*(i-1%5)
+            local x = side.offset + 8 + 16*(i-1%5)
             local y = i<=5 and 104 or 128
             if side.pal[i] then
                chip_artist.draw_icon(side.pal[i].name, x, y)
@@ -89,7 +85,7 @@ return {
          end
 
          for i=1,5 do -- Queue
-            local x = side.queue_x
+            local x = 96 + side.offset
             local y = 24 + 16*(i-1)
             if side.queue[i] then
                chip_artist.draw_icon(side.queue[i].name, x, y)
@@ -98,12 +94,12 @@ return {
 
          -- Selectable button
          local button_sel = side.sel==0 and 2 or 1
-         lg.draw(img, sheet.button[button_sel], 96, 112)
+         lg.draw(img, sheet.button[button_sel], 96 + side.offset, 112)
 
          -- Art
          local sel = side.pal[side.sel]
          if sel then
-            chip_artist.draw_art(sel.name, side.art_x, 16, 1)
+            chip_artist.draw_art(sel.name, 8 + side.offset, 16, 1)
             --         local damage = chipdb[sel.name].class.damage
             --         text.draw("flavor", tostring(damage), 8, 88)
          end
