@@ -59,10 +59,12 @@ function Side:update(input_list)
    elseif input.l==1 and not two_player then
       local chip = chipdb[sel.name]
       scene.push(dialog.popup, chip.desc, 132, 16)
+   elseif input.sel==1 then
+      self.hide = not self.hide
    end
 end
 function Side:draw()
-   if not self.enable then return end
+   if not self.enable or self.hide then return end
    lg.draw(img, sheet.bg, self.offset)
 
    -- Palette --
