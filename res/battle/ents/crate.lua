@@ -7,7 +7,7 @@ return {
       side = "none",
       tangible = false,
       spawn_offset = 1,
-      hp = 1000,
+      hp = 1000, hide_hp = true,
       start = function (self)
          local mirror = self.parent.side=="left" and 1 or -1
          self.x = self.x + self.spawn_offset * mirror
