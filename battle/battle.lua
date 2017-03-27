@@ -61,7 +61,7 @@ return {
 	    scene.push((require "src/Menu"):new("pause"))
 	    return
 	 elseif cust_frames >= cust_time and
-            set.left.selectchips or set.right.selectchips
+            (set.left.selectchips or set.right.selectchips)
          then
             set.left.selectchips = false
             set.right.selectchips = false
