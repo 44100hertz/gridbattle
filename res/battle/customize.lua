@@ -20,7 +20,8 @@ Side.__index = Side
 function Side:start(sidestr, deck)
    if not self.enable then return end
    self.deck = deck
-   self.queue = {}
+   self.queue = set[sidestr].queue
+   for i,_ in ipairs(self.queue) do self.queue[i] = nil end
    self.pal = deck:draw(5, self.pal)
    self.sel = 1
    self.ready = false
