@@ -22,19 +22,21 @@ local input_check = {
 }
 
 function Menu:update (input)
-   input = input[1]
+   local check = function (k)
+      return (input[1][k]==1 or input[2][k]==1)
+   end
    local entry = self[self.sel]
    for _,button in ipairs(input_check) do
-      if input[button] == 1 and
+      if check(button) and
          entry[button]
       then
          entry[button](entry)
          return
       end
    end
-   if input.dd==1 then
+   if check"dd" then
       self.sel = self.sel % #self + 1
-   elseif input.du==1 then
+   elseif check"du" then
       self.sel = (self.sel-2) % #self + 1
    end
 end
