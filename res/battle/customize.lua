@@ -65,11 +65,14 @@ function Side:update(input_list)
 end
 function Side:draw()
    if not self.enable or self.hide then return end
-   lg.draw(img, sheet.bg, self.offset)
+   lg.push()
+   lg.translate(self.offset, 0)
+
+   lg.draw(img, sheet.bg)
 
    -- Palette --
    for i=1,10 do
-      local x = self.offset + 8 + 16*(i-1%5)
+      local x = 8 + 16*(i-1%5)
       local y = i<=5 and 104 or 128
       if self.pal[i] then
          chip_artist.draw_icon(self.pal[i].name, x, y)
@@ -83,7 +86,7 @@ function Side:draw()
 
    -- Queue --
    for i=1,5 do
-      local x = 96 + self.offset
+      local x = 96
       local y = 24 + 16*(i-1)
       if self.queue[i] then
          chip_artist.draw_icon(self.queue[i].name, x, y)
@@ -94,15 +97,17 @@ function Side:draw()
    local button_sel = 1
    if self.sel==0 then button_sel = 2 end
    if self.ready then button_sel = 3 end
-   lg.draw(img, sheet.button[button_sel], 96 + self.offset, 112)
+   lg.draw(img, sheet.button[button_sel], 96, 112)
 
    -- Art --
    local sel = self.pal[self.sel]
    if sel then
-      chip_artist.draw_art(sel.name, 8 + self.offset, 16, 1)
+      chip_artist.draw_art(sel.name, 8, 16, 1)
       local damage = chipdb[sel.name].damage
-      text.draw("flavor", tostring(damage), 8+self.offset, 88)
+      text.draw("flavor", tostring(damage), 8, 88)
    end
+
+   lg.pop()
 end
 
 local left,  right
