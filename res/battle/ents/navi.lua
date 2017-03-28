@@ -36,10 +36,7 @@ return {
             if not input then return end
             input = self.side=="left" and input[1] or input[2]
 
-            if input.l==1 or input.r==1 then
-               self.selectchips = true
-               return
-            end
+            self.selectchips = input.l>0 or input.r>0
             local move = function  (dx, dy)
                local goalx, goaly = self.x+dx, self.y+dy
                if ai.is_panel_free(goalx, goaly, self.side) then
