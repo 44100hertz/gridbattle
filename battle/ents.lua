@@ -136,14 +136,14 @@ return {
       end
 
       if set.left_kind == "player" then
-         left = init_player(set.left, "left")
+         init_player(set.left, "left")
       elseif set.left_kind == "enemy" then
-         left = init_enemies(set.left, "left")
+         init_enemies(set.left, "left")
       end
       if set.right_kind == "player" then
-         right = init_player(set.right, "right")
+         init_player(set.right, "right")
       elseif set.right_kind == "enemy" then
-         right = init_enemies(set.right, "right")
+         init_enemies(set.right, "right")
       end
    end,
 
