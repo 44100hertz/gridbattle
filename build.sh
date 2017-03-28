@@ -1,7 +1,9 @@
 #!/bin/sh
 
-pushd ./dist/luasdl2
+cd dist/
+pushd luasdl2
+rm -r build/
 mkdir build/
 cd build/
-cmake ..
+cmake .. -DWITH_LUAVER=JIT
 make
