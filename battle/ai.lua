@@ -7,14 +7,11 @@ local ai = {}
 ai.start = function (_set) set = _set end
 
 ai.is_panel_free = function (x, y, side)
-   x,y = math.floor(x+0.5), math.floor(y+0.5)
-   if side=="left" and x > set.stage.turf[y] then return false end
-   if side=="right" and x <= set.stage.turf[y] then return false end
-   for _,ent in ipairs(ents) do
-      if ent.tangible and ent.x == x and ent.y == y then
-         return false, ent
-      end
-   end
+   local panel = stage.getpanel(x,y)
+   if not panel then return false end
+   if (side=="left" and x > set.stage.turf[y]) then return false end
+   if (side=="right" and x <= set.stage.turf[y]) then return false end
+   if panel.tenant then return false, panel.tenant end
    return true
 end
 
