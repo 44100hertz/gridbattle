@@ -20,14 +20,13 @@ end
 
 ai.see_enemy = function (x, y, side)
    local opp_side = side=="left" and "right" or "left"
-   for _,ent in ipairs(ents.ents()) do
-      if ent.tangible and
-         ent.side == opp_side and
-         math.abs(x - ent.x) < 1 and
-         math.abs(y - ent.y) < 1
-      then
-         return ent
-      end
+   local panel = stage.getpanel(x, y)
+   if panel and
+      panel.tenant and
+      panel.tenant.tangible and
+      panel.tenant.side == opp_side
+   then
+      return panel.tenant
    end
    return false
 end

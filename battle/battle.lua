@@ -75,8 +75,8 @@ return {
 	 cust_frames = cust_frames + 1
       end
 
-      ents.update(input)
       stage.update(ents.ents())
+      ents.update(input)
    end,
 
    draw = function ()

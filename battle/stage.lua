@@ -38,6 +38,17 @@ return {
    update = function (ents)
       for x = 1,numx do
          for y = 1,numy do
+            panels[x][y].tenant = nil
+         end
+      end
+      for _,ent in ipairs(ents) do
+         local x,y = math.floor(ent.x+0.5), math.floor(ent.y+0.5)
+         if panels[x] and panels[x][y] then
+            panels[x][y].tenant = ent
+         end
+      end
+      for x = 1,numx do
+         for y = 1,numy do
             local panel = panels[x][y]
             if panel.stat then
                panel.stat_time = panel.stat_time-1
