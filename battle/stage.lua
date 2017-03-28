@@ -43,7 +43,9 @@ return {
       end
       for _,ent in ipairs(ents) do
          local x,y = math.floor(ent.x+0.5), math.floor(ent.y+0.5)
-         if panels[x] and panels[x][y] then
+         if ent.tangible and
+            panels[x] and panels[x][y]
+         then
             panels[x][y].tenant = ent
          end
       end
