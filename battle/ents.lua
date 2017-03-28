@@ -173,32 +173,23 @@ return {
       end
 
       local collide = function (a, b)
+         if a.damage and b.hp then apply_damage(a, b) end
+         if b.damage and a.hp then apply_damage(b, a) end
+         if a.collide_die and b.tangible then kill(a) end
+         if b.collide_die and a.tangible then kill(b) end
          if a.collide then a:collide(b) end
-         if a.damage and b.hp then
-            apply_damage(a, b)
-         end
-         if a.collide_die and b.tangible then
-            kill(a)
-         end
+         if b.collide then b:collide(a) end
       end
-
-      for i = 1, #ents do
-         -- Triangle-shaped iteration
-         for j = i+1, #ents do
-            local a = ents[i]
-            local b = ents[j]
-            if a.side ~= b.side and
-               a.size and b.size
-            then
-               local size = a.size + b.size
-               -- square collisions
-               if math.abs(a.x - b.x) < size and
-                  math.abs(a.y - b.y) < size
-               then
-                  collide(a, b)
-                  collide(b, a)
-               end
-            end
+      stage.clear()
+      for _,ent in ipairs(ents) do
+         local panel = stage.getpanel(ent.x, ent.y)
+         if panel and panel.tenant and
+            panel.tenant.tangible and
+            panel.tenant.side ~= ent.side
+         then
+            collide(ent, panel.tenant)
+         elseif panel and ent.tangible then
+            panel.tenant = ent
          end
       end
    end,

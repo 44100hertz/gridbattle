@@ -1,4 +1,3 @@
-local ents = require "battle/ents"
 local stage = require "battle/stage"
 
 local set
@@ -29,7 +28,6 @@ ai.see_enemy = function (x, y, side)
 end
 
 ai.see_line = function (x, y, side)
-   local opp_side = side=="left" and "right" or "left"
    local inc = side=="left" and 1 or -1
    repeat
       x = x + inc
