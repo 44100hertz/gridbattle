@@ -4,6 +4,7 @@ local scene = require "src/scene"
 local dialog = require "src/dialog"
 local text = require "src/text"
 local chip_artist = require "battle/chip_artist"
+local set = require "battle/set"
 local chipdb = require(PATHS.chipdb)
 
 local img = lg.newImage(PATHS.battle .. "chips.png")
@@ -14,7 +15,7 @@ local sheet = (require "src/quads").multi_sheet{
    letter = {0,176,16,8,5},
    button = {0,184,16,16,3},}
 
-local set, two_player
+local two_player
 
 local Side = {}
 Side.__index = Side
@@ -131,8 +132,7 @@ return {
    queue = queue,
 
    clear = clear,
-   start = function (_set, left_deck, right_deck)
-      set = _set
+   start = function (left_deck, right_deck)
       left.enable = left_deck.data and true
       right.enable = right_deck.data and true
       two_player = (left.enable and right.enable)

@@ -1,19 +1,13 @@
---[[
-   A data and helper for panels and such.
-
-   Intended both to clean out the battle main loop, and so it doesn't
-   have any functions other files would call.
---]]
-
 local lg = love.graphics
 local quads = require "src/quads"
 local depthdraw = require "src/depthdraw"
+local set = require "battle/set"
 
 local image = love.graphics.newImage(PATHS.battle .. "panels.png")
 local sheet = quads.sheet(0, 0, 40, 40, 2, 2,
-                         image:getWidth(), image:getHeight())
+                          image:getWidth(), image:getHeight())
 
-local turf, panels
+local panels
 local numx, numy = 6, 3
 
 local getpanel = function (x,y)
@@ -32,8 +26,7 @@ return {
       end
    end,
 
-   start = function (new_turf)
-      turf = new_turf
+   start = function ()
       panels = {}
       for x = 1,numx do
          panels[x] = {}
@@ -63,7 +56,7 @@ return {
    draw = function ()
       for x = 1,numx do
          for y = 1,numy do
-            local row = x > turf[y] and 1 or 2
+            local row = x > set.stage.turf[y] and 1 or 2
             local col = panels[x][y].stat == "poison" and 2 or 1
             local draw = function (sx, sy)
                lg.draw(image, sheet[row][col], sx-BATTLE.xscale/2, sy-30)

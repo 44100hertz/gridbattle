@@ -6,10 +6,10 @@ local text = require "src/text"
 local stage = require "battle/stage"
 local actors = require "battle/actors"
 local chip_artist = require "battle/chip_artist"
+local set = require "battle/set"
 
 local enemydb = require(PATHS.enemydb)
 local elements = require(PATHS.battle .. "elements")
-local set
 
 local ents, images
 local clear = function ()
@@ -119,8 +119,7 @@ return {
    get_ending = get_ending,
    ents = function () return ents end,
 
-   start = function (new_set)
-      set = new_set
+   start = function ()
       local init_player = function (data, side)
          data.side = side
          add("navi", "player", data)

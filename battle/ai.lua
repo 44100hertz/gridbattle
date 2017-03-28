@@ -1,9 +1,7 @@
 local stage = require "battle/stage"
+local set = require "battle/set"
 
-local set
 local ai = {}
-
-ai.start = function (_set) set = _set end
 
 ai.is_panel_free = function (x, y, side)
    local panel = stage.getpanel(x,y)

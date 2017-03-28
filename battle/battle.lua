@@ -6,6 +6,7 @@ local depthdraw = require "src/depthdraw"
 local ents = require "battle/ents"
 local ai = require "battle/ai"
 local stage = require "battle/stage"
+local set = require "battle/set"
 
 local savedata = require(RES_PATH .. "savedata")
 local customize = require(PATHS.battle .. "customize")
@@ -14,16 +15,16 @@ local ui =  require(PATHS.battle .. "ui")
 local folder_left, folder_right
 
 local bg
-local set
 local cust_frames
 local cust_time = 4*60
 
 local selectchips = function ()
-   scene.push(customize, set, folder_left, folder_right)
+   scene.push(customize, folder_left, folder_right)
    cust_frames = 0
 end
 
 local clear = function ()
+   for k,_ in pairs(set) do set[k] = nil end
    folder_left = Folder.new{}
    folder_right = Folder.new{}
    customize.clear()
@@ -41,7 +42,8 @@ return {
       tform.xoff = BATTLE.xoff
       tform.yoff = BATTLE.yoff
 
-      set = dofile(PATHS.sets .. set_name .. ".lua")
+      local new_set = dofile(PATHS.sets .. set_name .. ".lua")
+      for k,v in pairs(new_set) do set[k] = v end
 
       if set.left_kind == "player" then
          set.left.queue = {}
@@ -52,9 +54,8 @@ return {
          folder_right:load(savedata.player.folder)
       end
 
-      stage.start(set.stage.turf)
-      ai.start(set)
-      ents.start(set)
+      stage.start()
+      ents.start()
 
       bg = require(PATHS.bg .. set.bg)
       set.bg_args = set.bg_args or {}
