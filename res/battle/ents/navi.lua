@@ -13,6 +13,9 @@ local class = {
       move = {
          row = 2, anim = {1,2}, speed = 3.5, length = 5, iasa = 3,
          act = function (self)
+            if not ai.is_panel_free(self.goalx, self.goaly, self.side) then
+               self.enter_state = idle
+            end
             if self.time == 5 then
                self.x, self.y = self.goalx, self.goaly
             end
