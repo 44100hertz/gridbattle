@@ -31,8 +31,8 @@ end
 local check_queue_valid = function (queue)
    local diff_letter, diff_chip
    for i=2,#queue do
-      diff_letter = queue[i].name ~= queue[1].name
-      diff_chip = queue[i].ltr ~= queue[1].ltr
+      if queue[i].name ~= queue[1].name then diff_chip = true end
+      if queue[i].ltr ~= queue[1].ltr then diff_letter = true end
    end
    return not (diff_letter and diff_chip)
 end
