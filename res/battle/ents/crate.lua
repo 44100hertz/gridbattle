@@ -21,8 +21,10 @@ return {
                self.dz = 0
                self.tangible = true
                self.size = 20/64
-            else
+            elseif tenant then
                ents.apply_damage(self, tenant, 40)
+               self.despawn = true
+            else
                self.despawn = true
             end
          end
