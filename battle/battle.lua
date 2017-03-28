@@ -2,13 +2,16 @@
 local scene = require "src/scene"
 local Folder = require "src/Folder"
 local depthdraw = require "src/depthdraw"
+
 local ents = require "battle/ents"
+local ai = require "battle/ai"
 local stage = require "battle/stage"
-local folder_left = Folder.new{}
-local folder_right = Folder.new{}
 
 local savedata = require(RES_PATH .. "savedata")
 local ui =  require(PATHS.battle .. "ui")
+
+local folder_left = Folder.new{}
+local folder_right = Folder.new{}
 
 local bg
 local set
@@ -41,6 +44,7 @@ return {
       end
 
       stage.start(set.stage.turf)
+      ai.start(set)
       ents.start(set)
       bg = require(PATHS.bg .. set.bg)
       set.bg_args = set.bg_args or {}
@@ -72,7 +76,7 @@ return {
       end
 
       ents.update(input)
-      stage.update()
+      stage.update(ents.ents())
    end,
 
    draw = function ()

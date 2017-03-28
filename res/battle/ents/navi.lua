@@ -1,4 +1,5 @@
-local stage = require "battle/stage"
+local ai = require "battle/ai"
+local ents = require "battle/ents"
 local chip = require "battle/chip_wrangler"
 local chip_artist = require "battle/chip_artist"
 
@@ -38,10 +39,8 @@ return {
             end
             local move = function  (dx, dy)
                local goalx, goaly = self.x+dx, self.y+dy
-               if stage.isfree(goalx, goaly, self.side) then
-                  stage.free(self.x, self.y)
+               if ai.is_panel_free(goalx, goaly, self.side) then
                   self.goalx, self.goaly = goalx, goaly
-                  stage.occupy(self, goalx, goaly)
                   self.enter_state = "move"
                end
             end

@@ -60,9 +60,6 @@ local add = function (class_name, variant_name, ent)
    if ent.start then ent:start() end
    ent.time = 0
    ent.z = ent.z or 0
-   if ent.tangible then
-      stage.occupy(ent)
-   end
    if ent.max_hp then ent.hp = ent.max_hp end
 
    table.insert(ents, ent)
@@ -82,7 +79,6 @@ local apply_damage = function (send, recv, amount)
 end
 
 local kill = function (ent)
-   if ent.tangible then stage.free(ent.x, ent.y) end
    if ent.states and ent.states.die then
       actors.kill(ent)
    elseif ent.die then
@@ -120,8 +116,8 @@ return {
    exit = clear,
    kill = kill,
    apply_damage = apply_damage,
-   get_enemy_names = get_enemy_names,
    get_ending = get_ending,
+   ents = function () return ents end,
 
    start = function (new_set)
       set = new_set

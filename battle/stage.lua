@@ -35,8 +35,7 @@ return {
       end
    end,
 
-   update = function ()
-      -- Stat/poison counters
+   update = function (ents)
       for x = 1,numx do
          for y = 1,numy do
             local panel = panels[x][y]
@@ -64,36 +63,6 @@ return {
             depthdraw.add(draw, x, y, -20)
          end
       end
-   end,
-
-   isfree = function (x, y, side)
-      local panel = getpanel(x,y)
-      if (not panel) then return end
-      if panel.tenant then return false, panel.tenant end
-
-      local is_left = x <= turf[y]
-      local off_side =
-         side=="left" and not is_left or
-         side=="right" and is_left
-
-      return not off_side
-   end,
-
-   occupy = function (actor, x, y)
-      x = x or actor.x
-      y = y or actor.y
-      local panel = getpanel(x,y)
-
-      assert(panel, "attempt to occupy nonexistant panel")
-      assert(not panel.tenant, "attempt to occupy occupied space")
-
-      panel.tenant = actor
-      actor.on_panel = {x=x, y=y}
-   end,
-
-   free = function (x, y)
-      local panel = getpanel(x, y)
-      if panel then panel.tenant = nil end
    end,
 
    apply_stat = function (kind, counter, x, y)
