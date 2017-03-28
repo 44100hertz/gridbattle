@@ -1,0 +1,3 @@
+[submodule "dist/luasdl2"]
+	path = dist/luasdl2
+	url = https://github.com/Tangent128/luasdl2
