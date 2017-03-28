@@ -1,4 +1,7 @@
-local path = love.filesystem.getSaveDirectory() .. "/settings.conf"
+--local lfs = require "lfs"
+
+--local path = love.filesystem.getSaveDirectory() .. "/settings.conf"
+local path = "savedata/settings.conf"
 
 local config = {
    gamescale = 3,
@@ -8,8 +11,8 @@ local config = {
 local set_gamescale = function (scale)
    if not scale then scale = config.gamescale end
    config.gamescale = scale
-   love.window.setMode(GAME.width * scale,
-                       GAME.height * scale)
+   -- love.window.setMode(GAME.width * scale,
+   --                     GAME.height * scale)
 end
 
 local serialize = require "src/serialize"

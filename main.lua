@@ -1,7 +1,33 @@
+require "lib"
+
+local SDL = require "SDL"
+local image = require "SDL.image"
+
+local scene = require "src/scene"
+local config = require "src/config"
+local input = require "src/input"
+
 _G.RES_PATH = arg[2] or "res/"
 local game = require(RES_PATH .. "game")
-local lg = love.graphics
-local lt = love.timer
+
+config.load()
+
+local ret, err = SDL.init{SDL.flags.video}
+if not ret then error(err) end
+
+local formats, ret, err = image.init{image.flags.PNG}
+if not ret then error(err) end
+
+local win, err = SDL.createWindow {
+   title = "Gridbattle",
+   width = GAME.width * config.c.gamescale,
+   height = GAME.height * config.c.gamescale,
+}
+if not win then error(err) end
+
+local rdr, err = SDL.createRenderer(win, 0, 0)
+if not rdr then error(err) end
+
 local outdir
 
 do
@@ -31,61 +57,50 @@ do
    end
 end
 
-local scene = require "src/scene"
-local config = require "src/config"
-local input = require "src/input"
+-- if arg[3] == "dump" then
+--    outdir = "out/" .. os.time()
+--    love.filesystem.createDirectory(outdir)
+-- end
+
+-- love.math.setRandomSeed(os.time())
 
 local time = 0
-config.load()
-lg.setDefaultFilter("nearest", "nearest")
-local canvas = lg.newCanvas(GAME.width, GAME.height)
+--lg.setDefaultFilter("nearest", "nearest")
+--local canvas = lg.newCanvas(GAME.width, GAME.height)
 GAME.tickperiod = (1/GAME.tickrate)
 
-local poll = function ()
-   love.event.pump()
-   for name, a,b,c,d,e,f in love.event.poll() do
-      if name == "quit" then
-         if not love.quit or not love.quit() then
-            return true
-         end
-      end
-      love.handlers[name](a,b,c,d,e,f)
-   end
-end
+game.start()
 
-love.update = scene.update
-love.draw = function ()
+--local next_tick = lt.getTime() + GAME.tickperiod
+
+local drawthread = function ()
    --lg.setBlendMode("alpha", "alphamultiply")
-   canvas:renderTo(scene.draw)
+--   canvas:renderTo(scene.draw)
 
    --lg.setBlendMode("replace", "premultiplied")
-   lg.draw( canvas, 0,0,0, config.c.gamescale )
-   lg.print(math.floor(collectgarbage("count")))
-   lg.present()
+--   lg.draw(canvas, 0,0,0, config.c.gamescale)
+--   lg.print(math.floor(collectgarbage("count")))
+--   lg.present()
 
-   if outdir then
-      time = time + 1
-      local imgdata = canvas:newImageData()
-      imgdata:encode("tga", outdir .. "/" .. time .. ".tga")
-   end
+   -- if outdir then
+   --    time = time + 1
+   --    local imgdata = canvas:newImageData()
+   --    imgdata:encode("tga", outdir .. "/" .. time .. ".tga")
+   -- end
 end
 
-love.run = function ()
-   if arg[3] == "dump" then
-      outdir = "out/" .. os.time()
-      love.filesystem.createDirectory(outdir)
-   end
-
-   love.math.setRandomSeed(os.time())
-   game.start()
-   local next_tick = lt.getTime() + GAME.tickperiod
-
-   while true do
-      if poll() then return end
-      love.update()
-      while(lt.getTime() < next_tick) do
-         love.draw(lt.getTime())
+while true do
+   for e in SDL.pollEvent() do
+      if e.type == SDL.event.quit then
+         return
+      elseif e.type == SDL.event.keyDown then
+--         input.handle_key(e)
       end
-      next_tick = next_tick + GAME.tickperiod
    end
+   scene.update()
+   scene.draw()
+   -- while(lt.getTime() < next_tick) do
+   --    love.draw(lt.getTime())
+   -- end
+   -- next_tick = next_tick + GAME.tickperiod
 end
