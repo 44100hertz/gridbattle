@@ -28,6 +28,9 @@ return {
                self.despawn = true
             end
          end
+         if self.x < 0 or self.x > 7 then
+            self.despawn = true
+         end
       end,
    },
    variants = {
