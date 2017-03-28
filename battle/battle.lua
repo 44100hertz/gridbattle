@@ -11,8 +11,7 @@ local savedata = require(RES_PATH .. "savedata")
 local customize = require(PATHS.battle .. "customize")
 local ui =  require(PATHS.battle .. "ui")
 
-local folder_left = Folder.new{}
-local folder_right = Folder.new{}
+local folder_left, folder_right
 
 local bg
 local set
@@ -24,7 +23,17 @@ local selectchips = function ()
    cust_frames = 0
 end
 
+local clear = function ()
+   folder_left = Folder.new{}
+   folder_right = Folder.new{}
+   customize.clear()
+   ents.exit()
+end
+
+clear()
+
 return {
+   exit = clear,
    start = function (set_name)
       local tform = depthdraw.tform
       tform.xscale = BATTLE.xscale
@@ -89,9 +98,4 @@ return {
       depthdraw.draw()
       ui.draw(set, cust_amount)
    end,
-
-   exit = function ()
-      customize.clear()
-      ents.exit()
-   end
 }

@@ -121,8 +121,6 @@ local clear = function ()
    setmetatable(right, Side)
 end
 
-clear()
-
 return {
    transparent = true,
    queue = queue,
