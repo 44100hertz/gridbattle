@@ -69,9 +69,9 @@ end
 local apply_damage = function (send, recv, amount)
    amount = amount or send.damage
    local recv_elem
-   local panel_elem = stage.getpanel(recv.x, recv.y).stat
-   if panel_elem and elements.by_name[panel_elem] then
-      recv_elem = panel_elem
+   local panel = stage.getpanel(recv.x, recv.y)
+   if panel and panel.stat and elements.by_name[panel.stat] then
+      recv_elem = panel.stat
    else
       recv_elem = recv.elem
    end
