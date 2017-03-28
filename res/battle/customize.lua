@@ -105,22 +105,31 @@ function Side:draw()
    end
 end
 
-local left = {
-   input_index = 1,
-   offset = 0,
-}
-setmetatable(left, Side)
-local right = {
-   input_index = 2,
-   offset = 120,
-}
-setmetatable(right, Side)
+local left,  right
+local clear = function ()
+   left = {
+      input_index = 1,
+      offset = 0,
+      deck = nil, queue = nil, pal = nil,
+   }
+   setmetatable(left, Side)
+   right = {
+      input_index = 2,
+      offset = 120,
+      deck = nil, queue = nil, pal = nil,
+   }
+   setmetatable(right, Side)
+end
+
+clear()
 
 return {
    transparent = true,
    queue = queue,
-   start = function (new_set, left_deck, right_deck)
-      set = new_set
+
+   clear = clear,
+   start = function (_set, left_deck, right_deck)
+      set = _set
       left.enable = left_deck.data and true
       right.enable = right_deck.data and true
       two_player = (left.enable and right.enable)

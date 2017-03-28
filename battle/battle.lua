@@ -8,6 +8,7 @@ local ai = require "battle/ai"
 local stage = require "battle/stage"
 
 local savedata = require(RES_PATH .. "savedata")
+local customize = require(PATHS.battle .. "customize")
 local ui =  require(PATHS.battle .. "ui")
 
 local folder_left = Folder.new{}
@@ -19,8 +20,7 @@ local cust_frames
 local cust_time = 4*60
 
 local selectchips = function ()
-   scene.push(require(PATHS.battle .. "customize"), set,
-              folder_left, folder_right)
+   scene.push(customize, set, folder_left, folder_right)
    cust_frames = 0
 end
 
@@ -46,6 +46,7 @@ return {
       stage.start(set.stage.turf)
       ai.start(set)
       ents.start(set)
+
       bg = require(PATHS.bg .. set.bg)
       set.bg_args = set.bg_args or {}
       bg.start(unpack(set.bg_args))
@@ -90,6 +91,7 @@ return {
    end,
 
    exit = function ()
+      customize.clear()
       ents.exit()
    end
 }
