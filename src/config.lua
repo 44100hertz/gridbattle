@@ -2,7 +2,7 @@
 
 --local path = love.filesystem.getSaveDirectory() .. "/settings.conf"
 local SDL = require "SDL"
-local path = "savedata/settings.conf"
+local path = PATHS.savedata .. "settings.conf"
 
 local config = {
    gamescale = 3,

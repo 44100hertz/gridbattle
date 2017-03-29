@@ -1,20 +1,16 @@
+local image = require "SDL.image"
+local rdr = _G.RDR
 local images = {}
-local lg = love.graphics
 
--- Chip graphics are fixed size at 256x256
--- this enables quads to be computed once only
-local icon, art
-do
-   local w,h = 256,256
-   local quads = require "src/quads"
-   icon = quads.sheet(0,0,16,16,1,1,w,h)[1][1]
-   art = quads.sheet(0,16,64,72,4,1,w,h)[1]
-end
+local sheet = {
+   icon = {x=0, y=0, w=16, h=16},
+   art = {x=0, y=16, w=64, h=72},
+}
 
 local getimage = function (name)
    if not images[name] then
       local imgpath = PATHS.chips .. name .. ".png"
-      images[name] = lg.newImage(imgpath)
+      images[name] = rdr:createTextureFromSurface(image.load(imgpath))
    end
    return images[name]
 end
@@ -25,7 +21,7 @@ end
 
 local draw_icon = function (name, x, y)
    local img = getimage(name)
-   lg.draw(img, icon, x, y)
+   rdr:copy(img, sheet.icon, {x=x, y=y, w=sheet.icon.w, h=sheet.icon.h})
 end
 
 local draw_icon_queue = function (queue, x, y)
@@ -41,7 +37,7 @@ end
 local draw_art = function (name, x, y, index)
    index = index or 1
    local img = getimage(name)
-   lg.draw(img, art[index], x, y)
+   rdr:copy(img, sheet.art, {x=x, y=y, w=sheet.art.w, h=sheet.art.h})
 end
 
 return {

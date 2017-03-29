@@ -6,6 +6,7 @@ local class = {
    tangible = true,
    size=20/64,
    ox = 22, oy = 50,
+   w = 50, h = 60,
    noflip = true,
    die = function (self)
       self.despawn = true

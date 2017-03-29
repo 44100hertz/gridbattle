@@ -67,8 +67,7 @@ end
 function Folder:load(name)
    self.temp_count = nil
    self.name = name
-   local input = love.filesystem.getSaveDirectory() ..
-      "/folders/" .. name
+   local input = PATHS.savedata .. "folders/" .. name
    if not pcall(function () io.input(input) end) then
       input = PATHS.folders .. name
    end
@@ -109,7 +108,7 @@ end
 
 function Folder:remove(index)
    self.temp_count = nil
-   index = index or love.math.random(#self.data)
+   index = index or math.floor(math.random()*#self.data)
    local entry = self.data[index]
    if not entry then
       print("tried to remove nonexistant index:", index)

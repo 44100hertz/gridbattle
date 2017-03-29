@@ -1,13 +1,41 @@
 require "lib"
 
+_G.RES_PATH = arg[2] or "res/"
+local game = require(RES_PATH .. "game")
+
+do
+   _G.PATHS = {}
+   local paths = {
+      chipdb = "chipdb",
+      enemydb = "enemydb",
+      chips = "chips/",
+      bg = "bg/",
+      fonts = "fonts/",
+      foldedit = "foldedit/",
+      folders = "folders/",
+      menu = "menu/",
+      battle = "battle/",
+      sets = "battle/sets/",
+   }
+   _G.PATHS.savedata = "savedata/"
+
+   for k,v in pairs(paths) do
+      _G.PATHS[k] = RES_PATH .. v
+   end
+
+   -- Index chips by name or by index interchangeably
+   local chipdb = require(PATHS.chipdb)
+   for i,v in ipairs(chipdb) do
+      v.index = i
+      chipdb[v[1]] = v
+   end
+end
+
 local SDL = require "SDL"
 local image = require "SDL.image"
 local config = require "src/config"
 local scene = require "src/scene"
 local input = require "src/input"
-
-_G.RES_PATH = arg[2] or "res/"
-local game = require(RES_PATH .. "game")
 
 local ret, err = SDL.init{SDL.flags.video}
 if not ret then error(err) end
@@ -32,33 +60,6 @@ SDL.glSetSwapInterval(1)
 local outdir
 
 config.load()
-
-do
-   _G.PATHS = {}
-   local paths = {
-      chipdb = "chipdb",
-      enemydb = "enemydb",
-      chips = "chips/",
-      bg = "bg/",
-      fonts = "fonts/",
-      foldedit = "foldedit/",
-      folders = "folders/",
-      menu = "menu/",
-      battle = "battle/",
-      sets = "battle/sets/",
-   }
-
-   for k,v in pairs(paths) do
-      _G.PATHS[k] = RES_PATH .. v
-   end
-
-   -- Index chips by name or by index interchangeably
-   local chipdb = require(PATHS.chipdb)
-   for i,v in ipairs(chipdb) do
-      v.index = i
-      chipdb[v[1]] = v
-   end
-end
 
 -- if arg[3] == "dump" then
 --    outdir = "out/" .. os.time()

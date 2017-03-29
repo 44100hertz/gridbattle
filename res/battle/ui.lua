@@ -1,22 +1,15 @@
+local image = require "SDL.image"
+local rdr = _G.RDR
+
 local text = require "src/text"
 
-local img = love.graphics.newImage(PATHS.battle .. "ui.png")
-local sb = love.graphics.newSpriteBatch(img, 40, "stream")
-local sheet = {}
-do
-   local quads = require "src/quads"
-   local w,h = img:getDimensions()
-   sheet.bar = quads.sheet(0,0,8,8,3,1,w,h)[1]
-end
+local img = rdr:createTextureFromSurface(image.load(PATHS.battle .. "ui.png"))
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
 local gamewidth = GAME.width
 
 return {
    draw = function (set, cust_amount)
-      local full_amt = cust_amount * bar_width
-      local bar_size = math.min(full_amt, bar_width-2)
-
       local draw_enemy_names = function (list, side)
          local names = {}
          for _,v in ipairs(list) do
@@ -43,26 +36,23 @@ return {
 
       local red = 40
       if cust_amount >= 1 then
-         red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100
+--         red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100
       end
 
-      -- Status bar
+      local bar_size = math.floor(math.min(cust_amount * bar_width, bar_width-2))
       local bar_y = 2
-      love.graphics.setColor(red, 40, 40)
-      love.graphics.rectangle("fill", bar_x+1, bar_y, bar_size, 8)
-      love.graphics.setColor(255, 255, 255)
+      rdr:setDrawColor(0xFF4040)
+      rdr:fillRect{x=bar_x+1, y=bar_y, w=bar_size, h=8}
 
-      sb:clear()
       local x,y = bar_x, bar_y
       local segs = bar_width/8 - 2
-      sb:add(sheet.bar[1], x, y)
+      rdr:copy(img, {x=0, y=0, w=8, h=8}, {x=x, y=y, w=8, h=8})
       for _=1,segs do
          x = x + 8
-         sb:add(sheet.bar[2], x, y)
+         rdr:copy(img, {x=8, y=0, w=8, h=8}, {x=x, y=y, w=8, h=8})
       end
       x = x + 8
-      sb:add(sheet.bar[3], x, y)
-      love.graphics.draw(sb)
+      rdr:copy(img, {x=16, y=0, w=8, h=8}, {x=x, y=y, w=8, h=8})
 
       local draw_queue_top = function (queue, x)
          if queue and #queue > 0 then

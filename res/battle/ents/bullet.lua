@@ -12,7 +12,7 @@ return {
       triangle = {
          img = "bullet",
          damage = 80,
-         sheet = {0,0,16,16,6,1},
+         w = 16, h = 16,
          lifespan = 60,
          dx = 0.01,
          z = 40,
@@ -21,7 +21,7 @@ return {
          end,
          states = {
             idle = {
-               row=1, anim = {1,2,3,4,5,6},
+               row=0, anim = {0,1,2,3,4,5},
                speed = 5,
             },
          },

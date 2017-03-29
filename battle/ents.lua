@@ -1,6 +1,6 @@
-local lg = love.graphics
+local image = require "SDL.image"
+local rdr = _G.RDR
 
-local quads = require "src/quads"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
 local stage = require "battle/stage"
@@ -18,12 +18,15 @@ local clear = function ()
 end
 clear()
 
-local getimage = function (img)
-   if not images[img] then
-      local imgpath = PATHS.battle .. "ents/" .. img .. ".png"
-      images[img] = love.graphics.newImage(imgpath)
+local getimage = function (name)
+   local w,h
+   if not images[name] then
+      local imgpath = PATHS.battle .. "ents/" .. name .. ".png"
+      local img = image.load(imgpath)
+      w,h = img:getSize()
+      images[name] = rdr:createTextureFromSurface(img)
    end
-   return images[img]
+   return images[name], w, h
 end
 
 local add = function (class_name, variant_name, ent)
@@ -47,13 +50,10 @@ local add = function (class_name, variant_name, ent)
 
    local img
    if type(ent.img)=="string" then
-      img = getimage(ent.img)
-      ent.image = img
-   end
-   if ent.sheet then
-      ent.sheet[7] = img:getWidth()
-      ent.sheet[8] = img:getHeight()
-      ent.anim = quads.sheet(unpack(ent.sheet))
+      img, w, h = getimage(ent.img)
+      ent.w = ent.w or w
+      ent.h = ent.h or h
+      ent.img = img
    end
 
    if ent.states then actors.start(ent) end
@@ -204,9 +204,13 @@ return {
 
             if ent.frame then
                local row = ent.state and ent.state.row or ent.row or 1
-               lg.draw(ent.image, ent.anim[row][ent.frame], x, y, 0, sx, 1)
-            elseif ent.image then
-               lg.draw(ent.image, x, y, 0, sx, 1)
+               rdr:copy(ent.img,
+                        {x=ent.frame*ent.w, y=row*ent.h, w=ent.w, h=ent.h},
+                        {x=x, y=y, w=ent.w, h=ent.h})
+            elseif ent.img then
+               rdr:copy(ent.img,
+                        {x=0, y=0, w=ent.w, h=ent.h},
+                        {x=x, y=y, w=ent.w, h=ent.h})
             end
 
             if ent.draw then ent:draw(x, y) end
