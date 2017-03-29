@@ -95,9 +95,9 @@ end
 
 while not SDL.quitRequested() do
    for e in SDL.pollEvent() do
-      if e.type == SDL.event.KeyDown then
+      if e.type == SDL.event.KeyDown and not e["repeat"] then
          input.handle_keydown(e)
-      elseif e.type == SDL.event.KeyUp then
+      elseif e.type == SDL.event.KeyUp and not e["repeat"] then
          input.handle_keyup(e)
       end
    end
