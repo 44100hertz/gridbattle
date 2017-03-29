@@ -1,10 +1,21 @@
--- local keybind1 = {
---    a="x", b="z",
---    l="a", r="s",
---    st="h", sel="g",
---    du="i", dd="k",
---    dl="j", dr="l",
--- }
+local SDL = require "SDL"
+
+local toscancode = function (table)
+   local converted = {}
+   for k,v in pairs(table) do
+      converted[SDL.getScancodeFromName(k)] = v
+   end
+   return converted
+end
+
+local keybind1 = toscancode{
+   x="a", z="b",
+   a="l", s="r",
+   h="st", g="sel",
+   i="du", k="dd",
+   j="dl", l="dr",
+}
+
 -- local keybind2 = {
 --    a="right", b="down",
 --    l="left", r="up",
@@ -37,7 +48,7 @@
 --    return joy:isGamepadDown(joybind[k])
 -- end
 
--- local count1, methods1 = {}, {}
+local count1, methods1 = {}, {}
 -- local count2, methods2 = {}, {}
 
 -- if joy1 then
@@ -69,12 +80,21 @@ return {
    keybind2 = keybind2,
    joybind = joybind,
 
-   handle_key = function ()
+   handle_keydown = function (e)
+      local sc = e.keysym.scancode
+      if keybind1[sc] then count1[keybind1[e.keysym.scancode]] = 0 end
+   end,
+
+   handle_keyup = function (e)
+      local sc = e.keysym.scancode
+      if keybind1[sc] then count1[keybind1[sc]] = false end
    end,
 
    resolve = function ()
-      --      return {check_all(count1, methods1), check_all(count2, methods2)}
-      return {{}, {}}
+      for k,v in pairs(count1) do
+         if v then count1[k] = v + 1 end
+      end
+      return {count1, count1}
    end,
 
    rebind = function (binds)

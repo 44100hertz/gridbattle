@@ -95,8 +95,10 @@ while true do
    for e in SDL.pollEvent() do
       if e.type == SDL.event.Quit then
          return
-      elseif e.type == SDL.event.keyDown then
---         input.handle_key(e)
+      elseif e.type == SDL.event.KeyDown then
+         input.handle_keydown(e)
+      elseif e.type == SDL.event.KeyUp then
+         input.handle_keyup(e)
       end
    end
    scene.update()
