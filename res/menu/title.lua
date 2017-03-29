@@ -1,3 +1,4 @@
+local SDL = require "SDL"
 local scene = require "src/scene"
 
 return {
@@ -25,5 +26,5 @@ return {
     a = function ()
        scene.push_fade({}, (require "src/Menu"):new("settings"))
    end},
-   {"exit", a = love.event.quit},
+   {"exit", a = SDL.Quit},
 }

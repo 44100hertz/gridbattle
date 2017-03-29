@@ -1,5 +1,6 @@
+local image = require "SDL.image"
 local text = require "src/text"
-local lg = love.graphics
+local rdr = _G.RDR
 
 local Menu = {}
 Menu.__index = Menu
@@ -8,11 +9,6 @@ function Menu:new (menu)
    menu = require(PATHS.menu .. menu)
    self = menu
    setmetatable(self, Menu)
-   if menu.bg_img then
-      self.bg_image =
-         lg.newImage(PATHS.menu .. self.bg_img .. ".png")
-      self.bg_img = nil
-   end
    self.sel = 1
    return self
 end
@@ -42,10 +38,17 @@ function Menu:update (input)
 end
 
 function Menu:draw ()
+   if self.bg_img then
+      local img, err = image.load(PATHS.menu .. self.bg_img .. ".png")
+      if err then error(err) end
+      self.bg_image = rdr:createTextureFromSurface(img)
+      self.bg_img = nil
+   end
+
    if self.bg_image then
-      lg.draw(self.bg_image)
+      rdr:copy(self.bg_image)
    else
-      lg.clear(0,0,0)
+      rdr:clear()
    end
    for i,v in ipairs(self) do
       local y = self.y + i * self.spacing
@@ -55,9 +58,9 @@ function Menu:draw ()
       end
 
       if self.sel==i then
-         lg.setColor(255, 100, 100)
+         rdr:setDrawColor(0xFF6464)
          drawtext()
-         lg.setColor(255, 255, 255)
+         rdr:setDrawColor(0xFFFFFF)
       else
          drawtext()
       end
