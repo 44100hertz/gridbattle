@@ -17,6 +17,7 @@ if not ret then error(err) end
 
 local win, err = SDL.createWindow {
    title = "Gridbattle",
+   flags = SDL.flags.OpenGL,
 }
 if not win then error(err) end
 _G.WIN = win
