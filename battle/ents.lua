@@ -1,3 +1,4 @@
+local SDL = require "SDL"
 local image = require "SDL.image"
 local rdr = _G.RDR
 
@@ -197,20 +198,25 @@ return {
       for _,ent in ipairs(ents) do
          if ent.states then actors.update_draw(ent) end
          local draw = function (raw_x, raw_y)
-            local flip = (ent.side=="right" and not ent.noflip)
+            local flip
+            if ent.side=="right" and not ent.noflip then
+               flip = SDL.rendererFlip.Horizontal
+            end
             local sx = flip and -1 or 1
             local x = raw_x + (ent.ox and (flip and ent.ox or -ent.ox) or 0)
             local y = raw_y - (ent.oy or 0)
 
             if ent.frame then
                local row = ent.state and ent.state.row or ent.row or 1
-               rdr:copy(ent.img,
-                        {x=ent.frame*ent.w, y=row*ent.h, w=ent.w, h=ent.h},
-                        {x=x, y=y, w=ent.w, h=ent.h})
+               rdr:copyEx{texture = ent.img,
+                        source = {x=ent.frame*ent.w, y=row*ent.h, w=ent.w, h=ent.h},
+                        destination={x=x, y=y, w=ent.w, h=ent.h},
+                        flip = flip}
             elseif ent.img then
-               rdr:copy(ent.img,
-                        {x=0, y=0, w=ent.w, h=ent.h},
-                        {x=x, y=y, w=ent.w, h=ent.h})
+               rdr:copyEx{texture = ent.img,
+                        source = {x=0, y=0, w=ent.w, h=ent.h},
+                        destination = {x=x, y=y, w=ent.w, h=ent.h},
+                        flip = flip}
             end
 
             if ent.draw then ent:draw(x, y) end
