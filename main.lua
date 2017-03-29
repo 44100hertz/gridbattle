@@ -37,6 +37,8 @@ local config = require "src/config"
 local scene = require "src/scene"
 local input = require "src/input"
 
+math.randomseed(os.time())
+
 local ret, err = SDL.init{SDL.flags.video}
 if not ret then error(err) end
 
