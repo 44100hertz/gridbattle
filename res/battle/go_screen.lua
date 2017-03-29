@@ -23,6 +23,6 @@ return {
       local elapsed = ticks / length
       local ysize = math.sqrt(1 - elapsed) * 3
       local ypos = (1 - ysize) / 2 * h
-      rdr:copy(img, {x=0, y=0, w=w, h=h}, {x=0, y=ypos, w=w, h=ysize})
+      rdr:copy(img, {x=0, y=0, w=w, h=h}, {x=0, y=ypos, w=w, h=ysize*h})
    end,
 }
