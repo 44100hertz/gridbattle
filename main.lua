@@ -27,6 +27,7 @@ if not win then error(err) end
 
 local rdr, err = SDL.createRenderer(win, 0, 0)
 if not rdr then error(err) end
+_G.RDR = rdr
 
 local outdir
 
@@ -91,7 +92,7 @@ end
 
 while true do
    for e in SDL.pollEvent() do
-      if e.type == SDL.event.quit then
+      if e.type == SDL.event.Quit then
          return
       elseif e.type == SDL.event.keyDown then
 --         input.handle_key(e)
@@ -99,6 +100,7 @@ while true do
    end
    scene.update()
    scene.draw()
+   rdr:present()
    -- while(lt.getTime() < next_tick) do
    --    love.draw(lt.getTime())
    -- end
