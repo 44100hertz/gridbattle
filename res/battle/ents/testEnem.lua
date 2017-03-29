@@ -23,12 +23,12 @@ return {
       {
          img = "testenemy",
          max_hp = 40,
-         color = {169, 53, 197},
+         color = 0xa935c5,
       },
       {
          img = "testenemy2",
          max_hp = 80,
-         color = {53, 57, 196},
+         color = 0x3539c4,
          cooldown = 0,
          update = function (self)
             if ai.see_line(self.x, self.y, self.side) and
