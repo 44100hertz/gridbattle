@@ -1,25 +1,28 @@
-local is_in, length, starttime, after
+local rdr = _G.RDR
+local fillrect = {x=0, y=0, w=GAME.width, h=GAME.height}
+
+local is_in, length, ticks
 
 return {
    transparent = true,
-   start = function (new_length, new_is_in, new_after)
-      is_in, length, after = new_is_in, new_length, new_after
-      starttime = love.timer.getTime()
+   start = function (_length, _is_in, _after)
+      is_in, after = _is_in, _after
+      length = GAME.tickrate * _length
+      ticks = 0
    end,
 
    update = function ()
-      if love.timer.getTime() - starttime > length then
+      if ticks > length then
          after()
       end
+      ticks = ticks + 1
    end,
 
    draw = function ()
-      local elapsed = love.timer.getTime() - starttime
-      local darkness = 255 * elapsed / length
+      local darkness = 255 * ticks / length
       if is_in then darkness = 255 - darkness end
 
-      love.graphics.setColor(0, 0, 0, darkness)
-      love.graphics.rectangle("fill", 0, 0, GAME.width, GAME.height)
-      love.graphics.setColor(255, 255, 255, 255)
+      rdr:setDrawColor(0x000000)
+      rdr:fillRect{fillrect}
    end,
 }
