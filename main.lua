@@ -25,8 +25,9 @@ local win, err = SDL.createWindow {
 }
 if not win then error(err) end
 
-local rdr, err = SDL.createRenderer(win, 0, 0)
+local rdr, err = SDL.createRenderer(win, 0, {presentVSYNC = true})
 if not rdr then error(err) end
+rdr:setLogicalSize(GAME.width, GAME.height)
 _G.RDR = rdr
 
 local outdir
