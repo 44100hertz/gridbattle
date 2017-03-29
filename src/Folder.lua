@@ -108,7 +108,7 @@ end
 
 function Folder:remove(index)
    self.temp_count = nil
-   index = index or math.floor(math.random()*#self.data)
+   index = index or math.floor(math.random()*#self.data + 1)
    local entry = self.data[index]
    if not entry then
       print("tried to remove nonexistant index:", index)
