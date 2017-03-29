@@ -34,7 +34,7 @@ return {
          depth = depths[i]
          if depth then
             for _,v in ipairs(depth) do
-               v[1](math.floor(v[2]), math.floor(v[3]))
+               v[1](v[2], v[3])
             end
          end
       end
