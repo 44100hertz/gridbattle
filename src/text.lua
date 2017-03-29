@@ -36,10 +36,12 @@ local getsize = function (font, lines)
    return maxw*f.char_w, #lines*f.char_h
 end
 
-local draw = function (font, lines, ox, oy, layout)
+local draw = function (font, lines, ox, oy, layout, color)
+   color = color or 0xFFFFFF
    if type(lines) == "string" then lines = {lines} end
 
    local f = getfont(font)
+   f.img:setColorMod(color)
    local x,y = ox,oy
    for _,line in ipairs(lines) do
       if layout=="right" then x = ox - getsize(font, line) end

@@ -53,14 +53,12 @@ function Menu:draw ()
    for i,v in ipairs(self) do
       local y = self.y + i * self.spacing
 
-      local drawtext = function ()
-         text.draw(self.font, v[1], GAME.width/2, y, "center")
+      local drawtext = function (color)
+         text.draw(self.font, v[1], GAME.width/2, y, "center", color)
       end
 
       if self.sel==i then
-         rdr:setDrawColor(0xFF6464)
-         drawtext()
-         rdr:setDrawColor(0xFFFFFF)
+         drawtext(0xFF5050)
       else
          drawtext()
       end
