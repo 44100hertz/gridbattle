@@ -26,5 +26,4 @@ return {
     a = function ()
        scene.push_fade({}, (require "src/Menu"):new("settings"))
    end},
-   {"exit", a = SDL.Quit},
 }
