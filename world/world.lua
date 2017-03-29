@@ -1,4 +1,5 @@
-local lg = love.graphics
+local rdr = _G.RDR
+
 local tiles = require "world/tiles"
 local depthdraw = require "src/depthdraw"
 local tform = depthdraw.tform
@@ -15,15 +16,15 @@ return {
 
    update = function (_, input)
       input = input[1]
-      if input.du>0 then tform.yoff = tform.yoff + 1 end
-      if input.dd>0 then tform.yoff = tform.yoff - 1 end
-      if input.dl>0 then tform.xoff = tform.xoff + 1 end
-      if input.dr>0 then tform.xoff = tform.xoff - 1 end
+      if input.du then tform.yoff = tform.yoff + 1 end
+      if input.dd then tform.yoff = tform.yoff - 1 end
+      if input.dl then tform.xoff = tform.xoff + 1 end
+      if input.dr then tform.xoff = tform.xoff - 1 end
       if input.b==1 then (require "src/scene").pop() end
    end,
 
    draw = function ()
-      lg.clear(0,0,0)
+      rdr:clear()
       tiles.draw()
       depthdraw.draw()
    end,
