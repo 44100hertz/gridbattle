@@ -1,12 +1,14 @@
+local image = require "SDL.image"
+local rdr = _G.RDR
 local scene = require "src/scene"
-local image
+local img
 
 return {
    transparent = true,
    open = true,
 
    start = function (result)
-      image = love.graphics.newImage(PATHS.battle .. result .. ".png")
+      img = rdr:createTextureFromSurface(image.load(PATHS.battle .. result .. ".png"))
    end,
 
    update = function (_, input)
@@ -17,6 +19,6 @@ return {
    end,
 
    draw = function ()
-      love.graphics.draw(image)
+      rdr:copy(img)
    end,
 }
