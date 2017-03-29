@@ -2,15 +2,12 @@ require "lib"
 
 local SDL = require "SDL"
 local image = require "SDL.image"
-
-local scene = require "src/scene"
 local config = require "src/config"
+local scene = require "src/scene"
 local input = require "src/input"
 
 _G.RES_PATH = arg[2] or "res/"
 local game = require(RES_PATH .. "game")
-
-config.load()
 
 local ret, err = SDL.init{SDL.flags.video}
 if not ret then error(err) end
@@ -20,17 +17,20 @@ if not ret then error(err) end
 
 local win, err = SDL.createWindow {
    title = "Gridbattle",
-   width = GAME.width * config.c.gamescale,
-   height = GAME.height * config.c.gamescale,
 }
 if not win then error(err) end
+_G.WIN = win
 
 local rdr, err = SDL.createRenderer(win, 0, {presentVSYNC = true})
 if not rdr then error(err) end
 rdr:setLogicalSize(GAME.width, GAME.height)
 _G.RDR = rdr
 
+SDL.glSetSwapInterval(1)
+
 local outdir
+
+config.load()
 
 do
    _G.PATHS = {}
@@ -91,11 +91,9 @@ local drawthread = function ()
    -- end
 end
 
-while true do
+while not SDL.quitRequested() do
    for e in SDL.pollEvent() do
-      if e.type == SDL.event.Quit then
-         return
-      elseif e.type == SDL.event.KeyDown then
+      if e.type == SDL.event.KeyDown then
          input.handle_keydown(e)
       elseif e.type == SDL.event.KeyUp then
          input.handle_keyup(e)
