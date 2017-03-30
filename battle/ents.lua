@@ -1,9 +1,10 @@
 local SDL = require "SDL"
 local rdr = _G.RDR
 
-local resources = require "src/resources"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
+local resources = require "src/resources"
+
 local stage = require "battle/stage"
 local actors = require "battle/actors"
 local chip_artist = require "battle/chip_artist"
@@ -12,10 +13,9 @@ local set = require "battle/set"
 local enemydb = require(_G.PATHS.enemydb)
 local elements = require(_G.PATHS.battle .. "elements")
 
-local ents, images
+local ents
 local clear = function ()
    ents = {}
-   images = {}
 end
 clear()
 
@@ -203,9 +203,9 @@ return {
                         flip = flip}
             elseif ent.img then
                rdr:copyEx{texture = ent.img,
-                        source = {x=0, y=0, w=ent.w, h=ent.h},
-                        destination = {x=x, y=y, w=ent.w, h=ent.h},
-                        flip = flip}
+                          source = {x=0, y=0, w=ent.w, h=ent.h},
+                          destination = {x=x, y=y, w=ent.w, h=ent.h},
+                          flip = flip}
             end
 
             if ent.draw then ent:draw(x, y) end

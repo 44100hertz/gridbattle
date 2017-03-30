@@ -2,6 +2,7 @@
 local scene = require "src/scene"
 local Folder = require "src/Folder"
 local depthdraw = require "src/depthdraw"
+local resources = require "src/resources"
 
 local ents = require "battle/ents"
 local stage = require "battle/stage"
@@ -23,6 +24,7 @@ local selectchips = function ()
 end
 
 local clear = function ()
+   resources.cleartag"battle"
    for k,_ in pairs(set) do set[k] = nil end
    folder_left = Folder.new{}
    folder_right = Folder.new{}
