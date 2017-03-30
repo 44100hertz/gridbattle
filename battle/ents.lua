@@ -201,7 +201,7 @@ return {
             if ent.side=="right" and not ent.noflip then
                flip = SDL.rendererFlip.Horizontal
             end
-            local x = raw_x + (ent.ox and (flip and ent.ox or -ent.ox) or 0)
+            local x = raw_x - (ent.ox or 0)
             local y = raw_y - (ent.oy or 0)
 
             if ent.frame then
