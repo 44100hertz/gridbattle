@@ -18,7 +18,7 @@ return {
       local set = data.tilesets[1]
       w,h = set.tilewidth, set.tileheight
       numx = math.floor(set.imagewidth / data.tilewidth)
-      img = resources.load("res/world/testmap/map.png", "world")
+      img = resources.getimage("res/world/testmap/map.png", "world")
    end,
 
    draw = function ()
