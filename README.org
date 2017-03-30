@@ -1,9 +1,12 @@
 * What is this?
 This is a re-implementation of gameplay from the Megaman Battle
-Network series, using love2d.
+Network series. I was using love2d, but I'm now in the almost-complete
+process of porting to sdl2, still using luajit, though I'm considering
+porting the core of the engine.
 
-You can run it by installing love2d and running it in this folder. The
-second argument is a path to custom resources, default "res/".
+You can run it by running build.sh, then running it in this
+folder. The second argument is a path to custom resources, default
+"res/".
 
 Files are under the zlib open-source license, included in LICENSE.
 The assets included here are fully original and should be considered
