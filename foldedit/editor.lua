@@ -157,7 +157,7 @@ return {
       -- Icons on left
       for i,v in ipairs(col1) do
          local is_sel = (col==1 and sel==i) and 16 or 0
-         rdr:copy(img, {x=is_sel, y=i*16, w=16, h=16}, {x=0, y=i*16, w=16, h=16})
+         rdr:copy(img, {x=is_sel, y=i*16-16, w=16, h=16}, {x=0, y=i*16, w=16, h=16})
       end
    end,
 }
