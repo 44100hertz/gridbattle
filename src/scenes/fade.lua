@@ -1,13 +1,14 @@
+local SDL = require "SDL"
 local rdr = _G.RDR
-local fillrect = {x=0, y=0, w=GAME.width, h=GAME.height}
 
-local is_in, length, ticks
+local is_in, length, ticks, after
+local screenrect = {x=0, y=0, w=_G.GAME.width, h=_G.GAME.height}
 
 return {
    transparent = true,
    start = function (_length, _is_in, _after)
       is_in, after = _is_in, _after
-      length = GAME.tickrate * _length
+      length = _G.GAME.tickrate * _length
       ticks = 0
    end,
 
@@ -20,9 +21,12 @@ return {
 
    draw = function ()
       local darkness = 255 * ticks / length
-      if is_in then darkness = 255 - darkness end
+      if darkness > 255 then darkness = 255 end
+      if not is_in then darkness = 255 - darkness end
 
-      rdr:setDrawColor(0x000000)
-      rdr:fillRect{fillrect}
+      rdr:setDrawBlendMode(SDL.blendMode.Mod)
+      rdr:setDrawColor{r=darkness, g=darkness, b=darkness}
+      rdr:fillRect(screenrect)
+      rdr:setDrawBlendMode(SDL.blendMode.None)
    end,
 }
