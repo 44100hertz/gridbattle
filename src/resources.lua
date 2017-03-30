@@ -24,7 +24,6 @@ return {
    cleartag = function (tag)
       if not tags[tag] then return end
       for k,_ in pairs(tags[tag]) do
-         print(k)
          imgstore[k] = nil
       end
       tags[tag] = nil
