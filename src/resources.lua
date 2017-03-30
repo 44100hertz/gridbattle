@@ -4,7 +4,7 @@ local image = require "SDL.image"
 local imgstore
 local tags = {}
 
-clear = function ()
+local clear = function ()
    imgstore = {}
 end
 
@@ -15,7 +15,7 @@ return {
       tags[tag] = tags[tag] or {}
       tags[tag][path] = true
       if not imgstore[path] then
-         img = image.load(path)
+         local img = image.load(path)
          imgstore[path] = rdr:createTextureFromSurface(img)
       end
       return imgstore[path]

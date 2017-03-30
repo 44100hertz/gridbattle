@@ -96,8 +96,4 @@ return {
       end
       return {count1, count1}
    end,
-
-   rebind = function (binds)
-      keyBind = binds
-   end
 }

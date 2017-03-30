@@ -1,19 +1,20 @@
 local text = require "src/text"
 local resources = require "src/resources"
 local rdr = _G.RDR
+local gwid = _G.GAME.width
 
 local Menu = {}
 Menu.__index = Menu
-Menu.__gc = function () resources.cleartag(self.uid) end
+--Menu.__gc = function () resources.cleartag(self.uid) end
 
 function Menu:new (menu)
-   menu = require(PATHS.menu .. menu)
+   menu = require(_G.PATHS.menu .. menu)
    self = menu
    self.uid = math.random()
    setmetatable(self, Menu)
    if self.bg_img then
       self.bg_image = resources.getimage(
-         PATHS.menu .. self.bg_img .. ".png", self.uid)
+         _G.PATHS.menu .. self.bg_img .. ".png", self.uid)
       self.bg_img = nil
    end
    self.sel = 1
@@ -54,7 +55,7 @@ function Menu:draw ()
       local y = self.y + i * self.spacing
 
       local drawtext = function (color)
-         text.draw(self.font, v[1], GAME.width/2, y, "center", color)
+         text.draw(self.font, v[1], gwid/2, y, "center", color)
       end
 
       if self.sel==i then

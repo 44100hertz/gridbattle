@@ -31,7 +31,7 @@ return {
 
    draw = function ()
       for i = min_depth, max_depth, depth_step do
-         depth = depths[i]
+         local depth = depths[i]
          if depth then
             for _,v in ipairs(depth) do
                v[1](v[2], v[3])

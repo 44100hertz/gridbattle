@@ -41,7 +41,7 @@ return {
       if stack[#stack].update then stack[#stack]:update(inputs) end
    end,
 
-   draw = function (rdr)
+   draw = function ()
       local pos = #stack
       while(stack[pos].transparent) do
          pos = pos - 1

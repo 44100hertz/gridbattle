@@ -6,7 +6,7 @@ local fonts = {}
 
 local getfont = function (font)
    if not fonts[font] then
-      local img = resources.getimage(PATHS.fonts .. font .. ".png", "font")
+      local img = resources.getimage(_G.PATHS.fonts .. font .. ".png", "font")
       local _,_,w,h = img:query()
       fonts[font] = {
          img = img,
