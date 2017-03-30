@@ -1,13 +1,7 @@
---local lfs = require "lfs"
-
---local path = love.filesystem.getSaveDirectory() .. "/settings.conf"
 local SDL = require "SDL"
 local path = PATHS.savedata .. "settings.conf"
 
-local config = {
-   gamescale = 3,
-   polldelay = 0,
-}
+local config = {}
 
 local set_gamescale = function (scale)
    if not scale then scale = config.gamescale end
@@ -29,8 +23,6 @@ local save = function ()
    print("saving config:", path)
    serialize.to_config(path, config)
 end
-
-if not pcall(function () io.input(path) end) then save() end
 
 return {
    c = config,
