@@ -1,6 +1,6 @@
-local image = require "SDL.image"
 local rdr = _G.RDR
 local scene = require "src/scene"
+local resources = require "src/resources"
 local img
 
 return {
@@ -8,8 +8,7 @@ return {
    open = true,
 
    start = function (result)
-      img = rdr:createTextureFromSurface(
-         image.load(_G.PATHS.battle .. result .. ".png"))
+      img = resources.getimage(_G.PATHS.battle .. result .. ".png", "battle")
    end,
 
    update = function (_, input)

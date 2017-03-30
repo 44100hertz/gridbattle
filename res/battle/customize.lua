@@ -1,17 +1,12 @@
 local rdr = _G.RDR
-local image = require "SDL.image"
 
 local scene = require "src/scene"
 local dialog = require "src/dialog"
 local text = require "src/text"
+local resources = require "src/resources"
 local chip_artist = require "battle/chip_artist"
 local set = require "battle/set"
 local chipdb = require(PATHS.chipdb)
-
-local img = rdr:createTextureFromSurface(image.load(PATHS.battle .. "chips.png"))
-local sheet = {
-   bg = {x=0, y=0, w=120, h=160},
-}
 
 local two_player
 
@@ -63,9 +58,10 @@ function Side:update(input_list)
    end
 end
 function Side:draw()
+   local img = resources.getimage(PATHS.battle .. "chips.png", "battle")
    if not self.enable or self.hide then return end
    rdr:setViewport{x=self.offset, y=0, w=GAME.width, h=GAME.width}
-   rdr:copy(img, sheet.bg, sheet.bg)
+   rdr:copy(img, {x=0, y=0, w=120, h=160}, {x=0, y=0, w=120, h=160})
 
    -- Palette --
    for i=1,10 do

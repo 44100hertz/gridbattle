@@ -1,11 +1,9 @@
-local image = require "SDL.image"
 local rdr = _G.RDR
 
 local depthdraw = require "src/depthdraw"
+local resources = require "src/resources"
 local set = require "battle/set"
 
-local img = rdr:createTextureFromSurface(
-   image.load(_G.PATHS.battle .. "panels.png"))
 local panel_w, panel_h = 40,40
 
 local panels
@@ -55,6 +53,7 @@ return {
    end,
 
    draw = function ()
+      local img = resources.getimage(_G.PATHS.battle .. "panels.png", "battle")
       for x = 1,numx do
          for y = 1,numy do
             local row = x > set.stage.turf[y] and 0 or 1

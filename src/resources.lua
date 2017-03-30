@@ -14,17 +14,19 @@ return {
    getimage = function (path, tag)
       tags[tag] = tags[tag] or {}
       tags[tag][path] = true
-      local w,h
       if not imgstore[path] then
          img = image.load(path)
-         w,h = img:getSize()
          imgstore[path] = rdr:createTextureFromSurface(img)
       end
-      return imgstore[path], w, h
+      return imgstore[path]
    end,
 
    cleartag = function (tag)
       if not tags[tag] then return end
-      for k,_ in pairs(tags[tag]) do print(k) imgstore[k] = nil end
+      for k,_ in pairs(tags[tag]) do
+         print(k)
+         imgstore[k] = nil
+      end
+      tags[tag] = nil
    end,
 }

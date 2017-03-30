@@ -1,14 +1,21 @@
-local image = require "SDL.image"
 local text = require "src/text"
+local resources = require "src/resources"
 local rdr = _G.RDR
 
 local Menu = {}
 Menu.__index = Menu
+Menu.__gc = function () resources.cleartag(self.uid) end
 
 function Menu:new (menu)
    menu = require(PATHS.menu .. menu)
    self = menu
+   self.uid = math.random()
    setmetatable(self, Menu)
+   if self.bg_img then
+      self.bg_image = resources.getimage(
+         PATHS.menu .. self.bg_img .. ".png", self.uid)
+      self.bg_img = nil
+   end
    self.sel = 1
    return self
 end
@@ -38,13 +45,6 @@ function Menu:update (input)
 end
 
 function Menu:draw ()
-   if self.bg_img then
-      local img, err = image.load(PATHS.menu .. self.bg_img .. ".png")
-      if err then error(err) end
-      self.bg_image = rdr:createTextureFromSurface(img)
-      self.bg_img = nil
-   end
-
    if self.bg_image then
       rdr:copy(self.bg_image)
    else

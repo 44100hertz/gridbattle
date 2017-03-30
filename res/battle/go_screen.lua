@@ -1,15 +1,16 @@
-local image = require "SDL.image"
+local resources = require "src/resources"
 local rdr = _G.RDR
-
-local img = image.load(PATHS.battle ..  "start.png")
-local w,h = img:getSize()
-img = rdr:createTextureFromSurface(img)
 
 local length = 30
 local ticks
+
+local img, w, h
+
 return {
    transparent = true,
    start = function ()
+      img = resources.getimage(PATHS.battle ..  "start.png", "battle")
+      _, _, w, h = img:query()
       ticks = 0
    end,
    update = function ()

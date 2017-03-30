@@ -7,3 +7,10 @@ mkdir build/
 cd build/
 cmake .. -DWITH_LUAVER=JIT
 make
+
+popd
+
+pushd luafilesystem/
+make
+
+popd

@@ -39,9 +39,9 @@ local add = function (class_name, variant_name, ent)
    end
 
    if type(ent.img)=="string" then
-      local img, w, h = resources.getimage(
-         _G.PATHS.battle .. "ents/" .. ent.img .. ".png",
-         "battle")
+      local img = resources.getimage(
+         _G.PATHS.battle .. "ents/" .. ent.img .. ".png", "battle")
+      local _,_,w,h = img:query()
       ent.w = ent.w or w
       ent.h = ent.h or h
       ent.img = img

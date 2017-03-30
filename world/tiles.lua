@@ -1,8 +1,8 @@
 local SDL = require "SDL"
-local image = require "SDL.image"
 local rdr = _G.RDR
 
 local depthdraw = require "src/depthdraw"
+local resources = require "src/resources"
 local data
 local img
 local band = bit.band
@@ -18,16 +18,16 @@ return {
       local set = data.tilesets[1]
       w,h = set.tilewidth, set.tileheight
       numx = math.floor(set.imagewidth / data.tilewidth)
-      img = rdr:createTextureFromSurface(image.load("res/world/testmap/map.png"))
+      img = resources.load("res/world/testmap/map.png", "world")
    end,
 
    draw = function ()
       local draw_tile = function (x, y, index, flip)
          local tx, ty = index % numx, math.floor(index / numx)
          rdr:copyEx{texture=img,
-                  source = {x=w*tx, y=h*ty, w=w, h=h},
-                  destination = {x=x, y=y, w=w, h=h},
-                  flip=flip,
+                    source = {x=w*tx, y=h*ty, w=w, h=h},
+                    destination = {x=x, y=y, w=w, h=h},
+                    flip=flip,
          }
       end
       for _,layer in ipairs(data.layers) do
@@ -52,4 +52,8 @@ return {
          end
       end
    end,
+
+   exit = function ()
+      resources.cleartag"world"
+   end
 }

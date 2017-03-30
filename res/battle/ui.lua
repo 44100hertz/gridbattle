@@ -1,15 +1,15 @@
-local image = require "SDL.image"
 local rdr = _G.RDR
 
 local text = require "src/text"
+local resources = require "src/resources"
 
-local img = rdr:createTextureFromSurface(image.load(PATHS.battle .. "ui.png"))
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
 local gamewidth = GAME.width
 
 return {
    draw = function (set, cust_amount)
+      local img = resources.getimage(PATHS.battle .. "ui.png", "battle")
       local draw_enemy_names = function (list, side)
          local names = {}
          for _,v in ipairs(list) do

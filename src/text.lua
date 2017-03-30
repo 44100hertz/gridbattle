@@ -1,17 +1,15 @@
 -- Functions for drawing ascii-grid fonts
 
-local image = require "SDL.image"
+local resources = require "src/resources"
 local rdr = _G.RDR
-
 local fonts = {}
 
 local getfont = function (font)
    if not fonts[font] then
-      local img, err = image.load(PATHS.fonts .. font .. ".png")
-      if err then error(err) end
-      local w, h = img:getSize()
+      local img = resources.getimage(PATHS.fonts .. font .. ".png", "font")
+      local _,_,w,h = img:query()
       fonts[font] = {
-         img = rdr:createTextureFromSurface(img),
+         img = img,
          char_w = w / 16,
          char_h = h / 8,
       }
