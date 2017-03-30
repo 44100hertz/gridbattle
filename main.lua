@@ -1,4 +1,4 @@
-require "lib"
+package.path = "?.lua;dist/luasdl2/build/?.lua;dist/luafilesystem/src/?.lua"
 
 _G.RES_PATH = arg[2] or "res/"
 local game = require(_G.RES_PATH .. "game")
