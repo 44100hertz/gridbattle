@@ -8,7 +8,8 @@ return {
    open = true,
 
    start = function (result)
-      img = rdr:createTextureFromSurface(image.load(PATHS.battle .. result .. ".png"))
+      img = rdr:createTextureFromSurface(
+         image.load(_G.PATHS.battle .. result .. ".png"))
    end,
 
    update = function (_, input)

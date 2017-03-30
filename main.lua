@@ -1,7 +1,7 @@
 require "lib"
 
 _G.RES_PATH = arg[2] or "res/"
-local game = require(RES_PATH .. "game")
+local game = require(_G.RES_PATH .. "game")
 
 do
    _G.PATHS = {}
@@ -20,7 +20,7 @@ do
    _G.PATHS.savedata = "savedata/"
 
    for k,v in pairs(paths) do
-      _G.PATHS[k] = RES_PATH .. v
+      _G.PATHS[k] = _G.RES_PATH .. v
    end
 
    -- Index chips by name or by index interchangeably
@@ -39,11 +39,8 @@ local input = require "src/input"
 
 math.randomseed(os.time())
 
-local ret, err = SDL.init{SDL.flags.video}
-if not ret then error(err) end
-
-local formats, ret, err = image.init{image.flags.PNG}
-if not ret then error(err) end
+SDL.init{SDL.flags.video}
+image.init{image.flags.PNG}
 
 local win, err = SDL.createWindow {
    title = "Gridbattle",
@@ -52,14 +49,14 @@ local win, err = SDL.createWindow {
 if not win then error(err) end
 _G.WIN = win
 
-local rdr, err = SDL.createRenderer(win, 0, {presentVSYNC = true})
-if not rdr then error(err) end
+local rdr = SDL.createRenderer(win, 0, {presentVSYNC = true})
 rdr:setLogicalSize(GAME.width, GAME.height)
 _G.RDR = rdr
 
 SDL.glSetSwapInterval(1)
 
-local outdir
+-- local outdir
+-- local time = 0
 
 config.load()
 
@@ -70,10 +67,9 @@ config.load()
 
 -- love.math.setRandomSeed(os.time())
 
-local time = 0
 --lg.setDefaultFilter("nearest", "nearest")
 --local canvas = lg.newCanvas(GAME.width, GAME.height)
-GAME.tickperiod = (1/GAME.tickrate)
+_G.GAME.tickperiod = (1/_G.GAME.tickrate)
 
 game.start()
 

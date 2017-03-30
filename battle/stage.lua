@@ -4,7 +4,8 @@ local rdr = _G.RDR
 local depthdraw = require "src/depthdraw"
 local set = require "battle/set"
 
-local img = rdr:createTextureFromSurface(image.load(PATHS.battle .. "panels.png"))
+local img = rdr:createTextureFromSurface(
+   image.load(_G.PATHS.battle .. "panels.png"))
 local panel_w, panel_h = 40,40
 
 local panels
@@ -36,7 +37,7 @@ return {
       end
    end,
 
-   update = function (ents)
+   update = function ()
       for x = 1,numx do
          for y = 1,numy do
             local panel = panels[x][y]

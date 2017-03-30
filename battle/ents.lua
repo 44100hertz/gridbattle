@@ -9,8 +9,8 @@ local actors = require "battle/actors"
 local chip_artist = require "battle/chip_artist"
 local set = require "battle/set"
 
-local enemydb = require(PATHS.enemydb)
-local elements = require(PATHS.battle .. "elements")
+local enemydb = require(_G.PATHS.enemydb)
+local elements = require(_G.PATHS.battle .. "elements")
 
 local ents, images
 local clear = function ()
@@ -22,7 +22,7 @@ clear()
 local getimage = function (name)
    local w,h
    if not images[name] then
-      local imgpath = PATHS.battle .. "ents/" .. name .. ".png"
+      local imgpath = _G.PATHS.battle .. "ents/" .. name .. ".png"
       local img = image.load(imgpath)
       w,h = img:getSize()
       images[name] = rdr:createTextureFromSurface(img)
@@ -32,7 +32,7 @@ end
 
 local add = function (class_name, variant_name, ent)
    ent = ent or {}
-   local class = require (PATHS.battle .. "ents/" .. class_name)
+   local class = require (_G.PATHS.battle .. "ents/" .. class_name)
 
    -- Chain metatables for variants
    class.class.__index = class.class
@@ -49,9 +49,8 @@ local add = function (class_name, variant_name, ent)
       setmetatable(ent, class.class)
    end
 
-   local img
    if type(ent.img)=="string" then
-      img, w, h = getimage(ent.img)
+      local img, w, h = getimage(ent.img)
       ent.w = ent.w or w
       ent.h = ent.h or h
       ent.img = img
@@ -202,7 +201,6 @@ return {
             if ent.side=="right" and not ent.noflip then
                flip = SDL.rendererFlip.Horizontal
             end
-            local sx = flip and -1 or 1
             local x = raw_x + (ent.ox and (flip and ent.ox or -ent.ox) or 0)
             local y = raw_y - (ent.oy or 0)
 

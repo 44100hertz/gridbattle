@@ -2,14 +2,9 @@ local image = require "SDL.image"
 local rdr = _G.RDR
 local images = {}
 
-local sheet = {
-   icon = {x=0, y=0, w=16, h=16},
-   art = {x=0, y=16, w=64, h=72},
-}
-
 local getimage = function (name)
    if not images[name] then
-      local imgpath = PATHS.chips .. name .. ".png"
+      local imgpath = _G.PATHS.chips .. name .. ".png"
       images[name] = rdr:createTextureFromSurface(image.load(imgpath))
    end
    return images[name]
@@ -21,7 +16,7 @@ end
 
 local draw_icon = function (name, x, y)
    local img = getimage(name)
-   rdr:copy(img, sheet.icon, {x=x, y=y, w=sheet.icon.w, h=sheet.icon.h})
+   rdr:copy(img, {x=0, y=0, w=16, h=16}, {x=x, y=y, w=16, h=16})
 end
 
 local draw_icon_queue = function (queue, x, y)
@@ -37,7 +32,7 @@ end
 local draw_art = function (name, x, y, index)
    index = index or 1
    local img = getimage(name)
-   rdr:copy(img, sheet.art, {x=x, y=y, w=sheet.art.w, h=sheet.art.h})
+   rdr:copy(img, {x=index*64, y=16, w=64, h=72}, {x=x, y=y, w=64, h=72})
 end
 
 return {
