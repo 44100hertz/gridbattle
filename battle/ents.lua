@@ -1,7 +1,7 @@
 local SDL = require "SDL"
-local image = require "SDL.image"
 local rdr = _G.RDR
 
+local resources = require "src/resources"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
 local stage = require "battle/stage"
@@ -18,17 +18,6 @@ local clear = function ()
    images = {}
 end
 clear()
-
-local getimage = function (name)
-   local w,h
-   if not images[name] then
-      local imgpath = _G.PATHS.battle .. "ents/" .. name .. ".png"
-      local img = image.load(imgpath)
-      w,h = img:getSize()
-      images[name] = rdr:createTextureFromSurface(img)
-   end
-   return images[name], w, h
-end
 
 local add = function (class_name, variant_name, ent)
    ent = ent or {}
@@ -50,7 +39,9 @@ local add = function (class_name, variant_name, ent)
    end
 
    if type(ent.img)=="string" then
-      local img, w, h = getimage(ent.img)
+      local img, w, h = resources.getimage(
+         _G.PATHS.battle .. "ents/" .. ent.img .. ".png",
+         "battle")
       ent.w = ent.w or w
       ent.h = ent.h or h
       ent.img = img
