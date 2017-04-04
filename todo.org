@@ -8,13 +8,13 @@
 *** TODO test some elemental interactions
 ** TODO ONLINE multiplier (hooooo boy)
 * Steps
-** TODO rewrite occupancy system
-make it so that, when it needs to be known whether an object is in a
-space, the game will solve it for that particular instance. Occupy and
-free would simply be replaced with whether "tangible" is true.
 ** TODO consider using Actor or Entity base class
 Instead of having a bunch of checks for actor properties that override
-default behavior, just make all classes implement a base class.
+default behavior, just make all classes implement a base class. This
+is actually a hella good idea.
+
+Make a battle/proto/ folder with prototypes for various actor kinds,
+which can use each other, of course.
 *** TODO interfaces/type system?
 It could be beneficial to have all actors implement an interface. This
 would be checked using tests, not at runtime.
@@ -32,11 +32,6 @@ coordinate transforms instead of just adding an offset value.
 ** TODO debug stuff
 *** TODO any chip selector
 *** TODO RAM, CPU, video info
-** TODO memory cleanup
-This is best done by keeping all loaded assets in tables. State exit
-functions will be added that nil these tables. Possibly: an asset
-manager is passed said tables, and clears them out when states get
-popped.
 ** TODO make keyboard input more responsive
 mostly for directions, just make it so the most recently pressed
 direction is what registers, as opposed to just having left/right
@@ -81,6 +76,15 @@ going to reject it.
 ** DONE FPS independance via threads (if stable)
 NO threads here, thanks.
 * Done
+** DONE rewrite occupancy system
+make it so that, when it needs to be known whether an object is in a
+space, the game will solve it for that particular instance. Occupy and
+free would simply be replaced with whether "tangible" is true.
+** DONE memory cleanup
+This is best done by keeping all loaded assets in tables. State exit
+functions will be added that nil these tables. Possibly: an asset
+manager is passed said tables, and clears them out when states get
+popped.
 ** DONE multiplayer
 Get two players that can fight each other.
 
