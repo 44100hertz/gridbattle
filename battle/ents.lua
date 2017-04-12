@@ -1,27 +1,34 @@
-local SDL = require "SDL"
-local rdr = _G.RDR
+local lg = love.graphics
 
+local quads = require "src/quads"
 local depthdraw = require "src/depthdraw"
 local text = require "src/text"
-local resources = require "src/resources"
-
 local stage = require "battle/stage"
 local actors = require "battle/actors"
 local chip_artist = require "battle/chip_artist"
 local set = require "battle/set"
 
-local enemydb = require(_G.PATHS.enemydb)
-local elements = require(_G.PATHS.battle .. "elements")
+local enemydb = require(PATHS.enemydb)
+local elements = require(PATHS.battle .. "elements")
 
-local ents
+local ents, images
 local clear = function ()
    ents = {}
+   images = {}
 end
 clear()
 
+local getimage = function (img)
+   if not images[img] then
+      local imgpath = PATHS.battle .. "ents/" .. img .. ".png"
+      images[img] = love.graphics.newImage(imgpath)
+   end
+   return images[img]
+end
+
 local add = function (class_name, variant_name, ent)
    ent = ent or {}
-   local class = require (_G.PATHS.battle .. "ents/" .. class_name)
+   local class = require (PATHS.battle .. "ents/" .. class_name)
 
    -- Chain metatables for variants
    class.class.__index = class.class
@@ -38,13 +45,15 @@ local add = function (class_name, variant_name, ent)
       setmetatable(ent, class.class)
    end
 
+   local img
    if type(ent.img)=="string" then
-      local img = resources.getimage(
-         _G.PATHS.battle .. "ents/" .. ent.img .. ".png", "battle")
-      local _,_,w,h = img:query()
-      ent.w = ent.w or w
-      ent.h = ent.h or h
-      ent.img = img
+      img = getimage(ent.img)
+      ent.image = img
+   end
+   if ent.sheet then
+      ent.sheet[7] = img:getWidth()
+      ent.sheet[8] = img:getHeight()
+      ent.anim = quads.sheet(unpack(ent.sheet))
    end
 
    if ent.states then actors.start(ent) end
@@ -188,24 +197,16 @@ return {
       for _,ent in ipairs(ents) do
          if ent.states then actors.update_draw(ent) end
          local draw = function (raw_x, raw_y)
-            local flip
-            if ent.side=="right" and not ent.noflip then
-               flip = SDL.rendererFlip.Horizontal
-            end
-            local x = raw_x - (ent.ox or 0)
+            local flip = (ent.side=="right" and not ent.noflip)
+            local sx = flip and -1 or 1
+            local x = raw_x + (ent.ox and (flip and ent.ox or -ent.ox) or 0)
             local y = raw_y - (ent.oy or 0)
 
             if ent.frame then
                local row = ent.state and ent.state.row or ent.row or 1
-               rdr:copyEx{texture = ent.img,
-                        source = {x=ent.frame*ent.w, y=row*ent.h, w=ent.w, h=ent.h},
-                        destination={x=x, y=y, w=ent.w, h=ent.h},
-                        flip = flip}
-            elseif ent.img then
-               rdr:copyEx{texture = ent.img,
-                          source = {x=0, y=0, w=ent.w, h=ent.h},
-                          destination = {x=x, y=y, w=ent.w, h=ent.h},
-                          flip = flip}
+               lg.draw(ent.image, ent.anim[row][ent.frame], x, y, 0, sx, 1)
+            elseif ent.image then
+               lg.draw(ent.image, x, y, 0, sx, 1)
             end
 
             if ent.draw then ent:draw(x, y) end

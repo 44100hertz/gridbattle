@@ -1,14 +1,12 @@
-local rdr = _G.RDR
 local scene = require "src/scene"
-local resources = require "src/resources"
-local img
+local image
 
 return {
    transparent = true,
    open = true,
 
    start = function (result)
-      img = resources.getimage(_G.PATHS.battle .. result .. ".png", "battle")
+      image = love.graphics.newImage(PATHS.battle .. result .. ".png")
    end,
 
    update = function (_, input)
@@ -19,6 +17,6 @@ return {
    end,
 
    draw = function ()
-      rdr:copy(img)
+      love.graphics.draw(image)
    end,
 }

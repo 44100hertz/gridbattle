@@ -6,7 +6,6 @@ local class = {
    tangible = true,
    size=20/64,
    ox = 22, oy = 50,
-   w = 50, h = 60,
    noflip = true,
    die = function (self)
       self.despawn = true
@@ -23,12 +22,12 @@ return {
       {
          img = "testenemy",
          max_hp = 40,
-         color = 0xa935c5,
+         color = {169, 53, 197},
       },
       {
          img = "testenemy2",
          max_hp = 80,
-         color = 0x3539c4,
+         color = {53, 57, 196},
          cooldown = 0,
          update = function (self)
             if ai.see_line(self.x, self.y, self.side) and

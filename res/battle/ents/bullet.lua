@@ -12,7 +12,7 @@ return {
       triangle = {
          img = "bullet",
          damage = 80,
-         w = 16, h = 16,
+         sheet = {0,0,16,16,6,1},
          lifespan = 60,
          dx = 0.01,
          z = 40,
@@ -21,7 +21,7 @@ return {
          end,
          states = {
             idle = {
-               row=0, anim = {0,1,2,3,4,5},
+               row=1, anim = {1,2,3,4,5,6},
                speed = 5,
             },
          },
@@ -29,7 +29,7 @@ return {
       boot = {
          start=false,
          img="boots",
-         w=24, h=16,
+         sheet={0,0,24,16,2,1},
          lifespan = 120,
          dx=0.1,
       }

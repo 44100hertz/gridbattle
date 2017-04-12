@@ -1,16 +1,7 @@
 #!/bin/sh
 
-cd dist/
-pushd luasdl2
-rm -r build/
+pushd ./dist/luasdl2
 mkdir build/
 cd build/
-cmake .. -DWITH_LUAVER=JIT
+cmake ..
 make
-
-popd
-
-pushd luafilesystem/
-make
-
-popd

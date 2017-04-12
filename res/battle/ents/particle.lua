@@ -1,4 +1,3 @@
-local rdr = _G.RDR
 local gravity = 0.1
 
 local class = {
@@ -16,8 +15,9 @@ local class = {
    end,
 
    draw = function (self, x, y)
-      rdr:setDrawColor(self.color)
-      rdr:fillRect{x=x, y=y, w=4, h=4}
+      love.graphics.setColor(unpack(self.color))
+      love.graphics.circle("fill", x, y, 5, 4)
+      love.graphics.setColor(255, 255, 255, 255)
    end,
 }
 

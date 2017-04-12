@@ -1,15 +1,15 @@
-local SDL = require "SDL"
-local path = _G.PATHS.savedata .. "settings.conf"
+local path = love.filesystem.getSaveDirectory() .. "/settings.conf"
 
-local config = {}
+local config = {
+   gamescale = 3,
+   polldelay = 0,
+}
 
 local set_gamescale = function (scale)
    if not scale then scale = config.gamescale end
    config.gamescale = scale
-   local w,h = _G.GAME.width * scale, _G.GAME.height * scale
-   local bounds = SDL.getDisplayBounds(0)
-   _G.WIN:setSize(w,h)
-   _G.WIN:setPosition(bounds.w/2 - w/2, bounds.h/2 - h/2)
+   love.window.setMode(GAME.width * scale,
+                       GAME.height * scale)
 end
 
 local serialize = require "src/serialize"
@@ -23,6 +23,8 @@ local save = function ()
    print("saving config:", path)
    serialize.to_config(path, config)
 end
+
+if not pcall(function () io.input(path) end) then save() end
 
 return {
    c = config,

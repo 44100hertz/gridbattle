@@ -1,14 +1,14 @@
-local rdr = _G.RDR
-
 local src_text = require "src/text"
 local scene = require "src/scene"
 
 local w,h
 local draw_box = function (font, text, x, y, color, border)
-   color = color or 0
+   color = color or {0,0,0}
    border = border or 4
-   rdr:setDrawColor(color)
-   rdr:fillRect{x=x-border, y=y-border, w=w+2*border, h=h+2*border}
+
+   love.graphics.setColor(unpack(color))
+   love.graphics.rectangle("fill", x-border, y-border, w+2*border, h+2*border)
+   love.graphics.setColor(255, 255, 255)
    src_text.draw(font, text, x, y)
 end
 

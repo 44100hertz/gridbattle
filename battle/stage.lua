@@ -1,10 +1,11 @@
-local rdr = _G.RDR
-
+local lg = love.graphics
+local quads = require "src/quads"
 local depthdraw = require "src/depthdraw"
-local resources = require "src/resources"
 local set = require "battle/set"
 
-local panel_w, panel_h = 40,40
+local image = love.graphics.newImage(PATHS.battle .. "panels.png")
+local sheet = quads.sheet(0, 0, 40, 40, 2, 2,
+                          image:getWidth(), image:getHeight())
 
 local panels
 local numx, numy = 6, 3
@@ -35,7 +36,7 @@ return {
       end
    end,
 
-   update = function ()
+   update = function (ents)
       for x = 1,numx do
          for y = 1,numy do
             local panel = panels[x][y]
@@ -53,15 +54,12 @@ return {
    end,
 
    draw = function ()
-      local img = resources.getimage(_G.PATHS.battle .. "panels.png", "battle")
       for x = 1,numx do
          for y = 1,numy do
-            local row = x > set.stage.turf[y] and 0 or 1
-            local col = panels[x][y].stat == "poison" and 1 or 0
-            local draw = function (x, y)
-               rdr:copy(img,
-                        {x=col*panel_w, y=row*panel_h, w=panel_w, h=panel_h},
-                        {x=x-20, y=y-30, w=panel_w, h=panel_h})
+            local row = x > set.stage.turf[y] and 1 or 2
+            local col = panels[x][y].stat == "poison" and 2 or 1
+            local draw = function (sx, sy)
+               lg.draw(image, sheet[row][col], sx-BATTLE.xscale/2, sy-30)
             end
             depthdraw.add(draw, x, y, -20)
          end

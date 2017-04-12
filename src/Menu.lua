@@ -1,20 +1,16 @@
 local text = require "src/text"
-local resources = require "src/resources"
-local rdr = _G.RDR
-local gwid = _G.GAME.width
+local lg = love.graphics
 
 local Menu = {}
 Menu.__index = Menu
---Menu.__gc = function () resources.cleartag(self.uid) end
 
 function Menu:new (menu)
-   menu = require(_G.PATHS.menu .. menu)
+   menu = require(PATHS.menu .. menu)
    self = menu
-   self.uid = math.random()
    setmetatable(self, Menu)
-   if self.bg_img then
-      self.bg_image = resources.getimage(
-         _G.PATHS.menu .. self.bg_img .. ".png", self.uid)
+   if menu.bg_img then
+      self.bg_image =
+         lg.newImage(PATHS.menu .. self.bg_img .. ".png")
       self.bg_img = nil
    end
    self.sel = 1
@@ -47,19 +43,21 @@ end
 
 function Menu:draw ()
    if self.bg_image then
-      rdr:copy(self.bg_image)
+      lg.draw(self.bg_image)
    else
-      rdr:clear()
+      lg.clear(0,0,0)
    end
    for i,v in ipairs(self) do
       local y = self.y + i * self.spacing
 
-      local drawtext = function (color)
-         text.draw(self.font, v[1], gwid/2, y, "center", color)
+      local drawtext = function ()
+         text.draw(self.font, v[1], GAME.width/2, y, "center")
       end
 
       if self.sel==i then
-         drawtext(0xFF5050)
+         lg.setColor(255, 100, 100)
+         drawtext()
+         lg.setColor(255, 255, 255)
       else
          drawtext()
       end

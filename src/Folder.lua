@@ -9,7 +9,7 @@ function Folder:new()
    return self
 end
 
-local chipdb = require(_G.PATHS.chipdb)
+local chipdb = require(PATHS.chipdb)
 local fetch_methods = {
    ltr = function (o) return o.ltr end,
    name = function (o) return o.name end,
@@ -48,8 +48,8 @@ end
 
 function Folder:condense()
    for i,a in ipairs(self.data) do
-      for j = i+1,#self.data do
-         local b = self.data[j]
+      for _ = i+1,#self.data do
+         local b = self.data[b]
          if a.name == b.name and
             a.ltr == b.ltr
          then
@@ -67,9 +67,10 @@ end
 function Folder:load(name)
    self.temp_count = nil
    self.name = name
-   local input = _G.PATHS.savedata .. "folders/" .. name
+   local input = love.filesystem.getSaveDirectory() ..
+      "/folders/" .. name
    if not pcall(function () io.input(input) end) then
-      input = _G.PATHS.folders .. name
+      input = PATHS.folders .. name
    end
    self.data = serialize.from_config(input)
    setmetatable(self, Folder)
@@ -78,11 +79,11 @@ end
 
 function Folder:save(name)
    if name then self.name = name end
-   -- local outdir = "folders/"
-   -- TODO love.filesystem.createDirectory(outdir)
-   -- serialize.to_config(
-   --    love.filesystem.getSaveDirectory()
-   --       .. "/" .. outdir .. self.name, self.data)
+   local outdir = "folders/"
+   love.filesystem.createDirectory(outdir)
+   serialize.to_config(
+      love.filesystem.getSaveDirectory()
+         .. "/" .. outdir .. self.name, self.data)
 end
 
 function Folder:find(entry)
@@ -108,7 +109,7 @@ end
 
 function Folder:remove(index)
    self.temp_count = nil
-   index = index or math.floor(math.random()*#self.data + 1)
+   index = index or love.math.random(#self.data)
    local entry = self.data[index]
    if not entry then
       print("tried to remove nonexistant index:", index)

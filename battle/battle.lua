@@ -2,15 +2,15 @@
 local scene = require "src/scene"
 local Folder = require "src/Folder"
 local depthdraw = require "src/depthdraw"
-local resources = require "src/resources"
 
 local ents = require "battle/ents"
+local ai = require "battle/ai"
 local stage = require "battle/stage"
 local set = require "battle/set"
 
-local savedata = require(_G.RES_PATH .. "savedata")
-local customize = require(_G.PATHS.battle .. "customize")
-local ui =  require(_G.PATHS.battle .. "ui")
+local savedata = require(RES_PATH .. "savedata")
+local customize = require(PATHS.battle .. "customize")
+local ui =  require(PATHS.battle .. "ui")
 
 local folder_left, folder_right
 
@@ -24,7 +24,6 @@ local selectchips = function ()
 end
 
 local clear = function ()
-   resources.cleartag"battle"
    for k,_ in pairs(set) do set[k] = nil end
    folder_left = Folder.new{}
    folder_right = Folder.new{}
@@ -38,12 +37,12 @@ return {
    exit = clear,
    start = function (set_name)
       local tform = depthdraw.tform
-      tform.xscale = _G.BATTLE.xscale
-      tform.yscale = _G.BATTLE.yscale
-      tform.xoff = _G.BATTLE.xoff
-      tform.yoff = _G.BATTLE.yoff
+      tform.xscale = BATTLE.xscale
+      tform.yscale = BATTLE.yscale
+      tform.xoff = BATTLE.xoff
+      tform.yoff = BATTLE.yoff
 
-      local new_set = dofile(_G.PATHS.sets .. set_name .. ".lua")
+      local new_set = dofile(PATHS.sets .. set_name .. ".lua")
       for k,v in pairs(new_set) do set[k] = v end
 
       if set.left_kind == "player" then
@@ -58,7 +57,7 @@ return {
       stage.start()
       ents.start()
 
-      bg = require(_G.PATHS.bg .. set.bg)
+      bg = require(PATHS.bg .. set.bg)
       set.bg_args = set.bg_args or {}
       bg.start(unpack(set.bg_args))
 

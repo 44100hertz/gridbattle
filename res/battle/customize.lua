@@ -1,12 +1,19 @@
-local rdr = _G.RDR
+local lg = love.graphics
 
 local scene = require "src/scene"
 local dialog = require "src/dialog"
 local text = require "src/text"
-local resources = require "src/resources"
 local chip_artist = require "battle/chip_artist"
 local set = require "battle/set"
 local chipdb = require(PATHS.chipdb)
+
+local img = lg.newImage(PATHS.battle .. "chips.png")
+local sheet = (require "src/quads").multi_sheet{
+   img = img,
+   bg = {0,0,120,160},
+   chipbg = {0,160,16,16,6},
+   letter = {0,176,16,8,5},
+   button = {0,184,16,16,3},}
 
 local two_player
 
@@ -58,10 +65,11 @@ function Side:update(input_list)
    end
 end
 function Side:draw()
-   local img = resources.getimage(PATHS.battle .. "chips.png", "battle")
    if not self.enable or self.hide then return end
-   rdr:setViewport{x=self.offset, y=0, w=GAME.width, h=GAME.width}
-   rdr:copy(img, {x=0, y=0, w=120, h=160}, {x=0, y=0, w=120, h=160})
+   lg.push()
+   lg.translate(self.offset, 0)
+
+   lg.draw(img, sheet.bg)
 
    -- Palette --
    for i=1,10 do
@@ -69,11 +77,11 @@ function Side:draw()
       local y = i<=5 and 104 or 128
       if self.pal[i] then
          chip_artist.draw_icon(self.pal[i].name, x, y)
-         local letter = self.pal[i].ltr:byte() - ("a"):byte()
-         rdr:copy(img, {x=letter*16, y=176, w=16, h=8}, {x=x, y=y+16, w=16, h=8})
+         local letter = self.pal[i].ltr:byte() - ("a"):byte() + 1
+         lg.draw(img, sheet.letter[letter], x, y+16)
       end
       if self.sel==i then
-         rdr:copy(img, {x=0, y=160, w=16, h=16}, {x=x, y=y, w=16, h=16})
+         lg.draw(img, sheet.chipbg[1], x, y)
       end
    end
 
@@ -87,10 +95,10 @@ function Side:draw()
    end
 
    -- GO button --
-   local button_sel = 0
-   if self.sel==0 then button_sel = 1 end
-   if self.ready then button_sel = 2 end
-   rdr:copy(img, {x=button_sel*16, y=184, w=16, h=16}, {x=96, y=112, w=16, h=16})
+   local button_sel = 1
+   if self.sel==0 then button_sel = 2 end
+   if self.ready then button_sel = 3 end
+   lg.draw(img, sheet.button[button_sel], 96, 112)
 
    -- Art --
    local sel = self.pal[self.sel]
@@ -100,7 +108,7 @@ function Side:draw()
       text.draw("flavor", tostring(damage), 8, 88)
    end
 
-   rdr:setViewport{x=0, y=0, w=GAME.width, h=GAME.height}
+   lg.pop()
 end
 
 local left,  right

@@ -1,10 +1,31 @@
-local rdr = _G.RDR
 local images = {}
-local resources = require "src/resources"
+local lg = love.graphics
+
+-- Chip graphics are fixed size at 256x256
+-- this enables quads to be computed once only
+local icon, art
+do
+   local w,h = 256,256
+   local quads = require "src/quads"
+   icon = quads.sheet(0,0,16,16,1,1,w,h)[1][1]
+   art = quads.sheet(0,16,64,72,4,1,w,h)[1]
+end
+
+local getimage = function (name)
+   if not images[name] then
+      local imgpath = PATHS.chips .. name .. ".png"
+      images[name] = lg.newImage(imgpath)
+   end
+   return images[name]
+end
+
+local clear = function ()
+   images = {}
+end
 
 local draw_icon = function (name, x, y)
-   local img = resources.getimage(_G.PATHS.chips .. name .. ".png", "battle")
-   rdr:copy(img, {x=0, y=0, w=16, h=16}, {x=x, y=y, w=16, h=16})
+   local img = getimage(name)
+   lg.draw(img, icon, x, y)
 end
 
 local draw_icon_queue = function (queue, x, y)
@@ -19,11 +40,12 @@ end
 
 local draw_art = function (name, x, y, index)
    index = index or 1
-   local img = resources.getimage(_G.PATHS.chips .. name .. ".png", "battle")
-   rdr:copy(img, {x=index*64, y=16, w=64, h=72}, {x=x, y=y, w=64, h=72})
+   local img = getimage(name)
+   lg.draw(img, art[index], x, y)
 end
 
 return {
+   clear = clear,
    draw_icon = draw_icon,
    draw_icon_queue = draw_icon_queue,
    draw_art = draw_art,

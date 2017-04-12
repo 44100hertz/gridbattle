@@ -7,11 +7,11 @@ local class = {
    tangible = true,
    size = 0.4,
    states = {
-      idle = {row = 0, anim = {0}, speed = 1000, iasa = 0},
-      shoot = {row = 2, anim = {0,1}, speed = 10, length = 2},
-      throw = {row = 3, anim = {0,1}, speed = 10, length = 2},
+      idle = {row = 1, anim = {1}, speed = 1000, iasa = 0},
+      shoot = {row = 3, anim = {1,2}, speed = 10, length = 2},
+      throw = {row = 4, anim = {1,2}, speed = 10, length = 2},
       move = {
-         row = 1, anim = {0,1}, speed = 3.5, length = 5, iasa = 3,
+         row = 2, anim = {1,2}, speed = 3.5, length = 5, iasa = 3,
          act = function (self)
             if not ai.is_panel_free(self.goalx, self.goaly, self.side) then
                self.enter_state = idle
@@ -29,14 +29,14 @@ return {
    variants = {
       player = {
          img = "ben",
-         w=50, h=60,
+         sheet = {0,0,50,60,2,6},
          ox = 24, oy = 54,
          hp = 300, hide_hp = true,
          act = function (self, input)
             if not input then return end
             input = self.side=="left" and input[1] or input[2]
 
-            self.selectchips = input.l or input.r
+            self.selectchips = input.l>0 or input.r>0
             local move = function  (dx, dy)
                local goalx, goaly = self.x+dx, self.y+dy
                if ai.is_panel_free(goalx, goaly, self.side) then
@@ -44,11 +44,14 @@ return {
                   self.enter_state = "move"
                end
             end
-            if input.a and input.a < 5  then chip.queue_use(self)
-            elseif input.du then move(0, -1)
-            elseif input.dd then move(0, 1)
-            elseif input.dl then move(-1, 0)
-            elseif input.dr then move(1, 0)
+            local lr = input.dr - input.dl
+            local ud = input.dd - input.du
+
+            if input.a > 0 and input.a < 5  then chip.queue_use(self)
+            elseif ud<0 then move(0, -1)
+            elseif ud>0 then move(0, 1)
+            elseif lr<0 then move(-1, 0)
+            elseif lr>0 then move(1, 0)
             end
          end,
       }

@@ -4,6 +4,3 @@
 [submodule "dist/luafilesystem"]
 	path = dist/luafilesystem
 	url = https://github.com/keplerproject/luafilesystem
-[submodule "lanp"]
-	path = lanp
-	url = https://github.com/hertz4/lanp

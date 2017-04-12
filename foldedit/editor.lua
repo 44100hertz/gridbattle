@@ -1,11 +1,15 @@
-local image = require "SDL.image"
-local rdr = _G.RDR
-
 local Folder = require "src/Folder"
 local text = require "src/text"
 local chipdb = require(PATHS.chipdb)
 
-local img = rdr:createTextureFromSurface(image.load(PATHS.foldedit .. "editor.png"))
+local lg = love.graphics
+
+local img = lg.newImage(PATHS.foldedit .. "editor.png")
+local sheet = (require "src/quads").multi_sheet{
+   img = img,
+   fg = {32,0,224,160},
+   icons = {0,0,16,16,2,7},
+}
 
 local pane_left = {}
 local pane_right = {}
@@ -71,7 +75,7 @@ return {
       input = input[1]
       -- Check input with repeat
       local repcheck = function (t)
-         return t and t % math.max(20-t, 6) == 1
+         return t % math.max(20-t, 6) == 1
       end
       local update_pane = function (pane)
          if #pane.folder.data==0 then return end
@@ -107,8 +111,7 @@ return {
    end,
 
    draw = function ()
-      rdr:setDrawColor(0x203030)
-      rdr:clear()
+      lg.clear(16,24,24)
 
       local draw_list = function (pane, x)
          if #pane.folder.data==0 then return end
@@ -126,13 +129,13 @@ return {
                end
             end
             -- Highlight selection
-
-            color = (i==pane.sel) and 0x78b008 or 0xffffff
+            if i == pane.sel then lg.setColor(120, 192, 128) end
 
             line = string.char(chipdb[v.name].elem) ..
                v.ltr:upper() .. " " .. v.name
-            text.draw("flavor", line, x, y, "left", color)
+            text.draw("flavor", line, x, y)
             text.draw("flavor", "\127" .. v.qty, x+78, y)
+            lg.setColor(255, 255, 255)
             ::continue::
             y = y + entry_height
             i = i + 1
@@ -141,23 +144,25 @@ return {
 
       draw_list(pane_left, 24)
       draw_list(pane_right, 136)
-      rdr:copy(img, {x=32, y=0, w=224, h=160}, {x=16, y=0, w=224, h=160})
+
+      lg.draw(img, sheet.fg, 16)
       text.draw("flavor", "Collection", 24, 8)
       local right_str = "Folder (" .. pane_right.folder:count() .. "/30" .. ")"
       text.draw("flavor", right_str, 136, 8)
 
       -- Selection rectangle around column
       local draw_col_sel = function (x)
-         rdr:setDrawColor(0x78b080)
-         rdr:drawRect{x=x+1, y=1, w=109, h=157}
+         lg.setColor(120, 192, 128)
+         lg.rectangle("line", x+1.5, 1.5, 109, 157)
+         lg.setColor(255, 255, 255)
       end
       if col==2 then draw_col_sel(16) end
       if col==3 then draw_col_sel(128) end
 
       -- Icons on left
-      for i,v in ipairs(col1) do
-         local is_sel = (col==1 and sel==i) and 16 or 0
-         rdr:copy(img, {x=is_sel, y=i*16-16, w=16, h=16}, {x=0, y=i*16, w=16, h=16})
+      for i,v in ipairs(sheet.icons) do
+         local is_sel = (col==1 and sel==i) and 2 or 1
+         lg.draw(img, v[is_sel], 0, i*16)
       end
    end,
 }
