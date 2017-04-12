@@ -1,12 +1,8 @@
-local lg = love.graphics
-
 local quads = require "src/quads"
-local depthdraw = require "src/depthdraw"
-local text = require "src/text"
 local stage = require "battle/stage"
-local actors = require "battle/actors"
-local chip_artist = require "battle/chip_artist"
 local set = require "battle/set"
+local proto_ent = require "battle/proto/ent"
+local depthdraw = require "src/depthdraw"
 
 local enemydb = require(PATHS.enemydb)
 local elements = require(PATHS.battle .. "elements")
@@ -56,11 +52,8 @@ local add = function (class_name, variant_name, ent)
       ent.anim = quads.sheet(unpack(ent.sheet))
    end
 
-   if ent.states then actors.start(ent) end
+   proto_ent.start(ent)
    if ent.start then ent:start() end
-   ent.time = 0
-   ent.z = ent.z or 0
-   if ent.max_hp then ent.hp = ent.max_hp end
 
    table.insert(ents, ent)
    return ent
@@ -76,16 +69,6 @@ local apply_damage = function (send, recv, amount)
       recv_elem = recv.elem
    end
    elements.interact(send.elem, recv_elem, amount, recv)
-end
-
-local kill = function (ent)
-   if ent.states and ent.states.die then
-      actors.kill(ent)
-   elseif ent.die then
-      ent:die()
-   else
-      ent.despawn = true
-   end
 end
 
 local results = {
@@ -114,7 +97,6 @@ end
 return {
    add = add,
    exit = clear,
-   kill = kill,
    apply_damage = apply_damage,
    get_ending = get_ending,
    ents = function () return ents end,
@@ -147,26 +129,9 @@ return {
    end,
 
    update = function (input)
-      for _,ent in ipairs(ents) do
-         if ent.states then actors.update(ent, input) end
-         if ent.update then ent:update(input) end
-
-         if ent.hp and ent.hp <= 0 or
-            ent.lifespan and ent.time == ent.lifespan
-         then
-            kill(ent)
-         end
-
-         if ent.dx then
-            ent.real_dx = ent.side=="right" and -ent.dx or ent.dx
-            ent.x = ent.x + ent.real_dx
-         end
-         if ent.dy then ent.y = ent.y + ent.dy end
-         if ent.dz then ent.z = ent.z + ent.dz end
-
-         ent.time = ent.time + 1
+      for i,ent in ipairs(ents) do
+         proto_ent.update(ent, input)
       end
-
       for i,ent in ipairs(ents) do
          if ent.despawn then table.remove(ents, i) end
       end
@@ -174,8 +139,8 @@ return {
       local collide = function (a, b)
          if a.damage and b.hp then apply_damage(a, b) end
          if b.damage and a.hp then apply_damage(b, a) end
-         if a.collide_die and b.tangible then kill(a) end
-         if b.collide_die and a.tangible then kill(b) end
+         if a.collide_die and b.tangible then proto_ent.kill(a) end
+         if b.collide_die and a.tangible then proto_ent.kill(b) end
          if a.collide then a:collide(b) end
          if b.collide then b:collide(a) end
       end
@@ -195,32 +160,8 @@ return {
 
    draw = function ()
       for _,ent in ipairs(ents) do
-         if ent.states then actors.update_draw(ent) end
-         local draw = function (raw_x, raw_y)
-            local flip = (ent.side=="right" and not ent.noflip)
-            local sx = flip and -1 or 1
-            local x = raw_x + (ent.ox and (flip and ent.ox or -ent.ox) or 0)
-            local y = raw_y - (ent.oy or 0)
-
-            if ent.frame then
-               local row = ent.state and ent.state.row or ent.row or 1
-               lg.draw(ent.image, ent.anim[row][ent.frame], x, y, 0, sx, 1)
-            elseif ent.image then
-               lg.draw(ent.image, x, y, 0, sx, 1)
-            end
-
-            if ent.draw then ent:draw(x, y) end
-
-            if ent.hp and not ent.hide_hp then
-               local hpstr = tostring(math.floor(ent.hp))
-               text.draw("hpnum", hpstr, raw_x, y-4, "center")
-            end
-
-            if ent.queue then
-               chip_artist.draw_icon_queue(ent.queue, raw_x, y-15)
-            end
-         end
-         depthdraw.add(draw, ent.x, ent.y, ent.z)
+         depthdraw.add(function (x,y) proto_ent.draw(ent,x,y) end,
+            ent.x, ent.y, ent.z)
       end
    end,
 }
