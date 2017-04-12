@@ -1,3 +1,4 @@
+love.filesystem.createDirectory(love.filesystem.getSaveDirectory())
 local path = love.filesystem.getSaveDirectory() .. "/settings.conf"
 
 local config = {
