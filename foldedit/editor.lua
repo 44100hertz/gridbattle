@@ -4,12 +4,8 @@ local chipdb = require(PATHS.chipdb)
 
 local lg = love.graphics
 
-local img = lg.newImage(PATHS.foldedit .. "editor.png")
 local sheet = (require "src/quads").multi_sheet{
-   img = img,
-   fg = {32,0,224,160},
-   icons = {0,0,16,16,2,7},
-}
+-- Load up "foldedit" image
 
 local pane_left = {}
 local pane_right = {}

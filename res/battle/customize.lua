@@ -7,14 +7,7 @@ local chip_artist = require "battle/chip_artist"
 local set = require "battle/set"
 local chipdb = require(PATHS.chipdb)
 
-local img = lg.newImage(PATHS.battle .. "chips.png")
-local sheet = (require "src/quads").multi_sheet{
-   img = img,
-   bg = {0,0,120,160},
-   chipbg = {0,160,16,16,6},
-   letter = {0,176,16,8,5},
-   button = {0,184,16,16,3},}
-
+-- load image: customize
 local two_player
 
 local Side = {}

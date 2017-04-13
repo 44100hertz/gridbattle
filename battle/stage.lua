@@ -1,12 +1,9 @@
-local lg = love.graphics
-local quads = require "src/quads"
 local depthdraw = require "src/depthdraw"
 local set = require "battle/set"
 
-local image = love.graphics.newImage(PATHS.battle .. "panels.png")
-local sheet = quads.sheet(0, 0, 40, 40, 2, 2,
-                          image:getWidth(), image:getHeight())
+local img = (require "src/Image"):new("stage")
 
+-- load stage.png
 local panels
 local numx, numy = 6, 3
 
@@ -58,8 +55,9 @@ return {
          for y = 1,numy do
             local row = x > set.stage.turf[y] and 1 or 2
             local col = panels[x][y].stat == "poison" and 2 or 1
-            local draw = function (sx, sy)
-               lg.draw(image, sheet[row][col], sx-BATTLE.xscale/2, sy-30)
+            local index = (col-1)*numy + numx
+            local draw = function (x, y)
+               img:draw(x, y, index)
             end
             depthdraw.add(draw, x, y, -20)
          end

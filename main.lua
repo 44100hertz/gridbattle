@@ -9,6 +9,7 @@ do
    local paths = {
       chipdb = "chipdb",
       enemydb = "enemydb",
+      imgdb = "imgdb",
       chips = "chips/",
       bg = "bg/",
       fonts = "fonts/",

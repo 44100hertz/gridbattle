@@ -1,5 +1,6 @@
 * Demo
-** TODO determine whether to focus on pvp or pve
+** DONE determine whether to focus on pvp or pve
+Focus on PvE!
 * Features
 ** TODO elements
 *** DONE give everything an element, show element in editor and battle
@@ -15,9 +16,7 @@ is actually a hella good idea.
 
 Make a battle/proto/ folder with prototypes for various actor kinds,
 which can use each other, of course.
-*** TODO interfaces/type system?
-It could be beneficial to have all actors implement an interface. This
-would be checked using tests, not at runtime.
+** TODO keep image data in sheets with image
 ** TODO use submodules for wad(s)
 This will enable me to use a private submodule for mainline game
 development.

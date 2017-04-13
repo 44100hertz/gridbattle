@@ -1,16 +1,6 @@
 local images = {}
 local lg = love.graphics
 
--- Chip graphics are fixed size at 256x256
--- this enables quads to be computed once only
-local icon, art
-do
-   local w,h = 256,256
-   local quads = require "src/quads"
-   icon = quads.sheet(0,0,16,16,1,1,w,h)[1][1]
-   art = quads.sheet(0,16,64,72,4,1,w,h)[1]
-end
-
 local getimage = function (name)
    if not images[name] then
       local imgpath = PATHS.chips .. name .. ".png"
