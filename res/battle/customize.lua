@@ -7,14 +7,7 @@ local chip_artist = require "battle/chip_artist"
 local set = require "battle/set"
 local chipdb = require(PATHS.chipdb)
 
-local img = lg.newImage(PATHS.battle .. "chips.png")
-local sheet = (require "src/quads").multi_sheet{
-   img = img,
-   bg = {0,0,120,160},
-   chipbg = {0,160,16,16,6},
-   letter = {0,176,16,8,5},
-   button = {0,184,16,16,3},}
-
+local img = (require"src/Image"):new("customize")
 local two_player
 
 local Side = {}
@@ -69,7 +62,7 @@ function Side:draw()
    lg.push()
    lg.translate(self.offset, 0)
 
-   lg.draw(img, sheet.bg)
+   img:draw(0,0)
 
    -- Palette --
    for i=1,10 do
@@ -78,10 +71,10 @@ function Side:draw()
       if self.pal[i] then
          chip_artist.draw_icon(self.pal[i].name, x, y)
          local letter = self.pal[i].ltr:byte() - ("a"):byte() + 1
-         lg.draw(img, sheet.letter[letter], x, y+16)
+--         lg.draw(img, sheet.letter[letter], x, y+16)
       end
       if self.sel==i then
-         lg.draw(img, sheet.chipbg[1], x, y)
+--         lg.draw(img, sheet.chipbg[1], x, y)
       end
    end
 
@@ -98,7 +91,7 @@ function Side:draw()
    local button_sel = 1
    if self.sel==0 then button_sel = 2 end
    if self.ready then button_sel = 3 end
-   lg.draw(img, sheet.button[button_sel], 96, 112)
+--   lg.draw(img, shee.button[button_sel], 96, 112)
 
    -- Art --
    local sel = self.pal[self.sel]

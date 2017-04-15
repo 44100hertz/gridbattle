@@ -1,6 +1,6 @@
 local lg = love.graphics
 
-local quads = require "src/quads"
+local img = (require "src/Image").new("battle_ui")
 local depthdraw = require "src/depthdraw"
 local data
 local tileset

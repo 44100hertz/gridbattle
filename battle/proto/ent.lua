@@ -43,29 +43,22 @@ return {
       self.time = self.time + 1
    end,
 
-   draw = function (self, raw_x, raw_y)
-      if self.states then actors.update_draw(self) end
+   draw = function (self, x, y)
       local flip = (self.side=="right" and not self.noflip)
-      local sx = flip and -1 or 1
-      local x = raw_x + (self.ox and (flip and self.ox or -self.ox) or 0)
-      local y = raw_y - (self.oy or 0)
 
-      if self.frame then
-         local row = self.state and self.state.row or self.row or 1
-         lg.draw(self.image, self.anim[row][self.frame], x, y, 0, sx, 1)
-      elseif self.image then
-         lg.draw(self.image, x, y, 0, sx, 1)
+      if self.image then
+         self.image:draw(x, y, flip)
       end
 
       if self.draw then self:draw(x, y) end
 
       if self.hp and not self.hide_hp then
          local hpstr = tostring(math.floor(self.hp))
-         text.draw("hpnum", hpstr, raw_x, y-4, "center")
+         text.draw("hpnum", hpstr, x, y-4, "center")
       end
 
       if self.queue then
-         chip_artist.draw_icon_queue(self.queue, raw_x, y-15)
+         chip_artist.draw_icon_queue(self.queue, x, y-15)
       end
    end,
 }

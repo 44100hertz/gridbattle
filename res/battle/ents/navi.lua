@@ -7,20 +7,14 @@ local class = {
    tangible = true,
    size = 0.4,
    states = {
-      idle = {row = 1, anim = {1}, speed = 1000, iasa = 0},
-      shoot = {row = 3, anim = {1,2}, speed = 10, length = 2},
-      throw = {row = 4, anim = {1,2}, speed = 10, length = 2},
-      move = {
-         row = 2, anim = {1,2}, speed = 3.5, length = 5, iasa = 3,
-         act = function (self)
-            if not ai.is_panel_free(self.goalx, self.goaly, self.side) then
-               self.enter_state = idle
-            end
-            if self.time == 5 then
-               self.x, self.y = self.goalx, self.goaly
-            end
-         end,
-      },
+      move = function (self)
+         if not ai.is_panel_free(self.goalx, self.goaly, self.side) then
+            self.enter_state = idle
+         end
+         if self.time == 5 then
+            self.x, self.y = self.goalx, self.goaly
+         end
+      end,
    },
 }
 
@@ -29,8 +23,6 @@ return {
    variants = {
       player = {
          img = "ben",
-         sheet = {0,0,50,60,2,6},
-         ox = 24, oy = 54,
          hp = 300, hide_hp = true,
          act = function (self, input)
             if not input then return end

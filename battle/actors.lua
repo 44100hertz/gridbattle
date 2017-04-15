@@ -30,12 +30,6 @@ return {
       end
    end,
 
-   update_draw = function (actor)
-      local frameindex =
-         math.floor(actor.time / actor.state.speed) % #actor.state.anim
-      actor.frame = actor.state.anim[frameindex + 1]
-   end,
-
    kill = function (actor)
       enter_state(actor, "die")
    end,

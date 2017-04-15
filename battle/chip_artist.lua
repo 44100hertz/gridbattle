@@ -6,9 +6,8 @@ local lg = love.graphics
 local icon, art
 do
    local w,h = 256,256
-   local quads = require "src/quads"
-   icon = quads.sheet(0,0,16,16,1,1,w,h)[1][1]
-   art = quads.sheet(0,16,64,72,4,1,w,h)[1]
+   icon = lg.newQuad(0,0,16,16,w,h)
+   art = lg.newQuad(0,16,64,72,w,h)
 end
 
 local getimage = function (name)
@@ -41,7 +40,7 @@ end
 local draw_art = function (name, x, y, index)
    index = index or 1
    local img = getimage(name)
-   lg.draw(img, art[index], x, y)
+   lg.draw(img, art, x, y)
 end
 
 return {

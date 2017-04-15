@@ -1,13 +1,8 @@
 local text = require "src/text"
 
-local img = love.graphics.newImage(PATHS.battle .. "ui.png")
-local sb = love.graphics.newSpriteBatch(img, 40, "stream")
-local sheet = {}
-do
-   local quads = require "src/quads"
-   local w,h = img:getDimensions()
-   sheet.bar = quads.sheet(0,0,8,8,3,1,w,h)[1]
-end
+-- image battle_ui
+
+local img = (require"src/Image"):new("battle_ui")
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
 local gamewidth = GAME.width
@@ -52,17 +47,18 @@ return {
       love.graphics.rectangle("fill", bar_x+1, bar_y, bar_size, 8)
       love.graphics.setColor(255, 255, 255)
 
-      sb:clear()
       local x,y = bar_x, bar_y
       local segs = bar_width/8 - 2
-      sb:add(sheet.bar[1], x, y)
+      img:draw(x, y)
+--      img:draw("bar", x, y)
       for _=1,segs do
          x = x + 8
-         sb:add(sheet.bar[2], x, y)
+         img:draw(x, y)
+--         img:draw("bar", x, y)
       end
       x = x + 8
-      sb:add(sheet.bar[3], x, y)
-      love.graphics.draw(sb)
+      img:draw(x, y)
+--      img:draw("bar", x, y)
 
       local draw_queue_top = function (queue, x)
          if queue and #queue > 0 then

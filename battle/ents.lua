@@ -1,4 +1,3 @@
-local quads = require "src/quads"
 local stage = require "battle/stage"
 local set = require "battle/set"
 local proto_ent = require "battle/proto/ent"
@@ -41,15 +40,9 @@ local add = function (class_name, variant_name, ent)
       setmetatable(ent, class.class)
    end
 
-   local img
-   if type(ent.img)=="string" then
-      img = getimage(ent.img)
-      ent.image = img
-   end
-   if ent.sheet then
-      ent.sheet[7] = img:getWidth()
-      ent.sheet[8] = img:getHeight()
-      ent.anim = quads.sheet(unpack(ent.sheet))
+   if ent.img then
+      ent.image = (require "src/Image"):new(ent.img)
+      ent.img = nil
    end
 
    proto_ent.start(ent)
