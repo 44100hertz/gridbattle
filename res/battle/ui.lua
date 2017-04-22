@@ -1,8 +1,6 @@
 local text = require "src/text"
 
--- image battle_ui
-
-local img = (require"src/Image"):new("battle_ui")
+local img = (require"src/Image").new"battle_ui"
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
 local gamewidth = GAME.width
@@ -49,16 +47,14 @@ return {
 
       local x,y = bar_x, bar_y
       local segs = bar_width/8 - 2
+      img:set_sheet("bar")
       img:draw(x, y)
---      img:draw("bar", x, y)
       for _=1,segs do
          x = x + 8
          img:draw(x, y)
---         img:draw("bar", x, y)
       end
       x = x + 8
       img:draw(x, y)
---      img:draw("bar", x, y)
 
       local draw_queue_top = function (queue, x)
          if queue and #queue > 0 then

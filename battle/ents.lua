@@ -2,6 +2,7 @@ local stage = require "battle/stage"
 local set = require "battle/set"
 local proto_ent = require "battle/proto/ent"
 local depthdraw = require "src/depthdraw"
+local Image = require "src/Image"
 
 local enemydb = require(PATHS.enemydb)
 local elements = require(PATHS.battle .. "elements")
@@ -12,14 +13,6 @@ local clear = function ()
    images = {}
 end
 clear()
-
-local getimage = function (img)
-   if not images[img] then
-      local imgpath = PATHS.battle .. "ents/" .. img .. ".png"
-      images[img] = love.graphics.newImage(imgpath)
-   end
-   return images[img]
-end
 
 local add = function (class_name, variant_name, ent)
    ent = ent or {}
