@@ -9,7 +9,7 @@ local class = {
    states = {
       move = function (self)
          if not ai.is_panel_free(self.goalx, self.goaly, self.side) then
-            self.enter_state = idle
+            self.enter_state = base
          end
          if self.time == 5 then
             self.x, self.y = self.goalx, self.goaly

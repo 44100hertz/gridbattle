@@ -4,8 +4,7 @@ local chipdb = require(PATHS.chipdb)
 
 local lg = love.graphics
 
-local sheet = (require "src/quads").multi_sheet{
--- Load up "foldedit" image
+local img = (require "src/Image").new"foldedit"
 
 local pane_left = {}
 local pane_right = {}
@@ -141,7 +140,8 @@ return {
       draw_list(pane_left, 24)
       draw_list(pane_right, 136)
 
-      lg.draw(img, sheet.fg, 16)
+      img:set_sheet"fg"
+      img:draw(16, 0)
       text.draw("flavor", "Collection", 24, 8)
       local right_str = "Folder (" .. pane_right.folder:count() .. "/30" .. ")"
       text.draw("flavor", right_str, 136, 8)
@@ -156,9 +156,10 @@ return {
       if col==3 then draw_col_sel(128) end
 
       -- Icons on left
-      for i,v in ipairs(sheet.icons) do
+      img:set_sheet"icons"
+      for i = 1,#col1 do
          local is_sel = (col==1 and sel==i) and 2 or 1
-         lg.draw(img, v[is_sel], 0, i*16)
+         img:draw(0, i*16, nil, (i-1)*2 + is_sel)
       end
    end,
 }

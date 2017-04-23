@@ -37,7 +37,7 @@ return {
    testenemy = {base = {ox=22, oy=50}},
    testenemy2 = {base = {ox=22, oy=50}},
    ben = {
-      base  = {anim = false},
+      base  = {w=50, h=60, ox=24, oy=54, anim = false},
       move  = {y=60,  w=50, h=60, ox=24, oy=54, numx=2,
                speed=3.5, len=5, iasa=3, anim={1,2}},
       shoot = {y=120, w=50, h=60, ox=24, oy=54, numx=2,
