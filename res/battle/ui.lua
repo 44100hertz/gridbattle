@@ -47,6 +47,7 @@ return {
 
       local x,y = bar_x, bar_y
       local segs = bar_width/8 - 2
+
       img:set_sheet("bar")
       img:draw(x, y)
       for _=1,segs do

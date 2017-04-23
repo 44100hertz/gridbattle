@@ -7,7 +7,7 @@ local chip_artist = require "battle/chip_artist"
 local set = require "battle/set"
 local chipdb = require(PATHS.chipdb)
 
-local img = (require"src/Image"):new("customize")
+local img = (require"src/Image"):new"customize"
 local two_player
 
 local Side = {}
@@ -62,6 +62,7 @@ function Side:draw()
    lg.push()
    lg.translate(self.offset, 0)
 
+   img:set_sheet"bg"
    img:draw(0,0)
 
    -- Palette --
@@ -71,10 +72,12 @@ function Side:draw()
       if self.pal[i] then
          chip_artist.draw_icon(self.pal[i].name, x, y)
          local letter = self.pal[i].ltr:byte() - ("a"):byte() + 1
---         lg.draw(img, sheet.letter[letter], x, y+16)
+         img:set_sheet"letter"
+         img:draw(x, y, nil, letter)
       end
       if self.sel==i then
---         lg.draw(img, sheet.chipbg[1], x, y)
+         img:set_sheet"chipbg"
+         img:draw(x, y)
       end
    end
 
@@ -91,7 +94,8 @@ function Side:draw()
    local button_sel = 1
    if self.sel==0 then button_sel = 2 end
    if self.ready then button_sel = 3 end
---   lg.draw(img, shee.button[button_sel], 96, 112)
+   img:set_sheet"button"
+   img:draw(96, 112, nil, button_sel)
 
    -- Art --
    local sel = self.pal[self.sel]

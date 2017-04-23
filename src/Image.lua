@@ -7,12 +7,12 @@ Image.__index = Image
 function Image:draw(x, y, flip, frame)
    if not frame then
       local dt = love.timer.getTime() - self.start_time
-      local frames_passed = dt * (self.current.fps % #self.current.anim)
+      local frames_passed = dt * ((self.current.fps-1) % #self.current.anim)+1
       frame = self.current.anim[frames_passed]
    end
    x = flip and x - self.iw or x
    sx = flip and -1 or 1
-   local quad = self.current.quads[frame] or self.current.quads[1]
+   local quad = self.current.quads[frame]
    love.graphics.draw(self.img, quad, x-self.current.ox, y-self.current.oy)
 end
 
