@@ -25,7 +25,7 @@ return {
    },
 
    -- Battle -------------------------------------
-   panels = {base = {x=0, y=0, w=40, h=40, numx=2, numy=2}},
+   panels = {base = {x=0, y=0, w=40, h=40, ox=20, oy=28, numx=2, numy=2}},
    battle_ui = {
       bar = {w=8, h=8, numx=3},
    },

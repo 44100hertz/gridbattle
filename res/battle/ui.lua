@@ -49,13 +49,13 @@ return {
       local segs = bar_width/8 - 2
 
       img:set_sheet("bar")
-      img:draw(x, y)
+      img:draw(x, y, nil, 1)
       for _=1,segs do
          x = x + 8
-         img:draw(x, y)
+         img:draw(x, y, nil, 2)
       end
       x = x + 8
-      img:draw(x, y)
+      img:draw(x, y, nil, 3)
 
       local draw_queue_top = function (queue, x)
          if queue and #queue > 0 then

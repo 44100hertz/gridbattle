@@ -73,7 +73,7 @@ function Side:draw()
          chip_artist.draw_icon(self.pal[i].name, x, y)
          local letter = self.pal[i].ltr:byte() - ("a"):byte() + 1
          img:set_sheet"letter"
-         img:draw(x, y, nil, letter)
+         img:draw(x, y+16, nil, letter)
       end
       if self.sel==i then
          img:set_sheet"chipbg"

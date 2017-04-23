@@ -7,13 +7,16 @@ Image.__index = Image
 function Image:draw(x, y, flip, frame)
    if not frame then
       local dt = love.timer.getTime() - self.start_time
-      local frames_passed = dt * ((self.current.fps-1) % #self.current.anim)+1
-      frame = self.current.anim[frames_passed]
+      local elapsed = 1 + (dt * (self.current.fps) - 1) % #self.current.anim
+      frame = self.current.anim[elapsed]
    end
+
    x = flip and x - self.iw or x
-   sx = flip and -1 or 1
+   local sx = flip and -1 or 1
    local quad = self.current.quads[frame]
-   love.graphics.draw(self.img, quad, x-self.current.ox, y-self.current.oy)
+   love.graphics.draw(self.img, quad,
+                      x-self.current.ox, y-self.current.oy,
+                      0, sx, 1)
 end
 
 function Image:set_sheet(name)
@@ -40,15 +43,14 @@ local function make_quads(root_x, y, w, h, numx, numy, iw, ih)
 
    local quads = {}
    local index = 1
-   for _ = 1,numx do
+   for _ = 1,numy do
       local x = root_x
-      for _ = 1,numy do
+      for _ = 1,numx do
          quads[index] = love.graphics.newQuad(x, y, w, h, iw, ih)
          x = x + w
          index = index + 1
       end
       y = y + h
-      index = index + 1
    end
    return quads
 end
@@ -64,15 +66,20 @@ function Image.new(path, sheet_name)
 
    assert(imgdb[sheet_name], "That's the wrong sheet: " .. sheet_name)
 
+   self.name = sheet_name
    self.sheets = {}
    for k,v in pairs(imgdb[sheet_name]) do
       self.sheets[k] = v
       local sheet = self.sheets[k]
-      sheet.quads = make_quads(v.x, v.y, w, h, numx, numy, self.iw, self.ih)
+      sheet.quads = make_quads(
+         v.x, v.y, v.w, v.h,
+         v.numx, v.numy, self.iw, self.ih
+      )
       sheet.ox = sheet.ox or 0
       sheet.oy = sheet.oy or 0
       sheet.fps = sheet.fps or 0
       sheet.anim = sheet.anim or {1}
+      sheet.name = k
    end
 
    if self.sheets.base then self:set_sheet("base") end

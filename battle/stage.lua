@@ -1,7 +1,7 @@
 local depthdraw = require "src/depthdraw"
 local set = require "battle/set"
 
-local img = (require "src/Image").new "panels"
+local img = (require "src/Image").new"panels"
 
 -- load stage.png
 local panels
@@ -56,7 +56,7 @@ return {
          for y = 1,numy do
             local row = x > set.stage.turf[y] and 1 or 2
             local col = panels[x][y].stat == "poison" and 2 or 1
-            local index = (col-1)*numx + col
+            local index = (row-1)*2 + col
             local draw = function (x, y)
                img:draw(x, y, nil, index)
             end
