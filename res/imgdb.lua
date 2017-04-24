@@ -30,7 +30,7 @@ return {
       bar = {w=8, h=8, numx=3},
    },
    -- Chips --------------------------------------
-   bullet = {base = {w=16, h=16, numx=6, anim={1,2,3,4,5,6}}},
+   bullet = {base = {w=16, h=16, numx=6, anim={1,2,3,4,5,6}, fps=20}},
    boots = {base = {x=0, y=0, w=24, h=16, numx=2}},
 
    -- Actors -------------------------------------
@@ -38,12 +38,12 @@ return {
    testenemy2 = {base = {ox=22, oy=50}},
    ben = {
       base  = {w=50, h=60, ox=24, oy=54, anim = false},
-      move  = {y=60,  w=50, h=60, ox=24, oy=54, numx=2,
-               speed=3.5, len=5, iasa=3, anim={1,2}},
-      shoot = {y=120, w=50, h=60, ox=24, oy=54, numx=2,
-               speed=3.5, len=5, iasa=3, anim={1,2}},
-      throw = {y=180, w=50, h=60, ox=24, oy=54, numx=2,
-               speed=3.5, len=5, iasa=3, anim={1,2}},
+      move  = {y=60,  w=50, h=60, ox=24, oy=54, fps=20, numx=2,
+               len=3, iasa=3, anim={1,2}},
+      shoot = {y=120, w=50, h=60, ox=24, oy=54, fps=20, numx=2,
+               len=5, iasa=3, anim={1,2}},
+      throw = {y=180, w=50, h=60, ox=24, oy=54, fps=20, numx=2,
+               len=5, iasa=3, anim={1,2}},
    },
    tvgirl = {
       base  = {y=0,    w=32, h=48, numx=1},

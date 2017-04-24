@@ -7,16 +7,14 @@ Image.__index = Image
 function Image:draw(x, y, flip, frame)
    if not frame then
       local dt = love.timer.getTime() - self.start_time
-      local elapsed = 1 + (dt * (self.current.fps) - 1) % #self.current.anim
+      local elapsed = 1 + math.floor(dt * (self.current.fps) - 1) % #self.current.anim
       frame = self.current.anim[elapsed]
    end
 
    x = flip and x - self.iw or x
    local sx = flip and -1 or 1
    local quad = self.current.quads[frame]
-   love.graphics.draw(self.img, quad,
-                      x-self.current.ox, y-self.current.oy,
-                      0, sx, 1)
+   love.graphics.draw(self.img, quad, x-self.current.ox, y-self.current.oy, 0, sx, 1)
 end
 
 function Image:set_sheet(name)
@@ -26,10 +24,16 @@ end
 
 function Image:get_interruptible()
    if not self.current.fps then return true end
+
+   local dt = love.timer.getTime() - self.start_time
+   return dt * self.current.fps >= self.current.iasa
 end
 
 function Image:get_over()
    if not self.current.fps then return false end
+
+   local dt = love.timer.getTime() - self.start_time
+   return dt * self.current.fps >= self.current.len
 end
 
 -- Read animation data and generate quads
@@ -79,6 +83,8 @@ function Image.new(path, sheet_name)
       sheet.oy = sheet.oy or 0
       sheet.fps = sheet.fps or 0
       sheet.anim = sheet.anim or {1}
+      sheet.iasa = sheet.iasa or 0
+      sheet.len = sheet.len or #sheet.anim
       sheet.name = k
    end
 
