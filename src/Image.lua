@@ -11,10 +11,11 @@ function Image:draw(x, y, flip, frame)
       frame = self.current.anim[elapsed]
    end
 
-   x = flip and x - self.iw or x
+   x = flip and x + self.current.ox or x - self.current.ox
+   y = y - self.current.oy
    local sx = flip and -1 or 1
    local quad = self.current.quads[frame]
-   love.graphics.draw(self.img, quad, x-self.current.ox, y-self.current.oy, 0, sx, 1)
+   love.graphics.draw(self.img, quad, x, y, 0, sx, 1)
 end
 
 function Image:set_sheet(name)
