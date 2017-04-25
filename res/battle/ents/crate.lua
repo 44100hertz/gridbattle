@@ -22,7 +22,7 @@ return {
                self.tangible = true
                self.size = 20/64
             elseif tenant then
-               ents.apply_damage(self, tenant, 40)
+               ents.apply_damage(self, tenant, self.conflict_damage)
                self.despawn = true
             else
                self.despawn = true
@@ -36,7 +36,6 @@ return {
    variants = {
       wheeled = {
          img="wheel_crate",
-         ox=17, oy=35,
          damage = 4,
          conflict_damage = 40,
          collide = function (self, with)

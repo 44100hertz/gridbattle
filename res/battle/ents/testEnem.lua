@@ -5,7 +5,6 @@ local chip = require "battle/chip_wrangler"
 local class = {
    tangible = true,
    size=20/64,
-   ox = 22, oy = 50,
    noflip = true,
    die = function (self)
       self.despawn = true
