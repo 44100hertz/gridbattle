@@ -30,8 +30,9 @@ return {
       bar = {w=8, h=8, numx=3},
    },
    -- Chips --------------------------------------
-   bullet = {base = {w=16, h=16, numx=6, anim={1,2,3,4,5,6}, fps=20}},
+   bullet = {base = {ox=8, oy=8, w=16, h=16, numx=6, anim={1,2,3,4,5,6}, fps=20}},
    boots = {base = {x=0, y=0, w=24, h=16, numx=2}},
+   wheel_crate = {base = {ox=17, oy=45}},
 
    -- Actors -------------------------------------
    testenemy = {base = {ox=22, oy=50}},
