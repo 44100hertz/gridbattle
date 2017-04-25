@@ -84,9 +84,6 @@ function Image.new(path, sheet_name)
          v.x, v.y, v.w, v.h,
          v.numx, v.numy, self.iw, self.ih
       )
-      if not sheet.ox then
-         print("warning: no origin data found: ", sheet_name, k)
-      end
       sheet.ox = sheet.ox or 0
       sheet.oy = sheet.oy or 0
       sheet.fps = sheet.fps or 0
