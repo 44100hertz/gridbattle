@@ -14,7 +14,7 @@ return {
          damage = 80,
          lifespan = 60,
          dx = 0.01,
-         z = 40,
+         z = 32,
          update = function (self)
             self.dx = self.dx * 1.1
          end,
