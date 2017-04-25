@@ -68,17 +68,24 @@ function Image.new(path, sheet_name)
    self.img = love.graphics.newImage(imgpath .. sheet_name .. ".png")
    self.iw, self.ih = self.img:getDimensions()
 
-   assert(imgdb[sheet_name], "That's the wrong sheet: " .. sheet_name)
+   local sheetdata = imgdb[sheet_name]
+   if not sheetdata then
+      print("warning: sheet not found: ", sheet_name)
+      sheetdata = {base={}}
+   end
 
    self.name = sheet_name
    self.sheets = {}
-   for k,v in pairs(imgdb[sheet_name]) do
+   for k,v in pairs(sheetdata) do
       self.sheets[k] = v
       local sheet = self.sheets[k]
       sheet.quads = make_quads(
          v.x, v.y, v.w, v.h,
          v.numx, v.numy, self.iw, self.ih
       )
+      if not sheet.ox then
+         print("warning: no origin data found: ", sheet_name, k)
+      end
       sheet.ox = sheet.ox or 0
       sheet.oy = sheet.oy or 0
       sheet.fps = sheet.fps or 0
