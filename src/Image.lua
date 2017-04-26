@@ -24,17 +24,17 @@ function Image:set_sheet(name)
 end
 
 function Image:get_interruptible()
-   if not self.current.fps then return true end
+   if self.current.fps==0 then return true end
 
    local dt = love.timer.getTime() - self.start_time
-   return dt * self.current.fps >= self.current.iasa
+   return math.floor(dt * self.current.fps) > self.current.iasa
 end
 
 function Image:get_over()
-   if not self.current.fps then return false end
+   if self.current.fps==0 then return false end
 
    local dt = love.timer.getTime() - self.start_time
-   return dt * self.current.fps >= self.current.len
+   return math.floor(dt * self.current.fps) > self.current.len
 end
 
 -- Read animation data and generate quads
@@ -88,8 +88,8 @@ function Image.new(path, sheet_name)
       sheet.oy = sheet.oy or 0
       sheet.fps = sheet.fps or 0
       sheet.anim = sheet.anim or {1}
-      sheet.iasa = sheet.iasa or 0
       sheet.len = sheet.len or #sheet.anim
+      sheet.iasa = sheet.iasa or sheet.len
       sheet.name = k
    end
 
