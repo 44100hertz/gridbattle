@@ -7,7 +7,7 @@ Image.__index = Image
 function Image:draw(x, y, flip, frame)
    if not frame then
       local dt = love.timer.getTime() - self.start_time
-      local elapsed = 1 + math.floor(dt * (self.current.fps) - 1) % #self.current.anim
+      local elapsed = 1 + math.ceil(dt * (self.current.fps) - 1) % #self.current.anim
       frame = self.current.anim[elapsed]
    end
 
@@ -27,14 +27,14 @@ function Image:get_interruptible()
    if self.current.fps==0 then return true end
 
    local dt = love.timer.getTime() - self.start_time
-   return math.floor(dt * self.current.fps) > self.current.iasa
+   return math.floor(dt * self.current.fps) >= self.current.iasa
 end
 
 function Image:get_over()
    if self.current.fps==0 then return false end
 
    local dt = love.timer.getTime() - self.start_time
-   return math.floor(dt * self.current.fps) > self.current.len
+   return math.floor(dt * self.current.fps) >= self.current.len
 end
 
 -- Read animation data and generate quads
