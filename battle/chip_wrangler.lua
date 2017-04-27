@@ -5,7 +5,7 @@ local use = function (actor, chip_name)
    local chip = chipdb[chip_name]
    local added = ents.add(
       chip.class, chip.variant,
-      {x=actor.x, y=actor.y, parent=actor})
+      {x=actor.x, y=actor.y, parent=actor, delay=8})
    added.side = added.side or actor.side
 end
 
