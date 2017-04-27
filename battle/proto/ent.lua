@@ -54,11 +54,11 @@ return {
 
       if self.hp and not self.hide_hp then
          local hpstr = tostring(math.floor(self.hp))
-         text.draw("hpnum", hpstr, x, y-4, "center")
+         text.draw("hpnum", hpstr, x, y-40, "center")
       end
 
       if self.queue then
-         chip_artist.draw_icon_queue(self.queue, x, y-15)
+         chip_artist.draw_icon_queue(self.queue, x, y-60)
       end
    end,
 }
