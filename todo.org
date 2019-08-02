@@ -1,3 +1,18 @@
+* Great Big Refactor
+** Resource Management
+*** Paths
+So, the resources are all under one path, RES_PATH. This doesn't bode well for
+resource packs.
+*** Packs
+Design resources to be done in multiple 'packs' with simple dependencies.
+*** img/ folder
+Please move everything out of img/ and into a folder with everything else.
+This also means, refactor uses of the Image class.
+** unlocalizing / classes
+Make way less stuff local and way more stuff part of the parent. The goal is to
+allow multiple instances of anything, implement RAII.
+** bigass return { ... }
+Turn these all into x = {}; x.y = z; return x. Every one of them.
 * Demo
 ** DONE determine whether to focus on pvp or pve
 Focus on PvE!
