@@ -118,19 +118,19 @@ return {
             if not v then
                if #pane.folder.data>7 then
                   v = pane.folder.data[(i-1) % #pane.folder.data+1]
-                  lg.setColor(136,144,136)
+                  lg.setColor(136/255.0,144/255.0,136/255.0)
                else
                   goto continue
                end
             end
             -- Highlight selection
-            if i == pane.sel then lg.setColor(120, 192, 128) end
+            if i == pane.sel then lg.setColor(120/255.0, 192/255.0, 128/255.0) end
 
             line = string.char(chipdb[v.name].elem) ..
                v.ltr:upper() .. " " .. v.name
             text.draw("flavor", line, x, y)
             text.draw("flavor", "\127" .. v.qty, x+78, y)
-            lg.setColor(255, 255, 255)
+            lg.setColor(1.0, 1.0, 1.0)
             ::continue::
             y = y + entry_height
             i = i + 1
@@ -148,9 +148,9 @@ return {
 
       -- Selection rectangle around column
       local draw_col_sel = function (x)
-         lg.setColor(120, 192, 128)
+         lg.setColor(120/255.0, 192/255.0, 128/255.0)
          lg.rectangle("line", x+1.5, 1.5, 109, 157)
-         lg.setColor(255, 255, 255)
+         lg.setColor(1.0, 1.0, 1.0)
       end
       if col==2 then draw_col_sel(16) end
       if col==3 then draw_col_sel(128) end

@@ -36,12 +36,12 @@ return {
 
       local red = 40
       if cust_amount >= 1 then
-         red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100
+         red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100/256.0
       end
 
       -- Status bar
       local bar_y = 2
-      love.graphics.setColor(red, 40, 40)
+      love.graphics.setColor(red, 40/256.0, 40/256.0)
       love.graphics.rectangle("fill", bar_x+1, bar_y, bar_size, 8)
       love.graphics.setColor(255, 255, 255)
 

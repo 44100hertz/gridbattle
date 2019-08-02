@@ -55,9 +55,9 @@ function Menu:draw ()
       end
 
       if self.sel==i then
-         lg.setColor(255, 100, 100)
+         lg.setColor(1.0, 100/256.0, 100/256.0)
          drawtext()
-         lg.setColor(255, 255, 255)
+         lg.setColor(1.0, 1.0, 1.0)
       else
          drawtext()
       end

@@ -8,7 +8,7 @@ local draw_box = function (font, text, x, y, color, border)
 
    love.graphics.setColor(unpack(color))
    love.graphics.rectangle("fill", x-border, y-border, w+2*border, h+2*border)
-   love.graphics.setColor(255, 255, 255)
+   love.graphics.setColor(1.0, 1.0, 1.0)
    src_text.draw(font, text, x, y)
 end
 
