@@ -38,7 +38,7 @@ function Image:get_over()
 end
 
 -- Read animation data and generate quads
-local function make_quads(root_x, y, w, h, numx, numy, iw, ih)
+function Image.make_quads(root_x, y, w, h, numx, numy, iw, ih)
    root_x = root_x or 0
    y = y or 0
    w = w or iw
@@ -62,7 +62,7 @@ end
 
 -- path is not optional, sheet_name is just for when many images share a sheet
 function Image.new(path, sheet_name)
-   self = {}
+   local self = {}
    setmetatable(self, Image)
 
    sheet_name = sheet_name or path
@@ -80,7 +80,7 @@ function Image.new(path, sheet_name)
    for k,v in pairs(sheetdata) do
       self.sheets[k] = v
       local sheet = self.sheets[k]
-      sheet.quads = make_quads(
+      sheet.quads = Image.make_quads(
          v.x, v.y, v.w, v.h,
          v.numx, v.numy, self.iw, self.ih
       )

@@ -26,14 +26,12 @@ return {
       data = new_data
       local set = data.tilesets[1]
       tileset = {}
-      tileset.sheet = make_1d(
-         quads.sheet(
+      tileset.sheet = Image.make_quads(
             0, 0, set.tilewidth, set.tileheight,
             math.floor(set.imagewidth / set.tilewidth),
             math.floor(set.imageheight / set.tileheight),
             set.imagewidth, set.imageheight
          )
-      )
       tileset.img = lg.newImage("res/world/testmap/map.png")
    end,
 
