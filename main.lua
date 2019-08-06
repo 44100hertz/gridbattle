@@ -39,8 +39,9 @@ local input = require "src/input"
 local time = 0
 config.load()
 lg.setDefaultFilter("nearest", "nearest")
-local canvas = lg.newCanvas(GAME.width, GAME.height)
 GAME.tickperiod = (1/GAME.tickrate)
+
+local dump_canvas
 
 local poll = function ()
    love.event.pump()
@@ -54,25 +55,9 @@ local poll = function ()
    end
 end
 
-love.update = scene.update
-love.draw = function ()
-   --lg.setBlendMode("alpha", "alphamultiply")
-   canvas:renderTo(scene.draw)
-
-   --lg.setBlendMode("replace", "premultiplied")
-   lg.draw( canvas, 0,0,0, config.c.gamescale )
-   lg.print(math.floor(collectgarbage("count")))
-   lg.present()
-
-   if outdir then
-      time = time + 1
-      local imgdata = canvas:newImageData()
-      imgdata:encode("tga", outdir .. "/" .. time .. ".tga")
-   end
-end
-
 love.run = function ()
    if arg[3] == "dump" then
+      dump_canvas = lg.newCanvas(240, 160)
       outdir = "out/" .. os.time()
       love.filesystem.createDirectory(outdir)
    end
@@ -83,10 +68,26 @@ love.run = function ()
 
    while true do
       if poll() then return end
-      love.update()
+      scene.update()
       while(lt.getTime() < next_tick) do
          love.draw(lt.getTime())
       end
       next_tick = next_tick + GAME.tickperiod
+   end
+end
+
+love.draw = function ()
+   lg.origin()
+   lg.scale( config.c.gamescale, config.c.gamescale )
+   scene.draw()
+   lg.origin()
+   lg.print(math.floor(collectgarbage("count")))
+   lg.present()
+
+   if outdir then
+      dump_canvas:renderTo(scene.draw)
+      time = time + 1
+      local imgdata = dump_canvas:newImageData()
+      imgdata:encode("tga", outdir .. "/" .. time .. ".tga")
    end
 end
