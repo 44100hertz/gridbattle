@@ -18,6 +18,6 @@ return {
       local offset = love.timer.getTime() - start_time
       local bgoff_y = offset*30 % bgsize - bgsize
       local bgoff_x = (offset + math.sin(offset))*30 % bgsize - bgsize
-      love.graphics.draw(bg, bgquad, math.floor(bgoff_x), math.floor(bgoff_y))
+      love.graphics.draw(bg, bgquad, bgoff_x, bgoff_y)
    end,
 }
