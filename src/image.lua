@@ -1,10 +1,10 @@
 local imgdb = require(PATHS.imgdb)
 local imgpath = _G.RES_PATH .. '/img/'
 
-Image = {}
-Image.__index = Image
+image = {}
+image.__index = image
 
-function Image:draw(x, y, flip, frame)
+function image:draw(x, y, flip, frame)
    if not frame then
       local dt = love.timer.getTime() - self.start_time
       local elapsed = 1 + math.ceil(dt * (self.current.fps) - 1) % #self.current.anim
@@ -18,19 +18,19 @@ function Image:draw(x, y, flip, frame)
    love.graphics.draw(self.img, quad, x, y, 0, sx, 1)
 end
 
-function Image:set_sheet(name)
+function image:set_sheet(name)
    self.current = self.sheets[name]
    self.start_time = love.timer.getTime()
 end
 
-function Image:get_interruptible()
+function image:get_interruptible()
    if self.current.fps==0 then return true end
 
    local dt = love.timer.getTime() - self.start_time
    return math.floor(dt * self.current.fps) >= self.current.iasa
 end
 
-function Image:get_over()
+function image:get_over()
    if self.current.fps==0 then return false end
 
    local dt = love.timer.getTime() - self.start_time
@@ -38,7 +38,7 @@ function Image:get_over()
 end
 
 -- Read animation data and generate quads
-function Image.make_quads(root_x, y, w, h, numx, numy, iw, ih)
+function image.make_quads(root_x, y, w, h, numx, numy, iw, ih)
    root_x = root_x or 0
    y = y or 0
    w = w or iw
@@ -61,9 +61,9 @@ function Image.make_quads(root_x, y, w, h, numx, numy, iw, ih)
 end
 
 -- path is not optional, sheet_name is just for when many images share a sheet
-function Image.new(path, sheet_name)
+function image.new(path, sheet_name)
    local self = {}
-   setmetatable(self, Image)
+   setmetatable(self, image)
 
    sheet_name = sheet_name or path
    self.img = love.graphics.newImage(imgpath .. sheet_name .. '.png')
@@ -80,7 +80,7 @@ function Image.new(path, sheet_name)
    for k,v in pairs(sheetdata) do
       self.sheets[k] = v
       local sheet = self.sheets[k]
-      sheet.quads = Image.make_quads(
+      sheet.quads = image.make_quads(
          v.x, v.y, v.w, v.h,
          v.numx, v.numy, self.iw, self.ih
       )
@@ -98,4 +98,4 @@ function Image.new(path, sheet_name)
    return self
 end
 
-return Image
+return image

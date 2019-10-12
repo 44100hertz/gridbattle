@@ -1,12 +1,12 @@
 local serialize = require 'src/serialize'
+local oop = require 'src/oop'
 
-local Folder = {}
+local folder = {}
 
-Folder.__index = Folder
+folder.__index = folder
 
-function Folder:new()
-   setmetatable(self, Folder)
-   return self
+function folder.new()
+   return oop.instance(folder, self)
 end
 
 local chipdb = require(PATHS.chipdb)
@@ -23,7 +23,7 @@ local compare_lists = {
    element = {'elem', 'ltr', 'name'},
 }
 
-function Folder:sort(method, is_ascending)
+function folder:sort(method, is_ascending)
    if self.lastsort == method then
       is_ascending = true
       self.lastsort = nil
@@ -46,7 +46,7 @@ function Folder:sort(method, is_ascending)
    table.sort(self.data, compare)
 end
 
-function Folder:condense()
+function folder:condense()
    for i,a in ipairs(self.data) do
       for _ = i+1,#self.data do
          local b = self.data[b]
@@ -64,7 +64,7 @@ function Folder:condense()
 end
 
 -- Copy static folder data into a folder
-function Folder:load(name)
+function folder:load(name)
    self.temp_count = nil
    self.name = name
    local input = love.filesystem.getSaveDirectory() ..
@@ -73,11 +73,11 @@ function Folder:load(name)
       input = PATHS.folders .. name
    end
    self.data = serialize.from_config(input)
-   setmetatable(self, Folder)
+   setmetatable(self, folder)
    return self
 end
 
-function Folder:save(name)
+function folder:save(name)
    if name then self.name = name end
    local outdir = 'folders/'
    love.filesystem.createDirectory(outdir)
@@ -86,7 +86,7 @@ function Folder:save(name)
          .. '/' .. outdir .. self.name, self.data)
 end
 
-function Folder:find(entry)
+function folder:find(entry)
    for i=1,#self.data do
       if self.data[i].name == entry.name and
          self.data[i].ltr == entry.ltr
@@ -96,7 +96,7 @@ function Folder:find(entry)
    end
 end
 
-function Folder:insert(entry)
+function folder:insert(entry)
    self.temp_count = nil
    local i = self:find(entry)
    if i then
@@ -107,7 +107,7 @@ function Folder:insert(entry)
    end
 end
 
-function Folder:remove(index)
+function folder:remove(index)
    self.temp_count = nil
    index = index or love.math.random(#self.data)
    local entry = self.data[index]
@@ -120,7 +120,7 @@ function Folder:remove(index)
    return {name = entry.name, ltr = entry.ltr}
 end
 
-function Folder:count()
+function folder:count()
    if not self.temp_count then
       self.temp_count = 0
       for _,v in ipairs(self.data) do
@@ -131,7 +131,7 @@ function Folder:count()
 end
 
 -- Draw a folder, optionally fill a palette
-function Folder:draw(num, pal)
+function folder:draw(num, pal)
    pal = pal or {}
    for i=1,num do
       if not pal[i] then
@@ -141,4 +141,4 @@ function Folder:draw(num, pal)
    return pal
 end
 
-return Folder
+return folder

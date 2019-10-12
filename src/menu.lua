@@ -1,14 +1,15 @@
 local text = require 'src/text'
+local oop = require 'src/oop'
+
 local lg = love.graphics
 
-local Menu = {}
-Menu.__index = Menu
+local menu = {}
 
-function Menu:new (menu)
-   menu = require(PATHS.menu .. menu)
-   self = menu
-   setmetatable(self, Menu)
-   if menu.bg_img then
+-- make a new menu
+function menu.new (name)
+   local self = require(PATHS.menu .. name)
+   oop.instance(menu, self)
+   if self.bg_img then
       self.bg_image =
          lg.newImage(PATHS.menu .. self.bg_img .. '.png')
       self.bg_img = nil
@@ -21,7 +22,7 @@ local input_check = {
    'a', 'b', 'dl', 'dr', 'l', 'r'
 }
 
-function Menu:update (input)
+function menu:update (input)
    local check = function (k)
       return (input[1][k]==1 or input[2][k]==1)
    end
@@ -41,7 +42,7 @@ function Menu:update (input)
    end
 end
 
-function Menu:draw ()
+function menu:draw ()
    if self.bg_image then
       lg.draw(self.bg_image)
    else
@@ -64,4 +65,4 @@ function Menu:draw ()
    end
 end
 
-return Menu
+return menu

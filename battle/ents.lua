@@ -2,7 +2,7 @@ local stage = require 'battle/stage'
 local set = require 'battle/set'
 local proto_ent = require 'battle/proto/ent'
 local depthdraw = require 'src/depthdraw'
-local Image = require 'src/Image'
+local image = require 'src/image'
 
 local enemydb = require(PATHS.enemydb)
 local elements = require(PATHS.battle .. 'elements')
@@ -34,7 +34,7 @@ local add = function (class_name, variant_name, ent)
    end
 
    if ent.img then
-      ent.image = (require 'src/Image'):new(ent.img)
+      ent.image = (require 'src/image').new(ent.img)
       ent.img = nil
    end
 

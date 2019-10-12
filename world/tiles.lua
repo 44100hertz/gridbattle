@@ -1,22 +1,22 @@
 local lg = love.graphics
 
-local Image = require 'src/Image'
+local image = require 'src/image'
 local oop = require 'src/oop'
 
-local img = Image.new('battle_ui')
+local img = image.new 'battle_ui'
 local depthdraw = require 'src/depthdraw'
 local BIT_XFLIP = 0x80000000
 
-local Tiles = {}
+local tiles = {}
 
-function Tiles.from_data (data)
+function tiles.from_data (data)
    local self = {
       data = data,
       tileset = {},
    }
-   oop.instance(Tiles, self)
+   oop.instance(tiles, self)
    local set = self.data.tilesets[1]
-   self.tileset.sheet = Image.make_quads(
+   self.tileset.sheet = image.make_quads(
       0, 0, set.tilewidth, set.tileheight,
       math.floor(set.imagewidth / set.tilewidth),
       math.floor(set.imageheight / set.tileheight),
@@ -26,7 +26,7 @@ function Tiles.from_data (data)
    return self
 end
 
-function Tiles:draw ()
+function tiles:draw ()
    local draw_tile = function (x, y, index, flip)
       lg.draw(self.tileset.img, self.tileset.sheet[index], x, y, 0, flip, 1)
    end
@@ -54,4 +54,4 @@ function Tiles:draw ()
    end
 end
 
-return Tiles
+return tiles

@@ -1,10 +1,10 @@
-local Folder = require 'src/Folder'
+local folder = require 'src/folder'
 local text = require 'src/text'
 local chipdb = require(PATHS.chipdb)
 
 local lg = love.graphics
 
-local img = (require 'src/Image').new'foldedit'
+local img = (require 'src/image').new'foldedit'
 
 local pane_left = {}
 local pane_right = {}
@@ -56,12 +56,12 @@ local move_chip = function (from, to)
 end
 
 return {
-   start = function (collection, folder)
+   start = function (collection)
       col, sel = 2,1
-      pane_left.folder = Folder.load({}, 'test-collection')
+      pane_left.folder = folder.load({}, 'test-collection')
       pane_left.folder.name = 'leftpane'
       pane_left.sel = 1
-      pane_right.folder = Folder.load({}, 'test-folder')
+      pane_right.folder = folder.load({}, 'test-folder')
       pane_right.folder.name = 'rightpane'
       pane_right.sel = 1
    end,
@@ -143,7 +143,7 @@ return {
       img:set_sheet'fg'
       img:draw(16, 0)
       text.draw('flavor', 'Collection', 24, 8)
-      local right_str = 'Folder (' .. pane_right.folder:count() .. '/30' .. ')'
+      local right_str = 'folder (' .. pane_right.folder:count() .. '/30' .. ')'
       text.draw('flavor', right_str, 136, 8)
 
       -- Selection rectangle around column

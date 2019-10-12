@@ -1,5 +1,5 @@
 local scene = require 'src/scene'
-local World = require 'world/World'
+local world = require 'world/world'
 
 return {
    y = 40, spacing = 16,
@@ -20,12 +20,12 @@ return {
    end},
    {'worldmap test',
     a = function ()
-       local world = World.from_map_path('res/world/testmap/map1.lua')
+       local world = world.from_map_path('res/world/testmap/map1.lua')
        scene.push_fade({}, world)
    end},
    {'config',
     a = function ()
-       scene.push_fade({}, (require 'src/Menu'):new('settings'))
+       scene.push_fade({}, (require 'src/menu').new('settings'))
    end},
    {'exit', a = love.event.quit},
 }

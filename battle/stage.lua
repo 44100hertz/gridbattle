@@ -1,7 +1,7 @@
 local depthdraw = require 'src/depthdraw'
 local set = require 'battle/set'
 
-local img = (require 'src/Image').new'panels'
+local img = (require 'src/image').new'panels'
 
 -- load stage.png
 local panels

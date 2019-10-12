@@ -7,7 +7,7 @@ local chip_artist = require 'battle/chip_artist'
 local set = require 'battle/set'
 local chipdb = require(PATHS.chipdb)
 
-local img = (require'src/Image'):new'customize'
+local img = (require'src/image').new'customize'
 local two_player
 
 local Side = {}

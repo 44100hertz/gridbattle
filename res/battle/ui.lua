@@ -1,6 +1,6 @@
 local text = require 'src/text'
 
-local img = (require'src/Image').new'battle_ui'
+local img = (require'src/image').new'battle_ui'
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
 local gamewidth = GAME.width

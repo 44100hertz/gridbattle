@@ -1,6 +1,6 @@
 -- Center the stage unless specified
 local scene = require 'src/scene'
-local Folder = require 'src/Folder'
+local folder = require 'src/folder'
 local depthdraw = require 'src/depthdraw'
 
 local ents = require 'battle/ents'
@@ -25,8 +25,8 @@ end
 
 local clear = function ()
    for k,_ in pairs(set) do set[k] = nil end
-   folder_left = Folder.new{}
-   folder_right = Folder.new{}
+   folder_left = folder.new{}
+   folder_right = folder.new{}
    customize.clear()
    ents.exit()
 end
@@ -73,7 +73,7 @@ return {
 	 end
 
 	 if input[1].st == 1 or input[2].st == 1 then
-	    scene.push((require 'src/Menu'):new('pause'))
+	    scene.push((require 'src/menu').new('pause'))
 	    return
 	 elseif cust_frames >= cust_time and
             (set.left.selectchips or set.right.selectchips)

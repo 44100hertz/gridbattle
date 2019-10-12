@@ -1,18 +1,18 @@
-local Tiles = require 'world/Tiles'
+local tiles = require 'world/tiles'
 local depthdraw = require 'src/depthdraw'
 local oop = require 'src/oop'
 
 local lg = love.graphics
 local tform = depthdraw.tform
 
-local World = {}
+local world = {}
 
-function World.from_map_path (path)
+function world.from_map_path (path)
    local data = dofile(path)
    local self = {
-      tiles = Tiles.from_data(data)
+      tiles = tiles.from_data(data)
    }
-   oop.instance(World, self)
+   oop.instance(world, self)
    tform.xscale = data.tilewidth / 2
    tform.yscale = data.tileheight / 2
    tform.xoff = 0
@@ -20,7 +20,7 @@ function World.from_map_path (path)
    return self
 end
 
-function World:update (input)
+function world:update (input)
    input = input[1]
    if input.du>0 then tform.yoff = tform.yoff + 1 end
    if input.dd>0 then tform.yoff = tform.yoff - 1 end
@@ -29,10 +29,10 @@ function World:update (input)
    if input.b==1 then (require 'src/scene').pop() end
 end
 
-function World:draw ()
+function world:draw ()
    lg.clear(0,0,0)
    self.tiles:draw()
    depthdraw.draw()
 end
 
-return World
+return world
