@@ -7,9 +7,9 @@ local ents = require 'battle/ents'
 local ai = require 'battle/ai'
 local stage = require 'battle/stage'
 local set = require 'battle/set'
+local customize = require 'battle/customize/customize'
 
 local savedata = require(RES_PATH .. 'savedata')
-local customize = require(PATHS.battle .. 'customize')
 local ui =  require(PATHS.battle .. 'ui')
 
 local folder_left, folder_right
@@ -27,7 +27,6 @@ local clear = function ()
    for k,_ in pairs(set) do set[k] = nil end
    folder_left = folder.new{}
    folder_right = folder.new{}
-   customize.clear()
    ents.exit()
 end
 
