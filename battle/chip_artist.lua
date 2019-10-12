@@ -12,7 +12,7 @@ end
 
 local getimage = function (name)
    if not images[name] then
-      local imgpath = PATHS.chips .. name .. ".png"
+      local imgpath = PATHS.chips .. name .. '.png'
       images[name] = lg.newImage(imgpath)
    end
    return images[name]

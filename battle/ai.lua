@@ -1,19 +1,19 @@
-local stage = require "battle/stage"
-local set = require "battle/set"
+local stage = require 'battle/stage'
+local set = require 'battle/set'
 
 local ai = {}
 
 ai.is_panel_free = function (x, y, side)
    local panel = stage.getpanel(x,y)
    if not panel then return false end
-   if (side=="left" and x > set.stage.turf[y]) then return false end
-   if (side=="right" and x <= set.stage.turf[y]) then return false end
+   if (side=='left' and x > set.stage.turf[y]) then return false end
+   if (side=='right' and x <= set.stage.turf[y]) then return false end
    if panel.tenant then return false, panel.tenant end
    return true
 end
 
 ai.see_enemy = function (x, y, side)
-   local opp_side = side=="left" and "right" or "left"
+   local opp_side = side=='left' and 'right' or 'left'
    local panel = stage.getpanel(x, y)
    if panel and
       panel.tenant and
@@ -26,7 +26,7 @@ ai.see_enemy = function (x, y, side)
 end
 
 ai.see_line = function (x, y, side)
-   local inc = side=="left" and 1 or -1
+   local inc = side=='left' and 1 or -1
    repeat
       x = x + inc
       local see = ai.see_enemy(x, y, side)

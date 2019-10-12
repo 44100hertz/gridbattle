@@ -1,5 +1,5 @@
 love.filesystem.createDirectory(love.filesystem.getSaveDirectory())
-local path = love.filesystem.getSaveDirectory() .. "/settings.conf"
+local path = love.filesystem.getSaveDirectory() .. '/settings.conf'
 
 local config = {
    gamescale = 3,
@@ -13,15 +13,15 @@ local set_gamescale = function (scale)
                        GAME.height * scale)
 end
 
-local serialize = require "src/serialize"
+local serialize = require 'src/serialize'
 local load = function ()
-   print("loading config:", path)
+   print('loading config:', path)
    serialize.from_config(path, config)
    set_gamescale()
 end
 
 local save = function ()
-   print("saving config:", path)
+   print('saving config:', path)
    serialize.to_config(path, config)
 end
 

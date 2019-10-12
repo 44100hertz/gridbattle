@@ -1,13 +1,13 @@
 local lg = love.graphics
 
-local scene = require "src/scene"
-local dialog = require "src/dialog"
-local text = require "src/text"
-local chip_artist = require "battle/chip_artist"
-local set = require "battle/set"
+local scene = require 'src/scene'
+local dialog = require 'src/dialog'
+local text = require 'src/text'
+local chip_artist = require 'battle/chip_artist'
+local set = require 'battle/set'
 local chipdb = require(PATHS.chipdb)
 
-local img = (require"src/Image"):new"customize"
+local img = (require'src/Image'):new'customize'
 local two_player
 
 local Side = {}
@@ -62,7 +62,7 @@ function Side:draw()
    lg.push()
    lg.translate(self.offset, 0)
 
-   img:set_sheet"bg"
+   img:set_sheet'bg'
    img:draw(0,0)
 
    -- Palette --
@@ -71,12 +71,12 @@ function Side:draw()
       local y = i<=5 and 104 or 128
       if self.pal[i] then
          chip_artist.draw_icon(self.pal[i].name, x, y)
-         local letter = self.pal[i].ltr:byte() - ("a"):byte() + 1
-         img:set_sheet"letter"
+         local letter = self.pal[i].ltr:byte() - ('a'):byte() + 1
+         img:set_sheet'letter'
          img:draw(x, y+16, nil, letter)
       end
       if self.sel==i then
-         img:set_sheet"chipbg"
+         img:set_sheet'chipbg'
          img:draw(x, y)
       end
    end
@@ -94,7 +94,7 @@ function Side:draw()
    local button_sel = 1
    if self.sel==0 then button_sel = 2 end
    if self.ready then button_sel = 3 end
-   img:set_sheet"button"
+   img:set_sheet'button'
    img:draw(96, 112, nil, button_sel)
 
    -- Art --
@@ -102,7 +102,7 @@ function Side:draw()
    if sel then
       chip_artist.draw_art(sel.name, 8, 16, 1)
       local damage = chipdb[sel.name].damage
-      text.draw("flavor", tostring(damage), 8, 88)
+      text.draw('flavor', tostring(damage), 8, 88)
    end
 
    lg.pop()
@@ -133,8 +133,8 @@ return {
       left.enable = left_deck.data and true
       right.enable = right_deck.data and true
       two_player = (left.enable and right.enable)
-      left:start("left", left_deck)
-      right:start("right", right_deck)
+      left:start('left', left_deck)
+      right:start('right', right_deck)
    end,
 
    update = function (_, input)
@@ -144,7 +144,7 @@ return {
          (not right.enable or right.ready)
       then
          scene.pop()
-         scene.push(require(PATHS.battle .. "go_screen"))
+         scene.push(require(PATHS.battle .. 'go_screen'))
       end
    end,
 

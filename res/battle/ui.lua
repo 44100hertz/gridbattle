@@ -1,6 +1,6 @@
-local text = require "src/text"
+local text = require 'src/text'
 
-local img = (require"src/Image").new"battle_ui"
+local img = (require'src/Image').new'battle_ui'
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
 local gamewidth = GAME.width
@@ -17,22 +17,22 @@ return {
                table.insert(names, v.name)
             end
          end
-         local x = side=="right" and GAME.width or 0
-         text.draw("shadow", names, x, 2, side)
+         local x = side=='right' and GAME.width or 0
+         text.draw('shadow', names, x, 2, side)
       end
       local draw_hp = function (hp, side)
-         local x = side=="right" and gamewidth-4 or 4
-         text.draw("visible", tostring(math.floor(hp)), x, 4, side)
+         local x = side=='right' and gamewidth-4 or 4
+         text.draw('visible', tostring(math.floor(hp)), x, 4, side)
       end
       local draw_side = function (kind, side)
-         if kind == "player" then
+         if kind == 'player' then
             draw_hp(set[side].hp, side)
          else
             draw_enemy_names(set[side], side)
          end
       end
-      draw_side(set.left_kind, "left")
-      draw_side(set.right_kind, "right")
+      draw_side(set.left_kind, 'left')
+      draw_side(set.right_kind, 'right')
 
       local red = 40
       if cust_amount >= 1 then
@@ -42,13 +42,13 @@ return {
       -- Status bar
       local bar_y = 2
       love.graphics.setColor(red, 40/256.0, 40/256.0)
-      love.graphics.rectangle("fill", bar_x+1, bar_y, bar_size, 8)
+      love.graphics.rectangle('fill', bar_x+1, bar_y, bar_size, 8)
       love.graphics.setColor(255, 255, 255)
 
       local x,y = bar_x, bar_y
       local segs = bar_width/8 - 2
 
-      img:set_sheet("bar")
+      img:set_sheet('bar')
       img:draw(x, y, nil, 1)
       for _=1,segs do
          x = x + 8
@@ -60,7 +60,7 @@ return {
       local draw_queue_top = function (queue, x)
          if queue and #queue > 0 then
             local top = queue[#queue].name
-            text.draw("visible", top, x, GAME.height-11)
+            text.draw('visible', top, x, GAME.height-11)
          end
       end
       draw_queue_top(set.left.queue, 0)

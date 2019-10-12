@@ -4,13 +4,13 @@ local fonts = {}
 
 local getfont = function (font)
    if not fonts[font] then
-      local img = love.graphics.newImage(PATHS.fonts .. font .. ".png")
+      local img = love.graphics.newImage(PATHS.fonts .. font .. '.png')
       fonts[font] = {
          img=img,
          quads = {},
          char_w = img:getWidth() / 16,
          char_h = img:getHeight() / 8,
-         sb = love.graphics.newSpriteBatch(img, 256, "stream"),
+         sb = love.graphics.newSpriteBatch(img, 256, 'stream'),
       }
    end
    return fonts[font]
@@ -29,7 +29,7 @@ local getletter = function (f, char)
 end
 
 local getsize = function (font, lines)
-   if type(lines) == "string" then lines = {lines} end
+   if type(lines) == 'string' then lines = {lines} end
 
    local maxw = 0
    for _,line in ipairs(lines) do
@@ -41,15 +41,15 @@ local getsize = function (font, lines)
 end
 
 local draw = function (font, lines, ox, oy, layout)
-   if type(lines) == "string" then lines = {lines} end
+   if type(lines) == 'string' then lines = {lines} end
 
    local f = getfont(font)
    f.sb:clear()
    local x,y = ox,oy
    for _,line in ipairs(lines) do
-      if layout=="right" then x = ox - getsize(font, line) end
-      if layout=="center" then x = ox - getsize(font, line)/2 end
-      for char in line:gmatch(".") do
+      if layout=='right' then x = ox - getsize(font, line) end
+      if layout=='center' then x = ox - getsize(font, line)/2 end
+      for char in line:gmatch('.') do
          f.sb:add(getletter(f, char), x, y)
          x = x+f.char_w
       end

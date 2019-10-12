@@ -1,9 +1,9 @@
-local ents = require "battle/ents"
+local ents = require 'battle/ents'
 
 return {
    class = {
       start = function (self)
-         self.parent.enter_state = "shoot"
+         self.parent.enter_state = 'shoot'
          self.lifespan = self.delay + self.num * self.period - 1
       end,
       update = function (self)
@@ -21,7 +21,7 @@ return {
          damage = 40,
          spawn = function (self)
             ents.add(
-               "bullet", "boot",
+               'bullet', 'boot',
                {x=self.x, y=self.y, z=40, frame=self.count,
                 side=self.side, damage=self.damage, parent=self.parent,
             })

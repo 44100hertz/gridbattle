@@ -1,5 +1,5 @@
-local Tiles = require "world/Tiles"
-local depthdraw = require "src/depthdraw"
+local Tiles = require 'world/Tiles'
+local depthdraw = require 'src/depthdraw'
 local oop = require 'src/oop'
 
 local lg = love.graphics
@@ -26,7 +26,7 @@ function World:update (input)
    if input.dd>0 then tform.yoff = tform.yoff - 1 end
    if input.dl>0 then tform.xoff = tform.xoff + 1 end
    if input.dr>0 then tform.xoff = tform.xoff - 1 end
-   if input.b==1 then (require "src/scene").pop() end
+   if input.b==1 then (require 'src/scene').pop() end
 end
 
 function World:draw ()

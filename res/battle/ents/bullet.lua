@@ -2,7 +2,7 @@ local class = {
    collide_die = true,
    size = 8/64,
    start = function (self)
-      self.parent.enter_state = "shoot"
+      self.parent.enter_state = 'shoot'
    end,
 }
 
@@ -10,7 +10,7 @@ return {
    class=class,
    variants={
       triangle = {
-         img = "bullet",
+         img = 'bullet',
          damage = 80,
          lifespan = 60,
          dx = 0.01,
@@ -21,7 +21,7 @@ return {
       },
       boot = {
          start=false,
-         img="boots",
+         img='boots',
          lifespan = 120,
          dx=0.1,
       }

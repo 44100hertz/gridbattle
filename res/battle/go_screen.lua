@@ -1,5 +1,5 @@
 local lg = love.graphics
-local img = lg.newImage(PATHS.battle ..  "start.png")
+local img = lg.newImage(PATHS.battle ..  'start.png')
 
 local start_time
 local transition_length = 0.5
@@ -11,7 +11,7 @@ return {
    update = function ()
       local elapsed = (love.timer.getTime() - start_time) / transition_length
       if elapsed >= 1 then
-         (require "src/scene"):pop()
+         (require 'src/scene'):pop()
       end
    end,
    draw = function ()

@@ -1,5 +1,5 @@
-local src_text = require "src/text"
-local scene = require "src/scene"
+local src_text = require 'src/text'
+local scene = require 'src/scene'
 
 local w,h
 local draw_box = function (font, text, x, y, color, border)
@@ -7,13 +7,13 @@ local draw_box = function (font, text, x, y, color, border)
    border = border or 4
 
    love.graphics.setColor(unpack(color))
-   love.graphics.rectangle("fill", x-border, y-border, w+2*border, h+2*border)
+   love.graphics.rectangle('fill', x-border, y-border, w+2*border, h+2*border)
    love.graphics.setColor(1.0, 1.0, 1.0)
    src_text.draw(font, text, x, y)
 end
 
 local text, x, y
-local font = "flavor"
+local font = 'flavor'
 return {
    draw_box = draw_box,
    popup = {

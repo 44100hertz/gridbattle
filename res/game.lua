@@ -17,6 +17,6 @@ _G.BATTLE.yoff = 62 + 0.5 * (GAME.height-160)
 
 return {
    start = function ()
-      (require "src/scene").push((require "src/Menu"):new("title"))
+      (require 'src/scene').push((require 'src/Menu'):new('title'))
    end,
 }

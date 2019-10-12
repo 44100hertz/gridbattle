@@ -1,4 +1,4 @@
-local serialize = require "src/serialize"
+local serialize = require 'src/serialize'
 
 local Folder = {}
 
@@ -17,10 +17,10 @@ local fetch_methods = {
    elem = function (o) return chipdb[o.name].elem end,
 }
 local compare_lists = {
-   letter = {"ltr", "name"},
-   name = {"name", "ltr"},
-   quantity = {"qty", "ltr", "name"},
-   element = {"elem", "ltr", "name"},
+   letter = {'ltr', 'name'},
+   name = {'name', 'ltr'},
+   quantity = {'qty', 'ltr', 'name'},
+   element = {'elem', 'ltr', 'name'},
 }
 
 function Folder:sort(method, is_ascending)
@@ -68,7 +68,7 @@ function Folder:load(name)
    self.temp_count = nil
    self.name = name
    local input = love.filesystem.getSaveDirectory() ..
-      "/folders/" .. name
+      '/folders/' .. name
    if not pcall(function () io.input(input) end) then
       input = PATHS.folders .. name
    end
@@ -79,11 +79,11 @@ end
 
 function Folder:save(name)
    if name then self.name = name end
-   local outdir = "folders/"
+   local outdir = 'folders/'
    love.filesystem.createDirectory(outdir)
    serialize.to_config(
       love.filesystem.getSaveDirectory()
-         .. "/" .. outdir .. self.name, self.data)
+         .. '/' .. outdir .. self.name, self.data)
 end
 
 function Folder:find(entry)
@@ -112,7 +112,7 @@ function Folder:remove(index)
    index = index or love.math.random(#self.data)
    local entry = self.data[index]
    if not entry then
-      print("tried to remove nonexistant index:", index)
+      print('tried to remove nonexistant index:', index)
       return
    end
    entry.qty = entry.qty - 1

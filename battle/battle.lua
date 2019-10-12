@@ -1,16 +1,16 @@
 -- Center the stage unless specified
-local scene = require "src/scene"
-local Folder = require "src/Folder"
-local depthdraw = require "src/depthdraw"
+local scene = require 'src/scene'
+local Folder = require 'src/Folder'
+local depthdraw = require 'src/depthdraw'
 
-local ents = require "battle/ents"
-local ai = require "battle/ai"
-local stage = require "battle/stage"
-local set = require "battle/set"
+local ents = require 'battle/ents'
+local ai = require 'battle/ai'
+local stage = require 'battle/stage'
+local set = require 'battle/set'
 
-local savedata = require(RES_PATH .. "savedata")
-local customize = require(PATHS.battle .. "customize")
-local ui =  require(PATHS.battle .. "ui")
+local savedata = require(RES_PATH .. 'savedata')
+local customize = require(PATHS.battle .. 'customize')
+local ui =  require(PATHS.battle .. 'ui')
 
 local folder_left, folder_right
 
@@ -42,14 +42,14 @@ return {
       tform.xoff = BATTLE.xoff
       tform.yoff = BATTLE.yoff
 
-      local new_set = dofile(PATHS.sets .. set_name .. ".lua")
+      local new_set = dofile(PATHS.sets .. set_name .. '.lua')
       for k,v in pairs(new_set) do set[k] = v end
 
-      if set.left_kind == "player" then
+      if set.left_kind == 'player' then
          set.left.queue = {}
          folder_left:load(savedata.player.folder)
       end
-      if set.right_kind == "player" then
+      if set.right_kind == 'player' then
          set.right.queue = {}
          folder_right:load(savedata.player.folder)
       end
@@ -68,12 +68,12 @@ return {
       if input then
 	 local ending = ents.get_ending()
 	 if ending then
-	    scene.push(require "battle/results", ending)
+	    scene.push(require 'battle/results', ending)
 	    return
 	 end
 
 	 if input[1].st == 1 or input[2].st == 1 then
-	    scene.push((require "src/Menu"):new("pause"))
+	    scene.push((require 'src/Menu'):new('pause'))
 	    return
 	 elseif cust_frames >= cust_time and
             (set.left.selectchips or set.right.selectchips)

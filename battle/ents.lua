@@ -1,11 +1,11 @@
-local stage = require "battle/stage"
-local set = require "battle/set"
-local proto_ent = require "battle/proto/ent"
-local depthdraw = require "src/depthdraw"
-local Image = require "src/Image"
+local stage = require 'battle/stage'
+local set = require 'battle/set'
+local proto_ent = require 'battle/proto/ent'
+local depthdraw = require 'src/depthdraw'
+local Image = require 'src/Image'
 
 local enemydb = require(PATHS.enemydb)
-local elements = require(PATHS.battle .. "elements")
+local elements = require(PATHS.battle .. 'elements')
 
 local ents, images
 local clear = function ()
@@ -16,14 +16,14 @@ clear()
 
 local add = function (class_name, variant_name, ent)
    ent = ent or {}
-   local class = require (PATHS.battle .. "ents/" .. class_name)
+   local class = require (PATHS.battle .. 'ents/' .. class_name)
 
    -- Chain metatables for variants
    class.class.__index = class.class
    if variant_name then
       local variant = class.variants[variant_name]
       if not variant then
-         print("variant not found:", variant)
+         print('variant not found:', variant)
          return
       end
       variant.__index = variant
@@ -34,7 +34,7 @@ local add = function (class_name, variant_name, ent)
    end
 
    if ent.img then
-      ent.image = (require "src/Image"):new(ent.img)
+      ent.image = (require 'src/Image'):new(ent.img)
       ent.img = nil
    end
 
@@ -58,11 +58,11 @@ local apply_damage = function (send, recv, amount)
 end
 
 local results = {
-   "p1win", "win", "lose", "p2win",
+   'p1win', 'win', 'lose', 'p2win',
 }
 local get_ending = function ()
    local side_alive = function (tab, kind)
-      if kind == "player" then
+      if kind == 'player' then
          return not tab.despawn
       else
          for _,v in ipairs(tab) do
@@ -71,8 +71,8 @@ local get_ending = function ()
       end
    end
    local index = 1 +
-      (set.left_kind=="player" and 2 or 0) +
-      (set.right_kind=="player" and 1 or 0)
+      (set.left_kind=='player' and 2 or 0) +
+      (set.right_kind=='player' and 1 or 0)
    if not side_alive(set.right, set.right_kind) then
       return results[5-index]
    elseif not side_alive(set.left, set.left_kind) then
@@ -90,7 +90,7 @@ return {
    start = function ()
       local init_player = function (data, side)
          data.side = side
-         add("navi", "player", data)
+         add('navi', 'player', data)
          return data
       end
       local init_enemies = function (data, side)
@@ -102,15 +102,15 @@ return {
          return data
       end
 
-      if set.left_kind == "player" then
-         init_player(set.left, "left")
-      elseif set.left_kind == "enemy" then
-         init_enemies(set.left, "left")
+      if set.left_kind == 'player' then
+         init_player(set.left, 'left')
+      elseif set.left_kind == 'enemy' then
+         init_enemies(set.left, 'left')
       end
-      if set.right_kind == "player" then
-         init_player(set.right, "right")
-      elseif set.right_kind == "enemy" then
-         init_enemies(set.right, "right")
+      if set.right_kind == 'player' then
+         init_player(set.right, 'right')
+      elseif set.right_kind == 'enemy' then
+         init_enemies(set.right, 'right')
       end
    end,
 

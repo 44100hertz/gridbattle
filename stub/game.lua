@@ -14,6 +14,6 @@ _G.BATTLE = {
 
 return {
    start = function ()
-      (require"src/scene").push(require"battle/battle", "empty", "empty")
+      (require'src/scene').push(require'battle/battle', 'empty', 'empty')
    end
 }

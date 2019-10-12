@@ -7,7 +7,7 @@ end
 
 return {
    start = function (actor)
-      enter_state(actor, "base")
+      enter_state(actor, 'base')
    end,
 
    update = function (actor, input)
@@ -21,11 +21,11 @@ return {
          actor:act(input)
       end
       if actor.image:get_over() then
-         enter_state(actor, "base")
+         enter_state(actor, 'base')
       end
    end,
 
    kill = function (actor)
-      enter_state(actor, "die")
+      enter_state(actor, 'die')
    end,
 }

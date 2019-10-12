@@ -1,4 +1,4 @@
-local text = require "src/text"
+local text = require 'src/text'
 local lg = love.graphics
 
 local Menu = {}
@@ -10,7 +10,7 @@ function Menu:new (menu)
    setmetatable(self, Menu)
    if menu.bg_img then
       self.bg_image =
-         lg.newImage(PATHS.menu .. self.bg_img .. ".png")
+         lg.newImage(PATHS.menu .. self.bg_img .. '.png')
       self.bg_img = nil
    end
    self.sel = 1
@@ -18,7 +18,7 @@ function Menu:new (menu)
 end
 
 local input_check = {
-   "a", "b", "dl", "dr", "l", "r"
+   'a', 'b', 'dl', 'dr', 'l', 'r'
 }
 
 function Menu:update (input)
@@ -34,9 +34,9 @@ function Menu:update (input)
          return
       end
    end
-   if check"dd" then
+   if check'dd' then
       self.sel = self.sel % #self + 1
-   elseif check"du" then
+   elseif check'du' then
       self.sel = (self.sel-2) % #self + 1
    end
 end
@@ -51,7 +51,7 @@ function Menu:draw ()
       local y = self.y + i * self.spacing
 
       local drawtext = function ()
-         text.draw(self.font, v[1], GAME.width/2, y, "center")
+         text.draw(self.font, v[1], GAME.width/2, y, 'center')
       end
 
       if self.sel==i then

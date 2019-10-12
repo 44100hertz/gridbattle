@@ -1,15 +1,15 @@
-local Folder = require "src/Folder"
-local text = require "src/text"
+local Folder = require 'src/Folder'
+local text = require 'src/text'
 local chipdb = require(PATHS.chipdb)
 
 local lg = love.graphics
 
-local img = (require "src/Image").new"foldedit"
+local img = (require 'src/Image').new'foldedit'
 
 local pane_left = {}
 local pane_right = {}
 
-local scene = require "src/scene"
+local scene = require 'src/scene'
 local col1 = {
    [1] = scene.pop,
    [2] = function ()
@@ -17,24 +17,24 @@ local col1 = {
       pane_right.folder:save()
    end,
    [3] = function ()
-      pane_left.folder:load("leftpane")
-      pane_right.folder:load("rightpane")
+      pane_left.folder:load('leftpane')
+      pane_right.folder:load('rightpane')
    end,
    [4] = function ()
-      pane_left.folder:sort("letter")
-      pane_right.folder:sort("letter")
+      pane_left.folder:sort('letter')
+      pane_right.folder:sort('letter')
    end,
    [5] = function ()
-      pane_left.folder:sort("name")
-      pane_right.folder:sort("name")
+      pane_left.folder:sort('name')
+      pane_right.folder:sort('name')
    end,
    [6] = function ()
-      pane_left.folder:sort("quantity")
-      pane_right.folder:sort("quantity")
+      pane_left.folder:sort('quantity')
+      pane_right.folder:sort('quantity')
    end,
    [7] = function ()
-      pane_left.folder:sort("element")
-      pane_right.folder:sort("element")
+      pane_left.folder:sort('element')
+      pane_right.folder:sort('element')
    end,
 }
 
@@ -58,11 +58,11 @@ end
 return {
    start = function (collection, folder)
       col, sel = 2,1
-      pane_left.folder = Folder.load({}, "test-collection")
-      pane_left.folder.name = "leftpane"
+      pane_left.folder = Folder.load({}, 'test-collection')
+      pane_left.folder.name = 'leftpane'
       pane_left.sel = 1
-      pane_right.folder = Folder.load({}, "test-folder")
-      pane_right.folder.name = "rightpane"
+      pane_right.folder = Folder.load({}, 'test-folder')
+      pane_right.folder.name = 'rightpane'
       pane_right.sel = 1
    end,
 
@@ -127,9 +127,9 @@ return {
             if i == pane.sel then lg.setColor(120/255.0, 192/255.0, 128/255.0) end
 
             line = string.char(chipdb[v.name].elem) ..
-               v.ltr:upper() .. " " .. v.name
-            text.draw("flavor", line, x, y)
-            text.draw("flavor", "\127" .. v.qty, x+78, y)
+               v.ltr:upper() .. ' ' .. v.name
+            text.draw('flavor', line, x, y)
+            text.draw('flavor', '\127' .. v.qty, x+78, y)
             lg.setColor(1.0, 1.0, 1.0)
             ::continue::
             y = y + entry_height
@@ -140,23 +140,23 @@ return {
       draw_list(pane_left, 24)
       draw_list(pane_right, 136)
 
-      img:set_sheet"fg"
+      img:set_sheet'fg'
       img:draw(16, 0)
-      text.draw("flavor", "Collection", 24, 8)
-      local right_str = "Folder (" .. pane_right.folder:count() .. "/30" .. ")"
-      text.draw("flavor", right_str, 136, 8)
+      text.draw('flavor', 'Collection', 24, 8)
+      local right_str = 'Folder (' .. pane_right.folder:count() .. '/30' .. ')'
+      text.draw('flavor', right_str, 136, 8)
 
       -- Selection rectangle around column
       local draw_col_sel = function (x)
          lg.setColor(120/255.0, 192/255.0, 128/255.0)
-         lg.rectangle("line", x+1.5, 1.5, 109, 157)
+         lg.rectangle('line', x+1.5, 1.5, 109, 157)
          lg.setColor(1.0, 1.0, 1.0)
       end
       if col==2 then draw_col_sel(16) end
       if col==3 then draw_col_sel(128) end
 
       -- Icons on left
-      img:set_sheet"icons"
+      img:set_sheet'icons'
       for i = 1,#col1 do
          local is_sel = (col==1 and sel==i) and 2 or 1
          img:draw(0, i*16, nil, (i-1)*2 + is_sel)

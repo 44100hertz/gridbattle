@@ -1,5 +1,5 @@
 return {
    player = {
-      folder = "empty"
+      folder = 'empty'
    }
 }

@@ -1,4 +1,4 @@
-local scene = require "src/scene"
+local scene = require 'src/scene'
 local image
 
 return {
@@ -6,7 +6,7 @@ return {
    open = true,
 
    start = function (result)
-      image = love.graphics.newImage(PATHS.battle .. result .. ".png")
+      image = love.graphics.newImage(PATHS.battle .. result .. '.png')
    end,
 
    update = function (_, input)

@@ -5,8 +5,8 @@ local start_time
 return {
    start = function (newbg)
       start_time = love.timer.getTime()
-      bg = love.graphics.newImage(PATHS.bg .. newbg .. ".png")
-      bg:setWrap("repeat", "repeat")
+      bg = love.graphics.newImage(PATHS.bg .. newbg .. '.png')
+      bg:setWrap('repeat', 'repeat')
       bgsize = bg:getDimensions()
       bgquad = love.graphics.newQuad(
 	 0, 0, GAME.width+bgsize, GAME.height+bgsize,

@@ -1,7 +1,7 @@
-local depthdraw = require "src/depthdraw"
-local set = require "battle/set"
+local depthdraw = require 'src/depthdraw'
+local set = require 'battle/set'
 
-local img = (require "src/Image").new"panels"
+local img = (require 'src/Image').new'panels'
 
 -- load stage.png
 local panels
@@ -31,7 +31,7 @@ return {
             panels[x][y] = {}
          end
       end
-      img:set_sheet("base")
+      img:set_sheet('base')
    end,
 
    update = function (ents)
@@ -42,7 +42,7 @@ return {
                panel.stat_time = panel.stat_time-1
                if panel.stat_time==0 then panel.stat=nil end
             end
-            if panel.stat=="poison" and
+            if panel.stat=='poison' and
                panel.tenant and panel.tenant.hp
             then
                panel.tenant.hp = panel.tenant.hp-(1/8)
@@ -55,7 +55,7 @@ return {
       for x = 1,numx do
          for y = 1,numy do
             local row = x > set.stage.turf[y] and 1 or 2
-            local col = panels[x][y].stat == "poison" and 2 or 1
+            local col = panels[x][y].stat == 'poison' and 2 or 1
             local index = (row-1)*2 + col
             local draw = function (x, y)
                img:draw(x, y, nil, index)

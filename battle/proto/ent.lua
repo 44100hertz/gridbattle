@@ -1,6 +1,6 @@
-local text = require "src/text"
-local actors = require "battle/actors"
-local chip_artist = require "battle/chip_artist"
+local text = require 'src/text'
+local actors = require 'battle/actors'
+local chip_artist = require 'battle/chip_artist'
 local lg = love.graphics
 
 local kill = function (ent)
@@ -34,7 +34,7 @@ return {
       end
 
       if self.dx then
-         self.real_dx = self.side=="right" and -self.dx or self.dx
+         self.real_dx = self.side=='right' and -self.dx or self.dx
          self.x = self.x + self.real_dx
       end
       if self.dy then self.y = self.y + self.dy end
@@ -44,7 +44,7 @@ return {
    end,
 
    draw = function (self, x, y)
-      local flip = (self.side=="right" and not self.noflip)
+      local flip = (self.side=='right' and not self.noflip)
 
       if self.image then
          self.image:draw(x, y, flip)
@@ -54,7 +54,7 @@ return {
 
       if self.hp and not self.hide_hp then
          local hpstr = tostring(math.floor(self.hp))
-         text.draw("hpnum", hpstr, x, y-40, "center")
+         text.draw('hpnum', hpstr, x, y-40, 'center')
       end
 
       if self.queue then

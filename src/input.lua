@@ -1,27 +1,27 @@
 local keybind1 = {
-   a="x", b="z",
-   l="a", r="s",
-   st="h", sel="g",
-   du="i", dd="k",
-   dl="j", dr="l",
+   a='x', b='z',
+   l='a', r='s',
+   st='h', sel='g',
+   du='i', dd='k',
+   dl='j', dr='l',
 }
 local keybind2 = {
-   a="right", b="down",
-   l="left", r="up",
-   st="kpenter", sel="kp+",
-   du="kp8", dd="kp5",
-   dl="kp4", dr="kp6",
+   a='right', b='down',
+   l='left', r='up',
+   st='kpenter', sel='kp+',
+   du='kp8', dd='kp5',
+   dl='kp4', dr='kp6',
 }
 local joybind = {
-   a="b", b="a",
-   l="leftshoulder", r="rightshoulder",
-   st="start", sel="back",
-   du="dpup", dd="dpdown",
-   dl="dpleft", dr="dpright",
+   a='b', b='a',
+   l='leftshoulder', r='rightshoulder',
+   st='start', sel='back',
+   du='dpup', dd='dpdown',
+   dl='dpleft', dr='dpright',
 }
 local joy1 = love.joystick.getJoysticks()[1]
 local joy2 = love.joystick.getJoysticks()[2]
-love.joystick.loadGamepadMappings("src/gamecontrollerdb.txt")
+love.joystick.loadGamepadMappings('src/gamecontrollerdb.txt')
 
 local deadzone = 0.5
 local check_key = function (keybind, k)
@@ -30,10 +30,10 @@ end
 local check_joy = function (joy, k)
    local lr = joy:getAxis(1)
    local ud = joy:getAxis(2)
-   if k=="dl" and (lr < -deadzone) then return true end
-   if k=="dr" and (lr > deadzone) then return true end
-   if k=="du" and (ud < -deadzone) then return true end
-   if k=="dd" and (ud > deadzone) then return true end
+   if k=='dl' and (lr < -deadzone) then return true end
+   if k=='dr' and (lr > deadzone) then return true end
+   if k=='du' and (ud < -deadzone) then return true end
+   if k=='dd' and (ud > deadzone) then return true end
    return joy:isGamepadDown(joybind[k])
 end
 

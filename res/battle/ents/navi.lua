@@ -1,7 +1,7 @@
-local ai = require "battle/ai"
-local ents = require "battle/ents"
-local chip = require "battle/chip_wrangler"
-local chip_artist = require "battle/chip_artist"
+local ai = require 'battle/ai'
+local ents = require 'battle/ents'
+local chip = require 'battle/chip_wrangler'
+local chip_artist = require 'battle/chip_artist'
 
 local class = {
    tangible = true,
@@ -22,18 +22,18 @@ return {
    class = class,
    variants = {
       player = {
-         img = "ben",
+         img = 'ben',
          hp = 300, hide_hp = true,
          act = function (self, input)
             if not input then return end
-            input = self.side=="left" and input[1] or input[2]
+            input = self.side=='left' and input[1] or input[2]
 
             self.selectchips = input.l>0 or input.r>0
             local move = function  (dx, dy)
                local goalx, goaly = self.x+dx, self.y+dy
                if ai.is_panel_free(goalx, goaly, self.side) then
                   self.goalx, self.goaly = goalx, goaly
-                  self.enter_state = "move"
+                  self.enter_state = 'move'
                end
             end
             local lr = input.dr - input.dl

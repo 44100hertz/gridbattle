@@ -1,7 +1,7 @@
 -- a singleton that stores a stack of scenes
 -- the stack top is the current game state.
 
-local input = require "src/input"
+local input = require 'src/input'
 local fade = require 'src/scenes/fade'
 
 local scene = {}

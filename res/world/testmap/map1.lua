@@ -1,9 +1,9 @@
 return {
-  version = "1.1",
-  luaversion = "5.1",
-  tiledversion = "0.17.2",
-  orientation = "isometric",
-  renderorder = "right-down",
+  version = '1.1',
+  luaversion = '5.1',
+  tiledversion = '0.17.2',
+  orientation = 'isometric',
+  renderorder = 'right-down',
   width = 8,
   height = 8,
   tilewidth = 64,
@@ -12,13 +12,13 @@ return {
   properties = {},
   tilesets = {
     {
-      name = "tiletest",
+      name = 'tiletest',
       firstgid = 1,
       tilewidth = 64,
       tileheight = 64,
       spacing = 0,
       margin = 0,
-      image = "map.png",
+      image = 'map.png',
       imagewidth = 240,
       imageheight = 160,
       tileoffset = {
@@ -33,8 +33,8 @@ return {
   },
   layers = {
     {
-      type = "tilelayer",
-      name = "1.5",
+      type = 'tilelayer',
+      name = '1.5',
       x = 0,
       y = 0,
       width = 8,
@@ -44,7 +44,7 @@ return {
       offsetx = 0,
       offsety = -16,
       properties = {},
-      encoding = "lua",
+      encoding = 'lua',
       data = {
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -57,8 +57,8 @@ return {
       }
     },
     {
-      type = "tilelayer",
-      name = "1",
+      type = 'tilelayer',
+      name = '1',
       x = 0,
       y = 0,
       width = 8,
@@ -68,7 +68,7 @@ return {
       offsetx = 0,
       offsety = 0,
       properties = {},
-      encoding = "lua",
+      encoding = 'lua',
       data = {
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,
@@ -81,8 +81,8 @@ return {
       }
     },
     {
-      type = "tilelayer",
-      name = "2",
+      type = 'tilelayer',
+      name = '2',
       x = 0,
       y = 0,
       width = 8,
@@ -92,7 +92,7 @@ return {
       offsetx = 0,
       offsety = -32,
       properties = {},
-      encoding = "lua",
+      encoding = 'lua',
       data = {
         0, 0, 0, 0, 0, 0, 0, 0,
         0, 0, 0, 0, 0, 0, 0, 0,

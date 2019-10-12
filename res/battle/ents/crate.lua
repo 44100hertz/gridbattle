@@ -1,17 +1,17 @@
-local ai = require "battle/ai"
-local ents = require "battle/ents"
+local ai = require 'battle/ai'
+local ents = require 'battle/ents'
 
 return {
    class={
       dx=0, z = 200, dz = -5,
-      side = "none",
+      side = 'none',
       tangible = false,
       spawn_offset = 1,
       hp = 1000, hide_hp = true,
       start = function (self)
-         local mirror = self.parent.side=="left" and 1 or -1
+         local mirror = self.parent.side=='left' and 1 or -1
          self.x = self.x + self.spawn_offset * mirror
-         self.parent.enter_state = "shoot"
+         self.parent.enter_state = 'shoot'
       end,
       update = function (self)
          if self.dz<0 and self.z<=0 then
@@ -35,7 +35,7 @@ return {
    },
    variants = {
       wheeled = {
-         img="wheel_crate",
+         img='wheel_crate',
          damage = 4,
          conflict_damage = 40,
          collide = function (self, with)

@@ -1,5 +1,5 @@
 local imgdb = require(PATHS.imgdb)
-local imgpath = _G.RES_PATH .. "/img/"
+local imgpath = _G.RES_PATH .. '/img/'
 
 Image = {}
 Image.__index = Image
@@ -66,12 +66,12 @@ function Image.new(path, sheet_name)
    setmetatable(self, Image)
 
    sheet_name = sheet_name or path
-   self.img = love.graphics.newImage(imgpath .. sheet_name .. ".png")
+   self.img = love.graphics.newImage(imgpath .. sheet_name .. '.png')
    self.iw, self.ih = self.img:getDimensions()
 
    local sheetdata = imgdb[sheet_name]
    if not sheetdata then
-      print("warning: sheet not found: ", sheet_name)
+      print('warning: sheet not found: ', sheet_name)
       sheetdata = {base={}}
    end
 
@@ -93,7 +93,7 @@ function Image.new(path, sheet_name)
       sheet.name = k
    end
 
-   if self.sheets.base then self:set_sheet("base") end
+   if self.sheets.base then self:set_sheet('base') end
 
    return self
 end

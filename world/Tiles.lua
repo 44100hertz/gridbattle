@@ -3,8 +3,8 @@ local lg = love.graphics
 local Image = require 'src/Image'
 local oop = require 'src/oop'
 
-local img = Image.new("battle_ui")
-local depthdraw = require "src/depthdraw"
+local img = Image.new('battle_ui')
+local depthdraw = require 'src/depthdraw'
 local BIT_XFLIP = 0x80000000
 
 local Tiles = {}
@@ -22,7 +22,7 @@ function Tiles.from_data (data)
       math.floor(set.imageheight / set.tileheight),
       set.imagewidth, set.imageheight
    )
-   self.tileset.img = lg.newImage("res/world/testmap/map.png")
+   self.tileset.img = lg.newImage('res/world/testmap/map.png')
    return self
 end
 
