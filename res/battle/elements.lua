@@ -21,6 +21,8 @@ return {
    by_name = by_name,
 
    interact = function (send_elem, recv_elem, amount, ent)
-      ent.hp = ent.hp - amount
+      if ent.hp then
+         ent.hp = ent.hp - amount
+      end
    end
 }

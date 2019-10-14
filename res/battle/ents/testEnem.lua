@@ -1,5 +1,4 @@
 local ents = require 'battle/ents'
-local ai = require 'battle/ai'
 local chip = require 'battle/chip_wrangler'
 
 local class = {
@@ -29,7 +28,7 @@ return {
          color = {53/255.0, 57/255.0, 196/255.0},
          cooldown = 0,
          update = function (self)
-            if ai.see_line(self.x, self.y, self.side) and
+            if self:locate_enemy_ahead() and
                self.cooldown<1
             then
                self.cooldown = 80

@@ -1,4 +1,3 @@
-local ai = require 'battle/ai'
 local ents = require 'battle/ents'
 
 return {
@@ -15,30 +14,29 @@ return {
       end,
       update = function (self)
          if self.dz<0 and self.z<=0 then
-            local isfree, tenant = ai.is_panel_free(self.x, self.y)
-            if isfree then
-               self.z = 0
-               self.dz = 0
-               self.tangible = true
-               self.size = 20/64
-            elseif tenant then
-               ents.apply_damage(self, tenant, self.conflict_damage)
-               self.despawn = true
-            else
-               self.despawn = true
+            self.z = 0
+            self.dz = 0
+            self.tangible = true
+            self.size = 20/64
+            local panel = self:query_panel()
+            if panel.tenant then
+               ents.apply_damage(self, panel.tenant, self.conflict_damage)
             end
          end
          if self.x < 0 or self.x > 7 then
             self.despawn = true
          end
+         self:move()
       end,
    },
    variants = {
       wheeled = {
          img='wheel_crate',
-         damage = 4,
          conflict_damage = 40,
          collide = function (self, with)
+            if self.z == 0 then
+               ents.apply_damage(self, with, 4)
+            end
             if with.dx and with.dx~=0 then
                self.dx = with.real_dx>0 and 1/16 or -1/16
                self.tangible = false

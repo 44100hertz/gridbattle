@@ -22,7 +22,6 @@ function side.new(queue, deck, is_right)
       self.offset = 0
    end
    self.queue = queue
-   assert(#self.queue == 0)
    self.pal = deck:draw(5, self.pal)
    self.sel = 1
    return self

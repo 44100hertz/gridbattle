@@ -12,6 +12,7 @@ return {
          if self.time == 60 then
             self:hit_ground()
          end
+         self:move()
       end,
    },
    variants = {

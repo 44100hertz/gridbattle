@@ -1,4 +1,3 @@
-local ai = require 'battle/ai'
 local ents = require 'battle/ents'
 local chip = require 'battle/chip_wrangler'
 local chip_artist = require 'battle/chip_artist'
@@ -8,7 +7,7 @@ local class = {
    size = 0.4,
    states = {
       move = function (self)
-         if not ai.is_panel_free(self.goalx, self.goaly, self.side) then
+         if not self:is_panel_free(self.goalx, self.goaly) then
             self.enter_state = base
          end
          if self.time == 5 then
@@ -31,7 +30,7 @@ return {
             self.selectchips = input.l>0 or input.r>0
             local move = function  (dx, dy)
                local goalx, goaly = self.x+dx, self.y+dy
-               if ai.is_panel_free(goalx, goaly, self.side) then
+               if self:is_panel_free(goalx, goaly) then
                   self.goalx, self.goaly = goalx, goaly
                   self.enter_state = 'move'
                end

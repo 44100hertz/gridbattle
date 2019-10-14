@@ -1,5 +1,4 @@
 local depthdraw = require 'src/depthdraw'
-local set = require 'battle/set'
 
 local img = (require 'src/image').new'panels'
 
@@ -51,10 +50,10 @@ return {
       end
    end,
 
-   draw = function ()
+   draw = function (turf)
       for x = 1,numx do
          for y = 1,numy do
-            local row = x > set.stage.turf[y] and 1 or 2
+            local row = x > turf[y] and 1 or 2
             local col = panels[x][y].stat == 'poison' and 2 or 1
             local index = (row-1)*2 + col
             local draw = function (x, y)
@@ -72,4 +71,6 @@ return {
          panel.stat_time = counter
       end
    end,
+
+   width = numx, height = numy,
 }

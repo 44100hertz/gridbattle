@@ -4,7 +4,6 @@ local scene = require 'src/scene'
 local dialog = require 'src/dialog'
 local oop = require 'src/oop'
 
-local set = require 'battle/set'
 local side = require 'battle/customize/side'
 
 local two_player
@@ -14,13 +13,13 @@ return {
    transparent = true,
    queue = queue,
 
-   start = function (left_deck, right_deck)
+   start = function (bstate, left_deck, right_deck)
       left, right = nil, nil
       if left_deck.data then
-         left = side.new(set.left.queue, left_deck, false)
+         left = side.new(bstate.left.queue, left_deck, false)
       end
       if right_deck.data then
-         right = side.new(set.right.queue, right_deck, true)
+         right = side.new(bstate.right.queue, right_deck, true)
       end
       two_player = (left_deck.data and right_deck.data)
    end,

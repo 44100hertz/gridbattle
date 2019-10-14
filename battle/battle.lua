@@ -1,4 +1,3 @@
--- Center the stage unless specified
 local scene = require 'src/scene'
 local folder = require 'src/folder'
 local depthdraw = require 'src/depthdraw'
@@ -6,8 +5,8 @@ local depthdraw = require 'src/depthdraw'
 local ents = require 'battle/ents'
 local ai = require 'battle/ai'
 local stage = require 'battle/stage'
-local set = require 'battle/set'
 local customize = require 'battle/customize/customize'
+local proto_ent = require 'battle/proto/ent'
 
 local savedata = require(RES_PATH .. 'savedata')
 local ui =  require(PATHS.battle .. 'ui')
@@ -18,13 +17,17 @@ local bg
 local cust_frames
 local cust_time = 4*60
 
+local bstate = {}
+
 local selectchips = function ()
-   scene.push(customize, folder_left, folder_right)
+   bstate.left.queue = {}
+   bstate.right.queue = {}
+   scene.push(customize, bstate, folder_left, folder_right)
    cust_frames = 0
 end
 
 local clear = function ()
-   for k,_ in pairs(set) do set[k] = nil end
+   for k,_ in pairs(bstate) do bstate[k] = nil end
    folder_left = folder.new{}
    folder_right = folder.new{}
    ents.exit()
@@ -42,30 +45,33 @@ return {
       tform.yoff = BATTLE.yoff
 
       local new_set = dofile(PATHS.sets .. set_name .. '.lua')
-      for k,v in pairs(new_set) do set[k] = v end
+      for k,v in pairs(new_set) do bstate[k] = v end
 
-      if set.left_kind == 'player' then
-         set.left.queue = {}
+      if bstate.left_kind == 'player' then
+         bstate.left.queue = {}
          folder_left:load(savedata.player.folder)
       end
-      if set.right_kind == 'player' then
-         set.right.queue = {}
+      if bstate.right_kind == 'player' then
+         bstate.right.queue = {}
          folder_right:load(savedata.player.folder)
       end
 
       stage.start()
-      ents.start()
+      ents.start(bstate)
 
-      bg = require(PATHS.bg .. set.bg)
-      set.bg_args = set.bg_args or {}
-      bg.start(unpack(set.bg_args))
+      bg = require(PATHS.bg .. bstate.bg)
+      bstate.bg_args = bstate.bg_args or {}
+      bg.start(unpack(bstate.bg_args))
+
+      -- binds methods to proto_ent
+      ai.start(proto_ent, stage, bstate.stage.turf)
 
       selectchips()
    end,
 
    update = function (_, input)
       if input then
-	 local ending = ents.get_ending()
+	 local ending = ents.get_ending(bstate)
 	 if ending then
 	    scene.push(require 'battle/results', ending)
 	    return
@@ -75,10 +81,10 @@ return {
 	    scene.push((require 'src/menu').new('pause'))
 	    return
 	 elseif cust_frames >= cust_time and
-            (set.left.selectchips or set.right.selectchips)
+            (bstate.left.selectchips or bstate.right.selectchips)
          then
-            set.left.selectchips = false
-            set.right.selectchips = false
+            bstate.left.selectchips = false
+            bstate.right.selectchips = false
 	    selectchips()
 	    return
 	 end
@@ -92,10 +98,10 @@ return {
    draw = function ()
       bg.draw()
       ents.draw() -- calls depthdraw
-      stage.draw() -- calls depthdraw
+      stage.draw(bstate.stage.turf) -- calls depthdraw
 
       local cust_amount = cust_frames / cust_time
       depthdraw.draw()
-      ui.draw(set, cust_amount)
+      ui.draw(bstate, cust_amount)
    end,
 }

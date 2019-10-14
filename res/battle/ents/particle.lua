@@ -12,6 +12,7 @@ local class = {
    update = function (self)
       self.dz = self.dz - gravity
       if self.z < -200 then self.despawn = true end
+      self:move()
    end,
 
    draw = function (self, x, y)
