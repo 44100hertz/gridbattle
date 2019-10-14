@@ -1,13 +1,24 @@
 local text = require 'src/text'
 local actors = require 'battle/actors'
 local chip_artist = require 'battle/chip_artist'
+
+local ai = require 'battle/proto/ai'
+
 local lg = love.graphics
 
 local ent = {}
 
--- AI methods are filled in in battle/battle.lua
-function ent.query_panel () error 'uninitialized function' end
-function ent.locate_enemy_ahead () error 'uninitialized function' end
+-- Must call initialize before prototype entity is usable at all
+function ent:initialize (bstate, stage)
+   ai.start(stage, bstate.stage.turf)
+   ent.query_panel = ai.query_panel
+   ent.locate_enemy_ahead = ai.locate_enemy_ahead
+   ent.is_panel_free = ai.is_panel_free
+end
+
+function ent:start ()
+   if self.states then actors.start(self) end
+end
 
 function ent:die ()
    if self.states and self.states.die then
@@ -15,10 +26,6 @@ function ent:die ()
    else
       self.despawn = true
    end
-end
-
-function ent:start ()
-   if self.states then actors.start(self) end
 end
 
 function ent:update (input)

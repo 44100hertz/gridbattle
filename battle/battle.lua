@@ -3,7 +3,6 @@ local folder = require 'src/folder'
 local depthdraw = require 'src/depthdraw'
 
 local ents = require 'battle/ents'
-local ai = require 'battle/ai'
 local stage = require 'battle/stage'
 local customize = require 'battle/customize/customize'
 local proto_ent = require 'battle/proto/ent'
@@ -57,14 +56,13 @@ return {
       end
 
       stage.start()
-      ents.start(bstate)
+      ents.start(bstate, stage)
 
       bg = require(PATHS.bg .. bstate.bg)
       bstate.bg_args = bstate.bg_args or {}
       bg.start(unpack(bstate.bg_args))
 
-      -- binds methods to proto_ent
-      ai.start(proto_ent, stage, bstate.stage.turf)
+      proto_ent:initialize(bstate, stage)
 
       selectchips()
    end,

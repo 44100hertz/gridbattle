@@ -2,11 +2,8 @@ local ai = {}
 
 local stage, turf
 
-ai.start = function (proto_ent, _stage, _turf)
+ai.start = function (_stage, _turf)
    stage, turf = _stage, _turf
-   proto_ent.query_panel = ai.query_panel
-   proto_ent.locate_enemy_ahead = ai.locate_enemy_ahead
-   proto_ent.is_panel_free = ai.is_panel_free
 end
 
 function ai:query_panel (x, y)
