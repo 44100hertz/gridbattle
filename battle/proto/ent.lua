@@ -8,12 +8,17 @@ local lg = love.graphics
 
 local ent = {}
 
--- Must call initialize before prototype entity is usable at all
-function ent:initialize (bstate, stage)
+function ent.initialize (bstate, stage)
    ai.start(stage, bstate.stage.turf)
    ent.query_panel = ai.query_panel
    ent.locate_enemy_ahead = ai.locate_enemy_ahead
    ent.is_panel_free = ai.is_panel_free
+   function ent:apply_panel_stat (stat, len, x, y)
+      stage:apply_stat(stat, len, x or self.x, y or self.y)
+   end
+   function ent:free_space (x, y)
+      stage.panels[x or self.x][y or self.y].tenant = nil
+   end
 end
 
 function ent:start ()

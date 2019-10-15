@@ -17,6 +17,7 @@ local cust_frames
 local cust_time = 4*60
 
 local bstate = {}
+local stage_instance = {} -- Will replace when battle is made OOP
 
 local selectchips = function ()
    bstate.left.queue = {}
@@ -55,14 +56,13 @@ return {
          folder_right:load(savedata.player.folder)
       end
 
-      stage.start()
-      ents.start(bstate, stage)
-
       bg = require(PATHS.bg .. bstate.bg)
       bstate.bg_args = bstate.bg_args or {}
       bg.start(unpack(bstate.bg_args))
 
-      proto_ent:initialize(bstate, stage)
+      stage_instance = stage.new()
+      ents.start(bstate, stage_instance)
+      proto_ent.initialize(bstate, stage_instance)
 
       selectchips()
    end,
@@ -89,14 +89,14 @@ return {
 	 cust_frames = cust_frames + 1
       end
 
-      stage.update(ents.ents())
+      stage_instance:update(ents.ents())
       ents.update(input)
    end,
 
    draw = function ()
       bg.draw()
       ents.draw() -- calls depthdraw
-      stage.draw(bstate.stage.turf) -- calls depthdraw
+      stage_instance:draw(bstate.stage.turf) -- calls depthdraw
 
       local cust_amount = cust_frames / cust_time
       depthdraw.draw()

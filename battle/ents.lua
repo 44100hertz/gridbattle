@@ -1,4 +1,3 @@
-local stage = require 'battle/stage'
 local proto_ent = require 'battle/proto/ent'
 local depthdraw = require 'src/depthdraw'
 local image = require 'src/image'
@@ -8,6 +7,7 @@ local elements = require(PATHS.battle .. 'elements')
 
 local entity_list, images = {}, {}
 
+local stage
 local ents = {}
 
 function ents.exit ()
@@ -52,7 +52,7 @@ end
 ents.apply_damage = function (send, recv, amount)
    amount = amount or send.damage
    local recv_elem
-   local panel = stage.getpanel(recv.x, recv.y)
+   local panel = stage:getpanel(recv.x, recv.y)
    if panel and panel.stat and elements.by_name[panel.stat] then
       recv_elem = panel.stat
    else
@@ -87,7 +87,8 @@ end
 
 function ents.ents () return entity_list end
 
-function ents.start (bstate)
+function ents.start (bstate, _stage)
+   stage = _stage
    local init_player = function (data, side)
       data.side = side
       ents.add('navi', 'player', data)
@@ -128,6 +129,9 @@ function ents.update (input)
    end
    for i,ent in ipairs(entity_list) do
       if ent.despawn then
+         if ent:query_panel().tenant == ent then
+            ent:free_space()
+         end
          table.remove(entity_list, i)
       end
    end
@@ -138,9 +142,8 @@ function ents.update (input)
       if a.collide then a:collide(b) end
       if b.collide then b:collide(a) end
    end
-   stage.clear()
    for _,ent in ipairs(entity_list) do
-      local panel = stage.getpanel(ent.x, ent.y)
+      local panel = stage:getpanel(ent.x, ent.y)
       if panel and panel.tenant and
          panel.tenant.tangible and
          panel.tenant.side ~= ent.side

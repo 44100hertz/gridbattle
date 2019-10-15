@@ -1,5 +1,3 @@
-local stage = require 'battle/stage'
-
 return {
    class = {
       dx = 3/60,
@@ -20,7 +18,7 @@ return {
          img = 'poisdrop',
          z=40, dz = 1,
          hit_ground = function (self)
-            stage.apply_stat('poison', 600, self.x, self.y)
+            self:apply_panel_stat('poison', 600)
          end,
       }
    }

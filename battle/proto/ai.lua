@@ -9,7 +9,7 @@ end
 function ai:query_panel (x, y)
    x = x or self.x
    y = y or self.y
-   local panel = stage.getpanel(x,y)
+   local panel = stage:getpanel(x,y)
    if not panel then
       return {}
    end

@@ -8,9 +8,10 @@ local class = {
    states = {
       move = function (self)
          if not self:is_panel_free(self.goalx, self.goaly) then
-            self.enter_state = base
+            self.enter_state = 'base'
          end
          if self.time == 5 then
+            self:free_space(self.x, self.y)
             self.x, self.y = self.goalx, self.goaly
          end
       end,
