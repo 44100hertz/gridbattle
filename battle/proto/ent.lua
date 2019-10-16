@@ -1,6 +1,7 @@
 local text = require 'src/text'
 local actors = require 'battle/actors'
 local chip_artist = require 'battle/chip_artist'
+local chip_wrangler = require 'battle/chip_wrangler'
 
 local ai = require 'battle/proto/ai'
 
@@ -8,7 +9,7 @@ local lg = love.graphics
 
 local ent = {}
 
-function ent.initialize (bstate, stage)
+function ent.initialize (bstate, stage, entities)
    ai.start(stage, bstate.stage.turf)
    ent.query_panel = ai.query_panel
    ent.locate_enemy_ahead = ai.locate_enemy_ahead
@@ -18,6 +19,21 @@ function ent.initialize (bstate, stage)
    end
    function ent:free_space (x, y)
       stage.panels[x or self.x][y or self.y].tenant = nil
+   end
+   function ent:use_chip (chip_name)
+      chip_wrangler.use(self, chip_name)
+   end
+   function ent:use_queue_chip ()
+      chip_wrangler.queue_use(self)
+   end
+   function ent:spawn (class_name, variant_name, props)
+      props = props or {}
+      props.x = props.x or self.x
+      props.y = props.y or self.y
+      return entities:add(class_name, variant_name, props)
+   end
+   function ent:apply_damage (target, amount)
+      entities:apply_damage(self, target, amount)
    end
 end
 

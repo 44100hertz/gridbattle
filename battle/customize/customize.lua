@@ -1,8 +1,7 @@
 local lg = love.graphics
 
-local scene = require 'src/scene'
-local dialog = require 'src/dialog'
 local oop = require 'src/oop'
+local scene = require 'src/scene'
 
 local side = require 'battle/customize/side'
 

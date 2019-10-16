@@ -2,6 +2,9 @@ local lg = love.graphics
 
 local oop = require 'src/oop'
 local text = require 'src/text'
+local scene = require 'src/scene'
+local dialog = require 'src/dialog'
+
 local img = (require'src/image').new'customize'
 local chip_artist = require 'battle/chip_artist'
 local chipdb = require(PATHS.chipdb)

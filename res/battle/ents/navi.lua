@@ -1,4 +1,3 @@
-local ents = require 'battle/ents'
 local chip = require 'battle/chip_wrangler'
 local chip_artist = require 'battle/chip_artist'
 

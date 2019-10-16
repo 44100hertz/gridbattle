@@ -1,4 +1,3 @@
-local ents = require 'battle/ents'
 local chip = require 'battle/chip_wrangler'
 
 local class = {
@@ -8,7 +7,7 @@ local class = {
    die = function (self)
       self.despawn = true
       for _ = 1,50 do
-         ents.add('particle', nil,
+         self:spawn('particle', nil,
             {x=self.x, y=self.y, z=20, color=self.color})
       end
    end

@@ -1,4 +1,3 @@
-local ents = require 'battle/ents'
 local class = {
    collide_die = true,
    size = 8/64,
@@ -6,7 +5,7 @@ local class = {
       self.parent.enter_state = 'shoot'
    end,
    collide = function (self, with)
-      ents.apply_damage(self, with, self.damage)
+      self:apply_damage(with, self.damage)
    end,
 }
 

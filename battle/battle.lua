@@ -2,7 +2,7 @@ local scene = require 'src/scene'
 local folder = require 'src/folder'
 local depthdraw = require 'src/depthdraw'
 
-local ents = require 'battle/ents'
+local entities = require 'battle/entities'
 local stage = require 'battle/stage'
 local customize = require 'battle/customize/customize'
 local proto_ent = require 'battle/proto/ent'
@@ -18,6 +18,7 @@ local cust_time = 4*60
 
 local bstate = {}
 local stage_instance = {} -- Will replace when battle is made OOP
+local entities_instance = {}
 
 local selectchips = function ()
    bstate.left.queue = {}
@@ -30,7 +31,6 @@ local clear = function ()
    for k,_ in pairs(bstate) do bstate[k] = nil end
    folder_left = folder.new{}
    folder_right = folder.new{}
-   ents.exit()
 end
 
 clear()
@@ -61,15 +61,15 @@ return {
       bg.start(unpack(bstate.bg_args))
 
       stage_instance = stage.new()
-      ents.start(bstate, stage_instance)
-      proto_ent.initialize(bstate, stage_instance)
+      entities_instance = entities.new(bstate, stage_instance)
+      proto_ent.initialize(bstate, stage_instance, entities_instance)
 
       selectchips()
    end,
 
    update = function (_, input)
       if input then
-	 local ending = ents.get_ending(bstate)
+	 local ending = entities_instance:get_ending(bstate)
 	 if ending then
 	    scene.push(require 'battle/results', ending)
 	    return
@@ -89,13 +89,13 @@ return {
 	 cust_frames = cust_frames + 1
       end
 
-      stage_instance:update(ents.ents())
-      ents.update(input)
+      stage_instance:update(entities_instance.entities)
+      entities_instance:update(input)
    end,
 
    draw = function ()
       bg.draw()
-      ents.draw() -- calls depthdraw
+      entities_instance:draw() -- calls depthdraw
       stage_instance:draw(bstate.stage.turf) -- calls depthdraw
 
       local cust_amount = cust_frames / cust_time
