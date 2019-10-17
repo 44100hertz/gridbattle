@@ -1,5 +1,6 @@
 local scene = require 'src/scene'
 local world = require 'world/world'
+local battle = require 'battle/battle'
 
 return {
    y = 40, spacing = 16,
@@ -7,11 +8,11 @@ return {
    bg_img = 'title',
    {'battle',
     a = function ()
-       scene.push_fade({}, (require 'battle/battle'), 'test')
+       scene.push_fade({}, battle.new('test'))
    end},
    {'pvp',
     a = function ()
-       scene.push_fade({}, (require 'battle/battle'), 'pvp')
+       scene.push_fade({}, battle.new('pvp'))
    end},
    {'folder editor',
     a = function ()

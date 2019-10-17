@@ -1,3 +1,4 @@
+local oop = require 'src/oop'
 local scene = require 'src/scene'
 local folder = require 'src/folder'
 local depthdraw = require 'src/depthdraw'
@@ -10,96 +11,89 @@ local proto_ent = require 'battle/proto/ent'
 local savedata = require(RES_PATH .. 'savedata')
 local ui =  require(PATHS.battle .. 'ui')
 
-local folder_left, folder_right
+local cust_length = 4*60
 
-local bg
-local cust_frames
-local cust_time = 4*60
+local battle = {}
 
-local bstate = {}
-local stage_instance = {} -- Will replace when battle is made OOP
-local entities_instance = {}
+function battle.new (set_name)
+   local self = oop.instance(battle, {})
+   self.folders = {folder.new{}, folder.new{}}
 
-local selectchips = function ()
-   bstate.left.queue = {}
-   bstate.right.queue = {}
-   scene.push(customize.new(bstate, folder_left, folder_right))
-   cust_frames = 0
+   local tform = depthdraw.tform
+   tform.xscale = BATTLE.xscale
+   tform.yscale = BATTLE.yscale
+   tform.xoff = BATTLE.xoff
+   tform.yoff = BATTLE.yoff
+
+   self.state = dofile(PATHS.sets .. set_name .. '.lua')
+
+   if self.state.left_kind == 'player' then
+      self.state.left.queue = {}
+      self.folders[1]:load(savedata.player.folder)
+   end
+   if self.state.right_kind == 'player' then
+      self.state.right.queue = {}
+      self.folders[2]:load(savedata.player.folder)
+   end
+
+   self.bg = require(PATHS.bg .. self.state.bg)
+   self.state.bg_args = self.state.bg_args or {}
+   self.bg.start(unpack(self.state.bg_args))
+
+   self.stage = stage.new()
+   self.entities = entities.new(self.state, self.stage)
+   proto_ent.initialize(self.state, self.stage, self.entities)
+
+   self.initial_select_chips = true
+   self.cust_timer = 0
+
+   return self
 end
 
-local clear = function ()
-   for k,_ in pairs(bstate) do bstate[k] = nil end
-   folder_left = folder.new{}
-   folder_right = folder.new{}
+function battle:selectchips ()
+   self.state.left.queue = {}
+   self.state.right.queue = {}
+   scene.push(customize.new(self.state, self.folders[1], self.folders[2]))
+   self.cust_timer = 0
+   self.initial_select_chips = false
 end
 
-clear()
-
-return {
-   exit = clear,
-   start = function (set_name)
-      local tform = depthdraw.tform
-      tform.xscale = BATTLE.xscale
-      tform.yscale = BATTLE.yscale
-      tform.xoff = BATTLE.xoff
-      tform.yoff = BATTLE.yoff
-
-      local new_set = dofile(PATHS.sets .. set_name .. '.lua')
-      for k,v in pairs(new_set) do bstate[k] = v end
-
-      if bstate.left_kind == 'player' then
-         bstate.left.queue = {}
-         folder_left:load(savedata.player.folder)
-      end
-      if bstate.right_kind == 'player' then
-         bstate.right.queue = {}
-         folder_right:load(savedata.player.folder)
+function battle:update (input)
+   if self.initial_select_chips then
+      self:selectchips()
+   end
+   if input then
+      local ending = self.entities:get_ending(self.state)
+      if ending then
+         scene.push(require 'battle/results', ending)
+         return
       end
 
-      bg = require(PATHS.bg .. bstate.bg)
-      bstate.bg_args = bstate.bg_args or {}
-      bg.start(unpack(bstate.bg_args))
-
-      stage_instance = stage.new()
-      entities_instance = entities.new(bstate, stage_instance)
-      proto_ent.initialize(bstate, stage_instance, entities_instance)
-
-      selectchips()
-   end,
-
-   update = function (_, input)
-      if input then
-	 local ending = entities_instance:get_ending(bstate)
-	 if ending then
-	    scene.push(require 'battle/results', ending)
-	    return
-	 end
-
-	 if input[1].st == 1 or input[2].st == 1 then
-	    scene.push((require 'src/menu').new('pause'))
-	    return
-	 elseif cust_frames >= cust_time and
-            (bstate.left.selectchips or bstate.right.selectchips)
-         then
-            bstate.left.selectchips = false
-            bstate.right.selectchips = false
-	    selectchips()
-	    return
-	 end
-	 cust_frames = cust_frames + 1
+      if input[1].st == 1 or input[2].st == 1 then
+         scene.push((require 'src/menu').new('pause'))
+         return
+      elseif self.cust_timer >= cust_length and
+         (self.state.left.selectchips or self.state.right.selectchips)
+      then
+         self.state.left.selectchips = false
+         self.state.right.selectchips = false
+         self:selectchips()
+         return
       end
+      self.cust_timer = self.cust_timer + 1
+   end
+   self.stage:update(self.entities.entities)
+   self.entities:update(input)
+end
 
-      stage_instance:update(entities_instance.entities)
-      entities_instance:update(input)
-   end,
+function battle:draw ()
+   self.bg.draw()
+   self.entities:draw() -- calls depthdraw
+   self.stage:draw(self.state.stage.turf) -- calls depthdraw
 
-   draw = function ()
-      bg.draw()
-      entities_instance:draw() -- calls depthdraw
-      stage_instance:draw(bstate.stage.turf) -- calls depthdraw
+   local cust_amount = self.cust_timer / cust_length
+   depthdraw.draw()
+   ui.draw(self.state, cust_amount)
+end
 
-      local cust_amount = cust_frames / cust_time
-      depthdraw.draw()
-      ui.draw(bstate, cust_amount)
-   end,
-}
+return battle
