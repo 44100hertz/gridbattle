@@ -15,7 +15,7 @@ local side = {}
 -- queue: a reference for where to write chips into when done
 -- deck: the deck to draw from
 -- is_right: set to true if the side is on the right part of the screen
-function side.new(queue, deck, is_right)
+function side.new(queue, deck, is_right, two_player)
    local self = oop.instance(side, {})
    if is_right then
       self.input_index = 2
@@ -27,6 +27,7 @@ function side.new(queue, deck, is_right)
    self.queue = queue
    self.pal = deck:draw(5, self.pal)
    self.sel = 1
+   self.two_player = two_player
    return self
 end
 
@@ -64,7 +65,7 @@ function side:update(input_list)
       local i=1
       while(self.pal[i]~=nil) do i=i+1 end
       self.pal[i] = table.remove(self.queue)
-   elseif input.l==1 and not two_player and sel then
+   elseif input.l==1 and not self.two_player and sel then
       local chip = chipdb[sel.name]
       scene.push(dialog.popup, chip.desc, 132, 16)
    elseif input.sel==1 then

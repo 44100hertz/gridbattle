@@ -23,7 +23,7 @@ local entities_instance = {}
 local selectchips = function ()
    bstate.left.queue = {}
    bstate.right.queue = {}
-   scene.push(customize, bstate, folder_left, folder_right)
+   scene.push(customize.new(bstate, folder_left, folder_right))
    cust_frames = 0
 end
 
