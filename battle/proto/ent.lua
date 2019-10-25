@@ -1,6 +1,5 @@
 local text = require 'src/text'
 local chip_artist = require 'battle/chip_artist'
-local chip_wrangler = require 'battle/chip_wrangler'
 
 local ai = require 'battle/proto/ai'
 
@@ -8,20 +7,16 @@ local ent = {}
 
 function ent.initialize (bstate, stage, entities)
    ai.start(stage, bstate.stage.turf)
+
    ent.query_panel = ai.query_panel
    ent.locate_enemy_ahead = ai.locate_enemy_ahead
    ent.is_panel_free = ai.is_panel_free
+
    function ent:apply_panel_stat (stat, len, x, y)
       stage:apply_stat(stat, len, x or self.x, y or self.y)
    end
    function ent:free_space (x, y)
       stage.panels[x or self.x][y or self.y].tenant = nil
-   end
-   function ent:use_chip (chip_name)
-      chip_wrangler.use(self, chip_name)
-   end
-   function ent:use_queue_chip ()
-      chip_wrangler.queue_use(self)
    end
    function ent:spawn (entity)
       entity.x = entity.x or self.x
@@ -65,6 +60,22 @@ function ent:draw_info (x, y)
 
    if self.queue then
       chip_artist.draw_icon_queue(self.queue, x, y-60)
+   end
+end
+
+function ent:use_chip (chip_name)
+   local added = self:spawn {
+      name = chip_name,
+      parent = self,
+      delay = 8,
+   }
+   added.side = added.side or self.side
+end
+
+function ent:use_queue_chip ()
+   if #self.queue>0 then
+      local removed = table.remove(self.queue, 1)
+      self:use_chip(removed.name)
    end
 end
 

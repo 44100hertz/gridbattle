@@ -22,7 +22,6 @@ function crate:update ()
       self.size = 20/64
       local panel = self:query_panel()
       if panel.tenant then
-         print 'oof'
          self:apply_damage(panel.tenant, self.land_damage)
          if not panel.tenant.despawn then
             self.despawn = true

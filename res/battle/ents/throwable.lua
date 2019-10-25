@@ -9,7 +9,7 @@ end
 
 function throwable:update ()
    self.dz = self.dz - 1/20
-   if self.time == 60 then
+   if self.time == self.lifespan then
       self:hit_ground()
    end
    self:move()

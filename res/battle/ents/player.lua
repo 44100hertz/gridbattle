@@ -1,5 +1,3 @@
-local chip = require 'battle/chip_wrangler'
-
 local player = {
    extends = 'navi',
    img = 'ben',
@@ -21,8 +19,7 @@ function player:act (input)
    local lr = input.dr - input.dl
    local ud = input.dd - input.du
 
-   if input.a == 1 then
-      chip.queue_use(self)
+   if input.a == 1 then self:use_queue_chip()
    elseif ud<0 then move(0, -1)
    elseif ud>0 then move(0, 1)
    elseif lr<0 then move(-1, 0)

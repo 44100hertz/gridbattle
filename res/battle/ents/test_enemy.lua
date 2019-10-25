@@ -1,5 +1,3 @@
-local chip = require 'battle/chip_wrangler'
-
 local test_enemy = {
    tangible = true,
    size=20/64,
@@ -37,7 +35,7 @@ end
 function test_enemy:update ()
    if self.bullet and self:locate_enemy_ahead() and self.cooldown<1 then
       self.cooldown = self.bullet_delay
-      chip.use(self, self.bullet)
+      self:use_chip(self.bullet)
    end
    self.cooldown = self.cooldown - 1
 end
