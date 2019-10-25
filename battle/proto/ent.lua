@@ -1,11 +1,8 @@
 local text = require 'src/text'
-local actors = require 'battle/actors'
 local chip_artist = require 'battle/chip_artist'
 local chip_wrangler = require 'battle/chip_wrangler'
 
 local ai = require 'battle/proto/ai'
-
-local lg = love.graphics
 
 local ent = {}
 
@@ -26,31 +23,21 @@ function ent.initialize (bstate, stage, entities)
    function ent:use_queue_chip ()
       chip_wrangler.queue_use(self)
    end
-   function ent:spawn (class_name, variant_name, props)
-      props = props or {}
-      props.x = props.x or self.x
-      props.y = props.y or self.y
-      return entities:add(class_name, variant_name, props)
+   function ent:spawn (entity)
+      entity.x = entity.x or self.x
+      entity.y = entity.y or self.y
+      return entities:add(entity)
    end
    function ent:apply_damage (target, amount)
       entities:apply_damage(self, target, amount)
    end
 end
 
-function ent:start ()
-   if self.states then actors.start(self) end
-end
-
 function ent:die ()
-   if self.states and self.states.die then
-      actors.kill(self)
-   else
-      self.despawn = true
-   end
+   self.despawn = true
 end
 
-function ent:update (input)
-   if self.states then actors.update(self, input) end
+function ent:update ()
    self:move()
 end
 

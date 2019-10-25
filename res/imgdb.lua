@@ -46,10 +46,4 @@ return {
       throw = {y=180, w=50, h=60, ox=24, oy=54, fps=20, numx=2,
                len=5, iasa=3, anim={1,2}},
    },
-   tvgirl = {
-      base  = {y=0,    w=32, h=48, numx=1},
-      shoot = {y=48,   w=32, h=48, numx=3, speed=10, len=3, anim={1,2,3,3}},
-      throw = {y=48*2, w=32, h=48, numx=3, speed=10, len=3, anim={1,2,3,3}},
-      move  = {y=48*3, w=32, h=48, numx=1, speed=3,  len=8},
-   },
 }

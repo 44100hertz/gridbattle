@@ -4,7 +4,6 @@ local image = require 'src/image'
 
 local proto_ent = require 'battle/proto/ent'
 
-local enemydb = require(PATHS.enemydb)
 local elements = require(PATHS.battle .. 'elements')
 
 local entities = {}
@@ -16,14 +15,14 @@ function entities.new (bstate, stage)
 
    local function init_player (data, side)
       data.side = side
-      self:add('navi', 'player', data)
+      data.name = 'player'
+      self:add(data)
       return data
    end
    local function init_enemies (data, side)
       for _,enemy in ipairs(data) do
          enemy.side = side
-         local db_enemy = enemydb[enemy.name]
-         self:add(db_enemy.class, db_enemy.variant, enemy)
+         self:add(enemy)
       end
       return data
    end
@@ -42,35 +41,31 @@ function entities.new (bstate, stage)
    return self
 end
 
-function entities:add (class_name, variant_name, ent)
-   ent = ent or {}
-   local class = require (PATHS.battle .. 'ents/' .. class_name)
-   setmetatable(class.class, {__index = proto_ent})
-
-   -- Chain metatables for variants
-   class.class.__index = class.class
-   if variant_name then
-      local variant = class.variants[variant_name]
-      if not variant then
-         print('variant not found:', variant)
-         return
-      end
-      variant.__index = variant
-      setmetatable(variant, class.class)
-      setmetatable(ent, variant)
-   else
-      setmetatable(ent, class.class)
+function entities:add (ent)
+   -- Class heirachy
+   -- Object -> Class -> [Parent -> [Parent -> ...]] -> Entity
+   local class = require (PATHS.battle .. 'ents/' .. ent.name)
+   local head = class
+   setmetatable(ent, {__index = head})
+   while head.extends do
+      local extended = require(PATHS.battle .. 'ents/' .. head.extends)
+      setmetatable(head, {__index = extended})
+      head = extended
    end
+   setmetatable(head, {__index = proto_ent})
+
+   if ent.start then ent:start() end
+
+   ent.time = 0
+   ent.z = ent.z or 0
+   if ent.max_hp then ent.hp = ent.max_hp end
 
    if ent.img then
       ent.image = (require 'src/image').new(ent.img)
       ent.img = nil
    end
 
-   ent.time = 0
-   ent.z = ent.z or 0
-   if ent.max_hp then ent.hp = ent.max_hp end
-   ent:start()
+   if ent.after_image_load then ent:after_image_load() end -- HACK
 
    table.insert(self.entities, ent)
    return ent
