@@ -1,6 +1,7 @@
 local scene = require 'src/scene'
 local world = require 'world/world'
 local battle = require 'battle/battle'
+local foldedit = require 'foldedit/editor'
 
 return {
    y = 40, spacing = 16,
@@ -16,8 +17,7 @@ return {
    end},
    {'folder editor',
     a = function ()
-       scene.push_fade({}, require 'foldedit/editor',
-          'test-collection', 'test')
+       scene.push_fade({}, foldedit.new('test-collection', 'test'))
    end},
    {'worldmap test',
     a = function ()
