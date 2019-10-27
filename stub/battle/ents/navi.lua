@@ -1,4 +1,0 @@
-return {
-   class = {},
-   variants = {player = {}},
-}

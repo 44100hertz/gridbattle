@@ -1,5 +1,0 @@
-return {
-   player = {
-      folder = 'empty'
-   }
-}
