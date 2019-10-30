@@ -6,7 +6,6 @@ local depthdraw = require 'src/depthdraw'
 local entities = require 'battle/entities'
 local stage = require 'battle/stage'
 local customize = require 'battle/customize/customize'
-local proto_ent = require 'battle/proto/ent'
 
 local savedata = require(RES_PATH .. 'savedata')
 local ui =  require(PATHS.battle .. 'ui')
@@ -41,8 +40,7 @@ function battle.new (set_name)
    self.bg.start(unpack(self.state.bg_args))
 
    self.stage = stage.new()
-   self.entities = entities.new(self.state, self.stage)
-   proto_ent.initialize(self.state, self.stage, self.entities)
+   self.entities = entities.new(self)
 
    self.initial_select_chips = true
    self.cust_timer = 0

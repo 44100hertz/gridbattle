@@ -2,15 +2,18 @@ local oop = require 'src/oop'
 local depthdraw = require 'src/depthdraw'
 local image = require 'src/image'
 
-local proto_ent = require 'battle/proto/ent'
+local proto_ent = require 'battle/proto_ent'
 
 local elements = require(PATHS.battle .. 'elements')
 
 local entities = {}
 
-function entities.new (bstate, stage)
+function entities.new (battle)
    local self = oop.instance(entities, {})
-   self.stage = stage
+
+   assert(battle.stage, 'must initialize battle stage first')
+   self.stage = battle.stage
+   self.proto_ent = proto_ent.new(battle)
    self.entities = {}
 
    local function init_player (data, side)
@@ -27,15 +30,15 @@ function entities.new (bstate, stage)
       return data
    end
 
-   if bstate.left_kind == 'player' then
-      init_player(bstate.left, 'left')
-   elseif bstate.left_kind == 'enemy' then
-      init_enemies(bstate.left, 'left')
+   if battle.state.left_kind == 'player' then
+      init_player(battle.state.left, 'left')
+   elseif battle.state.left_kind == 'enemy' then
+      init_enemies(battle.state.left, 'left')
    end
-   if bstate.right_kind == 'player' then
-      init_player(bstate.right, 'right')
-   elseif bstate.right_kind == 'enemy' then
-      init_enemies(bstate.right, 'right')
+   if battle.state.right_kind == 'player' then
+      init_player(battle.state.right, 'right')
+   elseif battle.state.right_kind == 'enemy' then
+      init_enemies(battle.state.right, 'right')
    end
 
    return self
@@ -52,7 +55,7 @@ function entities:add (ent)
       setmetatable(head, {__index = extended})
       head = extended
    end
-   setmetatable(head, {__index = proto_ent})
+   setmetatable(head, {__index = self.proto_ent})
 
    if ent.start then ent:start() end
 
@@ -61,7 +64,7 @@ function entities:add (ent)
    if ent.max_hp then ent.hp = ent.max_hp end
 
    if ent.img then
-      ent.image = (require 'src/image').new(ent.img)
+      ent.image = image.new(ent.img)
       ent.img = nil
    end
 
