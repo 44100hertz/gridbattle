@@ -31,8 +31,14 @@ end
 function ent:apply_panel_stat (stat, len, x, y)
    self.battle.stage:apply_stat(stat, len, x or self.x, y or self.y)
 end
+
 function ent:free_space (x, y)
-   self.battle.stage.panels[x or self.x][y or self.y].tenant = nil
+   x = x or self.x
+   y = y or self.y
+   local p = self.battle.stage.panels
+   if p[x] and p[x][y] then
+      p[x][y].tenant = nil
+   end
 end
 
 function ent:update ()
@@ -85,20 +91,19 @@ end
 function ent:query_panel (x, y)
    x = x or self.x
    y = y or self.y
-   local panel = self.battle.stage:getpanel(x,y)
-   if not panel then
-      return {}
-   end
-   local out = {}
+   return self.battle.stage:getpanel(x,y)
+end
 
-   out.tenant = panel.tenant
-   local opp_side = side=='left' and 'right' or 'left'
-   out.enemy =
+function ent:get_panel_enemy (x, y)
+   x = x or self.x
+   y = y or self.y
+   local panel = self.battle.stage:getpanel(x,y)
+   local opp_side = self.side=='left' and 'right' or 'left'
+   return
+      panel and
       panel.tenant and
       panel.tenant.tangible and
       panel.tenant.side == opp_side and panel.tenant
-   ;
-   return out
 end
 
 function ent:is_panel_free (x, y)
@@ -119,10 +124,8 @@ function ent:locate_enemy_ahead (x, y)
    local inc = self.side=='left' and 1 or -1
    repeat
       x = x + inc
-      local data = self:query_panel(x, y)
-      if data.enemy then
-         return data.enemy
-      end
+      local enemy = self:get_panel_enemy(x, y)
+      if enemy then return enemy end
    until x < 0 or x > self.battle.stage.width
    return nil
 end

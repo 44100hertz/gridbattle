@@ -124,9 +124,7 @@ function entities:update (input)
    end
    for i,ent in ipairs(self.entities) do
       if ent.despawn then
-         if ent:query_panel().tenant == ent then
-            ent:free_space()
-         end
+         ent:free_space()
          table.remove(self.entities, i)
       end
    end
