@@ -1,28 +1,33 @@
-* Great Big Refactor
-** Resource Management
-*** Paths
-So, the resources are all under one path, RES_PATH. This doesn't bode well for
-resource packs.
-*** Packs
-Design resources to be done in multiple 'packs' with simple dependencies.
-*** img/ folder
-Please move everything out of img/ and into a folder with everything else.
-This also means, refactor uses of the Image class.
-** unlocalizing / classes
-Make way less stuff local and way more stuff part of the parent. The goal is to
-allow multiple instances of anything, implement RAII.
-** bigass return { ... }
-Turn these all into x = {}; x.y = z; return x. Every one of them.
-* Demo
-** DONE determine whether to focus on pvp or pve
-Focus on PvE!
+* The Great Restructuring
+** OOP-ification
+*** TODO Dialog popup
+*** TODO What others?
+*** Clear out remaining unwanted return { statements
+** Battle
+*** TODO Make sides of battle use index 1 2 instead of 'left' / 'right'
+*** TODO Eliminate use of battle.state, make sets more logical too?
+** Replace scene stack system with simpler loop assignments
+   Must also use this to fix bug in customization dialog box, where local pvp frezes
+** Scaling back Resources
+*** TODO Scale back resource folder concept, remerge res/ with rest of game
+*** TODO Move images back into their local resource folders
+** Introduce coordinate type
+** Switch to 2d artstyle
+*** In Battle
+*** In Map
+* Bugfix
 * Features
-** TODO elements
+** Battle editor GUI
+** Server/Client for netplay (maybe never)
+** .exe and .love build system for releases
+** Navi Enemy
+** Elements
 *** DONE give everything an element, show element in editor and battle
 *** DONE handle elements on collisions
 *** DONE make panels affect elements
-*** TODO test some elemental interactions
-** TODO ONLINE multiplier (hooooo boy)
+* Demo
+** DONE determine whether to focus on pvp or pve
+Focus on PvE!
 * Steps
 ** TODO consider using Actor or Entity base class
 Instead of having a bunch of checks for actor properties that override
