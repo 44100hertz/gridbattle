@@ -1,8 +1,6 @@
 local oop = require 'src/oop'
 local text = require 'src/text'
 
-local chip_artist = require 'battle/chip_artist'
-
 local ent = {}
 
 -- TODO: move many of these methods into battle (so self.battle.spawn, etc.)
@@ -68,7 +66,7 @@ function ent:draw_info (x, y)
    end
 
    if self.queue then
-      chip_artist.draw_icon_queue(self.queue, x, y-60)
+      self.battle.chip_artist:draw_icon_queue(self.queue, x, y-60)
    end
 end
 

@@ -1,51 +1,49 @@
-local images = {}
+local oop = require 'src/oop'
 local lg = love.graphics
+
+local chip_artist = {}
 
 -- Chip graphics are fixed size at 256x256
 -- this enables quads to be computed once only
-local icon, art
+local icon_quad, art_quad
 do
    local w,h = 256,256
-   icon = lg.newQuad(0,0,16,16,w,h)
-   art = lg.newQuad(0,16,64,72,w,h)
+   icon_quad = lg.newQuad(0,0,16,16,w,h)
+   art_quad = lg.newQuad(0,16,64,72,w,h)
 end
 
-local getimage = function (name)
-   if not images[name] then
+function chip_artist.new ()
+   local self = oop.instance(chip_artist, {})
+   self.images = {}
+   return self
+end
+
+function chip_artist:get_image (name)
+   if not self.images[name] then
       local imgpath = PATHS.chips .. name .. '.png'
-      images[name] = lg.newImage(imgpath)
+      self.images[name] = lg.newImage(imgpath)
    end
-   return images[name]
+   return self.images[name]
 end
 
-local clear = function ()
-   images = {}
+function chip_artist:draw_icon (name, x, y)
+   local img = self:get_image(name)
+   lg.draw(img, icon_quad, x, y)
 end
 
-local draw_icon = function (name, x, y)
-   local img = getimage(name)
-   lg.draw(img, icon, x, y)
-end
-
-local draw_icon_queue = function (queue, x, y)
+function chip_artist:draw_icon_queue (queue, x, y)
    x = x - #queue - 8
    y = y - #queue - 8
    for i=#queue,1,-1 do
-      draw_icon(queue[i].name, x, y)
+      self:draw_icon(queue[i].name, x, y)
       x=x+2
       y=y+2
    end
 end
 
-local draw_art = function (name, x, y, index)
-   index = index or 1
-   local img = getimage(name)
-   lg.draw(img, art, x, y)
+function chip_artist:draw_art (name, x, y)
+   local img = self:get_image(name)
+   lg.draw(img, art_quad, x, y)
 end
 
-return {
-   clear = clear,
-   draw_icon = draw_icon,
-   draw_icon_queue = draw_icon_queue,
-   draw_art = draw_art,
-}
+return chip_artist

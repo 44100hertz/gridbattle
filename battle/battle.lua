@@ -5,6 +5,7 @@ local depthdraw = require 'src/depthdraw'
 
 local entities = require 'battle/entities'
 local stage = require 'battle/stage'
+local chip_artist = require 'battle/chip_artist'
 local customize = require 'battle/customize/customize'
 
 local savedata = require(RES_PATH .. 'savedata')
@@ -41,6 +42,7 @@ function battle.new (set_name)
 
    self.stage = stage.new()
    self.entities = entities.new(self)
+   self.chip_artist = chip_artist.new()
 
    self.will_select_chips = true
    self.cust_timer = 0
@@ -57,7 +59,7 @@ end
 function battle:selectchips ()
    self.state.left.queue = {}
    self.state.right.queue = {}
-   scene.push(customize.new(self.state, self.folders[1], self.folders[2]))
+   scene.push(customize.new(self))
    self.cust_timer = 0
    self.will_select_chips = false
 end

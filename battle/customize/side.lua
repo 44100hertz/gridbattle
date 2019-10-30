@@ -6,28 +6,26 @@ local scene = require 'src/scene'
 local dialog = require 'src/dialog'
 
 local img = (require'src/image').new'customize'
-local chip_artist = require 'battle/chip_artist'
 local chipdb = require(PATHS.chipdb)
 
 local side = {}
 
--- Instantiate one side of the battle customize screen.
--- queue: a reference for where to write chips into when done
--- deck: the deck to draw from
--- is_right: set to true if the side is on the right part of the screen
-function side.new(queue, deck, is_right, two_player)
+function side.new(battle, side_index)
    local self = oop.instance(side, {})
-   if is_right then
-      self.input_index = 2
-      self.offset = 120
-   else
-      self.input_index = 1
-      self.offset = 0
+   self.battle = battle
+   self.input_index = side_index
+   local side_data = {
+      {'left', 0},
+      {'right', 120},
+   }
+   self.side_name, self.offset = unpack(side_data[side_index])
+   local deck = battle.folders[side_index]
+   if not deck.data then
+      return nil
    end
-   self.queue = queue
+   self.queue = battle.state[self.side_name].queue
    self.pal = deck:draw(5, self.pal)
    self.sel = 1
-   self.two_player = two_player
    return self
 end
 
@@ -65,7 +63,8 @@ function side:update(input_list)
       local i=1
       while(self.pal[i]~=nil) do i=i+1 end
       self.pal[i] = table.remove(self.queue)
-   elseif input.l==1 and not self.two_player and sel then
+--   elseif input.l==1 and not self.two_player and sel then
+   elseif input.l==1 and sel then
       local chip = chipdb[sel.name]
       scene.push(dialog.popup, chip.desc, 132, 16)
    elseif input.sel==1 then
@@ -88,7 +87,7 @@ function side:draw()
       local x = 8 + 16*(i-1%5)
       local y = i<=5 and 104 or 128
       if self.pal[i] then
-         chip_artist.draw_icon(self.pal[i].name, x, y)
+         self.battle.chip_artist:draw_icon(self.pal[i].name, x, y)
          local letter = self.pal[i].ltr:byte() - ('a'):byte() + 1
          img:set_sheet'letter'
          img:draw(x, y+16, nil, letter)
@@ -104,7 +103,7 @@ function side:draw()
       local x = 96
       local y = 24 + 16*(i-1)
       if self.queue[i] then
-         chip_artist.draw_icon(self.queue[i].name, x, y)
+         self.battle.chip_artist:draw_icon(self.queue[i].name, x, y)
       end
    end
 
@@ -118,7 +117,7 @@ function side:draw()
    -- Art --
    local sel = self.pal[self.sel]
    if sel then
-      chip_artist.draw_art(sel.name, 8, 16, 1)
+      self.battle.chip_artist:draw_art(sel.name, 8, 16, 1)
       local damage = chipdb[sel.name].damage
       text.draw('flavor', tostring(damage), 8, 88)
    end
