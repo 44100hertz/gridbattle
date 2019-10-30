@@ -8,7 +8,9 @@ function player:act (input)
    if not input then return end
    input = self.side=='left' and input[1] or input[2]
 
-   self.selectchips = input.l>0 or input.r>0
+   if input.l>0 or input.r>0 then
+      self.battle:request_select_chips()
+   end
    local move = function  (dx, dy)
       local goalx, goaly = self.x+dx, self.y+dy
       if self:is_panel_free(goalx, goaly) then

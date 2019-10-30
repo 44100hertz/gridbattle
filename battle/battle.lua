@@ -42,10 +42,16 @@ function battle.new (set_name)
    self.stage = stage.new()
    self.entities = entities.new(self)
 
-   self.initial_select_chips = true
+   self.will_select_chips = true
    self.cust_timer = 0
 
    return self
+end
+
+function battle:request_select_chips()
+   if self.cust_timer >= cust_length then
+      self.will_select_chips = true
+   end
 end
 
 function battle:selectchips ()
@@ -53,11 +59,11 @@ function battle:selectchips ()
    self.state.right.queue = {}
    scene.push(customize.new(self.state, self.folders[1], self.folders[2]))
    self.cust_timer = 0
-   self.initial_select_chips = false
+   self.will_select_chips = false
 end
 
 function battle:update (input)
-   if self.initial_select_chips then
+   if self.will_select_chips then
       self:selectchips()
    end
    if input then
@@ -69,13 +75,6 @@ function battle:update (input)
 
       if input[1].st == 1 or input[2].st == 1 then
          scene.push((require 'src/menu').new('pause'))
-         return
-      elseif self.cust_timer >= cust_length and
-         (self.state.left.selectchips or self.state.right.selectchips)
-      then
-         self.state.left.selectchips = false
-         self.state.right.selectchips = false
-         self:selectchips()
          return
       end
       self.cust_timer = self.cust_timer + 1
