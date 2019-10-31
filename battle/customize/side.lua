@@ -66,7 +66,7 @@ function side:update(input_list)
 --   elseif input.l==1 and not self.two_player and sel then
    elseif input.l==1 and sel then
       local chip = chipdb[sel.name]
-      scene.push(dialog.popup, chip.desc, 132, 16)
+      scene.push(dialog.new(chip.desc, 132, 16))
    elseif input.sel==1 then
       self.hide = not self.hide
    end
