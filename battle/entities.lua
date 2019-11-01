@@ -73,13 +73,9 @@ end
 
 -- Figure out if the battle has ended yet
 function entities:get_ending ()
-   local results = {
-      'p1win', 'win', 'lose', 'p2win',
-   }
    local sides = self.battle.state.sides
-   local index = 1 +
-      (sides[1].is_player and 2 or 0) +
-      (sides[2].is_player and 1 or 0)
+   local two_player = sides[1].is_player and sides[2].is_player
+   local endings = two_player and {'p2win', 'p1win'} or {'lose', 'win'}
 
    for i = 1,2 do
       sides[i].alive = false
@@ -91,10 +87,10 @@ function entities:get_ending ()
       end
    end
 
-   if not sides[1].alive then
-      return results[5-index]
-   elseif not sides[2].alive then
-      return results[index]
+   for i = 1,2 do
+      if not sides[i].alive then
+         return endings[i]
+      end
    end
 end
 
