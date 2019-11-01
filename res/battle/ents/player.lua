@@ -6,7 +6,7 @@ local player = {
 
 function player:act (input)
    if not input then return end
-   input = self.side=='left' and input[1] or input[2]
+   input = input[self.side]
 
    if input.l>0 or input.r>0 then
       self.battle:request_select_chips()

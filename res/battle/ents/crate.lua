@@ -8,7 +8,7 @@ local crate = {
 }
 
 function crate:start ()
-   local mirror = self.parent.side=='left' and 1 or -1
+   local mirror = self.parent.side==1 and 1 or -1
    self.x = self.x + self.spawn_offset * mirror
    self.parent.next_state = 'shoot'
 end
