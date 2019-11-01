@@ -45,7 +45,7 @@ end
 
 function ent:move ()
    if self.dx then
-      self.real_dx = self.side=='right' and -self.dx or self.dx
+      self.real_dx = self.side==2 and -self.dx or self.dx
       self.x = self.x + self.real_dx
    end
    if self.dy then self.y = self.y + self.dy end
@@ -53,7 +53,7 @@ function ent:move ()
 end
 
 function ent:draw (x, y)
-   local flip = (self.side=='right' and not self.noflip)
+   local flip = (self.side==2 and not self.noflip)
    if self.image then
       self.image:draw(x, y, flip)
    end
@@ -96,7 +96,7 @@ function ent:get_panel_enemy (x, y)
    x = x or self.x
    y = y or self.y
    local panel = self.battle.stage:getpanel(x,y)
-   local opp_side = self.side=='left' and 'right' or 'left'
+   local opp_side = self.side==1 and 2 or 1
    return
       panel and
       panel.tenant and
@@ -111,7 +111,7 @@ function ent:is_panel_free (x, y)
    if not panel then
       return false
    end
-   local position_side = x > self.battle.state.stage.turf[y] and 'right' or 'left'
+   local position_side = x > self.battle.state.stage.turf[y] and 2 or 1
    local same_side = self.side == position_side
    return same_side and not panel.tenant
 end
@@ -119,7 +119,7 @@ end
 function ent:locate_enemy_ahead (x, y)
    x = x or self.x
    y = y or self.y
-   local inc = self.side=='left' and 1 or -1
+   local inc = self.side==1 and 1 or -1
    repeat
       x = x + inc
       local enemy = self:get_panel_enemy(x, y)

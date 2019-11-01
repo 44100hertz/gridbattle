@@ -15,15 +15,15 @@ function side.new(battle, side_index)
    self.battle = battle
    self.input_index = side_index
    local side_data = {
-      {'left', 0},
-      {'right', 120},
+      {0},
+      {120},
    }
-   self.side_name, self.offset = unpack(side_data[side_index])
+   self.offset = unpack(side_data[side_index])
    local deck = battle.folders[side_index]
    if not deck.data then
       return nil
    end
-   self.queue = battle.state[self.side_name].queue
+   self.queue = battle.state.sides[side_index][1].queue
    self.pal = deck:draw(5, self.pal)
    self.sel = 1
    return self

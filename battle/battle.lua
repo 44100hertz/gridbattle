@@ -27,13 +27,10 @@ function battle.new (set_name)
 
    self.state = dofile(PATHS.sets .. set_name .. '.lua')
 
-   if self.state.left_kind == 'player' then
-      self.state.left.queue = {}
-      self.folders[1]:load(savedata.player.folder)
-   end
-   if self.state.right_kind == 'player' then
-      self.state.right.queue = {}
-      self.folders[2]:load(savedata.player.folder)
+   for i = 1,2 do
+      if self.state.sides[i].is_player then
+         self.folders[i]:load(savedata.player.folder)
+      end
    end
 
    self.bg = require(PATHS.bg .. self.state.bg)
@@ -56,19 +53,17 @@ function battle:request_select_chips()
    end
 end
 
-function battle:selectchips ()
-   self.state.left.queue = {}
-   self.state.right.queue = {}
-   scene.push(customize.new(self))
-   self.cust_timer = 0
-   self.will_select_chips = false
-end
-
 function battle:update (input)
    if self.will_select_chips then
-      self:selectchips()
-   end
-   if input then
+      for i = 1,2 do
+         if self.state.sides[i].is_player then
+            self.state.sides[i][1].queue = {}
+         end
+      end
+      scene.push(customize.new(self))
+      self.cust_timer = 0
+      self.will_select_chips = false
+   elseif input then
       local ending = self.entities:get_ending(self.state)
       if ending then
          scene.push(require 'battle/results', ending)
@@ -80,9 +75,9 @@ function battle:update (input)
          return
       end
       self.cust_timer = self.cust_timer + 1
+      self.stage:update(self.entities.entities)
+      self.entities:update(input)
    end
-   self.stage:update(self.entities.entities)
-   self.entities:update(input)
 end
 
 function battle:draw ()

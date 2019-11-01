@@ -12,33 +12,18 @@ function entities.new (battle)
    local self = oop.instance(entities, {})
 
    assert(battle.stage, 'must initialize battle stage first')
-   self.stage = battle.stage
+   self.battle = battle
    self.proto_ent = proto_ent.new(battle)
+
    self.entities = {}
-
-   local function init_player (data, side)
-      data.side = side
-      data.name = 'player'
-      self:add(data)
-      return data
-   end
-   local function init_enemies (data, side)
-      for _,enemy in ipairs(data) do
-         enemy.side = side
-         self:add(enemy)
-      end
-      return data
-   end
-
-   if battle.state.left_kind == 'player' then
-      init_player(battle.state.left, 'left')
-   elseif battle.state.left_kind == 'enemy' then
-      init_enemies(battle.state.left, 'left')
-   end
-   if battle.state.right_kind == 'player' then
-      init_player(battle.state.right, 'right')
-   elseif battle.state.right_kind == 'enemy' then
-      init_enemies(battle.state.right, 'right')
+   for i = 1,2 do
+     for _,entity in ipairs(battle.state.sides[i]) do
+       entity.side = i
+       if entity.name == 'player' then
+          entity.queue = battle.state.sides[i].queue
+       end
+       self:add(entity)
+     end
    end
 
    return self
@@ -77,7 +62,7 @@ end
 function entities:apply_damage (send, recv, amount)
    amount = amount or send.damage
    local recv_elem
-   local panel = self.stage:getpanel(recv.x, recv.y)
+   local panel = self.battle.stage:getpanel(recv.x, recv.y)
    if panel and panel.stat and elements.by_name[panel.stat] then
       recv_elem = panel.stat
    else
@@ -87,25 +72,28 @@ function entities:apply_damage (send, recv, amount)
 end
 
 -- Figure out if the battle has ended yet
-function entities:get_ending (bstate)
+function entities:get_ending ()
    local results = {
       'p1win', 'win', 'lose', 'p2win',
    }
-   local function side_alive (tab, kind)
-      if kind == 'player' then
-         return not tab.despawn
-      else
-         for _,v in ipairs(tab) do
-            if not v.despawn then return true end
+   local sides = self.battle.state.sides
+   local index = 1 +
+      (sides[1].is_player and 2 or 0) +
+      (sides[2].is_player and 1 or 0)
+
+   for i = 1,2 do
+      sides[i].alive = false
+      for _,entity in ipairs(sides[i]) do
+         if not entity.despawn then
+            sides[i].alive = true
+            break
          end
       end
    end
-   local index = 1 +
-      (bstate.left_kind=='player' and 2 or 0) +
-      (bstate.right_kind=='player' and 1 or 0)
-   if not side_alive(bstate.right, bstate.right_kind) then
+
+   if not sides[1].alive then
       return results[5-index]
-   elseif not side_alive(bstate.left, bstate.left_kind) then
+   elseif not sides[2].alive then
       return results[index]
    end
 end
@@ -136,7 +124,7 @@ function entities:update (input)
       if b.collide then b:collide(a) end
    end
    for _,ent in ipairs(self.entities) do
-      local panel = self.stage:getpanel(ent.x, ent.y)
+      local panel = self.battle.stage:getpanel(ent.x, ent.y)
       if panel and panel.tenant and
          panel.tenant.tangible and
          panel.tenant.side ~= ent.side
