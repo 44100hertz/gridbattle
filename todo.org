@@ -1,10 +1,10 @@
 * The Great Restructuring
 ** OOP-ification
-*** TODO Dialog popup
+*** DONE Dialog popup
 *** TODO What others?
 *** Clear out remaining unwanted return { statements
 ** Battle
-*** TODO Make sides of battle use index 1 2 instead of 'left' / 'right'
+*** DONE Make sides of battle use index 1 2 instead of 'left' / 'right'
 *** TODO Eliminate use of battle.state, make sets more logical too?
 Change location of queue to player actor. Must relocate all mutable state here.
 ** Replace scene stack system with simpler loop assignments
