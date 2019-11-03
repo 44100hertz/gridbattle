@@ -12,6 +12,5 @@ return {
          {name='player', x=5, y=2},
       }
    },
-   bg='scroll',
-   bg_args={'pvp'},
+   bg = {'scroll', 'pvp'}
 }

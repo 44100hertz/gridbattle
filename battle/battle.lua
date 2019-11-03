@@ -9,6 +9,7 @@ local chip_artist = require 'battle/chip_artist'
 local customize = require 'battle/customize/customize'
 
 local savedata = require(RES_PATH .. 'savedata')
+local bg = require(PATHS.bg .. 'bg')
 local ui =  require(PATHS.battle .. 'ui')
 
 local cust_length = 4*60
@@ -33,9 +34,7 @@ function battle.new (set_name)
       end
    end
 
-   self.bg = require(PATHS.bg .. self.state.bg)
-   self.state.bg_args = self.state.bg_args or {}
-   self.bg.start(unpack(self.state.bg_args))
+   self.bg = bg.new(unpack(self.state.bg))
 
    self.stage = stage.new()
    self.entities = entities.new(self)
@@ -81,7 +80,7 @@ function battle:update (input)
 end
 
 function battle:draw ()
-   self.bg.draw()
+   self.bg:draw()
    self.entities:draw() -- calls depthdraw
    self.stage:draw(self.state.stage.turf) -- calls depthdraw
 

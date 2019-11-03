@@ -14,6 +14,5 @@ return {
          {name='test_enemy', level=2, x=6, y=3},
       },
    },
-   bg='scroll',
-   bg_args={'test'},
+   bg = {'scroll', 'test'},
 }
