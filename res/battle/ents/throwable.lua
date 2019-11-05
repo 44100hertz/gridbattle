@@ -8,7 +8,7 @@ function throwable:start ()
 end
 
 function throwable:update ()
-   self.dz = self.dz - 1/20
+   self.dz = self.dz - 1/30
    if self.time == self.lifespan then
       self:hit_ground()
    end

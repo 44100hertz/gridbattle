@@ -25,7 +25,7 @@ return {
    },
 
    -- Battle -------------------------------------
-   panels = {base = {x=0, y=0, w=40, h=40, ox=20, oy=28, numx=2, numy=2}},
+   panels = {base = {x=0, y=0, w=40, h=40, ox=20, oy=12, numx=2, numy=2}},
    battle_ui = {
       bar = {w=8, h=8, numx=3},
    },
@@ -33,6 +33,7 @@ return {
    bullet = {base = {ox=8, oy=8, w=16, h=16, numx=6, anim={1,2,3,4,5,6}, fps=20}},
    boots = {base = {x=0, y=0, w=24, h=16, numx=2}},
    wheel_crate = {base = {ox=17, oy=45}},
+   poisdrop = {base = {ox = 8, oy = 7}},
 
    -- Actors -------------------------------------
    testenemy = {base = {ox=22, oy=50}},

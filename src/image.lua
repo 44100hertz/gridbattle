@@ -4,18 +4,22 @@ local imgpath = _G.RES_PATH .. '/img/'
 image = {}
 image.__index = image
 
-function image:draw(x, y, flip, frame)
+function image:draw(x, y, flip, frame, scale)
+   scale = scale or 1
+
    if not frame then
       local dt = love.timer.getTime() - self.start_time
       local elapsed = 1 + math.ceil(dt * (self.current.fps) - 1) % #self.current.anim
       frame = self.current.anim[elapsed]
    end
 
-   x = flip and x + self.current.ox or x - self.current.ox
-   y = y - self.current.oy
-   local sx = flip and -1 or 1
+   local ox = self.current.ox * scale
+   local oy = self.current.oy * scale
+   x = flip and x + ox or x - ox
+   y = y - oy
+   local sx = flip and -scale or scale
    local quad = self.current.quads[frame]
-   love.graphics.draw(self.img, quad, x, y, 0, sx, 1)
+   love.graphics.draw(self.img, quad, x, y, 0, sx, scale)
 end
 
 function image:set_sheet(name)

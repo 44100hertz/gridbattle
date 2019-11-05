@@ -56,11 +56,16 @@ function stage:draw (turf)
    end
 end
 
-function stage:apply_stat (kind, counter, x, y)
+-- Apply a status effect to a particular panel
+-- kind is handled in the update loop
+function stage:apply_stat (kind, x, y)
    local panel = self:getpanel(x, y)
    if panel then
       panel.stat = kind
-      panel.stat_time = counter
+      panel.stat_time = 600
+   else
+      io.write(string.format('status effect %s misfired on %s, %s\n',
+                             kind, x, y))
    end
 end
 

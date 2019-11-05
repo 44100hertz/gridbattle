@@ -26,8 +26,8 @@ function ent:apply_damage (target, amount)
    self.battle.entities:apply_damage(self, target, amount)
 end
 
-function ent:apply_panel_stat (stat, len, x, y)
-   self.battle.stage:apply_stat(stat, len, x or self.x, y or self.y)
+function ent:apply_panel_stat (stat, x, y)
+   self.battle.stage:apply_stat(stat, x or self.x, y or self.y)
 end
 
 function ent:free_space (x, y)
@@ -55,7 +55,7 @@ end
 function ent:draw (x, y)
    local flip = (self.side==2 and not self.noflip)
    if self.image then
-      self.image:draw(x, y, flip)
+      self.image:draw(x, y, flip, nil, 1.0 + 0.2 * self.z)
    end
 end
 
