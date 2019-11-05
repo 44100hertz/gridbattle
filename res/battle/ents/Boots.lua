@@ -8,7 +8,7 @@ local boots = {
 function boots:make_bullet ()
    self:spawn{
       name = 'boot',
-      x=self.x, y=self.y, z=40,
+      x=self.x, y=self.y,
       frame=self.count,
       side=self.side,
       damage=self.damage,
