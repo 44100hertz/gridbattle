@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local image = require 'src/image'
 
 local proto_ent = require 'battle/proto_ent'
 
@@ -40,19 +39,7 @@ function entities:add (ent)
       head = extended
    end
    setmetatable(head, {__index = self.proto_ent})
-
-   if ent.start then ent:start() end
-
-   ent.time = 0
-   ent.z = ent.z or 0
-   if ent.max_hp then ent.hp = ent.max_hp end
-
-   if ent.img then
-      ent.image = image.new(ent.img)
-      ent.img = nil
-   end
-
-   if ent.after_image_load then ent:after_image_load() end -- HACK
+   ent:_load()
 
    table.insert(self.entities, ent)
    return ent
@@ -95,15 +82,7 @@ end
 
 function entities:update (input)
    for i,ent in ipairs(self.entities) do
-      if ent.time then
-         ent.time = ent.time + 1
-      end
-      ent:update(input)
-      if ent.hp and ent.hp <= 0 or
-         ent.lifespan and ent.time == ent.lifespan
-      then
-         ent:die()
-      end
+      ent:_update(input)
    end
    for i,ent in ipairs(self.entities) do
       if ent.despawn then
@@ -133,9 +112,7 @@ end
 
 function entities:draw ()
    for _,ent in ipairs(self.entities) do
-      local x, y = self.battle.stage:to_screen_pos(ent.x - 0.5, ent.y - 0.5)
-      ent:draw(x, y)
-      ent:draw_info(x, y)
+      ent:_draw()
    end
 end
 

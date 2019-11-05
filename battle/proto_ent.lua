@@ -1,5 +1,6 @@
 local oop = require 'src/oop'
 local text = require 'src/text'
+local image = require 'src/image'
 
 local ent = {}
 
@@ -10,6 +11,21 @@ local ent = {}
 
 function ent.new (battle)
    return oop.instance(ent, {battle = battle})
+end
+
+function ent:_load ()
+   if self.start then self:start() end
+
+   self.time = 0
+   self.z = self.z or 0
+   if self.max_hp then self.hp = self.max_hp end
+
+   if self.img then
+      self.image = image.new(self.img)
+      self.img = nil
+   end
+
+   if self.after_image_load then self:after_image_load() end -- HACK
 end
 
 function ent:die ()
@@ -39,6 +55,18 @@ function ent:free_space (x, y)
    end
 end
 
+function ent:_update (input)
+   if self.time then
+      self.time = self.time + 1
+   end
+   self:update(input)
+   if self.hp and self.hp <= 0 or
+      self.lifespan and self.time == self.lifespan
+   then
+      self:die()
+   end
+end
+
 function ent:update ()
    self:move()
 end
@@ -50,6 +78,12 @@ function ent:move ()
    end
    if self.dy then self.y = self.y + self.dy end
    if self.dz then self.z = self.z + self.dz end
+end
+
+function ent:_draw ()
+   local x, y = self.battle.stage:to_screen_pos(self.x - 0.5, self.y - 0.5)
+   self:draw(x, y)
+   self:draw_info(x, y)
 end
 
 function ent:draw (x, y)
