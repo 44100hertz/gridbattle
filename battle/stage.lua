@@ -1,9 +1,9 @@
 local oop = require 'src/oop'
-local depthdraw = require 'src/depthdraw'
-
 local img = (require 'src/image').new'panels'
 
 local stage = {
+   panel_width = 32,
+   panel_height = 32,
    width = 6,
    height = 3,
 }
@@ -50,10 +50,8 @@ function stage:draw (turf)
          local row = x > turf[y] and 1 or 2
          local col = self.panels[x][y].stat == 'poison' and 2 or 1
          local index = (row-1)*2 + col
-         local draw = function (x, y)
-            img:draw(x, y, nil, index)
-         end
-         depthdraw.add(draw, x, y, -20)
+         local xx, yy = self:to_screen_pos(x - 0.5, y - 0.5)
+         img:draw(xx, yy, nil, index)
       end
    end
 end
@@ -64,6 +62,19 @@ function stage:apply_stat (kind, counter, x, y)
       panel.stat = kind
       panel.stat_time = counter
    end
+end
+
+-- Convert a position on the stage to pixels.
+-- 0,0                           is the upper left corner.
+-- stage.width, stage.height     is the lower right.
+function stage:to_screen_pos (x, y)
+   -- Calculate total size of stage
+   local xsize = self.panel_width * self.width
+   local ysize = self.panel_height * self.height
+   -- Place panels with centered geometry
+   local ox = x * xsize / self.width  + 0.5 * (GAME.width - xsize)
+   local oy = y * ysize / self.height + 0.5 * (GAME.height - ysize)
+   return ox, oy
 end
 
 return stage

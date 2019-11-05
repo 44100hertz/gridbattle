@@ -2,7 +2,8 @@ local oop = require 'src/oop'
 
 local bg = {}
 
-function bg.new (_kind, bgimage)
+function bg.new (kind, bgimage)
+   assert(kind == 'scroll')
    local self = oop.instance(bg, {})
    self.start_time = love.timer.getTime()
    self.image = love.graphics.newImage(PATHS.bg .. bgimage .. '.png')

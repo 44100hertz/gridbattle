@@ -4,7 +4,6 @@ local image = require 'src/image'
 local oop = require 'src/oop'
 
 local img = image.new 'battle_ui'
-local depthdraw = require 'src/depthdraw'
 local BIT_XFLIP = 0x80000000
 
 local tiles = {}
@@ -27,9 +26,6 @@ function tiles.from_data (data)
 end
 
 function tiles:draw ()
-   local draw_tile = function (x, y, index, flip)
-      lg.draw(self.tileset.img, self.tileset.sheet[index], x, y, 0, flip, 1)
-   end
    for _,layer in ipairs(self.data.layers) do
       local count = 1
       for y = 1,layer.width do
@@ -42,12 +38,12 @@ function tiles:draw ()
                flip = -1
                flipoff = self.data.tilewidth
             end
-            if index > 0 then
-               depthdraw.add(
-                  function (x,y) draw_tile(x+flipoff, y, index, flip) end,
-                  x-y, x+y, -layer.offsety
-               )
-            end
+            lg.draw(self.tileset.img,
+                    1,
+--                    self.tileset.sheet[index],
+                    x * self.data.tilewidth + flipoff,
+                    y * self.data.tileheight,
+                    0, flip, 1)
             count = count + 1
          end
       end

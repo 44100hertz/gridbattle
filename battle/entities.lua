@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local depthdraw = require 'src/depthdraw'
 local image = require 'src/image'
 
 local proto_ent = require 'battle/proto_ent'
@@ -134,12 +133,9 @@ end
 
 function entities:draw ()
    for _,ent in ipairs(self.entities) do
-      depthdraw.add(
-         function (x,y)
-            ent:draw(x, y)
-            ent:draw_info(x, y)
-         end,
-         ent.x, ent.y, ent.z)
+      local x, y = self.battle.stage:to_screen_pos(ent.x - 0.5, ent.y - 0.5)
+      ent:draw(x, y)
+      ent:draw_info(x, y)
    end
 end
 

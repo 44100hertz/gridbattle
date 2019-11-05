@@ -3,7 +3,6 @@ local triangle = {
    img = 'bullet',
    lifespan = 60,
    dx = 0.01,
-   z = 32,
    damage = 80,
 }
 

@@ -1,7 +1,6 @@
 local oop = require 'src/oop'
 local scene = require 'src/scene'
 local folder = require 'src/folder'
-local depthdraw = require 'src/depthdraw'
 
 local entities = require 'battle/entities'
 local stage = require 'battle/stage'
@@ -19,12 +18,6 @@ local battle = {}
 function battle.new (set_name)
    local self = oop.instance(battle, {})
    self.folders = {folder.new{}, folder.new{}}
-
-   local tform = depthdraw.tform
-   tform.xscale = BATTLE.xscale
-   tform.yscale = BATTLE.yscale
-   tform.xoff = BATTLE.xoff
-   tform.yoff = BATTLE.yoff
 
    self.state = dofile(PATHS.sets .. set_name .. '.lua')
 
@@ -81,11 +74,10 @@ end
 
 function battle:draw ()
    self.bg:draw()
-   self.entities:draw() -- calls depthdraw
-   self.stage:draw(self.state.stage.turf) -- calls depthdraw
+   self.stage:draw(self.state.stage.turf)
+   self.entities:draw()
 
    local cust_amount = self.cust_timer / cust_length
-   depthdraw.draw()
    ui.draw(self.state, cust_amount)
 end
 
