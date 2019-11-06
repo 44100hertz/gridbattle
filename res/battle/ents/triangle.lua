@@ -4,6 +4,8 @@ local triangle = {
    lifespan = 60,
    dx = 0.01,
    damage = 80,
+   desc={'Shoot out',
+         'some triangle.'},
 }
 
 function triangle:update ()
