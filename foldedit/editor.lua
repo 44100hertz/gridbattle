@@ -3,7 +3,9 @@ local oop = require 'src/oop'
 local folder = require 'src/folder'
 local text = require 'src/text'
 local scene = require 'src/scene'
+
 local chipdb = require(PATHS.chipdb)
+local elements = require(PATHS.battle .. 'elements')
 
 local lg = love.graphics
 
@@ -116,7 +118,7 @@ function editor:draw ()
       local y = 19
       local i = pane.sel - 5
       for _ = 1, num_entries do
-         local line
+         local line, elem_index
          local v = pane.folder.data[i]
          if not v then
             if #pane.folder.data>7 then
@@ -129,8 +131,8 @@ function editor:draw ()
          -- Highlight selection
          if i == pane.sel then lg.setColor(120/255.0, 192/255.0, 128/255.0) end
 
-         line = string.char(chipdb[v.name].elem) ..
-            v.ltr:upper() .. ' ' .. v.name
+         elem_index = elements.by_name[chipdb[v.name].elem]
+         line = string.char(elem_index) .. v.ltr:upper() .. ' ' .. v.name
          text.draw('flavor', line, x, y)
          text.draw('flavor', '\127' .. v.qty, x+78, y)
          lg.setColor(1.0, 1.0, 1.0)
