@@ -5,6 +5,10 @@ local test_enemy = {
    cooldown = 0,
 }
 
+function test_enemy:after_image_load ()
+   self.image.yscale = 0.5
+end
+
 function test_enemy:start ()
    assert(self.level)
    if self.level == 1 then

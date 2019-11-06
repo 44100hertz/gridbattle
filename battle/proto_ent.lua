@@ -89,18 +89,20 @@ end
 function ent:draw (x, y)
    local flip = (self.side==2 and not self.noflip)
    if self.image then
-      self.image:draw(x, y, flip, nil, 1.0 + 0.2 * self.z)
+      self.image.scale = (1.0 + 0.2 * self.z)
+      self.image:draw(x, y, flip)
    end
 end
 
 function ent:draw_info (x, y)
+   local stage = self.battle.stage
    if self.hp and not self.hide_hp then
       local hpstr = tostring(math.floor(self.hp))
-      text.draw('hpnum', hpstr, x, y-40, 'center')
+      text.draw('hpnum', hpstr, x, y-stage.panel_height/2, 'center')
    end
 
    if self.queue then
-      self.battle.chip_artist:draw_icon_queue(self.queue, x, y-60)
+      self.battle.chip_artist:draw_icon_queue(self.queue, x, y-stage.panel_height*0.7)
    end
 end
 

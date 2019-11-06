@@ -47,11 +47,23 @@ end
 function stage:draw (turf)
    for x = 1,self.width do
       for y = 1,self.height do
-         local row = x > turf[y] and 1 or 2
-         local col = self.panels[x][y].stat == 'poison' and 2 or 1
-         local index = (row-1)*2 + col
-         local xx, yy = self:to_screen_pos(x - 0.5, y - 0.5)
-         img:draw(xx, yy, nil, index)
+         local x0, y0 = self:to_screen_pos(x-1, y-1)
+         local x1, y1 = self:to_screen_pos(x, y)
+         if x <= turf[y] then
+            love.graphics.setColor(224/256.0, 208/256.0, 240/256.0)
+         else
+            love.graphics.setColor(248/256.0, 128/256.0, 136/256.0)
+         end
+         local w, h = self.panel_width, self.panel_height
+         love.graphics.rectangle('fill', x0, y0, w, h, 5.0)
+         love.graphics.setColor(32/256.0, 40/256.0, 56/256.0)
+         love.graphics.rectangle('line', x0, y0, w, h, 5.0)
+         if self.panels[x][y].stat == 'poison' then
+            local x, y = self:to_screen_pos(x - 0.5, y - 0.5)
+            love.graphics.setColor(108/256.0, 63/256.0, 255/256.0)
+            love.graphics.circle('fill', x, y, 10)
+         end
+         love.graphics.setColor(1,1,1)
       end
    end
 end

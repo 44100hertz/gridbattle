@@ -4,6 +4,10 @@ local player = {
    hp = 300, hide_hp = true,
 }
 
+function player:after_image_load ()
+   self.image.yscale = 0.5
+end
+
 function player:act (input)
    if not input then return end
    input = input[self.side]

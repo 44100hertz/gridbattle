@@ -36,15 +36,15 @@ return {
    poisdrop = {base = {ox = 8, oy = 7}},
 
    -- Actors -------------------------------------
-   testenemy = {base = {ox=22, oy=50}},
-   testenemy2 = {base = {ox=22, oy=50}},
+   testenemy = {base = {ox=22, oy=30}},
+   testenemy2 = {base = {ox=22, oy=30}},
    ben = {
-      base  = {w=50, h=60, ox=24, oy=54, anim = false},
-      move  = {y=60,  w=50, h=60, ox=24, oy=54, fps=20, numx=2,
+      base  = {w=50, h=60, ox=24, oy=31, anim = false},
+      move  = {y=60,  w=50, h=60, ox=24, oy=31, fps=20, numx=2,
                len=3, iasa=3, anim={1,2}},
-      shoot = {y=120, w=50, h=60, ox=24, oy=54, fps=20, numx=2,
+      shoot = {y=120, w=50, h=60, ox=24, oy=31, fps=20, numx=2,
                len=5, iasa=3, anim={1,2}},
-      throw = {y=180, w=50, h=60, ox=24, oy=54, fps=20, numx=2,
+      throw = {y=180, w=50, h=60, ox=24, oy=31, fps=20, numx=2,
                len=5, iasa=3, anim={1,2}},
    },
 }

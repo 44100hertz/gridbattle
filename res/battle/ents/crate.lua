@@ -1,7 +1,7 @@
 local crate = {
    dx = 0,
    z = 200, dz = -5,
-   side = 'none',
+   side = 0,
    tangible = false,
    spawn_offset = 1,
    hp = 1000, hide_hp = true,
