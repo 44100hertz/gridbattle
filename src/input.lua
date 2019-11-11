@@ -21,7 +21,7 @@ local joybind = {
 }
 local joy1 = love.joystick.getJoysticks()[1]
 local joy2 = love.joystick.getJoysticks()[2]
-love.joystick.loadGamepadMappings('src/gamecontrollerdb.txt')
+love.joystick.loadGamepadMappings('res/gamecontrollerdb.txt')
 
 local deadzone = 0.5
 local check_key = function (keybind, k)

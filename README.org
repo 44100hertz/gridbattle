@@ -1,23 +1,13 @@
 * What is this?
-This is a re-implementation of gameplay from the Megaman Battle
-Network series, using love2d.
+This is a game prototype inspired by the Megaman Battle Network series.
 
-You can run it by installing love2d and running it in this folder. The
-second argument is a path to custom resources, default "res/".
-
-Files are under the zlib open-source license, included in LICENSE.
+This respository is under the zlib open-source license, included in LICENSE.
 The assets included here are fully original and should be considered
-free to use. gamecontrollerdb.txt is under LICENSE.gamecontrollerdb.
+free to use. gamecontrollerdb.txt is created by SDL.
 
 * Project structure
- - src/ :: The game engine; the most generic part of all this.
- - battle/ :: Battles, the fun part.
- - world/ :: The overworld.
- - foldedit/ :: A folder editor.
- - res/ :: Default game data.
- - stub/ :: The minimum game data in order to run without a crash.
-
-* Plans
-See TODO (ideally raw, not github) for exact details. I'm about to
-enter some real game development that will be done in private (sorry!)
-using this software as a base.
+ - battle/ :: Gridbattle action.
+ - foldedit/ :: A battle folder editor.
+ - res/ :: Resources for general use.
+ - src/ :: Code for general use.
+ - world/ :: The overworld/map. Will contain story eventually.
