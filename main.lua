@@ -1,35 +1,43 @@
 _G.RES_PATH = arg[2] or 'res/'
-local game = require(RES_PATH .. 'game')
 local lg = love.graphics
 local lt = love.timer
 local outdir
 
+local scene = require 'src/scene'
+local config = require 'src/config'
+local input = require 'src/input'
+local menu = require 'src/menu'
+
+_G.GAME = {
+   width = 240,
+   height = 160,
+   tickrate = 60,
+}
+
+GAME.tickperiod = 1/GAME.tickrate
+
+_G.PATHS = {
+   chips      = 'res/chips/',
+   chipdb     = 'res/chipdb',
+   imgdb      = 'res/imgdb',
+   folders    = 'res/folders/',
+   bg         = 'res/bg/',
+   fonts      = 'res/fonts/',
+   menu       = 'res/menu/',
+
+   foldedit   = 'foldedit/',
+   battle     = 'battle/',
+   sets       = 'battle/sets/',
+}
+
+-- Index chips by name or by index interchangeably
 do
-   _G.PATHS = {
-      chips      = 'res/chips/',
-      chipdb     = 'res/chipdb',
-      imgdb      = 'res/imgdb',
-      folders    = 'res/folders/',
-      bg         = 'res/bg/',
-      fonts      = 'res/fonts/',
-      menu       = 'res/menu/',
-
-      foldedit   = 'foldedit/',
-      battle     = 'battle/',
-      sets       = 'battle/sets/',
-   }
-
-   -- Index chips by name or by index interchangeably
    local chipdb = require(PATHS.chipdb)
    for i,v in ipairs(chipdb) do
       v.index = i
       chipdb[v[1]] = v
    end
 end
-
-local scene = require 'src/scene'
-local config = require 'src/config'
-local input = require 'src/input'
 
 local time = 0
 config.load()
@@ -58,7 +66,7 @@ love.run = function ()
    end
 
    love.math.setRandomSeed(os.time())
-   game.start()
+   scene.push(menu.new('title'))
    local next_tick = lt.getTime() + GAME.tickperiod
 
    while true do
