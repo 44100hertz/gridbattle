@@ -2,14 +2,13 @@
 -- the stack top is the current game state.
 
 local input = require 'src/input'
-local fade = require 'src/scenes/fade'
+local fade = require 'res/scenes/fade'
 
 local scene = {}
 local stack = {}
 
-function scene.push (mod, ...)
+function scene.push (mod)
    table.insert(stack, mod)
-   if mod.start then mod.start(...) end
 end
 
 function scene.pop ()
@@ -25,9 +24,9 @@ function scene.push_fade (fadeopts, mod, a,b,c,d,e)
    local fadein = function ()
       scene.pop()
       scene.push(mod, a,b,c,d,e)
-      scene.push(fade, length, true, scene.pop)
+      scene.push(fade.new(length, true, scene.pop))
    end
-   scene.push(fade, length, false, fadein)
+   scene.push(fade.new(length, false, fadein))
 end
 
 function scene.update ()
