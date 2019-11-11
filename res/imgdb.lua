@@ -25,26 +25,22 @@ return {
    },
 
    -- Battle -------------------------------------
-   panels = {base = {x=0, y=0, w=40, h=40, ox=20, oy=12, numx=2, numy=2}},
-   battle_ui = {
+   ['battle/ui' ]= {
       bar = {w=8, h=8, numx=3},
    },
+   ['battle/results'] = {base = {w=240, h=160, numx=4}},
+   ['battle/start'] = {base = {ox=120, oy=80, w=240, h=160, numx=1}},
    -- Chips --------------------------------------
-   bullet = {base = {ox=8, oy=8, w=16, h=16, numx=6, anim={1,2,3,4,5,6}, fps=20}},
-   boots = {base = {x=0, y=0, ox=11, oy=7, w=24, h=16, numx=2}},
-   wheel_crate = {base = {ox=17, oy=45}},
-   poisdrop = {base = {ox = 8, oy = 7}},
-
-   -- Actors -------------------------------------
-   testenemy = {base = {ox=22, oy=30}},
-   testenemy2 = {base = {ox=22, oy=30}},
-   ben = {
+   ['battle/entities/bullet'] = {base = {ox=8, oy=8, w=16, h=16, numx=6, anim={1,2,3,4,5,6}, fps=20}},
+   ['battle/entities/boots'] = {base = {x=0, y=0, ox=11, oy=7, w=24, h=16, numx=2}},
+   ['battle/entities/wheel_crate'] = {base = {ox=17, oy=45}},
+   ['battle/entities/poisdrop'] = {base = {ox = 8, oy = 7}},
+   ['battle/entities/testenemy'] = {base = {ox=22, oy=30}},
+   ['battle/entities/testenemy2'] = {base = {ox=22, oy=30}},
+   ['battle/entities/ben'] = {
       base  = {w=50, h=60, ox=24, oy=31, anim = false},
-      move  = {y=60,  w=50, h=60, ox=24, oy=31, fps=20, numx=2,
-               len=3, iasa=3, anim={1,2}},
-      shoot = {y=120, w=50, h=60, ox=24, oy=31, fps=20, numx=2,
-               len=5, iasa=3, anim={1,2}},
-      throw = {y=180, w=50, h=60, ox=24, oy=31, fps=20, numx=2,
-               len=5, iasa=3, anim={1,2}},
+      move  = {y=60,  w=50, h=60, ox=24, oy=31, fps=20, numx=2, len=3, iasa=3, anim={1,2}},
+      shoot = {y=120, w=50, h=60, ox=24, oy=31, fps=20, numx=2, len=5, iasa=3, anim={1,2}},
+      throw = {y=180, w=50, h=60, ox=24, oy=31, fps=20, numx=2, len=5, iasa=3, anim={1,2}},
    },
 }

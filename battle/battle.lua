@@ -4,6 +4,7 @@ local folder = require 'src/folder'
 
 local entities = require 'battle/entities'
 local stage = require 'battle/stage'
+local results = require 'battle/results'
 local chip_artist = require 'battle/chip_artist'
 local customize = require 'battle/customize/customize'
 
@@ -30,7 +31,7 @@ function battle.new (set_name)
    self.bg = bg.new(unpack(self.state.bg))
 
    self.stage = stage.new()
-   self.entities = entities.new(self)
+   self.entities = entities.new(self, 'battle/entities/')
    self.chip_artist = chip_artist.new()
 
    self.will_select_chips = true
@@ -58,7 +59,7 @@ function battle:update (input)
    elseif input then
       local ending = self.entities:get_ending(self.state)
       if ending then
-         scene.push(require 'battle/results', ending)
+         scene.push(results:new(ending))
          return
       end
 

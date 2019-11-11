@@ -6,11 +6,12 @@ local elements = require(PATHS.battle .. 'elements')
 
 local entities = {}
 
-function entities.new (battle)
+function entities.new (battle, entities_path)
    local self = oop.instance(entities, {})
 
    assert(battle.stage, 'must initialize battle stage first')
    self.battle = battle
+   self.entities_path = entities_path
    self.proto_ent = proto_ent.new(battle)
 
    self.entities = {}
@@ -30,11 +31,11 @@ end
 function entities:add (ent)
    -- Class heirachy
    -- Object -> Class -> [Parent -> [Parent -> ...]] -> Entity
-   local class = require (PATHS.battle .. 'ents/' .. ent.name)
+   local class = require (self.entities_path .. ent.name)
    local head = class
    setmetatable(ent, {__index = head})
    while head.extends do
-      local extended = require(PATHS.battle .. 'ents/' .. head.extends)
+      local extended = require(self.entities_path .. head.extends)
       setmetatable(head, {__index = extended})
       head = extended
    end
@@ -58,10 +59,10 @@ function entities:apply_damage (send, recv, amount)
 end
 
 -- Figure out if the battle has ended yet
+-- Endings in order: win, lose, p1win, p2win
 function entities:get_ending ()
    local sides = self.battle.state.sides
    local two_player = sides[1].is_player and sides[2].is_player
-   local endings = two_player and {'p2win', 'p1win'} or {'lose', 'win'}
 
    for i = 1,2 do
       sides[i].alive = false
@@ -75,7 +76,8 @@ function entities:get_ending ()
 
    for i = 1,2 do
       if not sides[i].alive then
-         return endings[i]
+         local loser = i == 1 and 2 or 1
+         return two_player and 2+loser or loser
       end
    end
 end

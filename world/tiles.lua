@@ -3,7 +3,6 @@ local lg = love.graphics
 local image = require 'src/image'
 local oop = require 'src/oop'
 
-local img = image.new 'battle_ui'
 local BIT_XFLIP = 0x80000000
 
 local tiles = {}

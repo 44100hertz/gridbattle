@@ -3,6 +3,7 @@ local lg = love.graphics
 local oop = require 'src/oop'
 local scene = require 'src/scene'
 
+local go_screen = require 'battle/go_screen'
 local side = require 'battle/customize/side'
 
 local customize = {
@@ -34,7 +35,7 @@ function customize:update (input)
    end
    if exit_scene then
       scene.pop()
-      scene.push(require(PATHS.battle .. 'go_screen'))
+      scene.push(go_screen:new())
    end
 end
 

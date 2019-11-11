@@ -1,22 +1,29 @@
-local scene = require 'src/scene'
-local image
+local oop = require 'src/oop'
+local image = require 'src/image'
 
-return {
+local scene = require 'src/scene'
+
+local results = {
    transparent = true,
    open = true,
-
-   start = function (result)
-      image = love.graphics.newImage(PATHS.battle .. result .. '.png')
-   end,
-
-   update = function (_, input)
-      if input[1].a==1 then
-	 scene.pop()
-	 scene.pop()
-      end
-   end,
-
-   draw = function ()
-      love.graphics.draw(image)
-   end,
 }
+
+function results:new (result)
+   local self = oop.instance(results, {})
+   self.image = image.new('battle/results')
+   self.frame = result
+   return self
+end
+
+function results:update (input)
+   if input[1].a==1 then
+      scene.pop()
+      scene.pop()
+   end
+end
+
+function results:draw ()
+   self.image:draw(0, 0, nil, self.frame)
+end
+
+return results

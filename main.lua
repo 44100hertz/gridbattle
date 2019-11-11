@@ -5,24 +5,19 @@ local lt = love.timer
 local outdir
 
 do
-   _G.PATHS = {}
-   local paths = {
-      chipdb = 'chipdb',
-      enemydb = 'enemydb',
-      imgdb = 'imgdb',
-      chips = 'chips/',
-      bg = 'bg/',
-      fonts = 'fonts/',
-      foldedit = 'foldedit/',
-      folders = 'folders/',
-      menu = 'menu/',
-      battle = 'battle/',
-      sets = 'battle/sets/',
-   }
+   _G.PATHS = {
+      chips      = 'res/chips/',
+      chipdb     = 'res/chipdb',
+      imgdb      = 'res/imgdb',
+      folders    = 'res/folders/',
+      bg         = 'res/bg/',
+      fonts      = 'res/fonts/',
+      menu       = 'res/menu/',
 
-   for k,v in pairs(paths) do
-      _G.PATHS[k] = RES_PATH .. v
-   end
+      foldedit   = 'foldedit/',
+      battle     = 'battle/',
+      sets       = 'battle/sets/',
+   }
 
    -- Index chips by name or by index interchangeably
    local chipdb = require(PATHS.chipdb)

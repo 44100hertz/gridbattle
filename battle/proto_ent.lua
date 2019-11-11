@@ -23,7 +23,7 @@ function ent:_load ()
    if self.max_hp then self.hp = self.max_hp end
 
    if self.img then
-      self.image = image.new(self.img)
+      self.image = image.new('battle/entities/' .. self.img)
       self.img = nil
    end
 

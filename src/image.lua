@@ -1,5 +1,5 @@
 local imgdb = require(PATHS.imgdb)
-local imgpath = _G.RES_PATH .. '/img/'
+local imgpath = 'res/images/'
 
 image = {}
 image.__index = image

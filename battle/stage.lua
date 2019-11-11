@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local img = (require 'src/image').new'panels'
 
 local stage = {
    panel_width = 32,
@@ -17,7 +16,6 @@ function stage.new ()
          self.panels[x][y] = {}
       end
    end
-   img:set_sheet('base')
    return self
 end
 
