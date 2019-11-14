@@ -8,7 +8,7 @@ local results = require 'battle/results'
 local chip_artist = require 'battle/chip_artist'
 local customize = require 'battle/customize/customize'
 
-local savedata = require(RES_PATH .. 'savedata')
+local savedata = require(PATHS.savedata)
 local bg = require(PATHS.bg .. 'bg')
 local ui =  require(PATHS.battle .. 'ui')
 

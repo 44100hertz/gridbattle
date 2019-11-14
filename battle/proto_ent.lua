@@ -2,8 +2,6 @@ local oop = require 'src/oop'
 local text = require 'src/text'
 local image = require 'src/image'
 
-local chipdb = require (PATHS.chipdb)
-
 local ent = {}
 
 -- TODO: move many of these methods into battle (so self.battle.spawn, etc.)
@@ -110,7 +108,7 @@ end
 
 function ent:use_chip (chip_name)
    local added = self:spawn {
-      name = chipdb[chip_name].class,
+      name = GAME.chipdb[chip_name].class,
       parent = self,
       delay = 8,
    }

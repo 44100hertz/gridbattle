@@ -4,7 +4,6 @@ local folder = require 'src/folder'
 local text = require 'src/text'
 local scene = require 'src/scene'
 
-local chipdb = require(PATHS.chipdb)
 local elements = require(PATHS.battle .. 'elements')
 
 local lg = love.graphics
@@ -131,7 +130,7 @@ function editor:draw ()
          -- Highlight selection
          if i == pane.sel then lg.setColor(120/255.0, 192/255.0, 128/255.0) end
 
-         elem_index = elements.by_name[chipdb[v.name].elem]
+         elem_index = elements.by_name[GAME.chipdb[v.name].elem]
          line = string.char(elem_index) .. v.ltr:upper() .. ' ' .. v.name
          text.draw('flavor', line, x, y)
          text.draw('flavor', '\127' .. v.qty, x+78, y)

@@ -6,7 +6,6 @@ local scene = require 'src/scene'
 local dialog = require 'src/dialog'
 
 local img = (require'src/image').new'customize'
-local chipdb = require(PATHS.chipdb)
 
 local side = {}
 
@@ -65,7 +64,7 @@ function side:update(input_list)
       self.pal[i] = table.remove(self.queue)
 --   elseif input.l==1 and not self.two_player and sel then
    elseif input.l==1 and sel then
-      local chip = chipdb[sel.name]
+      local chip = GAME.chipdb[sel.name]
       scene.push(dialog.new(chip.desc, 132, 16))
    elseif input.sel==1 then
       self.hide = not self.hide
@@ -118,7 +117,7 @@ function side:draw()
    local sel = self.pal[self.sel]
    if sel then
       self.battle.chip_artist:draw_art(sel.name, 8, 16, 1)
-      local damage = chipdb[sel.name].damage
+      local damage = GAME.chipdb[sel.name].damage
       text.draw('flavor', tostring(damage), 8, 88)
    end
 
