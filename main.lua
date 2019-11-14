@@ -1,11 +1,8 @@
 _G.RES_PATH = arg[2] or 'res/'
-local lg = love.graphics
-local lt = love.timer
 local outdir
 
 local scene = require 'src/scene'
 local config = require 'src/config'
-local input = require 'src/input'
 local menu = require 'src/menu'
 
 _G.GAME = {
@@ -41,7 +38,7 @@ end
 
 local time = 0
 config.load()
-lg.setDefaultFilter('nearest', 'nearest')
+love.graphics.setDefaultFilter('nearest', 'nearest')
 GAME.tickperiod = (1/GAME.tickrate)
 
 local dump_canvas
@@ -60,32 +57,32 @@ end
 
 love.run = function ()
    if arg[3] == 'dump' then
-      dump_canvas = lg.newCanvas(240, 160)
+      dump_canvas = love.graphics.newCanvas(240, 160)
       outdir = 'out/' .. os.time()
       love.filesystem.createDirectory(outdir)
    end
 
    love.math.setRandomSeed(os.time())
    scene.push(menu.new('title'))
-   local next_tick = lt.getTime() + GAME.tickperiod
+   local next_tick = love.timer.getTime() + GAME.tickperiod
 
    while true do
       if poll() then return end
       scene.update()
-      while(lt.getTime() < next_tick) do
-         love.draw(lt.getTime())
+      while(love.timer.getTime() < next_tick) do
+         love.draw(love.timer.getTime())
       end
       next_tick = next_tick + GAME.tickperiod
    end
 end
 
 love.draw = function ()
-   lg.origin()
-   lg.scale( config.c.gamescale, config.c.gamescale )
+   love.graphics.origin()
+   love.graphics.scale( config.c.gamescale, config.c.gamescale )
    scene.draw()
-   lg.origin()
-   lg.print(math.floor(collectgarbage('count')))
-   lg.present()
+   love.graphics.origin()
+   love.graphics.print(math.floor(collectgarbage('count')))
+   love.graphics.present()
 
    if outdir then
       dump_canvas:renderTo(scene.draw)
