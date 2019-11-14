@@ -1,0 +1,31 @@
+My todo file was organized into arbitrary categories. Rather than sorting based on the type of work being done (i.e. features, bugs, refactoring, etc.), I had them separated into arbitrary, vague names. For this reason, I accidentally made duplicate todo items. Also, all my old todo items are somewhat nonsensical to me now, and I had to delete them.
+
+Things that I wanted to learn before making this game were only bogging down the development process. It's wonderful that I want to learn these things, but it's not so wonderful to say that before I make a game, I need to learn to compose music, or to write glsl shaders. What if those things take a lot of time and effort? I don't care that they're a part of my dream, what I care about is making a good game. My dream is to make something good, not to have exactly the thing I'm dreaming about.
+
+My control fantasy is exactly what let things get out of control.
+
+I was insistent on avoiding the use of OOP, which means I ran into all sorts of issues. For example, I implemented a RAM viewer to make sure that I wasn't leaking assets, because it was up to me to initialize and de-initialize everything more or less manually. I didn't actually avoid the use of OOP, either. I just did things that, to me at the time, didn't feel like OOP even though on some level I knew they were.
+
+I should not have based my code on avoidance of certain concepts. I should be willing to embrace any concept that can improve my code.
+
+I used the require table more or less like a singleton creator, with a bunch of closure variables in the loaded files. I was only able to have a single instance of anything due to this. It also made it way too easy to have cross-file dependencies that are not so obvious, with code files modifying the things they require. Turning those file-level scoped variables into members of each object has made everything make a lot more sense, even for things where I only ever want one instance. It has allowed for the creation of object heirarchies.
+
+The require table is not magical. It's a table just like any other and can be implemented by the user if absolutely needed. The things in the require table don't go away easily, so don't put a lot of data on a file-level scope, or 'static' inside of a class that is being required.
+
+I often got the impression that my code was written to be very "smart". I wanted things to be complicated for some reason, I wanted intelligence to be required to understand it, and in the process I got way too clever. This is such a common thing for young coders and I feel a lot better about things now. I didn't have a lot of comments, my variables were given names that made sense on some intuitive level to me, but only in the moment they were written and definitely not now.
+
+I wanted my code to be short. lua exacerbated the problem of wanting my code to be short. lua isn't made to be short, it's made to be simple, and every time I tried to reduce the amount of code I ended up hurting the structure and clarity of the code as well. Longer names are fine. Dumber, longer code is good. Less characters doesn't matter, and less typing only matters if I have to type WAAAY too much.
+
+My resource folder was designed to be like a doom WAD, where I can put all of the data in one place. The problem is that the resource folder contains things that are heavily coupled with the source folders. I tried to separate the resources from the code at some point, and all I ended up doing is screwing things up and separating arbitrarily, making the structure even less obvious.
+
+Initially, I put images with the things that used them. Then, I put all my images into one folder. Now, I have my images in one folder, but also with subfolders. This is a fine solution, the first one was also fine. The all-in-one approach, not so much fine.
+
+It takes a lot of time and investment to fix bad code. The more you learn about a codebase, the more you can identify its patterns, but knowing those patterns isn't enough. You have to come up with transformation processes in order to turn the disorganized code into organized code, and that is a lot of work for a mind to do. I often find myself making multiple changes when I only wanted to make one, because of the way that things are coupled so heavily. I know it's not ideal, but sometimes the two-commit solution leaves one commit with a nonfunctioning repo; something I like to avoid.
+
+Overriding love.run was totally unneeded.
+
+I tried to build an "engine" on top of love2d, but all I really did was make a bunch of sloppy systems for my codebase to talk to. There are some useful boilerplate-y things, like src/image.lua, but overall I think I was way too quick to implement broad, generic features for specific problems, which were often much larger than they needed to be. Examples would be the font system that totally ignores love's built in fonts, and also the "z-buffer" system for drawing order that ended up not being needed at all. I still advocate for building up layers of abstraction, but not just for the sake of abstracting!
+
+I was very angry when I was coding. I was angry about a lot of things, and it shows. I was very stubborn, and I wanted to do things my way and no way else.
+
+I never thought I'd stay up until almost 3am ranting about my code changes. Maybe someone will read this file, I'm just going to leave it here. It feels good to vent.
