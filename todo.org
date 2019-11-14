@@ -1,276 +1,64 @@
-* The Great Restructuring
-** OOP-ification
+* Refactoring
+** TODO Remove unneeded fonts code
+*** TODO Remove word wrapping from chip descriptions
+*** TODO Remove 'src/fonts'
+*** TODO Convert fonts into love2d-friendly format (or use existing fonts, or fontstruct them)
+** TODO OOP-ification
+*** TODO The GAME global
 *** DONE Dialog popup
-*** TODO What others?
-*** Clear out remaining unwanted return { statements
-** Battle
-*** DONE Make sides of battle use index 1 2 instead of 'left' / 'right'
-*** TODO Eliminate use of battle.state, make sets more logical too?
+*** TODO src/config
+*** TODO src/input
+*** TODO Clear out remaining unwanted return { statements
+** DONE Make sides of battle use index 1 2 instead of 'left' / 'right'
+** TODO Eliminate use of battle.state
 Change location of queue to player actor. Must relocate all mutable state here.
-** Replace scene stack system with simpler loop assignments
+May become more clear if scene system is replaced.
+** TODO Replace scene stack system with simpler loop assignments
    Must also use this to fix bug in customization dialog box, where local pvp frezes
-** Scaling back Resources
-*** TODO Scale back resource folder concept, remerge res/ with rest of game
-*** TODO Move images back into their local resource folders
-** Introduce coordinate type
-** Switch to 2d artstyle
-*** In Battle
-*** In Map
-* Bugfix
+** TODO Introduce coordinate type
+** TODO Switch to 2d artstyle
+*** DONE In Battle
+*** TODO In Map
+** DONE Scaling back Resources
+*** DONE Scale back resource folder concept, remerge res/ with rest of game
+*** DONE Move images back into their local resource folders
+I actually just added subdirectories to img/, and I kept many game resource
+files in res/, but only if they don't fit into other directories.
 * Features
-** Battle editor GUI
-** Server/Client for netplay (maybe never)
-** .exe and .love build system for releases
-** Navi Enemy
-** Elements
-*** DONE give everything an element, show element in editor and battle
-*** DONE handle elements on collisions
-*** DONE make panels affect elements
-* Demo
-** DONE determine whether to focus on pvp or pve
-Focus on PvE!
-* Steps
-** TODO consider using Actor or Entity base class
+** TODO .exe and .love build system for releases
+This will be nice to have before I make my first demo. Maybe someone else has
+already written scripts for this?
+** TODO Navi Enemy
+I have some boss designs on paper, I should probably get some feedback on them.
+It's that or determine what navi AI or animation features I want to put into
+place, and make a simple enemy that has all of those traits.
+** TODO netplay
+Where to begin? I may want to separate a server/client somehow. I should start
+by sorting out which data needs to be shared between clients.
+** TODO sound effects
+I should determine sound architecture. Similar to image, or channel-based
+approach? etc.
+** TODO chip selector for debugging
+I just want a list of all chips and be able to put them into queue easily.
+** TODO handling music
+I should recover my old music from lanparty-code, get some feedback on it in
+discord or possibly other locations (upload to soundcloud is ideal), and
+ultimately decide whether I want a composer for me, or what. hi lorna?
+** TODO possible feature: pvp cust delay
+When one player wants to cust, display a timer on the other players'
+cust menu; give them 10 seconds to finish before the game autostarts.
+** TODO Battle editor GUI
+The idea here is that battles would be easier to edit with a UI, rather than in
+the current primitive format. This is likely to save effort in the long run, and
+create a sense of unity by having visual lists of enemies, maybe even previews.
+** DONE Use Actor or Entity base class
 Instead of having a bunch of checks for actor properties that override
 default behavior, just make all classes implement a base class. This
 is actually a hella good idea.
 
 Make a battle/proto/ folder with prototypes for various actor kinds,
 which can use each other, of course.
-** TODO keep image data in sheets with image
-** TODO use submodules for wad(s)
-This will enable me to use a private submodule for mainline game
-development.
-** TODO pvp features
-*** TODO cust delay
-When one player wants to cust, display a timer on the other players'
-cust menu; give them 10 seconds to finish before the game autostarts.
-** TODO make some wad features less intimidating
-If it's possible to automatically implement anything, especially in
-customize, go ahead and do it in src/. For example, try love2d
-coordinate transforms instead of just adding an offset value.
-** TODO debug stuff
-*** TODO any chip selector
-*** TODO RAM, CPU, video info
-** TODO make keyboard input more responsive
-mostly for directions, just make it so the most recently pressed
-direction is what registers, as opposed to just having left/right
-priority, etc.
-** TODO allow certain collisions to only happen once
-Have a collide_time variable, and just check if it equals 1?
-** TODO sound effects
- - Unified sound playback method; limits number of channels intelligently
- - named sound sources, searchable, etc.
-** TODO compose music
-** TODO shaders, etc.
-*** TODO get love2d shaders working
-*** TODO Add shine on panels
-*** TODO Masked pattern effects
-*** TODO mess with indexed stuff
-*** TODO posterize filter
-*** TODO palette cycle
-*** TODO pixel upscaling and/or LCD filter
-* Nope'd
-** DONE Image class that handles images, assets, and sheets
-*** TODO move all images into unified locations
-*** TODO identify all use of images and change them into image class calls
-*** TODO attach sheets to images directly
-** DONE make sheets a bit easier
-This would require too much restructuring so I'm giving up on it.
-
-I still have to specify the width and height when making quads for
-non-actors. It would be great if this was a bit more automatic, maybe
-making quads for actors would end up being so little work that I
-wouldn't have to do it implicitly.
-
-This would ideally be done just by feeding a sheet into
-the sheet generator, or possibly by creating a sheet object that just
-fetches quads as needed. It might not be bad just to unify drawing in
-general for this stuff.
-** DONE use Coord in more places
-This would require too much restructuring so I'm giving up on it.
-
-I've been told this is better. That remains to be seen, though I'm not
-going to reject it.
-
-** DONE FPS independance via threads (if stable)
-NO threads here, thanks.
-* Done
-** DONE rewrite occupancy system
-make it so that, when it needs to be known whether an object is in a
-space, the game will solve it for that particular instance. Occupy and
-free would simply be replaced with whether "tangible" is true.
-** DONE memory cleanup
-This is best done by keeping all loaded assets in tables. State exit
-functions will be added that nil these tables. Possibly: an asset
-manager is passed said tables, and clears them out when states get
-popped.
-** DONE multiplayer
-Get two players that can fight each other.
-
-This would possibly require more elegant coordinate flipping. Maybe
-built into draw, maybe not. For now, just make a custom flippable
-coord type in the place where it's needed, and I can toy with how to
-implement it elsewhere.
-** DONE more cool/trippy bg's
-It's now possible to do this, so I'm going to go ahead and mark it
-done. I can make more BG's when I actually start developing a game.
-** DONE make a stub assets folder
-This should have the absolute minimum required to make things not
-crash. It will help me to decide what matters for src/, res/, or in
-essence, what should be under user control without modifying the
-source.
-** DONE automate scene transitions
-Tell scene.lua that you want a fade, and it just does it without
-having to manually push a transition.
-** DONE saving/loading chip folders
-*** TODO file save/load menu
-*** TODO save/load chip folders
-** DONE configuration and saves
-In order for the folder editor to be finished, it's needed to
-implement this. Good thing I already have a serialization class just
-sitting around, though it might not hurt to make some kind of custom
-format if it's small and doesn't cause any problems, or to use someone
-else's that doesn't suck too much.
-
-A prerequisite to calling this done might be a configuration
-menu. Best thing currently would just be screen settings, but input
-will matter.
-*** DONE config menu
-*** DONE saving config
-** DONE automatic path solving given a root folder
-You shouldn't have to put all those paths into game.lua. It's a bunch
-of extra work. Ideally instead of path globals, just use a resource
-class.
-
-Actually I don't think this is needed.
-** DONE Manage cross-path access
-There's quite a bit in src/ that still manages things in other folders
-either without being able to change the path, or just shouldn't use
-that path in general.
-** DONE variants and naming
-What I might want to do is, simply call things by name e.g. testEnem1,
-then detect and separate numerals. The current scheme is just a bit
-awkward, though servicable.
-** DONE res/game.lua
-A file that tells the game what files to run when starting, so that I
-don't have to code anything pointing to res/ into src/.
-** DONE Do chips belong in battle?
-Maybe there should be a dedicated folder for all that, but it feels
-wrong to have chips.lua in src/, and just as wrong to have a chips/
-folder that implements things specific to battle/.
-
-** DONE Interchangeable "wads"
-Resources were put into the root for now because I felt like it. I did
-learn a bit about my structure by upending it :P. Anyway, ideally
-there should be a sort of res/ folder that can be swapped out to run
-different games, essentially.
-** DONE better resolution/aspect independance
-Maybe not arbitrary, but supporting 4:3 and 16:9 versions of your res
-could be good. This is mostly just testing if that works at all.
-
-** DONE automatic text align center and right
-** DONE show name of top chip on queue
-** DONE separate battle actors into category lists
-New thinking: it's already obvious enough what is and isn't
-stateful. If anything needs to happen, it's just to improve that
-distinction. Limiting things to be stateful or not is just a waste of
-time.
-
-Ents: All actors are entities, so they're run as well.
-Actors: assume that all actors (player, enemy) are stateful.
-*** DONE Make enemies explicitly specified in each set
-** DONE allow states to let the previous state partially update
-*** DONE pass in input as part of the update, rather than including directly
-*** DONE make things that use input handle it not being passed in
-** DONE game over screen, reset the game
-** DONE lazy depth calculation
-I wanted to do this, I did a decent amount of the work...it's not
-worth it, there's nothing to gain. This can be revived if I actually
-bottleneck again.
-
-Calculate depth on each draw call, then update that to be only when
-things move. Maintain a drawn game state, essentially.
-** DONE crisp XM playback (supposedly)
-
-** DONE deck editor
-Select which chips out of your pool of chips to put into a given deck.
-*** DONE show chip damage
-*** DONE design deck editor UI
-*** DONE draw UI
-*** DONE program UI
-** DONE make enemies use attacks (chips)
-** DONE give player HP, death
-** DONE enemy list
-** DONE make enemies aware of player
-** DONE battle status info
-** DONE class variants
-** DONE table value to draw previous state
-** DONE do actually use metatables, not classes
-** DONE subdivided draw depth list
-** DONE make menus nice
-Menus should be primarily graphical.
-menu.lua should create a runnable menu state from a set of data.
-submenus should work as separate states.
-the menu data itself should be as minimal as possible.
-*** DONE menu example file
-*** DONE rewrite existing menus
-*** DONE convert current fonts to grid mono
-** DONE battle chips
-*** DONE chip UI
-*** DONE example folder
-*** DONE interface battle chips with player
-I chose concept B. queue.lua exists as helper functions, but because queue
-is just an array data type, I didn't bother with anything else.
-
-Concept A: Queue.lua file; When the chip UI is brought up, a Queue data
-type is passed to it. When the player wants to do things with this
-queue, there's helper functions attatched to the queue to make it
-work.
-
-Concept B: The player holds the queue, and queue.lua just takes in
-that queue. No functions neccessarily attatched.
-*** DONE bullet
-*** DONE boots
-*** DONE wheel crate
-*** DONE poison
-*** DONE allow chip to affect actor state
-** DONE make chips do more stuff
-*** DONE whlcrate damaging enemies
-*** DONE poisdrop throw animation
-*** DONE boots push whlcrate
-** DONE unified actor animation and state model
-** DONE asset management
-Well, now I know. RAM usage or object counts would help, but I think
-that lua now knows when to GC things, and I make sure that images are
-only loaded once.
-
-Not really sure what is meant by this, probably better just to null out
-assets when battles end, etc.
-** DONE custom mono fonts via ascii grid style + spritebatch
-** DONE joypad
-** DONE rewrite
-** DONE no more "actor"
-** DONE image asset management
-** DONE nicer animation system
-Have rows, speeds in FPS.
-FPS speeds were never really needed, I guess.
-** DONE damage management
-** DONE drawing origins
-** DONE all actors with states
-** DONE non-object panels
-** DONE no more signals
-Signals are dumb because they're really messy
-** DONE no more "data"
-** DONE 240x160
-** DONE initial game
-** DONE auto-sorting draw list (z-buffer)
-https://love2d.org/wiki/Skip_list:Drawing_Order
-** DONE drawing class w/organization
-** DONE custom fonts
-** DONE 6x3 grid
-** DONE movement
-** DONE debug menus
-** DONE battle objects (bullets, etc.)
-** DONE hitboxes/collision
-** DONE debug menus
+** DONE Initial Element dev
+*** DONE give everything an element, show element in editor and battle
+*** DONE handle elements on collisions
+*** DONE make panels affect elements
