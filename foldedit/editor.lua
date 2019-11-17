@@ -1,7 +1,6 @@
 local oop = require 'src/oop'
 
 local folder = require 'src/folder'
-local text = require 'src/text'
 local scene = require 'src/scene'
 
 local elements = require(PATHS.battle .. 'elements')
@@ -132,8 +131,8 @@ function editor:draw ()
 
          elem_index = elements.by_name[GAME.chipdb[v.name].elem]
          line = string.char(elem_index) .. v.ltr:upper() .. ' ' .. v.name
-         text.draw('flavor', line, x, y)
-         text.draw('flavor', '\127' .. v.qty, x+78, y)
+         love.graphics.print(line, x, y)
+--         love.graphics.print('\127' .. v.qty, x+78, y)
          lg.setColor(1.0, 1.0, 1.0)
          ::continue::
          y = y + entry_height
@@ -146,9 +145,9 @@ function editor:draw ()
 
    img:set_sheet'fg'
    img:draw(16, 0)
-   text.draw('flavor', 'Collection', 24, 8)
+   love.graphics.print('Collection', 24, 8)
    local right_str = 'folder (' .. self.library.folder:count() .. '/30' .. ')'
-   text.draw('flavor', right_str, 136, 8)
+   love.graphics.print(right_str, 136, 8)
 
    -- Selection rectangle around column
    local function draw_col_sel (x)

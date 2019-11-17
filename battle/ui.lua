@@ -1,5 +1,3 @@
-local text = require 'src/text'
-
 local img = (require'src/image').new'battle/ui'
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
@@ -11,16 +9,16 @@ function ui.draw (set, cust_amount)
    -- Side-specific information
    for i = 1,2 do
       local side = set.sides[i]
+      local align = i == 1 and 'left' or 'right'
       if side.is_player then
          -- For player: HP in upper corner
          local hp = side[1].hp
          local x = i==2 and gamewidth-4 or 4
-         text.draw('visible', tostring(math.floor(hp)), x, 4, side)
+         love.graphics.print(tostring(math.floor(hp)), x, 4)
          -- Queue top in lower corner
          if side.queue and #side.queue > 0 then
             local top = side.queue[#side.queue].name
-            local x = i == 1 and 0 or GAME.width
-            text.draw('visible', top, x, GAME.height-11)
+            love.graphics.printf(top, 0, GAME.height-11, GAME.width, align)
          end
       else
          -- For enemies: Enemy names in upper corner
@@ -30,8 +28,9 @@ function ui.draw (set, cust_amount)
                table.insert(names, v.name)
             end
          end
-         local x = i==2 and GAME.width or 0
-         text.draw('shadow', names, x, 2, i)
+         for j = 1,#names do
+            love.graphics.printf(names[j], 0,  j*20, GAME.width, align)
+         end
       end
    end
 

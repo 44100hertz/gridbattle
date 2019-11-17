@@ -1,7 +1,6 @@
 local lg = love.graphics
 
 local oop = require 'src/oop'
-local text = require 'src/text'
 local scene = require 'src/scene'
 local dialog = require 'src/dialog'
 
@@ -118,7 +117,7 @@ function side:draw()
    if sel then
       self.battle.chip_artist:draw_art(sel.name, 8, 16, 1)
       local damage = GAME.chipdb[sel.name].damage
-      text.draw('flavor', tostring(damage), 8, 88)
+      love.graphics.print(tostring(damage), 8, 88)
    end
 
    lg.pop()

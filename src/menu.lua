@@ -1,4 +1,3 @@
-local text = require 'src/text'
 local oop = require 'src/oop'
 
 local lg = love.graphics
@@ -52,7 +51,7 @@ function menu:draw ()
       local y = self.y + i * self.spacing
 
       local drawtext = function ()
-         text.draw(self.font, v[1], GAME.width/2, y, 'center')
+         love.graphics.printf(v[1], 0, y, GAME.width, 'center')
       end
 
       if self.sel==i then

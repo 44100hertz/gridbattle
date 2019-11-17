@@ -50,7 +50,9 @@ function battle:update (input)
    if self.will_select_chips then
       for i = 1,2 do
          if self.state.sides[i].is_player then
-            self.state.sides[i][1].queue = {}
+            local q = {}
+            self.state.sides[i].queue = q
+            self.state.sides[i][1].queue = q
          end
       end
       scene.push(customize.new(self))

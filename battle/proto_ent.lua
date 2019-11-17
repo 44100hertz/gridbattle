@@ -1,13 +1,7 @@
 local oop = require 'src/oop'
-local text = require 'src/text'
 local image = require 'src/image'
 
 local ent = {}
-
--- TODO: move many of these methods into battle (so self.battle.spawn, etc.)
--- It's okay that it makes the code a bit more complex. The self.x and self.y
--- defaults can go for the sake of consistency, and will also become nicer when
--- a coordinate type introduced.
 
 function ent.new (battle)
    return oop.instance(ent, {battle = battle})
@@ -98,7 +92,7 @@ function ent:draw_info (x, y)
    local stage = self.battle.stage
    if self.hp and not self.hide_hp then
       local hpstr = tostring(math.floor(self.hp))
-      text.draw('hpnum', hpstr, x, y-stage.panel_height/2, 'center')
+      love.graphics.printf(hpstr, x - 200, y-stage.panel_height/2, 400, 'center')
    end
 
    if self.queue then
