@@ -1,79 +1,70 @@
-local keybind1 = {
-   a='x', b='z',
-   l='a', r='s',
-   st='h', sel='g',
-   du='i', dd='k',
-   dl='j', dr='l',
-}
-local keybind2 = {
-   a='right', b='down',
-   l='left', r='up',
-   st='kpenter', sel='kp+',
-   du='kp8', dd='kp5',
-   dl='kp4', dr='kp6',
-}
-local joybind = {
-   a='b', b='a',
-   l='leftshoulder', r='rightshoulder',
-   st='start', sel='back',
-   du='dpup', dd='dpdown',
-   dl='dpleft', dr='dpright',
-}
-local joy1 = love.joystick.getJoysticks()[1]
-local joy2 = love.joystick.getJoysticks()[2]
+local oop = require 'src/oop'
+
+local input = {}
+local joy_to_dpad_threshold = 0.5
+
 love.joystick.loadGamepadMappings('res/gamecontrollerdb.txt')
 
-local deadzone = 0.5
-local check_key = function (keybind, k)
-   return love.keyboard.isScancodeDown(keybind[k])
-end
-local check_joy = function (joy, k)
-   local lr = joy:getAxis(1)
-   local ud = joy:getAxis(2)
-   if k=='dl' and (lr < -deadzone) then return true end
-   if k=='dr' and (lr > deadzone) then return true end
-   if k=='du' and (ud < -deadzone) then return true end
-   if k=='dd' and (ud > deadzone) then return true end
-   return joy:isGamepadDown(joybind[k])
-end
-
-local count1, methods1 = {}, {}
-local count2, methods2 = {}, {}
-
-if joy1 then
-   methods1[1] = function (k) return check_joy(joy1, k) end
-end
-table.insert(methods1, function (k) return check_key(keybind1, k) end)
-
-if joy2 then
-   methods2[1] = function (k) return check_joy(joy2, k) end
-end
-table.insert(methods2, function (k) return check_key(keybind2, k) end)
-
-local check_all = function (count, methods)
-   local check_defer = function (k)
-      for _,v in ipairs(methods) do
-         if v(k) then return true end
+function input.new()
+   local self = oop.instance(input, {})
+   self.keybinds = {
+      {
+         a='x', b='z',
+         l='a', r='s',
+         st='h', sel='g', -- Left player
+         du='i', dd='k',
+         dl='j', dr='l',
+      },
+      {
+         a='right', b='down',
+         l='left', r='up',
+         st='kpenter', sel='kp+', -- Right player
+         du='kp8', dd='kp5',
+         dl='kp4', dr='kp6',
+      }
+   }
+   self.joybinds = {
+      {
+         a='b', b='a',
+         l='leftshoulder', r='rightshoulder',
+         st='start', sel='back',
+         du='dpup', dd='dpdown',
+         dl='dpleft', dr='dpright',
+      },
+      {
+         a='b', b='a',
+         l='leftshoulder', r='rightshoulder',
+         st='start', sel='back',
+         du='dpup', dd='dpdown',
+         dl='dpleft', dr='dpright',
+      },
+   }
+   self.counts = {}
+   for i = 1,2 do
+      self.counts[i] = {}
+      for key,_ in pairs(self.joybinds[1]) do
+         self.counts[i][key] = 0
       end
-      return false
    end
-   local pressed
-   for k,_ in pairs(joybind) do
-      count[k] = check_defer(k) and count[k]+1 or 0
-   end
-   return count
+   return self
 end
 
-return {
-   keybind1 = keybind1,
-   keybind2 = keybind2,
-   joybind = joybind,
-
-   resolve = function ()
-      return {check_all(count1, methods1), check_all(count2, methods2)}
-   end,
-
-   rebind = function (binds)
-      keyBind = binds
+function input:update()
+   local joys = love.joystick.getJoysticks()
+   for i = 1,2 do
+      for key,_ in pairs(self.joybinds[1]) do
+         local lr = joys[i] and joys[i]:getAxis(1) or 0
+         local ud = joys[i] and joys[i]:getAxis(2) or 0
+         local down = love.keyboard.isScancodeDown(self.keybinds[i][key]) or
+            (joys[i] and joys[i]:isGamepadDown(self.joybinds[i][key])) or
+            (key=='dl' and lr < -joy_to_dpad_threshold) or
+            (key=='dr' and lr > joy_to_dpad_threshold) or
+            (key=='du' and ud < -joy_to_dpad_threshold) or
+            (key=='dd' and ud > joy_to_dpad_threshold)
+         self.counts[i][key] = down and self.counts[i][key]+1 or 0
+      end
    end
-}
+   return self.counts
+end
+
+return input

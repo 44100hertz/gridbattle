@@ -1,3 +1,4 @@
+local input = require 'src/input'
 local scene = require 'src/scene'
 local config = require 'src/config'
 local menu = require 'src/menu'
@@ -29,6 +30,8 @@ function love.load ()
       tickrate = 60,
    }
    GAME.tickperiod = 1/GAME.tickrate
+
+   GAME.input = input.new()
 
    GAME.chipdb = dofile(PATHS.chipdb .. '.lua')
    -- Give chips an index field based on their order in the file, and

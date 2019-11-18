@@ -1,7 +1,6 @@
 -- a singleton that stores a stack of scenes
 -- the stack top is the current game state.
 
-local input = require 'src/input'
 local fade = require 'res/scenes/fade'
 
 local scene = {}
@@ -32,7 +31,7 @@ end
 function scene.update ()
    local top = stack[#stack]
    if top.open and stack[#stack-1].update then stack[#stack-1]:update() end
-   local inputs = input.resolve()
+   local inputs = GAME.input:update()
    if stack[#stack].update then stack[#stack]:update(inputs) end
 end
 

@@ -1,13 +1,10 @@
 * Refactoring
-** TODO Remove unneeded fonts code
-*** TODO Remove word wrapping from chip descriptions
-*** TODO Remove 'src/fonts'
-*** TODO Convert fonts into love2d-friendly format (or use existing fonts, or fontstruct them)
+** TODO Fix fonts somehow
 ** TODO OOP-ification
 *** TODO The GAME global
 *** DONE Dialog popup
 *** TODO src/config
-*** TODO src/input
+*** DONE src/input
 *** TODO Clear out remaining unwanted return { statements
 ** DONE Make sides of battle use index 1 2 instead of 'left' / 'right'
 ** TODO Eliminate use of battle.state
