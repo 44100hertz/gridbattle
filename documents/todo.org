@@ -1,5 +1,4 @@
 * Refactoring
-** TODO Make menus use 'name = x'
 ** TODO Fix fonts somehow
 ** TODO OOP-ification
 *** TODO The GAME global
@@ -15,11 +14,15 @@ multiple game instances (though it is not the only way).
 Change location of queue to player actor. Must relocate all mutable state here.
 May become more clear if scene system is replaced.
 ** TODO Replace scene stack system with simpler loop assignments
-   Must also use this to fix bug in customization dialog box, where local pvp frezes
+   Must also use this to fix bug in customization dialog box, where local pvp
+   freezes. There's a problem where the 'pause' screen for battle just calls
+   scene.pop twice to exit the scene, and that's really hacky but I see no
+   better way.
 ** TODO Introduce coordinate type
 ** TODO Switch to 2d artstyle
 *** DONE In Battle
 *** TODO In Map
+** DONE Make menus use 'name = x'
 ** DONE Cut down serializer
 Make 'serialize' write to lua and use dofile for reading.
 ** DONE Make sides of battle use index 1 2 instead of 'left' / 'right'

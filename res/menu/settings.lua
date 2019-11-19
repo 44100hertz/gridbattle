@@ -2,11 +2,18 @@ local oop = require 'src/oop'
 local scene = require 'src/scene'
 
 local menu = {
-   y = 60, spacing = 16,
+   y = 60,
+   spacing = 16,
    font = 'title',
    [1] = {},
-   [2] = {'save', a = oop.bind_by_name(GAME.config, 'save')},
-   [3] = {'exit', a = scene.pop},
+   {
+      text = 'save',
+      a = oop.bind_by_name(GAME.config, 'save')
+   },
+   {
+      text = 'exit',
+      a = scene.pop
+   },
 }
 
 local game_scale = menu[1]
@@ -18,7 +25,7 @@ local game_scale = menu[1]
 -- end
 
 function game_scale:update_text()
-   self[1] = 'game_scale: ' .. GAME.config.settings.game_scale
+   self.text = 'game_scale: ' .. GAME.config.settings.game_scale
 end
 
 function game_scale:dl ()
