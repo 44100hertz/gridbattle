@@ -6,21 +6,20 @@ local config = {}
 function config.new ()
    local self = oop.instance(config, {})
    -- Set up and create save path
-   local savedir = love.filesystem.getSaveDirectory()
-   self.path = savedir .. '/settings.conf'
+   self.path = 'settings.lua'
    -- Setup and Load configuration
    self.default_settings = {
       game_scale = 3,
       poll_delay = 0,
    }
-   print('loading config:', self.path)
-   local settings = serialize.from_config(self.path)
-   self.settings = oop.instance(self.default_settings, settings)
-   self:set_window_scale()
    -- Write config if it does not exist
    if not love.filesystem.getInfo(self.path) then
-      self:save()
-   end
+      serialize.write(self.path, self.default_settings)
+  end
+   print('loading config:', self.path)
+   local settings = serialize.read(self.path)
+   self.settings = oop.instance(self.default_settings, settings)
+   self:set_window_scale()
    return self
 end
 
@@ -36,7 +35,7 @@ end
 
 function config:save ()
    print('saving config:', self.path)
-   serialize.to_config(self.path, self.settings)
+   serialize.write(self.path, self.settings)
 end
 
 function config:set_path (path)

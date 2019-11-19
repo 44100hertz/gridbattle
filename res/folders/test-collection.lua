@@ -2,7 +2,7 @@ return {
    {
       ltr = 'a',
       name = 'Boots',
-      qty = 4,
+      qty = 3,
    },
    {
       ltr = 'b',
@@ -17,12 +17,17 @@ return {
    {
       ltr = 'b',
       name = 'Triangle',
-      qty = 4,
+      qty = 5,
    },
    {
       ltr = 'a',
       name = 'PoisDrop',
-      qty = 6,
+      qty = 5,
+   },
+   {
+      ltr = 'b',
+      name = 'PoisDrop',
+      qty = 5,
    },
    {
       ltr = 'b',

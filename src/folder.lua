@@ -67,11 +67,11 @@ function folder:load(name)
    self.temp_count = nil
    self.name = name
    local input = love.filesystem.getSaveDirectory() ..
-      '/folders/' .. name
+      '/folders/' .. name .. '.lua'
    if not pcall(function () io.input(input) end) then
       input = PATHS.folders .. name
    end
-   self.data = serialize.from_config(input)
+   self.data = dofile(input)
    setmetatable(self, folder)
    return self
 end
