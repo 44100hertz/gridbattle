@@ -1,12 +1,17 @@
 * Refactoring
+** TODO Make menus use 'name = x'
 ** TODO Fix fonts somehow
+** TODO Cut down serializer
+Make 'serialize' write to lua and use dofile for reading.
 ** TODO OOP-ification
 *** TODO The GAME global
-*** DONE Dialog popup
-*** TODO src/config
-*** DONE src/input
+There may not be a purpose to removing the GAME global, but it would allow
+multiple game instances (though it is not the only way).
+*** TODO use 'new' to spawn menus. Also entities?
 *** TODO Clear out remaining unwanted return { statements
-** DONE Make sides of battle use index 1 2 instead of 'left' / 'right'
+*** DONE src/config
+*** DONE src/input
+*** DONE Dialog popup
 ** TODO Eliminate use of battle.state
 Change location of queue to player actor. Must relocate all mutable state here.
 May become more clear if scene system is replaced.
@@ -16,6 +21,7 @@ May become more clear if scene system is replaced.
 ** TODO Switch to 2d artstyle
 *** DONE In Battle
 *** TODO In Map
+** DONE Make sides of battle use index 1 2 instead of 'left' / 'right'
 ** DONE Scaling back Resources
 *** DONE Scale back resource folder concept, remerge res/ with rest of game
 *** DONE Move images back into their local resource folders

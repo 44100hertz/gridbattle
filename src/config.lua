@@ -1,36 +1,46 @@
-love.filesystem.createDirectory(love.filesystem.getSaveDirectory())
-local path = love.filesystem.getSaveDirectory() .. '/settings.conf'
-
-local config = {
-   gamescale = 3,
-   polldelay = 0,
-}
-
-local set_gamescale = function (scale)
-   if not scale then scale = config.gamescale end
-   config.gamescale = scale
-   love.window.setMode(GAME.width * scale,
-                       GAME.height * scale)
-end
-
+local oop = require 'src/oop'
 local serialize = require 'src/serialize'
-local load = function ()
-   print('loading config:', path)
-   serialize.from_config(path, config)
-   set_gamescale()
+
+local config = {}
+
+function config.new ()
+   local self = oop.instance(config, {})
+   -- Set up and create save path
+   local savedir = love.filesystem.getSaveDirectory()
+   self.path = savedir .. '/settings.conf'
+   -- Setup and Load configuration
+   self.default_settings = {
+      game_scale = 3,
+      poll_delay = 0,
+   }
+   print('loading config:', self.path)
+   local settings = serialize.from_config(self.path)
+   self.settings = oop.instance(self.default_settings, settings)
+   self:set_window_scale()
+   -- Write config if it does not exist
+   if not love.filesystem.getInfo(self.path) then
+      self:save()
+   end
+   return self
 end
 
-local save = function ()
-   print('saving config:', path)
-   serialize.to_config(path, config)
+function config:set_window_scale ()
+   love.window.setMode(GAME.width * self.settings.game_scale,
+                       GAME.height * self.settings.game_scale)
 end
 
-if not pcall(function () io.input(path) end) then save() end
+function config:adjust_game_scale (delta)
+   self.settings.game_scale = self.settings.game_scale + delta
+   self:set_window_scale()
+end
 
-return {
-   c = config,
-   set_path = function (new_path) path = new_path end,
-   set_gamescale = set_gamescale,
-   load = load,
-   save = save,
-}
+function config:save ()
+   print('saving config:', self.path)
+   serialize.to_config(self.path, self.settings)
+end
+
+function config:set_path (path)
+   self.path = path
+end
+
+return config

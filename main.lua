@@ -41,7 +41,7 @@ function love.load ()
       GAME.chipdb[chip.name] = chip
    end
 
-   config.load()
+   GAME.config = config.new()
 
    love.graphics.setDefaultFilter('nearest', 'nearest')
 
@@ -56,7 +56,8 @@ end
 
 function love.draw ()
    love.graphics.origin()
-   love.graphics.scale( config.c.gamescale, config.c.gamescale )
+   love.graphics.scale(GAME.config.settings.game_scale,
+                       GAME.config.settings.game_scale)
    scene.draw()
 --   -- Memory usage
 --   love.graphics.origin()
