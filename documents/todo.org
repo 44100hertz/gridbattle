@@ -1,10 +1,12 @@
 * Refactoring
 ** TODO Fix fonts somehow
 ** TODO OOP-ification
+*** TODO Replace oop.instance with oop.class everywhere
 *** TODO The GAME global
 There may not be a purpose to removing the GAME global, but it would allow
 multiple game instances (though it is not the only way).
-*** TODO use 'new' to spawn menus. Also entities?
+*** DONE use 'new' to spawn menus. Also entities?
+Instead of using 'new', I just added a menu.start method.
 *** TODO Clear out remaining unwanted return { statements
 *** TODO src/folder
 *** DONE src/config

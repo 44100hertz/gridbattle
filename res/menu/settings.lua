@@ -18,11 +18,9 @@ local menu = {
 
 local game_scale = menu[1]
 
--- function menu.new()
---    local self = oop.instance(menu)
---    menu:update_text()
---    return self
--- end
+function menu:init()
+   self:update_text()
+end
 
 function game_scale:update_text()
    self.text = 'game_scale: ' .. GAME.config.settings.game_scale
@@ -37,7 +35,5 @@ function game_scale:dr ()
    GAME.config:adjust_game_scale(1)
    self:update_text()
 end
-
-game_scale:update_text()
 
 return menu

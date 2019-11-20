@@ -2,19 +2,24 @@ local oop = require 'src/oop'
 
 local lg = love.graphics
 
-local menu = {}
+local menu = oop.class()
+
+function menu.initial_table(name)
+   return dofile(PATHS.menu .. name .. '.lua')
+end
 
 -- make a new menu
-function menu.new (name)
-   local self = require(PATHS.menu .. name)
-   oop.instance(menu, self)
+function menu:init (name, ...)
+   local t = dofile(PATHS.menu .. name .. '.lua')
+   local mt = getmetatable(self)
+   self = setmetatable(t, mt)
+
    if self.bg_img then
       self.bg_image =
          lg.newImage(PATHS.menu .. self.bg_img .. '.png')
       self.bg_img = nil
    end
    self.sel = 1
-   return self
 end
 
 local input_check = {

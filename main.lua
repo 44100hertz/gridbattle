@@ -51,7 +51,7 @@ function love.load ()
       love.filesystem.createDirectory(framedump_dir)
    end
 
-   scene.push(menu.new('title'))
+   scene.push(menu('title'))
 end
 
 function love.draw ()

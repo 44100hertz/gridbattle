@@ -39,7 +39,7 @@ local menu = {
    {
       text = 'config',
       a = function ()
-         scene.push_fade({}, menu.new('settings'))
+         scene.push_fade({}, menu('settings'))
       end,
    },
    {
