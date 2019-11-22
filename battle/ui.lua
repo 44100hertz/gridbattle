@@ -1,11 +1,17 @@
-local img = (require'src/image').new'battle/ui'
+local oop = require 'src/oop'
+local image = require 'src/image'
+
 local bar_width = 128
 local bar_x = GAME.width/2 - bar_width/2
 local gamewidth = GAME.width
 
-local ui = {}
+local ui = oop.class()
 
-function ui.draw (set, cust_amount)
+function ui:init ()
+   self.image = image('battle/ui')
+end
+
+function ui:draw (set, cust_amount)
    -- Side-specific information
    for i = 1,2 do
       local side = set.sides[i]
@@ -47,14 +53,14 @@ function ui.draw (set, cust_amount)
    love.graphics.setColor(255, 255, 255)
    local x,y = bar_x, bar_y
    local segs = bar_width/8 - 2
-   img:set_sheet('bar')
-   img:draw(x, y, nil, 1)
+   self.image:set_sheet('bar')
+   self.image:draw(x, y, nil, 1)
    for _=1,segs do
       x = x + 8
-      img:draw(x, y, nil, 2)
+      self.image:draw(x, y, nil, 2)
    end
    x = x + 8
-   img:draw(x, y, nil, 3)
+   self.image:draw(x, y, nil, 3)
 end
 
 return ui

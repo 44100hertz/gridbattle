@@ -1,15 +1,16 @@
 local oop = require 'src/oop'
 local scene = require 'src/scene'
 
-local dialog = {
+local dialog = oop.class{
    transparent = true
 }
 
-function dialog.new (text, x, y, color)
-   local self = oop.instance(dialog, {text=text, x=x, y=y})
+function dialog:init (text, x, y, color)
+   self.text = text
+   self.x = x
+   self.y = y
    self.color = color or {0,0,0}
    self.border_width = 4
-   return self
 end
 
 function dialog:update (input_list)

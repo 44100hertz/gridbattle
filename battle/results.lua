@@ -3,16 +3,14 @@ local image = require 'src/image'
 
 local scene = require 'src/scene'
 
-local results = {
+local results = oop.class {
    transparent = true,
    open = true,
 }
 
-function results:new (result)
-   local self = oop.instance(results, {})
-   self.image = image.new('battle/results')
+function results:init (result)
+   self.image = image('battle/results')
    self.frame = result
-   return self
 end
 
 function results:update (input)

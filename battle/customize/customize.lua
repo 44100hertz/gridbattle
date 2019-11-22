@@ -6,18 +6,18 @@ local scene = require 'src/scene'
 local go_screen = require 'battle/go_screen'
 local side = require 'battle/customize/side'
 
-local customize = {
+local customize = oop.class {
    transparent = true,
 }
 
-function customize.new (battle)
-   local self = oop.instance(customize, {})
+function customize:init (battle)
 --   local two_player = (left_deck.data and right_deck.data)
    self.sides = {}
    for i = 1,2 do
-      self.sides[i] = side.new(battle, i)
+      if battle.folders[i] then
+         self.sides[i] = side(battle, i)
+      end
    end
-   return self
 end
 
 function customize:update (input)
@@ -35,7 +35,7 @@ function customize:update (input)
    end
    if exit_scene then
       scene.pop()
-      scene.push(go_screen:new())
+      scene.push(go_screen())
    end
 end
 

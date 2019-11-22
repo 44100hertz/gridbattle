@@ -1,26 +1,40 @@
+local oop = require 'src/oop'
+
 local imgdb = require(PATHS.imgdb)
-local imgpath = 'res/images/'
 
-image = {}
-image.__index = image
+image = oop.class()
 
-function image:draw(x, y, flip, frame)
-   local xscale = (self.xscale or 1) * (self.scale or 1)
-   local yscale = (self.yscale or 1) * (self.scale or 1)
+-- path is not optional, sheet_name is just for when many images share a sheet
+function image:init(path, sheet_name)
+   sheet_name = sheet_name or path
+   self.img = love.graphics.newImage(PATHS.images .. sheet_name .. '.png')
+   self.iw, self.ih = self.img:getDimensions()
 
-   if not frame then
-      local dt = love.timer.getTime() - self.start_time
-      local elapsed = 1 + math.ceil(dt * (self.current.fps) - 1) % #self.current.anim
-      frame = self.current.anim[elapsed]
+   local sheetdata = imgdb[sheet_name]
+   if not sheetdata then
+      print('warning: sheet not found: ', sheet_name)
+      sheetdata = {base={}}
    end
 
-   local ox = self.current.ox * (xscale or 1)
-   local oy = self.current.oy * (yscale or 1)
-   x = flip and x + ox or x - ox
-   y = y - oy
-   local sx = flip and -xscale or xscale
-   local quad = self.current.quads[frame]
-   love.graphics.draw(self.img, quad, x, y, 0, sx, yscale)
+   self.name = sheet_name
+   self.sheets = {}
+   for k,v in pairs(sheetdata) do
+      self.sheets[k] = v
+      local sheet = self.sheets[k]
+      sheet.quads = image.make_quads(
+         v.x, v.y, v.w, v.h,
+         v.numx, v.numy, self.iw, self.ih
+      )
+      sheet.ox = sheet.ox or 0
+      sheet.oy = sheet.oy or 0
+      sheet.fps = sheet.fps or 0
+      sheet.anim = sheet.anim or {1}
+      sheet.len = sheet.len or #sheet.anim
+      sheet.iasa = sheet.iasa or sheet.len
+      sheet.name = k
+   end
+
+   if self.sheets.base then self:set_sheet('base') end
 end
 
 function image:set_sheet(name)
@@ -65,42 +79,23 @@ function image.make_quads(root_x, y, w, h, numx, numy, iw, ih)
    return quads
 end
 
--- path is not optional, sheet_name is just for when many images share a sheet
-function image.new(path, sheet_name)
-   local self = {}
-   setmetatable(self, image)
+function image:draw(x, y, flip, frame)
+   local xscale = (self.xscale or 1) * (self.scale or 1)
+   local yscale = (self.yscale or 1) * (self.scale or 1)
 
-   sheet_name = sheet_name or path
-   self.img = love.graphics.newImage(imgpath .. sheet_name .. '.png')
-   self.iw, self.ih = self.img:getDimensions()
-
-   local sheetdata = imgdb[sheet_name]
-   if not sheetdata then
-      print('warning: sheet not found: ', sheet_name)
-      sheetdata = {base={}}
+   if not frame then
+      local dt = love.timer.getTime() - self.start_time
+      local elapsed = 1 + math.ceil(dt * (self.current.fps) - 1) % #self.current.anim
+      frame = self.current.anim[elapsed]
    end
 
-   self.name = sheet_name
-   self.sheets = {}
-   for k,v in pairs(sheetdata) do
-      self.sheets[k] = v
-      local sheet = self.sheets[k]
-      sheet.quads = image.make_quads(
-         v.x, v.y, v.w, v.h,
-         v.numx, v.numy, self.iw, self.ih
-      )
-      sheet.ox = sheet.ox or 0
-      sheet.oy = sheet.oy or 0
-      sheet.fps = sheet.fps or 0
-      sheet.anim = sheet.anim or {1}
-      sheet.len = sheet.len or #sheet.anim
-      sheet.iasa = sheet.iasa or sheet.len
-      sheet.name = k
-   end
-
-   if self.sheets.base then self:set_sheet('base') end
-
-   return self
+   local ox = self.current.ox * (xscale or 1)
+   local oy = self.current.oy * (yscale or 1)
+   x = flip and x + ox or x - ox
+   y = y - oy
+   local sx = flip and -xscale or xscale
+   local quad = self.current.quads[frame]
+   love.graphics.draw(self.img, quad, x, y, 0, sx, yscale)
 end
 
 return image

@@ -2,14 +2,11 @@ local oop = require 'src/oop'
 
 local folder = require 'src/folder'
 local scene = require 'src/scene'
+local image = require 'src/image'
 
 local elements = require(PATHS.battle .. 'elements')
 
-local lg = love.graphics
-
-local img = (require 'src/image').new'foldedit'
-
-local editor = {}
+local editor = oop.class()
 
 local num_entries = 12
 local entry_height = 11
@@ -42,6 +39,19 @@ local icons = {
    end,
 }
 
+function editor:init (collection)
+   self.column, self.selection = 2,1
+   self.deck = {}
+   self.deck.folder = folder('test-collection')
+   self.deck.folder.name = 'leftpane'
+   self.deck.sel = 1
+   self.library = {}
+   self.library.folder = folder('test-folder')
+   self.library.folder.name = 'rightpane'
+   self.library.sel = 1
+   self.image = image('foldedit')
+end
+
 function editor:move_chip (from, to)
    local entry = from.folder:remove(from.sel)
    if not entry then return end
@@ -53,20 +63,6 @@ function editor:move_chip (from, to)
       end
    end
    to.folder:insert(entry)
-end
-
-function editor.new (collection)
-   local self = oop.instance(editor, {})
-   self.column, self.selection = 2,1
-   self.deck = {}
-   self.deck.folder = folder.load({}, 'test-collection')
-   self.deck.folder.name = 'leftpane'
-   self.deck.sel = 1
-   self.library = {}
-   self.library.folder = folder.load({}, 'test-folder')
-   self.library.folder.name = 'rightpane'
-   self.library.sel = 1
-   return self
 end
 
 function editor:update (input)
@@ -109,7 +105,7 @@ function editor:update (input)
 end
 
 function editor:draw ()
-   lg.clear(16/255.0,24/255.0,24/255.0)
+   love.graphics.clear(16/255.0,24/255.0,24/255.0)
 
    local function draw_list (pane, x)
       if #pane.folder.data==0 then return end
@@ -121,19 +117,19 @@ function editor:draw ()
          if not v then
             if #pane.folder.data>7 then
                v = pane.folder.data[(i-1) % #pane.folder.data+1]
-               lg.setColor(136/255.0,144/255.0,136/255.0)
+               love.graphics.setColor(136/255.0,144/255.0,136/255.0)
             else
                goto continue
             end
          end
          -- Highlight selection
-         if i == pane.sel then lg.setColor(120/255.0, 192/255.0, 128/255.0) end
+         if i == pane.sel then love.graphics.setColor(120/255.0, 192/255.0, 128/255.0) end
 
          elem_index = elements.by_name[GAME.chipdb[v.name].elem]
          line = string.char(elem_index) .. v.ltr:upper() .. ' ' .. v.name
          love.graphics.print(line, x, y)
---         love.graphics.print('\127' .. v.qty, x+78, y)
-         lg.setColor(1.0, 1.0, 1.0)
+         love.graphics.print('x' .. v.qty, x+78, y)
+         love.graphics.setColor(1.0, 1.0, 1.0)
          ::continue::
          y = y + entry_height
          i = i + 1
@@ -143,26 +139,26 @@ function editor:draw ()
    draw_list(self.deck, 24)
    draw_list(self.library, 136)
 
-   img:set_sheet'fg'
-   img:draw(16, 0)
+  self.image:set_sheet'fg'
+   self.image:draw(16, 0)
    love.graphics.print('Collection', 24, 8)
    local right_str = 'folder (' .. self.library.folder:count() .. '/30' .. ')'
    love.graphics.print(right_str, 136, 8)
 
    -- Selection rectangle around column
    local function draw_col_sel (x)
-      lg.setColor(120/255.0, 192/255.0, 128/255.0)
-      lg.rectangle('line', x+1.5, 1.5, 109, 157)
-      lg.setColor(1.0, 1.0, 1.0)
+      love.graphics.setColor(120/255.0, 192/255.0, 128/255.0)
+      love.graphics.rectangle('line', x+1.5, 1.5, 109, 157)
+      love.graphics.setColor(1.0, 1.0, 1.0)
    end
    if self.column==2 then draw_col_sel(16) end
    if self.column==3 then draw_col_sel(128) end
 
    -- Icons on left
-   img:set_sheet'icons'
+   self.image:set_sheet'icons'
    for i = 1,#icons do
       local is_sel = (self.column==1 and self.selection==i) and 2 or 1
-      img:draw(0, i*16, nil, (i-1)*2 + is_sel)
+      self.image:draw(0, i*16, nil, (i-1)*2 + is_sel)
    end
 end
 

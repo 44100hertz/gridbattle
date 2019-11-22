@@ -1,10 +1,10 @@
 local oop = require 'src/oop'
 local image = require 'src/image'
 
-local ent = {}
+local ent = oop.class()
 
-function ent.new (battle)
-   return oop.instance(ent, {battle = battle})
+function ent:init (battle)
+   self.battle = battle
 end
 
 function ent:_load ()
@@ -15,7 +15,7 @@ function ent:_load ()
    if self.max_hp then self.hp = self.max_hp end
 
    if self.img then
-      self.image = image.new('battle/entities/' .. self.img)
+      self.image = image('battle/entities/' .. self.img)
       self.img = nil
    end
 

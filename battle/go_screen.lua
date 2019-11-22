@@ -1,16 +1,14 @@
 local oop = require 'src/oop'
 local image = require 'src/image'
 
-local go = {
+local go = oop.class{
    transparent = true,
    transition_length = 0.5
 }
 
-function go:new ()
-   local self = oop.instance({}, go)
-   self.image = image.new('battle/start')
+function go:init ()
+   self.image = image('battle/start')
    self.start_time = love.timer.getTime()
-   return self
 end
 
 function go:update ()

@@ -19,7 +19,7 @@ local menu = {
 local game_scale = menu[1]
 
 function menu:init()
-   self:update_text()
+   self[1]:update_text()
 end
 
 function game_scale:update_text()

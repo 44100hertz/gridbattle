@@ -1,10 +1,9 @@
 local oop = require 'src/oop'
 
-local bg = {}
+local bg = oop.class()
 
-function bg.new (kind, bgimage)
+function bg:init (kind, bgimage)
    assert(kind == 'scroll')
-   local self = oop.instance(bg, {})
    self.start_time = love.timer.getTime()
    self.image = love.graphics.newImage(PATHS.bg .. bgimage .. '.png')
    self.image:setWrap('repeat', 'repeat')
@@ -13,7 +12,6 @@ function bg.new (kind, bgimage)
       0, 0, GAME.width+self.bg_size, GAME.height+self.bg_size,
       self.bg_size, self.bg_size
    )
-   return self
 end
 
 function bg:draw ()

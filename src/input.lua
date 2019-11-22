@@ -1,12 +1,11 @@
 local oop = require 'src/oop'
 
-local input = {}
+local input = oop.class()
 local joy_to_dpad_threshold = 0.5
 
 love.joystick.loadGamepadMappings('res/gamecontrollerdb.txt')
 
-function input.new()
-   local self = oop.instance(input, {})
+function input:init()
    self.keybinds = {
       {
          a='x', b='z',
@@ -46,7 +45,6 @@ function input.new()
          self.counts[i][key] = 0
       end
    end
-   return self
 end
 
 function input:update()

@@ -4,15 +4,13 @@ local proto_ent = require 'battle/proto_ent'
 
 local elements = require(PATHS.battle .. 'elements')
 
-local entities = {}
+local entities = oop.class()
 
-function entities.new (battle, entities_path)
-   local self = oop.instance(entities, {})
-
+function entities:init (battle, entities_path)
    assert(battle.stage, 'must initialize battle stage first')
    self.battle = battle
    self.entities_path = entities_path
-   self.proto_ent = proto_ent.new(battle)
+   self.proto_ent = proto_ent(battle)
 
    self.entities = {}
    for i = 1,2 do
@@ -24,8 +22,6 @@ function entities.new (battle, entities_path)
        self:add(entity)
      end
    end
-
-   return self
 end
 
 function entities:add (ent)

@@ -12,9 +12,10 @@ local framedump_canvas, framedump_dir
 function love.load ()
    PATHS = {
       imgdb      = 'res/imgdb',
+      images     = 'res/images/',
       chipdb     = 'res/chipdb',
-      savedata   = 'res/savedata',
       chips      = 'res/chips/',
+      savedata   = 'res/savedata',
       folders    = 'res/folders/',
       bg         = 'res/bg/',
       fonts      = 'res/fonts/',
@@ -31,7 +32,7 @@ function love.load ()
    }
    GAME.tickperiod = 1/GAME.tickrate
 
-   GAME.input = input.new()
+   GAME.input = input()
 
    GAME.chipdb = dofile(PATHS.chipdb .. '.lua')
    -- Give chips an index field based on their order in the file, and
@@ -41,7 +42,7 @@ function love.load ()
       GAME.chipdb[chip.name] = chip
    end
 
-   GAME.config = config.new()
+   GAME.config = config()
 
    love.graphics.setDefaultFilter('nearest', 'nearest')
 

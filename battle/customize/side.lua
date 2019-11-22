@@ -3,13 +3,12 @@ local lg = love.graphics
 local oop = require 'src/oop'
 local scene = require 'src/scene'
 local dialog = require 'src/dialog'
+local image = require 'src/image'
 
-local img = (require'src/image').new'customize'
 
-local side = {}
+local side = oop.class()
 
-function side.new(battle, side_index)
-   local self = oop.instance(side, {})
+function side:init(battle, side_index)
    self.battle = battle
    self.input_index = side_index
    local side_data = {
@@ -18,13 +17,10 @@ function side.new(battle, side_index)
    }
    self.offset = unpack(side_data[side_index])
    local deck = battle.folders[side_index]
-   if not deck.data then
-      return nil
-   end
-   self.queue = battle.state.sides[side_index][1].queue
    self.pal = deck:draw(5, self.pal)
+   self.queue = battle.state.sides[side_index][1].queue
    self.sel = 1
-   return self
+   self.image = image('customize')
 end
 
 function side:update(input_list)
@@ -64,7 +60,7 @@ function side:update(input_list)
 --   elseif input.l==1 and not self.two_player and sel then
    elseif input.l==1 and sel then
       local chip = GAME.chipdb[sel.name]
-      scene.push(dialog.new(chip.desc, 132, 16))
+      scene.push(dialog(chip.desc, 132, 16))
    elseif input.sel==1 then
       self.hide = not self.hide
    end
@@ -77,8 +73,8 @@ function side:draw()
    lg.push()
    lg.translate(self.offset, 0)
 
-   img:set_sheet 'bg'
-   img:draw(0,0)
+   self.image:set_sheet 'bg'
+   self.image:draw(0,0)
 
    -- Palette --
    for i=1,10 do
@@ -87,12 +83,12 @@ function side:draw()
       if self.pal[i] then
          self.battle.chip_artist:draw_icon(self.pal[i].name, x, y)
          local letter = self.pal[i].ltr:byte() - ('a'):byte() + 1
-         img:set_sheet'letter'
-         img:draw(x, y+16, nil, letter)
+         self.image:set_sheet'letter'
+         self.image:draw(x, y+16, nil, letter)
       end
       if self.sel==i then
-         img:set_sheet'chipbg'
-         img:draw(x, y)
+         self.image:set_sheet'chipbg'
+         self.image:draw(x, y)
       end
    end
 
@@ -109,8 +105,8 @@ function side:draw()
    local button_sel = 1
    if self.sel==0 then button_sel = 2 end
    if self.ready then button_sel = 3 end
-   img:set_sheet'button'
-   img:draw(96, 112, nil, button_sel)
+   self.image:set_sheet'button'
+   self.image:draw(96, 112, nil, button_sel)
 
    -- Art --
    local sel = self.pal[self.sel]

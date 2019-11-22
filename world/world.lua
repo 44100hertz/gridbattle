@@ -2,17 +2,13 @@ local tiles = require 'world/tiles'
 local oop = require 'src/oop'
 
 local lg = love.graphics
-local world = {}
+local world = oop.class()
 
-function world.from_map_path (path)
+function world:init (path)
    local data = dofile(path)
-   local self = {
-      tiles = tiles.from_data(data),
-      x = 0,
-      y = 0,
-   }
-   oop.instance(world, self)
-   return self
+   self.tiles = tiles.from_data(data)
+   self.x = 0
+   self.y = 0
 end
 
 function world:update (input)

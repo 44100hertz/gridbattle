@@ -1,6 +1,7 @@
 local oop = require 'src/oop'
 local scene = require 'src/scene'
 local folder = require 'src/folder'
+local menu = require 'src/menu'
 
 local entities = require 'battle/entities'
 local stage = require 'battle/stage'
@@ -14,30 +15,27 @@ local ui =  require(PATHS.battle .. 'ui')
 
 local cust_length = 4*60
 
-local battle = {}
+local battle = oop.class()
 
-function battle.new (set_name)
-   local self = oop.instance(battle, {})
-   self.folders = {folder.new{}, folder.new{}}
-
+function battle:init (set_name)
    self.state = dofile(PATHS.sets .. set_name .. '.lua')
 
+   self.folders = {}
    for i = 1,2 do
       if self.state.sides[i].is_player then
-         self.folders[i]:load(savedata.player.folder)
+         self.folders[i] = folder(savedata.player.folder)
       end
    end
 
-   self.bg = bg.new(unpack(self.state.bg))
+   self.bg = bg(unpack(self.state.bg))
+   self.ui = ui()
 
-   self.stage = stage.new()
-   self.entities = entities.new(self, 'battle/entities/')
-   self.chip_artist = chip_artist.new()
+   self.stage = stage()
+   self.entities = entities(self, 'battle/entities/')
+   self.chip_artist = chip_artist()
 
    self.will_select_chips = true
    self.cust_timer = 0
-
-   return self
 end
 
 function battle:request_select_chips()
@@ -55,18 +53,18 @@ function battle:update (input)
             self.state.sides[i][1].queue = q
          end
       end
-      scene.push(customize.new(self))
+      scene.push(customize(self))
       self.cust_timer = 0
       self.will_select_chips = false
    elseif input then
       local ending = self.entities:get_ending(self.state)
       if ending then
-         scene.push(results:new(ending))
+         scene.push(results(ending))
          return
       end
 
       if input[1].st == 1 or input[2].st == 1 then
-         scene.push((require 'src/menu').new('pause'))
+         scene.push(menu('pause'))
          return
       end
       self.cust_timer = self.cust_timer + 1
@@ -81,7 +79,7 @@ function battle:draw ()
    self.entities:draw()
 
    local cust_amount = self.cust_timer / cust_length
-   ui.draw(self.state, cust_amount)
+   self.ui:draw(self.state, cust_amount)
 end
 
 return battle

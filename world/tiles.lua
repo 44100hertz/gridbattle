@@ -5,14 +5,11 @@ local oop = require 'src/oop'
 
 local BIT_XFLIP = 0x80000000
 
-local tiles = {}
+local tiles = oop.class()
 
-function tiles.from_data (data)
-   local self = {
-      data = data,
-      tileset = {},
-   }
-   oop.instance(tiles, self)
+function tiles:init (data)
+   self.data = data
+   self.tileset = {}
    local set = self.data.tilesets[1]
    self.tileset.sheet = image.make_quads(
       0, 0, set.tilewidth, set.tileheight,
@@ -21,7 +18,6 @@ function tiles.from_data (data)
       set.imagewidth, set.imageheight
    )
    self.tileset.img = lg.newImage('res/world/testmap/map.png')
-   return self
 end
 
 function tiles:draw ()

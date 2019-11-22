@@ -1,13 +1,29 @@
 local serialize = require 'src/serialize'
 local oop = require 'src/oop'
 
-local folder = {}
+local folder = oop.class()
 
-folder.__index = folder
-
-function folder.new()
-   return oop.instance(folder, self)
+function folder:init(name)
+   self.temp_count = nil
+   self.name = name
+   local path = 'folders/' .. name .. '.lua'
+   -- Look first in save dir, then in game folders.
+   if love.filesystem.getInfo(path) then
+      self.data = love.filesystem.load(input)()
+   else
+      self.data = dofile(PATHS.folders .. name .. '.lua')
+   end
 end
+
+function folder:save(name)
+   if name then self.name = name end
+   local outdir = 'folders/'
+   love.filesystem.createDirectory(outdir)
+   serialize.to_config(
+      love.filesystem.getSaveDirectory()
+         .. '/' .. outdir .. self.name, self.data)
+end
+
 
 local fetch_methods = {
    ltr = function (o) return o.ltr end,
@@ -60,29 +76,6 @@ function folder:condense()
    for _,v in ipairs(self.data) do
       if v.qty == 0 then table.remove(self.data, v) end
    end
-end
-
--- Copy static folder data into a folder
-function folder:load(name)
-   self.temp_count = nil
-   self.name = name
-   local input = love.filesystem.getSaveDirectory() ..
-      '/folders/' .. name .. '.lua'
-   if not pcall(function () io.input(input) end) then
-      input = PATHS.folders .. name
-   end
-   self.data = dofile(input)
-   setmetatable(self, folder)
-   return self
-end
-
-function folder:save(name)
-   if name then self.name = name end
-   local outdir = 'folders/'
-   love.filesystem.createDirectory(outdir)
-   serialize.to_config(
-      love.filesystem.getSaveDirectory()
-         .. '/' .. outdir .. self.name, self.data)
 end
 
 function folder:find(entry)

@@ -1,14 +1,13 @@
 local oop = require 'src/oop'
 
-local stage = {
+local stage = oop.class {
    panel_width = 32,
    panel_height = 32,
    width = 6,
    height = 3,
 }
 
-function stage.new ()
-   local self = oop.instance(stage, {})
+function stage:init ()
    self.panels = {}
    for x = 1,self.width do
       self.panels[x] = {}
@@ -16,7 +15,6 @@ function stage.new ()
          self.panels[x][y] = {}
       end
    end
-   return self
 end
 
 function stage:getpanel (x,y)

@@ -14,19 +14,19 @@ local menu = {
    {
       text = 'battle',
       a = function ()
-         scene.push_fade({}, battle.new('test'))
+         scene.push_fade({}, battle('test'))
       end,
    },
    {
       text = 'pvp',
       a = function ()
-         scene.push_fade({}, battle.new('pvp'))
+         scene.push_fade({}, battle('pvp'))
       end,
    },
    {
       text = 'folder editor',
       a = function ()
-         scene.push_fade({}, foldedit.new('test-collection', 'test'))
+         scene.push_fade({}, foldedit('test-collection', 'test'))
       end,
    },
    {

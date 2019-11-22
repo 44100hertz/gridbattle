@@ -1,14 +1,12 @@
 local oop = require 'src/oop'
 
-local fade= {
+local fade = oop.class {
    transparent = true,
 }
 
-function fade.new (length, is_in, after)
-   local self = oop.instance(fade, {})
+function fade:init (length, is_in, after)
    self.length, self.is_in, self.after = length, is_in, after
    self.starttime = love.timer.getTime()
-   return self
 end
 
 function fade:update ()

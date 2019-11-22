@@ -1,10 +1,9 @@
 local oop = require 'src/oop'
 local serialize = require 'src/serialize'
 
-local config = {}
+local config = oop.class()
 
-function config.new ()
-   local self = oop.instance(config, {})
+function config:init ()
    -- Set up and create save path
    self.path = 'settings.lua'
    -- Setup and Load configuration
@@ -18,9 +17,8 @@ function config.new ()
   end
    print('loading config:', self.path)
    local settings = serialize.read(self.path)
-   self.settings = oop.instance(self.default_settings, settings)
+   self.settings = setmetatable(settings, {__index = self.default_settings})
    self:set_window_scale()
-   return self
 end
 
 function config:set_window_scale ()

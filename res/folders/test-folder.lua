@@ -1,31 +1,31 @@
 return {
    {
-      ltr = a,
+      ltr = 'a',
       name = 'Boots',
       qty = 4,
    },
    {
-      ltr = b,
+      ltr = 'b',
       name = 'Boots',
       qty = 5,
    },
    {
-      ltr = a,
+      ltr = 'a',
       name = 'Triangle',
       qty = 5,
    },
    {
-      ltr = b,
+      ltr = 'b',
       name = 'Triangle',
       qty = 4,
    },
    {
-      ltr = a,
+      ltr = 'a',
       name = 'PoisDrop',
       qty = 6,
    },
    {
-      ltr = b,
+      ltr = 'b',
       name = 'WhlCrate',
       qty = 6,
    },

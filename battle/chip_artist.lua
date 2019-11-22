@@ -1,7 +1,7 @@
 local oop = require 'src/oop'
 local lg = love.graphics
 
-local chip_artist = {}
+local chip_artist = oop.class()
 
 -- Chip graphics are fixed size at 256x256
 -- this enables quads to be computed once only
@@ -12,10 +12,8 @@ do
    art_quad = lg.newQuad(0,16,64,72,w,h)
 end
 
-function chip_artist.new ()
-   local self = oop.instance(chip_artist, {})
+function chip_artist:init ()
    self.images = {}
-   return self
 end
 
 function chip_artist:get_image (name)
