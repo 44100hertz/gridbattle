@@ -26,8 +26,8 @@ function love.load ()
       sets       = 'battle/sets/',
    }
    GAME = {
-      width = 240,
-      height = 160,
+      width = 512,
+      height = 288,
       tickrate = 60,
    }
    GAME.tickperiod = 1/GAME.tickrate
@@ -45,6 +45,7 @@ function love.load ()
    GAME.config = config()
 
    love.graphics.setDefaultFilter('nearest', 'nearest')
+   love.graphics.setNewFont('res/fonts/squrave.ttf', 32, 'none')
 
    if arg[3] == 'dump' then
       framedump_canvas = love.graphics.newCanvas(GAME.width, GAME.height)

@@ -109,6 +109,8 @@ function folder:remove(index)
    end
    entry.qty = entry.qty - 1
    if entry.qty==0 then table.remove(self.data, index) end
+   for k,v in pairs(entry) do
+   end
    return {name = entry.name, ltr = entry.ltr}
 end
 

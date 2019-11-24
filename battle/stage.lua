@@ -1,8 +1,8 @@
 local oop = require 'src/oop'
 
 local stage = oop.class {
-   panel_width = 32,
-   panel_height = 32,
+   panel_width = 48,
+   panel_height = 48,
    width = 6,
    height = 3,
 }
