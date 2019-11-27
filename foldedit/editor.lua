@@ -1,7 +1,6 @@
 local oop = require 'src/oop'
 
 local folder = require 'src/folder'
-local scene = require 'src/scene'
 local image = require 'src/image'
 
 local elements = require(PATHS.battle .. 'elements')
@@ -11,35 +10,34 @@ local editor = oop.class()
 local num_entries = 12
 local entry_height = 11
 
-local icons = {
-   [1] = scene.pop,
-   [2] = function (self)
-      self.deck.folder:save()
-      self.library.folder:save()
-   end,
-   [3] = function (self)
-      self.deck.folder:load('leftpane')
-      self.library.folder:load('rightpane')
-   end,
-   [4] = function (self)
-      self.deck.folder:sort('letter')
-      self.library.folder:sort('letter')
-   end,
-   [5] = function (self)
-      self.deck.folder:sort('name')
-      self.library.folder:sort('name')
-   end,
-   [6] = function (self)
-      self.deck.folder:sort('quantity')
-      self.library.folder:sort('quantity')
-   end,
-   [7] = function (self)
-      self.deck.folder:sort('element')
-      self.library.folder:sort('element')
-   end,
-}
-
 function editor:init (collection)
+   self.icons = {
+      [1] = oop.bind_by_name(GAME.scene, 'pop'),
+      [2] = function (self)
+         self.deck.folder:save()
+         self.library.folder:save()
+      end,
+      [3] = function (self)
+         self.deck.folder:load('leftpane')
+         self.library.folder:load('rightpane')
+      end,
+      [4] = function (self)
+         self.deck.folder:sort('letter')
+         self.library.folder:sort('letter')
+      end,
+      [5] = function (self)
+         self.deck.folder:sort('name')
+         self.library.folder:sort('name')
+      end,
+      [6] = function (self)
+         self.deck.folder:sort('quantity')
+         self.library.folder:sort('quantity')
+      end,
+      [7] = function (self)
+         self.deck.folder:sort('element')
+         self.library.folder:sort('element')
+      end,
+   }
    self.column, self.selection = 2,1
    self.deck = {}
    self.deck.folder = folder('test-collection')
@@ -85,11 +83,11 @@ function editor:update (input)
 
    if self.column==1 then
       if input.a==1 then
-         icons[self.selection](self)
+         self.icons[self.selection](self)
       elseif input.dd==1 then
-         self.selection = self.selection % #icons + 1
+         self.selection = self.selection % #self.icons + 1
       elseif input.du==1 then
-         self.selection = (self.selection-2) % #icons + 1
+         self.selection = (self.selection-2) % #self.icons + 1
       end
    elseif self.column==2 then
       update_pane(self.deck)
@@ -156,7 +154,7 @@ function editor:draw ()
 
    -- Icons on left
    self.image:set_sheet'icons'
-   for i = 1,#icons do
+   for i = 1,#self.icons do
       local is_sel = (self.column==1 and self.selection==i) and 2 or 1
       self.image:draw(0, i*16, nil, (i-1)*2 + is_sel)
    end

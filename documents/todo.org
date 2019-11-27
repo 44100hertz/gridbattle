@@ -1,15 +1,4 @@
 * Refactoring
-** TODO OOP-ification
-*** DONE Replace oop.instance with oop.class everywhere
-*** TODO The GAME global
-There may not be a purpose to removing the GAME global, but it would allow
-multiple game instances (though it is not the only way).
-*** DONE use 'new' to spawn menus. Also entities?
-Instead of using 'new', I just added a menu.start method.
-*** DONE src/folder
-*** DONE src/config
-*** DONE src/input
-*** DONE Dialog popup
 ** TODO Eliminate use of battle.state
 Change location of queue to player actor. Must relocate all mutable state here.
 May become more clear if scene system is replaced.
@@ -22,6 +11,18 @@ May become more clear if scene system is replaced.
 ** TODO Switch to 2d artstyle
 *** DONE In Battle
 *** TODO In Map
+** DONE OOP-ification
+   CLOSED: [2019-11-26 Tue 14:36]
+*** DONE Replace oop.instance with oop.class everywhere
+*** TODO The GAME global
+There may not be a purpose to removing the GAME global, but it would allow
+multiple game instances (though it is not the only way).
+*** DONE use 'new' to spawn menus. Also entities?
+Instead of using 'new', I just added a menu.start method.
+*** DONE src/folder
+*** DONE src/config
+*** DONE src/input
+*** DONE Dialog popup
 ** DONE Fix fonts somehow
 ** DONE Make menus use 'name = x'
 ** DONE Cut down serializer

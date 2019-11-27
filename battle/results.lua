@@ -1,11 +1,8 @@
 local oop = require 'src/oop'
 local image = require 'src/image'
 
-local scene = require 'src/scene'
-
 local results = oop.class {
    transparent = true,
-   open = true,
 }
 
 function results:init (result)
@@ -14,9 +11,9 @@ function results:init (result)
 end
 
 function results:update (input)
-   if input[1].a==1 then
-      scene.pop()
-      scene.pop()
+   if input[1].a == 1 then
+      GAME.scene:pop()
+      GAME.scene:pop()
    end
 end
 

@@ -17,7 +17,7 @@ function world:update (input)
    if input.dd>0 then self.y = self.y - 1 end
    if input.dl>0 then self.x = self.x + 1 end
    if input.dr>0 then self.x = self.x - 1 end
-   if input.b==1 then (require 'src/scene').pop() end
+   if input.b==1 then GAME.scene:pop() end
 end
 
 function world:draw ()

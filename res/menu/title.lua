@@ -1,4 +1,3 @@
-local scene = require 'src/scene'
 local menu = require 'src/menu'
 
 local world = require 'world/world'
@@ -14,32 +13,32 @@ local menu = {
    {
       text = 'battle',
       a = function ()
-         scene.push_fade({}, battle('test'))
+         GAME.scene:push_fade({}, battle('test'))
       end,
    },
    {
       text = 'pvp',
       a = function ()
-         scene.push_fade({}, battle('pvp'))
+         GAME.scene:push_fade({}, battle('pvp'))
       end,
    },
    {
       text = 'folder editor',
       a = function ()
-         scene.push_fade({}, foldedit('test-collection', 'test'))
+         GAME.scene:push_fade({}, foldedit('test-collection', 'test'))
       end,
    },
    {
       text = 'worldmap test',
       a = function ()
          local world = world.from_map_path('res/world/testmap/map1.lua')
-         scene.push_fade({}, world)
+         GAME.scene:push_fade({}, world)
       end,
    },
    {
       text = 'config',
       a = function ()
-         scene.push_fade({}, menu('settings'))
+         GAME.scene:push_fade({}, menu('settings'))
       end,
    },
    {

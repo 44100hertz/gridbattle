@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local scene = require 'src/scene'
 local folder = require 'src/folder'
 local menu = require 'src/menu'
 
@@ -53,18 +52,18 @@ function battle:update (input)
             self.state.sides[i][1].queue = q
          end
       end
-      scene.push(customize(self))
+      GAME.scene:push(customize(self))
       self.cust_timer = 0
       self.will_select_chips = false
    elseif input then
       local ending = self.entities:get_ending(self.state)
       if ending then
-         scene.push(results(ending))
+         GAME.scene:push(results(ending))
          return
       end
 
       if input[1].st == 1 or input[2].st == 1 then
-         scene.push(menu('pause'))
+         GAME.scene:push(menu('pause'))
          return
       end
       self.cust_timer = self.cust_timer + 1

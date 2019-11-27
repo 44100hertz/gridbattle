@@ -1,10 +1,8 @@
 local lg = love.graphics
 
 local oop = require 'src/oop'
-local scene = require 'src/scene'
 local dialog = require 'src/dialog'
 local image = require 'src/image'
-
 
 local side = oop.class()
 
@@ -60,7 +58,7 @@ function side:update(input_list)
 --   elseif input.l==1 and not self.two_player and sel then
    elseif input.l==1 and sel then
       local chip = GAME.chipdb[sel.name]
-      scene.push(dialog(chip.desc, 132, 16))
+      GAME.scene:push(dialog(chip.desc, 132, 16))
    elseif input.sel==1 then
       self.hide = not self.hide
    end

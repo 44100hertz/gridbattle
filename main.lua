@@ -33,6 +33,7 @@ function love.load ()
    GAME.tickperiod = 1/GAME.tickrate
 
    GAME.input = input()
+   GAME.scene = scene()
 
    GAME.chipdb = dofile(PATHS.chipdb .. '.lua')
    -- Give chips an index field based on their order in the file, and
@@ -53,14 +54,14 @@ function love.load ()
       love.filesystem.createDirectory(framedump_dir)
    end
 
-   scene.push(menu('title'))
+   GAME.scene:push(menu('title'))
 end
 
 function love.draw ()
    love.graphics.origin()
    love.graphics.scale(GAME.config.settings.game_scale,
                        GAME.config.settings.game_scale)
-   scene.draw()
+   GAME.scene:draw()
 --   -- Memory usage
 --   love.graphics.origin()
 --   love.graphics.print(math.floor(collectgarbage('count')))
@@ -72,11 +73,11 @@ function love.update (dt)
    total_time = total_time + dt
    while total_time > next_tick do
       next_tick = next_tick + GAME.tickperiod
-      scene.update()
+      GAME.scene:update()
       -- Frame dumping; frames are dumped at the actual tick rate.
       frame_count = frame_count + 1
       if framedump_dir then
-         framedump_canvas:renderTo(scene.draw)
+         framedump_canvas:renderTo(oop.bind_by_name(GAME.scene, 'draw'))
          local imgdata = framedump_canvas:newImageData()
          imgdata:encode('tga', framedump_dir .. '/' .. frame_count .. '.tga')
       end

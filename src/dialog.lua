@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local scene = require 'src/scene'
 
 local dialog = oop.class{
    transparent = true
@@ -16,7 +15,7 @@ end
 function dialog:update (input_list)
    local input = input_list[1]
    if input.a == 1 or input.b == 1 then
-      scene.pop()
+      GAME.scene:pop()
    end
 end
 

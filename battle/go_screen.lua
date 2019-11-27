@@ -14,7 +14,7 @@ end
 function go:update ()
    local elapsed = self:get_elapsed()
    if elapsed >= 1 then
-      (require 'src/scene'):pop()
+      GAME.scene:pop()
    end
 end
 
