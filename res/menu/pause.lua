@@ -1,3 +1,5 @@
+local oop = require 'src/oop'
+
 local menu = {
    y=100,
    spacing=16,
@@ -8,7 +10,7 @@ local menu = {
 
 menu[1] = {
    text = 'return',
-   a = oop.bind(GAME.scene, 'pop'),
+   a = oop.bind_by_name(GAME.scene, 'pop'),
 }
 menu[2] = {
    text = 'main menu',
