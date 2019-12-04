@@ -1,73 +1,46 @@
-* Refactoring
-** TODO Eliminate use of battle.state
+* Battle
+** Eliminate use of battle.state
 Change location of queue to player actor. Must relocate all mutable state here.
 May become more clear if scene system is replaced.
-** TODO Replace scene stack system with simpler loop assignments
+** Navi Enemy
+I have some boss designs on paper, I should probably get some feedback on them.
+It's that or determine what navi AI or animation features I want to put into
+place, and make a simple enemy that has all of those traits.
+** netplay
+Where to begin? I may want to separate a server/client somehow. I should start
+by sorting out which data needs to be shared between clients.
+** chip selector for debugging
+I just want a list of all chips and be able to put them into queue easily.
+** possible feature: pvp cust delay
+When one player wants to cust, display a timer on the other players'
+cust menu; give them 10 seconds to finish before the game autostarts.
+** Battle editor GUI
+The idea here is that battles would be easier to edit with a UI, rather than in
+the current primitive format. This is likely to save effort in the long run, and
+create a sense of unity by having visual lists of enemies, maybe even previews.
+* World map
+** Player / actors shown
+** Display dialog box
+** Engage in battle with npc
+** optimization: Draw only visible tiles
+** Move actors to position
+** Move actors along path
+** Pause screen
+** Save / quit
+* Other Stuff
+** handling music
+I should recover my old music from lanparty-code, get some feedback on it in
+discord or possibly other locations (upload to soundcloud is ideal), and
+ultimately decide whether I want a composer for me, or what. hi lorna?
+** sound effects
+I should determine sound architecture. Similar to image, or channel-based
+approach? etc.
+** Replace scene stack system with simpler loop assignments
    Must also use this to fix bug in customization dialog box, where local pvp
    freezes. There's a problem where the 'pause' screen for battle just calls
    scene.pop twice to exit the scene, and that's really hacky but I see no
    better way.
-** TODO Introduce coordinate type
-** TODO Switch to 2d artstyle
-*** DONE In Battle
-*** TODO In Map
-** DONE OOP-ification
-   CLOSED: [2019-11-26 Tue 14:36]
-*** DONE Replace oop.instance with oop.class everywhere
-*** TODO The GAME global
-There may not be a purpose to removing the GAME global, but it would allow
-multiple game instances (though it is not the only way).
-*** DONE use 'new' to spawn menus. Also entities?
-Instead of using 'new', I just added a menu.start method.
-*** DONE src/folder
-*** DONE src/config
-*** DONE src/input
-*** DONE Dialog popup
-** DONE Fix fonts somehow
-** DONE Make menus use 'name = x'
-** DONE Cut down serializer
-Make 'serialize' write to lua and use dofile for reading.
-** DONE Make sides of battle use index 1 2 instead of 'left' / 'right'
-** DONE Scaling back Resources
-*** DONE Scale back resource folder concept, remerge res/ with rest of game
-*** DONE Move images back into their local resource folders
-I actually just added subdirectories to img/, and I kept many game resource
-files in res/, but only if they don't fit into other directories.
-* Features
-** TODO .exe and .love build system for releases
+** Introduce coordinate type
+** .exe and .love build system for releases
 This will be nice to have before I make my first demo. Maybe someone else has
 already written scripts for this?
-** TODO Navi Enemy
-I have some boss designs on paper, I should probably get some feedback on them.
-It's that or determine what navi AI or animation features I want to put into
-place, and make a simple enemy that has all of those traits.
-** TODO netplay
-Where to begin? I may want to separate a server/client somehow. I should start
-by sorting out which data needs to be shared between clients.
-** TODO sound effects
-I should determine sound architecture. Similar to image, or channel-based
-approach? etc.
-** TODO chip selector for debugging
-I just want a list of all chips and be able to put them into queue easily.
-** TODO handling music
-I should recover my old music from lanparty-code, get some feedback on it in
-discord or possibly other locations (upload to soundcloud is ideal), and
-ultimately decide whether I want a composer for me, or what. hi lorna?
-** TODO possible feature: pvp cust delay
-When one player wants to cust, display a timer on the other players'
-cust menu; give them 10 seconds to finish before the game autostarts.
-** TODO Battle editor GUI
-The idea here is that battles would be easier to edit with a UI, rather than in
-the current primitive format. This is likely to save effort in the long run, and
-create a sense of unity by having visual lists of enemies, maybe even previews.
-** DONE Use Actor or Entity base class
-Instead of having a bunch of checks for actor properties that override
-default behavior, just make all classes implement a base class. This
-is actually a hella good idea.
-
-Make a battle/proto/ folder with prototypes for various actor kinds,
-which can use each other, of course.
-** DONE Initial Element dev
-*** DONE give everything an element, show element in editor and battle
-*** DONE handle elements on collisions
-*** DONE make panels affect elements
