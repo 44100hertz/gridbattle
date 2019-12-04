@@ -31,7 +31,7 @@ local menu = {
    {
       text = 'worldmap test',
       a = function ()
-         local world = world.from_map_path('res/world/testmap/map1.lua')
+         local world = world('world/maps/testmap-flat/map1.lua')
          GAME.scene:push_fade({}, world)
       end,
    },
