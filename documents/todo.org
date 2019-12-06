@@ -22,7 +22,6 @@ create a sense of unity by having visual lists of enemies, maybe even previews.
 ** Player / actors shown
 ** Display dialog box
 ** Engage in battle with npc
-** optimization: Draw only visible tiles
 ** Move actors to position
 ** Move actors along path
 ** Pause screen

@@ -22,8 +22,7 @@ end
 
 function world:draw ()
    love.graphics.clear(0,0,0)
-   love.graphics.translate(-self.x, -self.y)
-   self.tiles:draw()
+   self.tiles:draw(self.x, self.y)
 end
 
 return world
