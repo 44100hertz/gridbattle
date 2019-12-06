@@ -2,8 +2,6 @@ local oop = require 'src/oop'
 local image = require 'src/image'
 
 local bar_width = 128
-local bar_x = GAME.width/2 - bar_width/2
-local gamewidth = GAME.width
 
 local ui = oop.class()
 
@@ -19,12 +17,12 @@ function ui:draw (set, cust_amount)
       if side.is_player then
          -- For player: HP in upper corner
          local hp = side[1].hp
-         local x = i==2 and gamewidth-4 or 4
+         local x = i==2 and GAME.size.x-4 or 4
          love.graphics.print(tostring(math.floor(hp)), x, 4)
          -- Queue top in lower corner
          if side.queue and #side.queue > 0 then
             local top = side.queue[#side.queue].name
-            love.graphics.printf(top, 0, GAME.height-11, GAME.width, align)
+            love.graphics.printf(top, 0, GAME.size.y-11, GAME.size.x, align)
          end
       else
          -- For enemies: Enemy names in upper corner
@@ -35,7 +33,7 @@ function ui:draw (set, cust_amount)
             end
          end
          for j = 1,#names do
-            love.graphics.printf(names[j], 0,  j*20, GAME.width, align)
+            love.graphics.printf(names[j], 0,  j*20, GAME.size.x, align)
          end
       end
    end
@@ -47,6 +45,7 @@ function ui:draw (set, cust_amount)
    if cust_amount >= 1 then
       red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100/256.0
    end
+   local bar_x = GAME.size.x/2 - bar_width/2
    local bar_y = 2
    love.graphics.setColor(red, 40/256.0, 40/256.0)
    love.graphics.rectangle('fill', bar_x+1, bar_y, bar_size, 8)

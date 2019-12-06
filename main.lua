@@ -1,6 +1,7 @@
 local input = require 'src/input'
 local scene = require 'src/scene'
 local config = require 'src/config'
+local point = require 'src/point'
 local menu = require 'src/menu'
 
 local total_time = 0
@@ -25,11 +26,9 @@ function love.load ()
       battle     = 'battle/',
       sets       = 'battle/sets/',
    }
-   GAME = {
-      width = 512,
-      height = 288,
-      tickrate = 60,
-   }
+   GAME = {}
+   GAME.tickrate = 60
+   GAME.size = point(512, 288)
    GAME.tickperiod = 1/GAME.tickrate
 
    GAME.input = input()
@@ -49,7 +48,7 @@ function love.load ()
    love.graphics.setNewFont('res/fonts/squrave.ttf', 32, 'none')
 
    if arg[3] == 'dump' then
-      framedump_canvas = love.graphics.newCanvas(GAME.width, GAME.height)
+      framedump_canvas = love.graphics.newCanvas(GAME.size:unpack())
       framedump_dir = 'out/' .. os.time()
       love.filesystem.createDirectory(framedump_dir)
    end

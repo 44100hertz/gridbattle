@@ -92,11 +92,11 @@ function ent:draw_info (x, y)
    local stage = self.battle.stage
    if self.hp and not self.hide_hp then
       local hpstr = tostring(math.floor(self.hp))
-      love.graphics.printf(hpstr, x - 200, y-stage.panel_height/2, 400, 'center')
+      love.graphics.printf(hpstr, x - 200, y-stage.panel_size.y/2, 400, 'center')
    end
 
    if self.queue then
-      self.battle.chip_artist:draw_icon_queue(self.queue, x, y-stage.panel_height*0.7)
+      self.battle.chip_artist:draw_icon_queue(self.queue, x, y-stage.panel_size.y*0.7)
    end
 end
 
@@ -154,7 +154,7 @@ function ent:locate_enemy_ahead (x, y)
       x = x + inc
       local enemy = self:get_panel_enemy(x, y)
       if enemy then return enemy end
-   until x < 0 or x > self.battle.stage.width
+   until x < 0 or x > self.battle.stage.num_panels.x
    return nil
 end
 

@@ -54,7 +54,7 @@ function menu:draw ()
       local y = self.y + i * self.spacing
 
       local drawtext = function ()
-         love.graphics.printf(v.text, 0, y, GAME.width, 'center')
+         love.graphics.printf(v.text, 0, y, GAME.size.x, 'center')
       end
 
       if self.sel==i then

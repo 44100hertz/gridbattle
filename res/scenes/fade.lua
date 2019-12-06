@@ -21,7 +21,7 @@ function fade:draw ()
    if self.is_in then darkness = 1.0 - darkness end
 
    love.graphics.setColor(0, 0, 0, darkness)
-   love.graphics.rectangle('fill', 0, 0, GAME.width, GAME.height)
+   love.graphics.rectangle('fill', 0, 0, GAME.size.x, GAME.size.y)
    love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
 end
 

@@ -1,17 +1,16 @@
 local oop = require 'src/oop'
+local point = require 'src/point'
 
-local stage = oop.class {
-   panel_width = 48,
-   panel_height = 48,
-   width = 6,
-   height = 3,
-}
+local stage = oop.class {}
 
 function stage:init ()
    self.panels = {}
-   for x = 1,self.width do
+   self.panel_size = point(48, 48)
+   self.num_panels = point(6, 3)
+   self.size = self.panel_size * self.num_panels
+   for x = 1,self.num_panels.x do
       self.panels[x] = {}
-      for y = 1,self.height do
+      for y = 1,self.num_panels.y do
          self.panels[x][y] = {}
       end
    end
@@ -24,8 +23,8 @@ function stage:getpanel (x,y)
 end
 
 function stage:update (ents)
-   for x = 1,self.width do
-      for y = 1,self.height do
+   for x = 1,self.num_panels.x do
+      for y = 1,self.num_panels.y do
          local panel = self.panels[x][y]
          if panel.stat then
             panel.stat_time = panel.stat_time-1
@@ -41,8 +40,8 @@ function stage:update (ents)
 end
 
 function stage:draw (turf)
-   for x = 1,self.width do
-      for y = 1,self.height do
+   for x = 1,self.num_panels.x do
+      for y = 1,self.num_panels.y do
          local x0, y0 = self:to_screen_pos(x-1, y-1)
          local x1, y1 = self:to_screen_pos(x, y)
          if x <= turf[y] then
@@ -50,7 +49,7 @@ function stage:draw (turf)
          else
             love.graphics.setColor(248/256.0, 128/256.0, 136/256.0)
          end
-         local w, h = self.panel_width, self.panel_height
+         local w, h = self.panel_size:unpack()
          love.graphics.rectangle('fill', x0, y0, w, h, 5.0)
          love.graphics.setColor(32/256.0, 40/256.0, 56/256.0)
          love.graphics.rectangle('line', x0, y0, w, h, 5.0)
@@ -78,16 +77,12 @@ function stage:apply_stat (kind, x, y)
 end
 
 -- Convert a position on the stage to pixels.
--- 0,0                           is the upper left corner.
--- stage.width, stage.height     is the lower right.
+-- 0,0                                        is the upper left corner.
+-- stage.num_panels.x, stage.num_panels.y     is the lower right.
 function stage:to_screen_pos (x, y)
-   -- Calculate total size of stage
-   local xsize = self.panel_width * self.width
-   local ysize = self.panel_height * self.height
-   -- Place panels with centered geometry
-   local ox = x * xsize / self.width  + 0.5 * (GAME.width - xsize)
-   local oy = y * ysize / self.height + 0.5 * (GAME.height - ysize)
-   return ox, oy
+   local pos = point(x, y)
+   local offset = pos * self.panel_size + (GAME.size - self.size) * 0.5
+   return offset:unpack()
 end
 
 return stage

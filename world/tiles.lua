@@ -1,12 +1,13 @@
 local image = require 'src/image'
 local oop = require 'src/oop'
+local point = require 'src/point'
 
 local BIT_XFLIP = 0x80000000
 
 local tiles = oop.class()
 
 function tiles:init (data, path)
-   self.view_width, self.view_height = 320, 192
+   self.view_size = point(320, 192)
    self.data = data
    self.base_dir = path:gsub('[^/]+$', '/')
    self.tileset = {}
@@ -22,18 +23,19 @@ function tiles:init (data, path)
    self.batch = love.graphics.newSpriteBatch(self.tileset.img, 1000)
 end
 
-function tiles:draw (scrollx, scrolly)
-   local border_width = (GAME.width - self.view_width) / 2
-   local border_height= (GAME.height- self.view_height)/ 2
-   love.graphics.translate(-scrollx + border_width, -scrolly + border_height)
-   local lowerx = math.floor(scrollx / self.data.tilewidth)
-   local numx   = self.view_width / self.data.tilewidth
-   local lowery = math.floor(scrolly / self.data.tileheight)
-   local numy   = self.view_height / self.data.tileheight
+function tiles:draw (scroll_pos)
+   local border_size = (GAME.size - self.view_size) * 0.5
+   local offset = -scroll_pos + border_size
+   love.graphics.translate(offset:unpack())
+   -- iteration boundaries
+   local tile_size = point(self.data.tilewidth, self.data.tileheight)
+   local lower = (scroll_pos / tile_size):floor()
+   local count = (self.view_size / tile_size):floor()
+   local upper = lower + count
    for _,layer in ipairs(self.data.layers) do
       if layer.type == 'tilelayer' then
-         for y = lowery, lowery + numy do
-            for x = lowerx, lowerx + numx do
+         for y = lower.y, upper.y do
+            for x = lower.x, upper.x do
                local tile = layer.data[x + (y-1) * layer.width]
                if tile and tile > 0 then
                   local flip = 1

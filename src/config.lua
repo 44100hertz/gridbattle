@@ -22,8 +22,8 @@ function config:init ()
 end
 
 function config:set_window_scale ()
-   love.window.setMode(GAME.width * self.settings.game_scale,
-                       GAME.height * self.settings.game_scale)
+   love.window.setMode(GAME.size.x * self.settings.game_scale,
+                       GAME.size.y * self.settings.game_scale)
 end
 
 function config:adjust_game_scale (delta)

@@ -9,7 +9,7 @@ function bg:init (kind, bgimage)
    self.image:setWrap('repeat', 'repeat')
    self.bg_size = self.image:getDimensions()
    self.bg_quad = love.graphics.newQuad(
-      0, 0, GAME.width+self.bg_size, GAME.height+self.bg_size,
+      0, 0, GAME.size.x+self.bg_size, GAME.size.y+self.bg_size,
       self.bg_size, self.bg_size
    )
 end
