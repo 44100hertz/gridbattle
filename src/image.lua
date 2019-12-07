@@ -57,8 +57,8 @@ function image:get_over()
 end
 
 -- Read animation data and generate quads
-function image.make_quads(root_x, y, w, h, numx, numy, iw, ih)
-   root_x = root_x or 0
+function image.make_quads(x, y, w, h, numx, numy, iw, ih)
+   x = x or 0
    y = y or 0
    w = w or iw
    h = h or ih
@@ -66,15 +66,11 @@ function image.make_quads(root_x, y, w, h, numx, numy, iw, ih)
    numy = numy or 1
 
    local quads = {}
-   local index = 1
-   for _ = 1,numy do
-      local x = root_x
-      for _ = 1,numx do
-         quads[index] = love.graphics.newQuad(x, y, w, h, iw, ih)
-         x = x + w
-         index = index + 1
+   for iy = 1,numy do
+      for ix = 1,numx do
+         quads[#quads+1] = love.graphics.newQuad(
+            x + ix*w-w, y + iy*h-h, w, h, iw, ih)
       end
-      y = y + h
    end
    return quads
 end
