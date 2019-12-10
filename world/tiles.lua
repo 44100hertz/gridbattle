@@ -32,6 +32,8 @@ function tiles:draw (scroll_pos)
    local lower = (scroll_pos / tile_size):floor()
    local count = (self.view_size / tile_size):floor()
    local upper = lower + count
+
+   -- draw tile layers
    for _,layer in ipairs(self.data.layers) do
       if layer.type == 'tilelayer' then
          for y = lower.y, upper.y do
@@ -46,8 +48,8 @@ function tiles:draw (scroll_pos)
                      flipoff = self.data.tilewidth
                   end
                   self.batch:add(self.tileset.sheet[tile],
-                                 x * self.data.tilewidth + flipoff,
-                                 y * self.data.tileheight,
+                                 (x-1) * self.data.tilewidth + flipoff,
+                                 (y-1) * self.data.tileheight,
                                  0, flip, 1)
                end
             end
@@ -56,6 +58,28 @@ function tiles:draw (scroll_pos)
    end
    love.graphics.draw(self.batch)
    self.batch:clear()
+
+   -- draw objects
+   for _,layer in ipairs(self.data.layers) do
+      if layer.type == 'objectgroup' then
+         for i,object in ipairs(layer.objects) do
+            if object.shape == 'point' then
+               love.graphics.setColor(1, 0, 0)
+               love.graphics.circle('line', object.x, object.y, 8)
+            elseif object.shape == 'polyline' then
+               local out_tab = {}
+               for _,point in ipairs(object.polyline) do
+                  out_tab[#out_tab+1] = point.x + object.x
+                  out_tab[#out_tab+1] = point.y + object.y
+               end
+               love.graphics.setColor(0, 0, 1)
+               love.graphics.line(out_tab)
+            end
+         end
+      end
+   end
+
+   love.graphics.setColor(1, 1, 1)
 end
 
 return tiles

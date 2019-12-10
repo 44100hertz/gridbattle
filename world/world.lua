@@ -5,8 +5,8 @@ local point = require 'src/point'
 local world = oop.class()
 
 function world:init (path)
-   local data = dofile(path)
-   self.tiles = tiles(data, path)
+   self.data = dofile(path)
+   self.tiles = tiles(self.data, path)
    self.pos = point(176, 824)
    self.scroll_speed = 8
 end
