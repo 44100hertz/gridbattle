@@ -1,3 +1,4 @@
+local oop = require 'src/oop'
 local input = require 'src/input'
 local scene = require 'src/scene'
 local config = require 'src/config'
@@ -47,7 +48,7 @@ function love.load ()
    love.graphics.setDefaultFilter('nearest', 'nearest')
    love.graphics.setNewFont('res/fonts/squrave.ttf', 32, 'none')
 
-   if arg[3] == 'dump' then
+   if arg[2] == 'dump' then
       framedump_canvas = love.graphics.newCanvas(GAME.size:unpack())
       framedump_dir = 'out/' .. os.time()
       love.filesystem.createDirectory(framedump_dir)
@@ -76,6 +77,7 @@ function love.update (dt)
       -- Frame dumping; frames are dumped at the actual tick rate.
       frame_count = frame_count + 1
       if framedump_dir then
+         love.graphics.origin()
          framedump_canvas:renderTo(oop.bind_by_name(GAME.scene, 'draw'))
          local imgdata = framedump_canvas:newImageData()
          imgdata:encode('tga', framedump_dir .. '/' .. frame_count .. '.tga')
