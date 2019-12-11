@@ -1,16 +1,16 @@
 local oop = require 'src/oop'
 local point = require 'src/point'
 
-local objects = oop.class()
+local actors = oop.class()
 
-function objects:init (data)
-   self.objects = {}
+function actors:init (data)
+   self.actors = {}
 
    for _,layer in ipairs(data.layers) do
       if layer.type == 'objectgroup' then
          for _,object in ipairs(layer.objects) do
-            self.objects[#self.objects+1] = {layer.type}
-            local out = self.objects[#self.objects]
+            self.actors[#self.actors+1] = {layer.type}
+            local out = self.actors[#self.actors]
             out.type = object.type
             out.shape = object.shape
             out.pos = point(object.x, object.y)
@@ -27,14 +27,14 @@ function objects:init (data)
       end
    end
 
-   for _,object in ipairs(self.objects) do
+   for _,object in ipairs(self.actors) do
       if object.type == 'player' then
          self.player = object
       end
    end
 end
 
-function objects:update (input)
+function actors:update (input)
    -- TODO: move into player behavior
    local longest_held = math.max(math.max(input.du, input.dd), math.max(input.dl, input.dr))
    local autofire = input.b > 0 and 5 or 15
@@ -48,8 +48,8 @@ function objects:update (input)
    end
 end
 
-function objects:draw (scroll_pos, view_size)
-   for _,object in ipairs(self.objects) do
+function actors:draw (scroll_pos, view_size)
+   for _,object in ipairs(self.actors) do
       if object.shape == 'point' then
          love.graphics.setColor(1, 0, 0)
          love.graphics.circle('line', object.pos.x, object.pos.y, 8)
@@ -61,4 +61,4 @@ function objects:draw (scroll_pos, view_size)
    love.graphics.setColor(1, 1, 1)
 end
 
-return objects
+return actors

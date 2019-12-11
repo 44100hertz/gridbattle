@@ -19,6 +19,15 @@ function point:floor ()
    return self:map(math.floor)
 end
 
+function point:lerp (other, weight)
+   return (self * (1-weight) + other * weight)
+end
+
+-- Length from 0,0. A common pattern for distance between is (x - y):distance()
+function point:length ()
+   return math.sqrt(self.x * self.x + self.y * self.y)
+end
+
 point.mt = {}
 point.mt.__index = point
 function point.mt.__unm (p)
