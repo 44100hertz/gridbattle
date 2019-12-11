@@ -30,9 +30,7 @@ function menu:update (input)
    end
    local entry = self[self.sel]
    for _,button in ipairs(input_check) do
-      if check(button) and
-         entry[button]
-      then
+      if check(button) and entry[button] then
          entry[button](entry)
          return
       end

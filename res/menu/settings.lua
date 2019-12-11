@@ -12,7 +12,7 @@ local menu = {
    },
    {
       text = 'exit',
-      a = scene.pop
+      a = oop.bind_by_name(GAME.scene, 'pop')
    },
 }
 
