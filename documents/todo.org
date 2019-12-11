@@ -19,11 +19,10 @@ The idea here is that battles would be easier to edit with a UI, rather than in
 the current primitive format. This is likely to save effort in the long run, and
 create a sense of unity by having visual lists of enemies, maybe even previews.
 * World map
-** Player / actors shown
-** Display dialog box
 ** Engage in battle with npc
-** Move actors to position
-** Move actors along path
+** Display dialog box w/script
+** Move actors to position w/script
+** Move actors along path w/script
 ** Pause screen
 ** Save / quit
 * Other Stuff
