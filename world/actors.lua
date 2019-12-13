@@ -1,5 +1,6 @@
 local oop = require 'src/oop'
 local point = require 'src/point'
+local aloader = require 'src/actor_loader'
 
 local proto_actor = require 'world/proto_actor'
 
@@ -7,7 +8,7 @@ local actors = oop.class()
 
 function actors:init (data)
    self.actors = {}
-   self.actor_cache = {}
+   self.aloader = aloader(proto_actor, 'world/actors/')
 
    for _,layer in ipairs(data.layers) do
       if layer.type == 'objectgroup' then
@@ -35,15 +36,7 @@ function actors:init (data)
       if actor.type == 'player' then
          self.player = actor
       end
-      if actor.type == '' then
-         setmetatable(actor, {__index = proto_actor})
-      else
-         if not self.actor_cache[actor.type] then
-            self.actor_cache[actor.type] = dofile('world/actors/' .. actor.type .. '.lua')
-            setmetatable(self.actor_cache[actor.type], {__index = proto_actor})
-         end
-         setmetatable(actor, {__index = self.actor_cache[actor.type]})
-      end
+      self.aloader:add(actor)
    end
 end
 

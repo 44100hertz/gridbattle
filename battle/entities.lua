@@ -13,6 +13,7 @@ function entities:init (battle, entities_path)
    self.proto_ent = proto_ent(battle)
 
    self.entities = {}
+   self.entities_cache = {}
    for i = 1,2 do
      for _,entity in ipairs(battle.state.sides[i]) do
        entity.side = i
