@@ -2,7 +2,7 @@ local oop = require 'src/oop'
 local folder = require 'src/folder'
 local menu = require 'src/menu'
 
-local entities = require 'battle/entities'
+local actors = require 'battle/actors'
 local stage = require 'battle/stage'
 local results = require 'battle/results'
 local chip_artist = require 'battle/chip_artist'
@@ -30,7 +30,7 @@ function battle:init (set_name)
    self.ui = ui()
 
    self.stage = stage()
-   self.entities = entities(self, 'battle/entities/')
+   self.actors = actors(self, 'battle/actors/')
    self.chip_artist = chip_artist()
 
    self.will_select_chips = true
@@ -56,7 +56,7 @@ function battle:update (input)
       self.cust_timer = 0
       self.will_select_chips = false
    elseif input then
-      local ending = self.entities:get_ending(self.state)
+      local ending = self.actors:get_ending(self.state)
       if ending then
          GAME.scene:push(results(ending))
          return
@@ -67,15 +67,15 @@ function battle:update (input)
          return
       end
       self.cust_timer = self.cust_timer + 1
-      self.stage:update(self.entities.entities)
-      self.entities:update(input)
+      self.stage:update(self.actors.actors)
+      self.actors:update(input)
    end
 end
 
 function battle:draw ()
    self.bg:draw()
    self.stage:draw(self.state.stage.turf)
-   self.entities:draw()
+   self.actors:draw()
 
    local cust_amount = self.cust_timer / cust_length
    self.ui:draw(self.state, cust_amount)

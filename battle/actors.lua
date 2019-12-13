@@ -1,49 +1,37 @@
 local oop = require 'src/oop'
+local aloader = require 'src/actor_loader'
 
-local proto_ent = require 'battle/proto_ent'
+local base_actor = require 'battle/base_actor'
 
 local elements = require(PATHS.battle .. 'elements')
 
-local entities = oop.class()
+local actors = oop.class()
 
-function entities:init (battle, entities_path)
-   assert(battle.stage, 'must initialize battle stage first')
+function actors:init (battle, actors_path)
    self.battle = battle
-   self.entities_path = entities_path
-   self.proto_ent = proto_ent(battle)
+   self.actors_path = actors_path
 
-   self.entities = {}
-   self.entities_cache = {}
+   self.actors = {}
+   self.aloader = aloader(base_actor(battle), actors_path)
    for i = 1,2 do
-     for _,entity in ipairs(battle.state.sides[i]) do
-       entity.side = i
-       if entity.name == 'player' then
-          entity.queue = battle.state.sides[i].queue
+     for _,actor in ipairs(battle.state.sides[i]) do
+       actor.side = i
+       if actor[1] == 'player' then
+          actor.queue = battle.state.sides[i].queue
        end
-       self:add(entity)
+       self:add(actor)
      end
    end
 end
 
-function entities:add (ent)
-   -- Class heirachy
-   -- Object -> Class -> [Parent -> [Parent -> ...]] -> Entity
-   local class = require (self.entities_path .. ent.name)
-   local head = class
-   setmetatable(ent, {__index = head})
-   while head.extends do
-      local extended = require(self.entities_path .. head.extends)
-      setmetatable(head, {__index = extended})
-      head = extended
-   end
-   setmetatable(head, {__index = self.proto_ent})
-   ent:_load()
-
-   table.insert(self.entities, ent)
-   return ent
+function actors:add (actor)
+   self.aloader:load(actor, actor[1])
+   actor:_load()
+   table.insert(self.actors, actor)
+   return actor
 end
 
-function entities:apply_damage (send, recv, amount)
+function actors:apply_damage (send, recv, amount)
    amount = amount or send.damage
    local recv_elem
    local panel = self.battle.stage:getpanel(recv.x, recv.y)
@@ -57,14 +45,14 @@ end
 
 -- Figure out if the battle has ended yet
 -- Endings in order: win, lose, p1win, p2win
-function entities:get_ending ()
+function actors:get_ending ()
    local sides = self.battle.state.sides
    local two_player = sides[1].is_player and sides[2].is_player
 
    for i = 1,2 do
       sides[i].alive = false
-      for _,entity in ipairs(sides[i]) do
-         if not entity.despawn then
+      for _,actor in ipairs(sides[i]) do
+         if not actor.despawn then
             sides[i].alive = true
             break
          end
@@ -79,14 +67,14 @@ function entities:get_ending ()
    end
 end
 
-function entities:update (input)
-   for i,ent in ipairs(self.entities) do
+function actors:update (input)
+   for i,ent in ipairs(self.actors) do
       ent:_update(input)
    end
-   for i,ent in ipairs(self.entities) do
+   for i,ent in ipairs(self.actors) do
       if ent.despawn then
          ent:free_space()
-         table.remove(self.entities, i)
+         table.remove(self.actors, i)
       end
    end
 
@@ -96,7 +84,7 @@ function entities:update (input)
       if a.collide then a:collide(b) end
       if b.collide then b:collide(a) end
    end
-   for _,ent in ipairs(self.entities) do
+   for _,ent in ipairs(self.actors) do
       local panel = self.battle.stage:getpanel(ent.x, ent.y)
       if panel and panel.tenant and
          panel.tenant.tangible and
@@ -109,10 +97,10 @@ function entities:update (input)
    end
 end
 
-function entities:draw ()
-   for _,ent in ipairs(self.entities) do
+function actors:draw ()
+   for _,ent in ipairs(self.actors) do
       ent:_draw()
    end
 end
 
-return entities
+return actors

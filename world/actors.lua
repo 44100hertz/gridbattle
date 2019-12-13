@@ -13,7 +13,7 @@ function actors:init (data)
    for _,layer in ipairs(data.layers) do
       if layer.type == 'objectgroup' then
          for _,object in ipairs(layer.objects) do
-            self.actors[#self.actors+1] = {layer.type}
+            self.actors[#self.actors+1] = {}
             local out = self.actors[#self.actors]
             -- These fields are accessible in the script file
             out.type = object.type
@@ -36,7 +36,10 @@ function actors:init (data)
       if actor.type == 'player' then
          self.player = actor
       end
-      self.aloader:add(actor)
+      if actor.type == '' then
+         actor.type = nil
+      end
+      self.aloader:load(actor, actor.type)
    end
 end
 

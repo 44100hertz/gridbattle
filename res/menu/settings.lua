@@ -5,7 +5,7 @@ local menu = {
    y = 60,
    spacing = 16,
    font = 'title',
-   [1] = {},
+   {},
    {
       text = 'save',
       a = oop.bind_by_name(GAME.config, 'save')

@@ -1,37 +1,30 @@
--- A generalized actor loader for the "class sandwich" approach I'm beginning to
--- favor. Every actor has 2 layers of inheritance:
-
---     1. The "proto actor": Every actor inherits these properties, which
---     consist of a set of functions that would be useful to all actors.
-
---     2. The "type": by having a 'type' field, the actor can inherit a set of
---     functions specific to a class of actors.
-
--- And on top of this, a set of custom properties (and possibly functions?) can
--- be applied to the actor. This nicely separates things into engine-level,
--- script-level, and data-level.
+-- Actor Loader is a way of loading the types for actors efficiently, and
+-- handles inheritance.
 
 local oop = require 'src/oop'
 
 local aloader = oop.class()
 
-function aloader:init (proto_actor, base_path)
-   self.proto = proto_actor
+function aloader:init (base_actor, base_path)
+   self.base = base_actor
    self.path = base_path
    self.cache = {}
 end
 
-function aloader:add (actor)
-   if actor.type == '' then
-      setmetatable(actor, {__index = self.proto})
-   else
-      if not self.cache[actor.type] then
-         self.cache[actor.type] = dofile(self.path .. actor.type .. '.lua')
-         setmetatable(self.cache[actor.type], {__index = proto_actor})
+-- Load an actor or class.
+-- This will chain its type tables.
+-- 'extends' is an optional argument that overrides actor.extends field.
+function aloader:load (actor, extends)
+   local atype = extends or actor.extends
+   if atype then
+      if not self.cache[atype] then
+         local class = dofile(self.path .. atype .. '.lua')
+         self.cache[atype] = self:load(class)
       end
-      setmetatable(actor, {__index = self.cache[actor.type]})
+      return setmetatable(actor, {__index = self.cache[atype]})
+   else
+      return setmetatable(actor, {__index = self.base})
    end
-   return actor
 end
 
 return aloader

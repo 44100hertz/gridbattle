@@ -1,13 +1,13 @@
 local oop = require 'src/oop'
 local image = require 'src/image'
 
-local ent = oop.class()
+local actor = oop.class()
 
-function ent:init (battle)
+function actor:init (battle)
    self.battle = battle
 end
 
-function ent:_load ()
+function actor:_load ()
    if self.start then self:start() end
 
    self.time = 0
@@ -15,32 +15,32 @@ function ent:_load ()
    if self.max_hp then self.hp = self.max_hp end
 
    if self.img then
-      self.image = image('battle/entities/' .. self.img)
+      self.image = image('battle/actors/' .. self.img)
       self.img = nil
    end
 
    if self.after_image_load then self:after_image_load() end -- HACK
 end
 
-function ent:die ()
+function actor:die ()
    self.despawn = true
 end
 
-function ent:spawn (entity)
-   entity.x = entity.x or self.x
-   entity.y = entity.y or self.y
-   return self.battle.entities:add(entity)
+function actor:spawn (actor)
+   actor.x = actor.x or self.x
+   actor.y = actor.y or self.y
+   return self.battle.actors:add(actor)
 end
 
-function ent:apply_damage (target, amount)
-   self.battle.entities:apply_damage(self, target, amount)
+function actor:apply_damage (target, amount)
+   self.battle.actors:apply_damage(self, target, amount)
 end
 
-function ent:apply_panel_stat (stat, x, y)
+function actor:apply_panel_stat (stat, x, y)
    self.battle.stage:apply_stat(stat, x or self.x, y or self.y)
 end
 
-function ent:free_space (x, y)
+function actor:free_space (x, y)
    x = x or self.x
    y = y or self.y
    local p = self.battle.stage.panels
@@ -49,7 +49,7 @@ function ent:free_space (x, y)
    end
 end
 
-function ent:_update (input)
+function actor:_update (input)
    if self.time then
       self.time = self.time + 1
    end
@@ -61,11 +61,11 @@ function ent:_update (input)
    end
 end
 
-function ent:update ()
+function actor:update ()
    self:move()
 end
 
-function ent:move ()
+function actor:move ()
    if self.dx then
       self.real_dx = self.side==2 and -self.dx or self.dx
       self.x = self.x + self.real_dx
@@ -74,13 +74,13 @@ function ent:move ()
    if self.dz then self.z = self.z + self.dz end
 end
 
-function ent:_draw ()
+function actor:_draw ()
    local x, y = self.battle.stage:to_screen_pos(self.x - 0.5, self.y - 0.5)
    self:draw(x, y)
    self:draw_info(x, y)
 end
 
-function ent:draw (x, y)
+function actor:draw (x, y)
    local flip = (self.side==2 and not self.noflip)
    if self.image then
       self.image.scale = (1.0 + 0.2 * self.z)
@@ -88,7 +88,7 @@ function ent:draw (x, y)
    end
 end
 
-function ent:draw_info (x, y)
+function actor:draw_info (x, y)
    local stage = self.battle.stage
    if self.hp and not self.hide_hp then
       local hpstr = tostring(math.floor(self.hp))
@@ -100,29 +100,29 @@ function ent:draw_info (x, y)
    end
 end
 
-function ent:use_chip (chip_name)
+function actor:use_chip (chip_name)
    local added = self:spawn {
-      name = GAME.chipdb[chip_name].class,
+      GAME.chipdb[chip_name].class,
       parent = self,
       delay = 8,
    }
    added.side = added.side or self.side
 end
 
-function ent:use_queue_chip ()
+function actor:use_queue_chip ()
    if #self.queue>0 then
       local removed = table.remove(self.queue, 1)
       self:use_chip(removed.name)
    end
 end
 
-function ent:query_panel (x, y)
+function actor:query_panel (x, y)
    x = x or self.x
    y = y or self.y
    return self.battle.stage:getpanel(x,y)
 end
 
-function ent:get_panel_enemy (x, y)
+function actor:get_panel_enemy (x, y)
    x = x or self.x
    y = y or self.y
    local panel = self.battle.stage:getpanel(x,y)
@@ -134,7 +134,7 @@ function ent:get_panel_enemy (x, y)
       panel.tenant.side == opp_side and panel.tenant
 end
 
-function ent:is_panel_free (x, y)
+function actor:is_panel_free (x, y)
    x = x or self.x
    y = y or self.y
    local panel = self.battle.stage:getpanel(x,y)
@@ -146,7 +146,7 @@ function ent:is_panel_free (x, y)
    return same_side and not panel.tenant
 end
 
-function ent:locate_enemy_ahead (x, y)
+function actor:locate_enemy_ahead (x, y)
    x = x or self.x
    y = y or self.y
    local inc = self.side==1 and 1 or -1
@@ -158,4 +158,4 @@ function ent:locate_enemy_ahead (x, y)
    return nil
 end
 
-return ent
+return actor

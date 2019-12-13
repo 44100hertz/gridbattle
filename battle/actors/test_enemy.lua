@@ -29,7 +29,7 @@ function test_enemy:die ()
    self.despawn = true
    for _ = 1,50 do
       self:spawn{
-         name = 'particle',
+         'particle',
          x=self.x, y=self.y, z=20,
          color=self.color
       }

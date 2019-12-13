@@ -2,6 +2,7 @@
 ** Eliminate use of battle.state
 Change location of queue to player actor. Must relocate all mutable state here.
 May become more clear if scene system is replaced.
+** Convert inheritance -> lua interfaces
 ** Navi Enemy
 I have some boss designs on paper, I should probably get some feedback on them.
 It's that or determine what navi AI or animation features I want to put into

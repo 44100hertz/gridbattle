@@ -5,11 +5,11 @@ return {
    sides = {
       {
          is_player = true,
-         {name='player', x=2, y=2},
+         {'player', x=2, y=2},
       },
       {
          is_player = true,
-         {name='player', x=5, y=2},
+         {'player', x=5, y=2},
       }
    },
    bg = {'scroll', 'pvp'}
