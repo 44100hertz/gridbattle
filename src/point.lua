@@ -23,6 +23,11 @@ function point:lerp (other, weight)
    return (self * (1-weight) + other * weight)
 end
 
+function point:within_rectangle (x, y, w, h)
+   local x0, x1, y0, y1 = x, x+w, y, y+h
+   return self.x >= x0 and self.x <= x1 and self.y >= y0 and self.y <= y1
+end
+
 -- Length from 0,0. A common pattern for distance between is (x - y):distance()
 function point:length ()
    return math.sqrt(self.x * self.x + self.y * self.y)

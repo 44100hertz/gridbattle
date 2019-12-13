@@ -44,6 +44,13 @@ function actors:init (data)
 end
 
 function actors:update (input)
+   -- check rectangle collisions
+   for i,actor in ipairs(self.actors) do
+      if (self.player.pos+8):within_rectangle(actor:bounds()) then
+         actor:collide(self.player)
+      end
+   end
+
    for i,actor in ipairs(self.actors) do
       actor:update(input)
    end
