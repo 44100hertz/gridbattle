@@ -1,15 +1,11 @@
 local oop = {}
 
-function oop.instance (class, object)
-   return setmetatable(object or {}, {__index = class})
-end
-
-local oop_metatable = {
+local class_mt = {
    __call = function (class, ...)
       if class.manual_init then
          return class.manual_init(...)
       else
-         local class = setmetatable(initial_table or {}, {__index = class})
+         local class = setmetatable({}, {__index = class})
          if class.init then
             class:init(...)
          end
@@ -18,7 +14,7 @@ local oop_metatable = {
    end,
 }
 function oop.class (base)
-   return setmetatable(base or {}, oop_metatable)
+   return setmetatable(base or {}, class_mt)
 end
 
 function oop.bind (class, func)

@@ -10,7 +10,7 @@ function menu.manual_init (name, ...)
    if self.init then
       self:init(...)
    end
-   oop.instance(menu, self)
+   setmetatable(self, {__index = menu})
    if self.bg_img then
       self.bg_image =
          lg.newImage(PATHS.menu .. self.bg_img .. '.png')
