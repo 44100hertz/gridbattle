@@ -11,6 +11,13 @@ local menu = {
    font = 'title',
    bg_img = 'title',
    {
+      text = 'worldmap test',
+      a = function ()
+         local world = world('world/maps/testmap-flat/map1.lua')
+         GAME.scene:push_fade({}, world)
+      end,
+   },
+   {
       text = 'battle',
       a = function ()
          GAME.scene:push_fade({}, battle('test'))
@@ -26,13 +33,6 @@ local menu = {
       text = 'folder editor',
       a = function ()
          GAME.scene:push_fade({}, foldedit('test-collection', 'test'))
-      end,
-   },
-   {
-      text = 'worldmap test',
-      a = function ()
-         local world = world('world/maps/testmap-flat/map1.lua')
-         GAME.scene:push_fade({}, world)
       end,
    },
    {

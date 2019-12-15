@@ -13,7 +13,7 @@ menu[1] = {
    a = oop.bind_by_name(GAME.scene, 'pop'),
 }
 menu[2] = {
-   text = 'main menu',
+   text = 'exit',
    a = function ()
       GAME.scene:pop()
       GAME.scene:pop()

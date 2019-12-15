@@ -258,6 +258,9 @@
    <point/>
   </object>
   <object id="2" type="enemy" x="392" y="1000">
+   <properties>
+    <property name="battle" value="test"/>
+   </properties>
    <point/>
   </object>
   <object id="4" x="358.909" y="1001.09">

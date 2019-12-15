@@ -46,19 +46,25 @@ end
 function actors:update (input)
    -- check rectangle collisions
    for i,actor in ipairs(self.actors) do
-      if (self.player.pos+8):within_rectangle(actor:bounds()) then
+      local _,_,w,h = self.player:rect()
+      local player_center = self.player.pos + point(w,h)/2
+      if actor.active and (player_center):within_rectangle(actor:rect()) then
          actor:collide(self.player)
       end
    end
 
    for i,actor in ipairs(self.actors) do
-      actor:update(input)
+      if actor.active and actor.update then
+         actor:update(input)
+      end
    end
 end
 
 function actors:draw (scroll_pos, view_size)
    for _,object in ipairs(self.actors) do
-      if object.shape == 'point' then
+      if not object.visible then
+         ;
+      elseif object.shape == 'point' then
          love.graphics.setColor(1, 0, 0)
          love.graphics.circle('line', object.pos.x, object.pos.y, 8)
       elseif object.shape == 'polyline' then
