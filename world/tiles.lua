@@ -8,10 +8,9 @@ local tiles = oop.class()
 
 function tiles:init (data, path)
    self.data = data
-   self.base_dir = path:gsub('[^/]+$', '/')
    self.tileset = {}
    local set = self.data.tilesets[1]
-   local imgpath = self.base_dir .. set.image
+   local imgpath = path .. set.image
    self.tileset.img = love.graphics.newImage(imgpath)
    self.tileset.sheet = image.make_quads(
       0, 0, set.tilewidth, set.tileheight,
