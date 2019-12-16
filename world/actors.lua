@@ -2,13 +2,13 @@ local oop = require 'src/oop'
 local point = require 'src/point'
 local aloader = require 'src/actor_loader'
 
-local proto_actor = require 'world/proto_actor'
+local base_actor = require 'world/base_actor'
 
 local actors = oop.class()
 
 function actors:init (data)
    self.actors = {}
-   self.aloader = aloader(proto_actor, 'world/actors/')
+   self.aloader = aloader(base_actor, 'world/actors/')
 
    for _,layer in ipairs(data.layers) do
       if layer.type == 'objectgroup' then
@@ -63,7 +63,7 @@ end
 function actors:draw (scroll_pos, view_size)
    for _,object in ipairs(self.actors) do
       if not object.visible then
-         ;
+         do end
       elseif object.shape == 'point' then
          love.graphics.setColor(1, 0, 0)
          love.graphics.circle('line', object.pos.x, object.pos.y, 8)
