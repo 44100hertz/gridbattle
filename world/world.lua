@@ -14,7 +14,7 @@ function world:init (path)
    self.scroll_speed = 8
    self.tiles = tiles(self.map, path)
    self.tile_size = point(self.map.tilewidth, self.map.tileheight)
-   self.actors = actors(self.map)
+   self.actors = actors(self)
    self.border_shader = love.graphics.newShader('res/shaders/border.glsl')
    self.border_shader:send('scale', GAME.config.settings.game_scale)
    self.border_shader:send('size', {self.view_size:unpack()})

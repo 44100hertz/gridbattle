@@ -11,6 +11,10 @@ function point:unpack ()
    return self.x, self.y
 end
 
+function point:copy ()
+   return init(self.x, self.y)
+end
+
 function point:map (fun)
    return init(fun(self.x), fun(self.y))
 end

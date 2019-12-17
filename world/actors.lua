@@ -6,11 +6,12 @@ local base_actor = require 'world/base_actor'
 
 local actors = oop.class()
 
-function actors:init (data)
+function actors:init (world)
    self.actors = {}
-   self.aloader = aloader(base_actor, 'world/actors/')
+   self.base = base_actor(world)
+   self.aloader = aloader(self.base, 'world/actors/')
 
-   for _,layer in ipairs(data.layers) do
+   for _,layer in ipairs(world.map.layers) do
       if layer.type == 'objectgroup' then
          for _,object in ipairs(layer.objects) do
             self.actors[#self.actors+1] = {}
