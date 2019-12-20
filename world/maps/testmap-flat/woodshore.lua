@@ -44,6 +44,7 @@ return {
     },
     {
       id = 4,
+      type = "crushable_flower",
       properties = {
         ["walkable"] = true
       }
@@ -56,6 +57,7 @@ return {
     },
     {
       id = 6,
+      type = "crushable_flower",
       properties = {
         ["walkable"] = true
       }

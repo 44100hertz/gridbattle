@@ -14,9 +14,9 @@ function actors:init (world)
    for _,layer in ipairs(world.map.layers) do
       if layer.type == 'objectgroup' then
          for _,object in ipairs(layer.objects) do
-            self.actors[#self.actors+1] = {}
-            local out = self.actors[#self.actors]
+            local out = {}
             -- These fields are accessible in the script file
+            out.is_tile = false
             out.type = object.type
             out.shape = object.shape
             out.pos = point(object.x, object.y)
@@ -29,19 +29,20 @@ function actors:init (world)
                   out.line[#out.line+1] = point.y + object.y
                end
             end
+            self:add(out)
          end
       end
    end
+end
 
-   for _,actor in ipairs(self.actors) do
-      if actor.type == 'player' then
-         self.player = actor
-      end
-      if actor.type == '' then
-         actor.type = nil
-      end
-      self.aloader:load(actor, actor.type)
+function actors:add (actor)
+   if actor.type == 'player' then
+      self.player = actor
    end
+   if actor.type == '' then
+      actor.type = nil
+   end
+   self.actors[#self.actors+1] = self.aloader:load(actor, actor.type)
 end
 
 function actors:update (input)
@@ -63,13 +64,15 @@ end
 
 function actors:draw (scroll_pos, view_size)
    for _,object in ipairs(self.actors) do
-      if not object.visible then
-         do end
-      elseif object.shape == 'point' then
-         love.graphics.setColor(1, 0, 0)
+      local opacity = object.visible and 1 or 0.5
+      if object.active then
+         love.graphics.setColor(1, 0, 0, opacity)
+      else
+         love.graphics.setColor(0, 0, 1, opacity)
+      end
+      if object.shape == 'point' then
          love.graphics.circle('line', object.pos.x, object.pos.y, 8)
       elseif object.shape == 'polyline' then
-         love.graphics.setColor(0, 0, 1)
          love.graphics.line(object.line)
       end
    end

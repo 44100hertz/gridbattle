@@ -8,13 +8,16 @@ local world = oop.class()
 
 function world:init (path)
    self.scroll_pos = point(0, 0)
-   self.view_size = point(352, 224)
+   self.view_size = point(21 * 16, 13 * 16)
 
    self.map = dofile(path .. 'map.lua')
    self.scroll_speed = 8
    self.tiles = tiles(self.map, path)
    self.tile_size = point(self.map.tilewidth, self.map.tileheight)
    self.actors = actors(self)
+
+   self.tiles:add_tile_actors(self.actors)
+
    self.border_shader = love.graphics.newShader('res/shaders/border.glsl')
    self.border_shader:send('scale', GAME.config.settings.game_scale)
    self.border_shader:send('size', {self.view_size:unpack()})
@@ -29,7 +32,7 @@ end
 function world:draw ()
    do
       -- smooth scroll follows player
-      local goal = self.actors.player.pos - self.view_size/2 + self.map.tilewidth/2
+      local goal = self.actors.player.pos - self.view_size/2
       self.scroll_pos = self.scroll_pos:lerp(goal, 0.2)
       local border_size = (GAME.size - self.view_size) * 0.5
       local offset = -self.scroll_pos + border_size

@@ -19,7 +19,7 @@
    <property name="walkable" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="4">
+ <tile id="4" type="crushable_flower">
   <properties>
    <property name="walkable" type="bool" value="true"/>
   </properties>
@@ -29,7 +29,7 @@
    <property name="walkable" type="bool" value="true"/>
   </properties>
  </tile>
- <tile id="6">
+ <tile id="6" type="crushable_flower">
   <properties>
    <property name="walkable" type="bool" value="true"/>
   </properties>

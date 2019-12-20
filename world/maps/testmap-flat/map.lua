@@ -1,7 +1,7 @@
 return {
   version = "1.2",
   luaversion = "5.1",
-  tiledversion = "1.2.0",
+  tiledversion = "1.3.1",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 80,
@@ -36,7 +36,52 @@ return {
       properties = {},
       terrains = {},
       tilecount = 256,
-      tiles = {}
+      tiles = {
+        {
+          id = 1,
+          properties = {
+            ["walkable"] = true
+          }
+        },
+        {
+          id = 2,
+          properties = {
+            ["walkable"] = true
+          }
+        },
+        {
+          id = 3,
+          properties = {
+            ["walkable"] = true
+          }
+        },
+        {
+          id = 4,
+          type = "crushable_flower",
+          properties = {
+            ["walkable"] = true
+          }
+        },
+        {
+          id = 5,
+          properties = {
+            ["walkable"] = true
+          }
+        },
+        {
+          id = 6,
+          type = "crushable_flower",
+          properties = {
+            ["walkable"] = true
+          }
+        },
+        {
+          id = 7,
+          properties = {
+            ["walkable"] = true
+          }
+        }
+      }
     }
   },
   layers = {
