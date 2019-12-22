@@ -9,10 +9,8 @@ local tiles = oop.class()
 function tiles:init (map, path)
    self.map = map
    self.tile_size = point(self.map.tilewidth, self.map.tileheight)
-   local tsx_path = self.map.tilesets[1].filename
-   local tileset_path = path .. tsx_path:gsub('.tsx$', '.lua')
 
-   self.set = dofile(tileset_path)
+   self.set = self.map.tilesets[1]
    local imgpath = path .. self.set.image
    self.set.texture = love.graphics.newImage(imgpath)
    self.set.sheet = image.make_quads(
@@ -39,7 +37,7 @@ function tiles:add_tile_actors (actors)
                actor.is_tile = true
                actor.tile = tile
                actor.layer = layer_index
-               actor.pos = (point(self:index_to_xy(index)) + point(0.5, 1.5)) * self.tile_size
+               actor.pos = (point(self:index_to_xy(index)) + point(0.5, 0.5)) * self.tile_size
                actor.shape = 'point'
                actor.type = data.type
                actor.properties = data.properties
@@ -51,7 +49,7 @@ function tiles:add_tile_actors (actors)
 end
 
 function tiles:xy_to_index(x, y)
-   return x + (y-1) * self.map.width + 1
+   return x + y * self.map.width + 1
 end
 
 function tiles:index_to_xy (index)

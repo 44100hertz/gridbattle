@@ -20,9 +20,6 @@ The idea here is that battles would be easier to edit with a UI, rather than in
 the current primitive format. This is likely to save effort in the long run, and
 create a sense of unity by having visual lists of enemies, maybe even previews.
 * World map
-** Take advantage of newer Tiled lua export
-There's a version difference where more info is stored in the map. It may no
-longer be necessary to load tilesets.
 ** Makefile (convert to .lua)
 ** Display dialog box w/script
 ** Move actors to position w/script
