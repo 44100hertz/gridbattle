@@ -11,3 +11,7 @@ free to use. gamecontrollerdb.txt is created by SDL.
  - res/ :: Resources for general use.
  - src/ :: Code for general use.
  - world/ :: The overworld/map. Will contain story eventually.
+
+* Building
+Makefile generates tmx -> lua maps for the worldmap. Currently no way to build
+.love or .exe files.
