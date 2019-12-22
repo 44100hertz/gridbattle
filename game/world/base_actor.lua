@@ -32,7 +32,7 @@ function proto:enter_battle (name)
 end
 
 function proto:is_walkable (pos)
-   return self.world.tiles:walkable((pos / 16 + 0.5):floor():unpack())
+   return self.world.tiles:walkable((pos / 16):floor():unpack())
 end
 
 function proto:set_tile_graphics_here (id, xoff, yoff)

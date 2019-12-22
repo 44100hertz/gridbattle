@@ -68,7 +68,6 @@ function love.draw ()
 --   -- Memory usage
 --   love.graphics.origin()
 --   love.graphics.print(math.floor(collectgarbage('count')))
-   love.graphics.present()
 end
 
 function love.update (dt)
