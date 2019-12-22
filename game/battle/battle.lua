@@ -17,7 +17,7 @@ local cust_length = 4*60
 local battle = oop.class()
 
 function battle:init (set_name)
-   self.state = dofile(PATHS.sets .. set_name .. '.lua')
+   self.state = dofile(PATHS.battle .. 'sets/' .. set_name .. '.lua')
 
    self.folders = {}
    for i = 1,2 do

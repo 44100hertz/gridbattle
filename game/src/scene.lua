@@ -6,8 +6,6 @@
 
 local oop = require 'src/oop'
 
-local fade = require 'res/scenes/fade'
-
 local scene = oop.class()
 
 function scene:init()
@@ -31,6 +29,7 @@ function scene:pop (depth)
 end
 
 function scene:push_fade (fadeopts, mod)
+   local fade = require(PATHS.scenes .. 'fade')
    local length = fadeopts.length or 0.25
    local fadein = function ()
       self:pop()

@@ -3,7 +3,7 @@ local oop = require 'src/oop'
 local input = oop.class()
 local joy_to_dpad_threshold = 0.5
 
-love.joystick.loadGamepadMappings('res/gamecontrollerdb.txt')
+love.joystick.loadGamepadMappings('gamecontrollerdb.txt')
 
 function input:init()
    self.keybinds = {

@@ -1,4 +1,4 @@
 *~
 \#*\#
-out/
-world/maps/*/map.lua
+video_out/
+game/world/maps/*/map.lua

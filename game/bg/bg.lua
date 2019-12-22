@@ -7,7 +7,7 @@ function bg:init (kind, bgimage)
    assert(kind == 'scroll')
    self.start_time = love.timer.getTime()
    self.image = love.graphics.newImage(PATHS.bg .. bgimage .. '.png')
-   self.shader = love.graphics.newShader('res/shaders/background.glsl')
+   self.shader = love.graphics.newShader(PATHS.shaders .. 'background.glsl')
    self.shader:send('texture_size', {self.image:getDimensions()})
    self.shader:send('scale', GAME.config.settings.game_scale * 2.0)
 end

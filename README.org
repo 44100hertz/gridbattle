@@ -5,13 +5,6 @@ This respository is under the zlib open-source license, included in LICENSE.
 The assets included here are fully original and should be considered
 free to use. gamecontrollerdb.txt is created by SDL.
 
-* Project structure
- - battle/ :: Gridbattle action.
- - foldedit/ :: A battle folder editor.
- - res/ :: Resources for general use.
- - src/ :: Code for general use.
- - world/ :: The overworld/map. Will contain story eventually.
-
 * Building
 Makefile generates tmx -> lua maps for the worldmap. Currently no way to build
 .love or .exe files.

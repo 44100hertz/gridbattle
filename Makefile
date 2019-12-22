@@ -1,8 +1,8 @@
-TMXMAPS:=$(wildcard world/maps/*/map.tmx)
+TMXMAPS:=$(wildcard game/world/maps/*/map.tmx)
 LUAMAPS:=$(patsubst %.tmx,%.lua,$(TMXMAPS))
 
 run: all
-	love .
+	cd game/; love .
 
 all: $(LUAMAPS)
 

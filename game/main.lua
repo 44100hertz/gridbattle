@@ -13,19 +13,22 @@ local framedump_canvas, framedump_dir
 
 function love.load ()
    PATHS = {
-      imgdb      = 'res/imgdb',
-      images     = 'res/images/',
-      chipdb     = 'res/chipdb',
-      chips      = 'res/chips/',
-      savedata   = 'res/savedata',
-      folders    = 'res/folders/',
-      bg         = 'res/bg/',
-      fonts      = 'res/fonts/',
-      menu       = 'res/menu/',
-
-      foldedit   = 'foldedit/',
+      -- Game Modes
       battle     = 'battle/',
-      sets       = 'battle/sets/',
+      foldedit   = 'foldedit/',
+      world      = 'world/',
+
+      bg         = 'bg/',
+      chipdb     = 'chipdb',
+      chips      = 'chips/',
+      folders    = 'folders/',
+      fonts      = 'fonts/',
+      images     = 'images/',
+      imgdb      = 'imgdb',
+      savedata   = 'savedata',
+      scenes     = 'scenes/',
+      shaders    = 'shaders/',
+      menu       = 'menu/',
    }
    GAME = {}
    GAME.tickrate = 60
@@ -46,11 +49,11 @@ function love.load ()
    GAME.config = config()
 
    love.graphics.setDefaultFilter('nearest', 'nearest')
-   love.graphics.setNewFont('res/fonts/squrave.ttf', 32, 'none')
+   love.graphics.setNewFont(PATHS.fonts .. 'squrave.ttf', 32, 'none')
 
    if arg[2] == 'dump' then
       framedump_canvas = love.graphics.newCanvas(GAME.size:unpack())
-      framedump_dir = 'out/' .. os.time()
+      framedump_dir = '../framedump/' .. os.time()
       love.filesystem.createDirectory(framedump_dir)
    end
 
@@ -80,7 +83,7 @@ function love.update (dt)
          love.graphics.origin()
          framedump_canvas:renderTo(oop.bind_by_name(GAME.scene, 'draw'))
          local imgdata = framedump_canvas:newImageData()
-         imgdata:encode('tga', framedump_dir .. '/' .. frame_count .. '.tga')
+         imgdata:encode('tga', framedump_dir .. frame_count .. '.tga')
       end
    end
 end
