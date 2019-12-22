@@ -38,7 +38,7 @@ function love.load ()
    GAME.input = input()
    GAME.scene = scene()
 
-   GAME.chipdb = dofile(PATHS.chipdb .. '.lua')
+   GAME.chipdb = love.filesystem.load(PATHS.chipdb .. '.lua')()
    -- Give chips an index field based on their order in the file, and
    -- allow chips to be looked up by name.
    for i,chip in ipairs(GAME.chipdb) do

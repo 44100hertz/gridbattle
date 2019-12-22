@@ -18,7 +18,7 @@ function aloader:load (actor, extends)
    local atype = extends or actor.extends
    if atype then
       if not self.cache[atype] then
-         local class = dofile(self.path .. atype .. '.lua')
+         local class = love.filesystem.load(self.path .. atype .. '.lua')()
          self.cache[atype] = self:load(class)
       end
       return setmetatable(actor, {__index = self.cache[atype]})

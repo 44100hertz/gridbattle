@@ -1,12 +1,17 @@
 TMXMAPS:=$(wildcard game/world/maps/*/map.tmx)
 LUAMAPS:=$(patsubst %.tmx,%.lua,$(TMXMAPS))
 
-run: all
+all: maps gridbattle.love
+
+run: maps
 	cd game/; love .
 
-all: $(LUAMAPS)
+maps: $(LUAMAPS)
 
 %map.lua: %map.tmx
 	tiled --export-map $< $@
+
+gridbattle.love: $(shell find game/)
+	cd game/; zip -r ../$@ .
 
 .PHONY: all run

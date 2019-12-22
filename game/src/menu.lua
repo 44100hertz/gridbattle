@@ -6,7 +6,7 @@ local menu = oop.class()
 
 -- make a new menu
 function menu.manual_init (name, ...)
-   local self = dofile(PATHS.menu .. name .. '.lua')
+   local self = love.filesystem.load(PATHS.menu .. name .. '.lua')()
    if self.init then
       self:init(...)
    end

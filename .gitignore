@@ -2,3 +2,4 @@
 \#*\#
 video_out/
 game/world/maps/*/map.lua
+gridbattle.love

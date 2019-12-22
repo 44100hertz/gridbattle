@@ -10,7 +10,7 @@ function world:init (path)
    self.scroll_pos = point(0, 0)
    self.view_size = point(21 * 16, 13 * 16)
 
-   self.map = dofile(path .. 'map.lua')
+   self.map = love.filesystem.load(path .. 'map.lua')()
    self.scroll_speed = 8
    self.tiles = tiles(self.map, path)
    self.tile_size = point(self.map.tilewidth, self.map.tileheight)

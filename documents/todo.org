@@ -39,9 +39,7 @@ approach? etc.
    freezes. There's a problem where the 'pause' screen for battle just calls
    scene.pop twice to exit the scene, and that's really hacky but I see no
    better way.
-** .exe and .love build system for releases
-This will be nice to have before I make my first demo. Maybe someone else has
-already written scripts for this?
+** Exe builder
 ** Fix video dumping
 I reorganized all the folders and video dumping might not work. I might also
 make it nicer.
