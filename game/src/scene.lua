@@ -24,7 +24,7 @@ function scene:top (distance)
    return self.stack[#self.stack - (distance or 0)]
 end
 
-function scene:pop (depth)
+function scene:pop ()
    return table.remove(self.stack)
 end
 

@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local scene = require 'src/scene'
 
 local menu = {
    y = 60,

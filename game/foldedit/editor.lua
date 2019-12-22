@@ -10,7 +10,7 @@ local editor = oop.class()
 local num_entries = 12
 local entry_height = 11
 
-function editor:init (collection)
+function editor:init ()
    self.icons = {
       [1] = oop.bind_by_name(GAME.scene, 'pop'),
       [2] = function (self)

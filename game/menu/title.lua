@@ -5,7 +5,7 @@ local world = require 'world/world'
 local battle = require 'battle/battle'
 local foldedit = require 'foldedit/editor'
 
-local menu = {
+local title = {
    y = 40,
    spacing = 16,
    font = 'title',
@@ -13,8 +13,7 @@ local menu = {
    {
       text = 'worldmap test',
       a = function ()
-         local world = world('world/maps/testmap-flat/')
-         GAME.scene:push_fade({}, world)
+         GAME.scene:push_fade({}, world('world/maps/testmap-flat/'))
       end,
    },
    {
@@ -47,4 +46,4 @@ local menu = {
    },
 }
 
-return menu
+return title

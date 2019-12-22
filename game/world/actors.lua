@@ -24,9 +24,9 @@ function actors:init (world)
             -- convert polyline to absolute position
             if object.shape == 'polyline' then
                out.line = {}
-               for _,point in ipairs(object.polyline) do
-                  out.line[#out.line+1] = point.x + object.x
-                  out.line[#out.line+1] = point.y + object.y
+               for _,p in ipairs(object.polyline) do
+                  out.line[#out.line+1] = p.x + object.x
+                  out.line[#out.line+1] = p.y + object.y
                end
             end
             self:add(out)
@@ -47,7 +47,7 @@ end
 
 function actors:update (input)
    -- check rectangle collisions
-   for i,actor in ipairs(self.actors) do
+   for _,actor in ipairs(self.actors) do
       local _,_,w,h = self.player:rect()
       local player_center = self.player.pos + point(w,h)/2
       if actor.active and (player_center):within_rectangle(actor:rect()) then
@@ -55,14 +55,14 @@ function actors:update (input)
       end
    end
 
-   for i,actor in ipairs(self.actors) do
+   for _,actor in ipairs(self.actors) do
       if actor.active and actor.update then
          actor:update(input)
       end
    end
 end
 
-function actors:draw (scroll_pos, view_size)
+function actors:draw ()
    for _,object in ipairs(self.actors) do
       local opacity = object.visible and 1 or 0.5
       if object.active then

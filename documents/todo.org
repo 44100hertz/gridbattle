@@ -1,4 +1,7 @@
 * Battle
+** Strip away elements system
+I need to make things better in general, and the elements system is confusingly
+implemented and sort of useless.
 ** Eliminate use of battle.state
 Change location of queue to player actor. Must relocate all mutable state here.
 May become more clear if scene system is replaced.

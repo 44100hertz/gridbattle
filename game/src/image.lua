@@ -2,7 +2,7 @@ local oop = require 'src/oop'
 
 local imgdb = require(PATHS.imgdb)
 
-image = oop.class()
+local image = oop.class()
 
 -- path is not optional, sheet_name is just for when many images share a sheet
 function image:init(path, sheet_name)

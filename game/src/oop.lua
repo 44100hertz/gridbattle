@@ -5,11 +5,11 @@ local class_mt = {
       if class.manual_init then
          return class.manual_init(...)
       else
-         local class = setmetatable({}, {__index = class})
-         if class.init then
-            class:init(...)
+         local object = setmetatable({}, {__index = class})
+         if object.init then
+            object:init(...)
          end
-         return class
+         return object
       end
    end,
 }

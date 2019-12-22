@@ -22,7 +22,7 @@ function stage:getpanel (x,y)
    return self.panels[x] and self.panels[x][y]
 end
 
-function stage:update (ents)
+function stage:update ()
    for x = 1,self.num_panels.x do
       for y = 1,self.num_panels.y do
          local panel = self.panels[x][y]
@@ -42,21 +42,20 @@ end
 function stage:draw (turf)
    for x = 1,self.num_panels.x do
       for y = 1,self.num_panels.y do
-         local x0, y0 = self:to_screen_pos(x-1, y-1)
-         local x1, y1 = self:to_screen_pos(x, y)
+         local screen_x, screen_y = self:to_screen_pos(x-1, y-1)
          if x <= turf[y] then
             love.graphics.setColor(224/256.0, 208/256.0, 240/256.0)
          else
             love.graphics.setColor(248/256.0, 128/256.0, 136/256.0)
          end
          local w, h = self.panel_size:unpack()
-         love.graphics.rectangle('fill', x0, y0, w, h, 5.0)
+         love.graphics.rectangle('fill', screen_x, screen_y, w, h, 5.0)
          love.graphics.setColor(32/256.0, 40/256.0, 56/256.0)
-         love.graphics.rectangle('line', x0, y0, w, h, 5.0)
+         love.graphics.rectangle('line', screen_x, screen_y, w, h, 5.0)
          if self.panels[x][y].stat == 'poison' then
-            local x, y = self:to_screen_pos(x - 0.5, y - 0.5)
+            local center_x, center_y = self:to_screen_pos(x - 0.5, y - 0.5)
             love.graphics.setColor(108/256.0, 63/256.0, 255/256.0)
-            love.graphics.circle('fill', x, y, 10)
+            love.graphics.circle('fill', center_x, center_y, 10)
          end
          love.graphics.setColor(1,1,1)
       end

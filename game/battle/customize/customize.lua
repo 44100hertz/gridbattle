@@ -1,5 +1,3 @@
-local lg = love.graphics
-
 local oop = require 'src/oop'
 
 local go_screen = require 'battle/go_screen'

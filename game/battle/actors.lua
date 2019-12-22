@@ -68,7 +68,7 @@ function actors:get_ending ()
 end
 
 function actors:update (input)
-   for i,ent in ipairs(self.actors) do
+   for _,ent in ipairs(self.actors) do
       ent:_update(input)
    end
    for i,ent in ipairs(self.actors) do

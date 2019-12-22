@@ -14,4 +14,4 @@ maps: $(LUAMAPS)
 gridbattle.love: $(shell find game/)
 	cd game/; zip -r ../$@ .
 
-.PHONY: all run
+.PHONY: all run maps

@@ -6,7 +6,7 @@ local folder = oop.class()
 function folder:init(name)
    self.temp_count = nil
    self.name = name
-   local path = 'folders/' .. name .. '.lua'
+--   local path = 'folders/' .. name .. '.lua'
    -- Look first in save dir, then in game folders.
 --   if love.filesystem.getInfo(path) then
 --      self.data = love.filesystem.load(input)()
@@ -63,8 +63,8 @@ end
 
 function folder:condense()
    for i,a in ipairs(self.data) do
-      for _ = i+1,#self.data do
-         local b = self.data[b]
+      for j = i+1,#self.data do
+         local b = self.data[j]
          if a.name == b.name and
             a.ltr == b.ltr
          then
@@ -109,8 +109,6 @@ function folder:remove(index)
    end
    entry.qty = entry.qty - 1
    if entry.qty==0 then table.remove(self.data, index) end
-   for k,v in pairs(entry) do
-   end
    return {name = entry.name, ltr = entry.ltr}
 end
 

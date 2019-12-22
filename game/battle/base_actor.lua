@@ -26,10 +26,10 @@ function actor:die ()
    self.despawn = true
 end
 
-function actor:spawn (actor)
-   actor.x = actor.x or self.x
-   actor.y = actor.y or self.y
-   return self.battle.actors:add(actor)
+function actor:spawn (a)
+   a.x = a.x or self.x
+   a.y = a.y or self.y
+   return self.battle.actors:add(a)
 end
 
 function actor:apply_damage (target, amount)
