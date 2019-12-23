@@ -37,7 +37,7 @@ function tiles:add_tile_actors (actors)
                actor.is_tile = true
                actor.tile = tile
                actor.layer = layer_index
-               actor.pos = (point(self:index_to_xy(index)) + point(0.5, 0.5)) * self.tile_size
+               actor.pos = (point(self:index_to_xy(index))) * self.tile_size
                actor.shape = 'point'
                actor.type = data.type
                actor.properties = data.properties

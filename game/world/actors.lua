@@ -63,6 +63,7 @@ function actors:update (input)
 end
 
 function actors:draw ()
+   -- Draw hitboxes for debug
    for _,object in ipairs(self.actors) do
       local opacity = object.visible and 1 or 0.5
       if object.active then
@@ -71,7 +72,7 @@ function actors:draw ()
          love.graphics.setColor(0, 0, 1, opacity)
       end
       if object.shape == 'point' then
-         love.graphics.circle('line', object.pos.x, object.pos.y, 8)
+         love.graphics.rectangle('line', object:rect())
       elseif object.shape == 'polyline' then
          love.graphics.line(object.line)
       end
