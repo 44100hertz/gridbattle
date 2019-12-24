@@ -17,7 +17,7 @@ local cust_length = 4*60
 local battle = oop.class()
 
 function battle:init (set_name)
-   local path = PATHS.battle .. 'sets/' .. set_name .. '.lua'
+   local path = PATHS.battle .. 'battles/' .. set_name .. '.lua'
    self.state = love.filesystem.load(path)()
 
    self.folders = {}
