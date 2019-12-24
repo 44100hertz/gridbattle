@@ -14,5 +14,5 @@ return {
          {'test_enemy', level=2, x=6, y=3},
       },
    },
-   bg = {'scroll', 'test'},
+   bg = {'scroll', 'acid'},
 }

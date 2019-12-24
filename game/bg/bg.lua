@@ -9,7 +9,7 @@ function bg:init (kind, bgimage)
    self.image = love.graphics.newImage(PATHS.bg .. bgimage .. '.png')
    self.shader = love.graphics.newShader(PATHS.shaders .. 'background.glsl')
    self.shader:send('texture_size', {self.image:getDimensions()})
-   self.shader:send('scale', GAME.config.settings.game_scale * 2.0)
+   self.shader:send('scale', GAME.config.settings.game_scale)
 end
 
 function bg:draw ()
