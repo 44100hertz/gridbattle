@@ -1,7 +1,6 @@
 local navi = {
    extends = 'actor',
-   tangible = true,
-   size = 0.4,
+   can_collide = true,
    states = {},
 }
 
@@ -12,6 +11,7 @@ function navi.states:move ()
    if self.time == 5 then
       self:free_space(self.x, self.y)
       self.x, self.y = self.goalx, self.goaly
+      self:occupy()
    end
 end
 

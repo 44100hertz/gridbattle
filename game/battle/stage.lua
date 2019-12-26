@@ -17,7 +17,6 @@ function stage:init ()
 end
 
 function stage:getpanel (x,y)
-   assert(self.panels[1][1])
    x,y = math.floor(x+0.5), math.floor(y+0.5)
    return self.panels[x] and self.panels[x][y]
 end
@@ -44,9 +43,9 @@ function stage:draw (turf)
       for y = 1,self.num_panels.y do
          local screen_x, screen_y = self:to_screen_pos(x-1, y-1)
          if x <= turf[y] then
-            love.graphics.setColor(224/256.0, 208/256.0, 240/256.0)
+            love.graphics.setColor(1, 0, 1, 0.5)
          else
-            love.graphics.setColor(248/256.0, 128/256.0, 136/256.0)
+            love.graphics.setColor(0, 0, 1, 128/256.0, 136/256.0, 0.5)
          end
          local w, h = self.panel_size:unpack()
          love.graphics.rectangle('fill', screen_x, screen_y, w, h, 5.0)
@@ -72,6 +71,12 @@ function stage:apply_stat (kind, x, y)
    else
       io.write(string.format('status effect %s misfired on %s, %s\n',
                              kind, x, y))
+   end
+end
+
+function stage:set_tenant (x, y, tenant)
+   if self.panels[x] and self.panels[x][y] then
+      self.panels[x][y].tenant = tenant
    end
 end
 

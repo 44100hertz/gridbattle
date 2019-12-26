@@ -1,11 +1,25 @@
 * Battle
+** Make chip queues a subclass of actors
+Currently chip queues are weirdly initialized as part of the base class, and
+possibly elsewhere. Ideally I just want to stick all their methods in one place,
+separate from the other code.
+** Other possible subclasses for actors
+*** Position/movement
+*** HP/damage
+*** Actor/animation system
+*** AI
+*** "Navi"
+** Fix Wheel crate
+Wheel crate poses an interesting problem for the panel/occupancy system. It was
+intended to be able to be shot back and forth, but this is only possible if it
+prevents other actors from moving to the panel it is on. Maybe I will delete
+this one.
 ** Strip away elements system
 I need to make things better in general, and the elements system is confusingly
 implemented and sort of useless.
 ** Eliminate use of battle.state
 Change location of queue to player actor. Must relocate all mutable state here.
 May become more clear if scene system is replaced.
-** Reduce inheritance...replace with parameters?
 ** Navi Enemy
 I have some boss designs on paper, I should probably get some feedback on them.
 It's that or determine what navi AI or animation features I want to put into

@@ -1,11 +1,11 @@
 local test_enemy = {
-   tangible = true,
-   size=20/64,
+   can_collide = true,
+   auto_occupy = true,
    noflip = true,
    cooldown = 0,
 }
 
-function test_enemy:after_image_load ()
+function test_enemy:after_load ()
    self.image.yscale = 0.5
 end
 

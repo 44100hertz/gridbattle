@@ -6,7 +6,7 @@ function actor:enter_state (state)
    self.time = 0
 end
 
-function actor:after_image_load ()
+function actor:after_load ()
    self:enter_state('base')
 end
 

@@ -4,7 +4,7 @@ local player = {
    hp = 300, hide_hp = true,
 }
 
-function player:after_image_load ()
+function player:after_load ()
    self.image.yscale = 0.5
 end
 

@@ -1,5 +1,7 @@
 local particle = {
    gravity = 0.1,
+   can_collide = false,
+   auto_occupy = false,
 }
 
 function particle:start ()
@@ -16,7 +18,10 @@ function particle:update ()
    self:move()
 end
 
-function particle:draw (x, y)
+function particle:draw (x, y, draw_shadow)
+   if draw_shadow then
+      return
+   end
    love.graphics.setColor(unpack(self.color))
    love.graphics.circle('fill', x, y, math.max(0, 5 + self.z*5/200), 4)
    love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
