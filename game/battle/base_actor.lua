@@ -7,15 +7,9 @@ local actor = oop.class()
 -- Override these fields!
 ------------------------------------------------------------
 
--- if true, collision will call actor:collide(with)
-actor.can_collide = false
--- if true, any collision with enemy will call actor:die()
-actor.collide_die = false
--- if true, will automatically become panel.tenant for any panel it goes over.
-actor.auto_occupy = false
-
 -- Initialize data and set up loading parameters
 function actor:start ()
+   --self:occupy()
 end
 
 -- Do anything with the loaded content
@@ -130,7 +124,6 @@ function actor:get_panel_enemy (x, y)
    return
       panel and
       panel.tenant and
-      panel.tenant.can_collide and
       panel.tenant.side == opp_side and panel.tenant
 end
 

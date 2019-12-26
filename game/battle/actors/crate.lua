@@ -1,7 +1,6 @@
 local crate = {}
 
 function crate:start ()
-   self.can_collide = false
    self.hp = 1000
    self.hide_hp = true
    self.side = 0 -- Can hurt anyone
@@ -22,7 +21,6 @@ function crate:update ()
    if self.dz<0 and self.z<=0 then
       self.z = 0
       self.dz = 0
-      self.can_collide = true
       self.size = 20/64
       local panel = self:query_panel()
       if panel.tenant then

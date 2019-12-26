@@ -1,6 +1,4 @@
 local test_enemy = {
-   can_collide = true,
-   auto_occupy = true,
    noflip = true,
    cooldown = 0,
 }
@@ -11,6 +9,7 @@ end
 
 function test_enemy:start ()
    assert(self.level)
+   self:occupy()
    if self.level == 1 then
       self.img = 'testenemy'
       self.max_hp = 40

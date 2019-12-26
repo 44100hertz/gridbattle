@@ -78,24 +78,12 @@ function actors:update (input)
       end
    end
 
-   local function collide (a, b)
-      if a.collide_die and b.can_collide then
-         a:die()
-      end
-      a:collide(b)
-   end
-
    -- Check for collisions on this panel
-   for _,ent in ipairs(self.actors) do
-      local panel = self.battle.stage:getpanel(ent.x, ent.y)
-      if panel and panel.tenant and
-         panel.tenant.can_collide and
-         panel.tenant.side ~= ent.side
-      then
-         collide(ent, panel.tenant)
-         collide(panel.tenant, ent)
-      elseif panel and ent.auto_occupy then
-         panel.tenant = ent
+   for _,actor in ipairs(self.actors) do
+      local enemy = actor:get_panel_enemy()
+      if enemy then
+         actor:collide(enemy)
+         enemy:collide(actor)
       end
    end
 end

@@ -1,7 +1,5 @@
 local particle = {
    gravity = 0.1,
-   can_collide = false,
-   auto_occupy = false,
 }
 
 function particle:start ()

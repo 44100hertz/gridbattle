@@ -1,6 +1,5 @@
 local navi = {
    extends = 'actor',
-   can_collide = true,
    states = {},
 }
 
