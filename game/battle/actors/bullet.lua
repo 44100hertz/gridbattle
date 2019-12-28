@@ -5,8 +5,8 @@ function bullet:start ()
 end
 
 function bullet:collide (with)
-   self:apply_damage(with, self.damage)
-   self:die()
+   self:damage_other(with, self.damage)
+   self.despawn = true
 end
 
 return bullet

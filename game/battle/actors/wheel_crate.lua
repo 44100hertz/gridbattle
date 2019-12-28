@@ -11,7 +11,7 @@ function wcrate:collide (with)
    end
    if with.dx and with.dx~=0 then
       self.dx = with.real_dx>0 and 1/16 or -1/16
-      self:free_space()
+      self:free_panel()
    end
 end
 

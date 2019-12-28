@@ -22,12 +22,12 @@ function crate:update ()
       self.z = 0
       self.dz = 0
       self.size = 20/64
-      local panel = self:query_panel()
+      local panel = self:get_panel()
       if panel.tenant then
          self:apply_damage(panel.tenant, self.land_damage)
          self:die()
       else
-         self:occupy()
+         self:occupy_panel()
       end
    end
 

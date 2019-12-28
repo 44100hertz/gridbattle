@@ -9,7 +9,7 @@ end
 
 function test_enemy:start ()
    assert(self.level)
-   self:occupy()
+   self:occupy_panel()
    if self.level == 1 then
       self.img = 'testenemy'
       self.max_hp = 40
@@ -25,6 +25,7 @@ function test_enemy:start ()
 end
 
 function test_enemy:die ()
+   self:free_panel()
    self.despawn = true
    for _ = 1,50 do
       self:spawn{

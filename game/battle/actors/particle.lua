@@ -25,4 +25,8 @@ function particle:draw (x, y, draw_shadow)
    love.graphics.setColor(1.0, 1.0, 1.0, 1.0)
 end
 
+function particle:die ()
+   self.despawn = true
+end
+
 return particle

@@ -8,9 +8,9 @@ function navi.states:move ()
       self.next_state = 'base'
    end
    if self.time == 5 then
-      self:free_space(self.x, self.y)
+      self:free_panel()
       self.x, self.y = self.goalx, self.goaly
-      self:occupy()
+      self:occupy_panel()
    end
 end
 

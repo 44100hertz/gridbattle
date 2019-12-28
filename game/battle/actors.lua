@@ -34,7 +34,7 @@ end
 function actors:apply_damage (send, recv, amount)
    amount = amount or send.damage
    local recv_elem
-   local panel = self.battle.stage:getpanel(recv.x, recv.y)
+   local panel = self.battle.stage:get_panel(recv.x, recv.y)
    if panel and panel.stat and elements.by_name[panel.stat] then
       recv_elem = panel.stat
    else
@@ -71,16 +71,15 @@ function actors:update (input)
    for _,ent in ipairs(self.actors) do
       ent:_update(input)
    end
-   for i,ent in ipairs(self.actors) do
-      if ent.despawn then
-         ent:free_space()
+   for i,actor in ipairs(self.actors) do
+      if actor.despawn then
          table.remove(self.actors, i)
       end
    end
 
-   -- Check for collisions on this panel
+   -- Collisions
    for _,actor in ipairs(self.actors) do
-      local enemy = actor:get_panel_enemy()
+      local enemy = actor:locate_enemy()
       if enemy then
          actor:collide(enemy)
          enemy:collide(actor)

@@ -30,7 +30,7 @@ function battle:init (set_name)
    self.bg = bg(unpack(self.state.bg))
    self.ui = ui()
 
-   self.stage = stage()
+   self.stage = stage(self.state.stage.turf)
    self.actors = actors(self, 'battle/actors/')
    self.chip_artist = chip_artist()
 
@@ -75,7 +75,7 @@ end
 
 function battle:draw ()
    self.bg:draw()
-   self.stage:draw(self.state.stage.turf)
+   self.stage:draw()
    self.actors:draw()
 
    local cust_amount = self.cust_timer / cust_length

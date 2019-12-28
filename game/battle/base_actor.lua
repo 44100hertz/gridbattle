@@ -7,12 +7,33 @@ local actor = oop.class()
 -- Override these fields!
 ------------------------------------------------------------
 
--- Initialize data and set up loading parameters
+actor.time = 0     -- Length of existance in ticks. May break if modified.
+actor.z = 0        -- z position, used in animation.
+actor.max_hp = nil
+actor.hp = nil     -- defaults to max_hp
+actor.img = nil    -- if set, loads an image (src/image) into 'self.image'
+
+-- initialize the actor
+-- 'img' must be set here actor if has image
 function actor:start ()
    --self:occupy()
 end
 
--- Do anything with the loaded content
+-- 'internal' initialization
+function actor:_load ()
+   self:start()
+
+   self.hp = self.hp or self.max_hp
+   if self.img then
+      self.image = image('battle/actors/' .. self.img)
+      self.img = nil
+   end
+
+   self:after_load()
+end
+
+-- change properties on loaded items
+-- TODO: remove this
 function actor:after_load ()
 end
 
@@ -21,11 +42,22 @@ function actor:update ()
    self:move()
 end
 
+function actor:_update (input)
+   self:update(input)
+   self.time = self.time + 1
+   if (self.hp and self.hp <= 0) or
+      (self.lifespan and self.time >= self.lifespan)
+   then
+      self:die()
+   end
+end
+
 -- Called every frame when colliding with other
 function actor:collide (with)
 end
 
 function actor:die ()
+   self:free_panel()
    self.despawn = true
 end
 
@@ -65,29 +97,37 @@ function actor:spawn (a)
    return self.battle.actors:add(a)
 end
 
--- Set a panel's tenant, by default occupies here with 'self'.
--- Does NOT check if the panel is free, self:is_panel_free()
-function actor:occupy (x, y, actor)
-   x = x or self.x
-   y = y or self.y
-   self.battle.stage:set_tenant(x, y, actor or self)
+-- Set a panel's tenant to self, by default occupies here
+function actor:occupy_panel (x, y)
+   self:get_panel(x, y).tenant = self
 end
 
 -- Free a panel, default this one.
-function actor:free_space (x, y)
-   x = x or self.x
-   y = y or self.y
-   self.battle.stage:set_tenant(x, y, nil)
+function actor:free_panel (x, y)
+   local panel = self:get_panel(x, y)
+   if panel then
+      panel.tenant = nil
+   end
 end
 
--- Hurt a specific actor
-function actor:apply_damage (target, amount)
+function actor:get_panel (x, y)
+   return self.battle.stage:get_panel(x or self.x, y or self.y)
+end
+
+function actor:is_panel_free (x, y)
+   return self.battle.stage:is_panel_free(x or self.x, y or self.y, self.side)
+end
+
+-- Hurt a known actor
+function actor:damage_other (target, amount)
    self.battle.actors:apply_damage(self, target, amount)
 end
 
 -- Apply a status effect to a panel
-function actor:apply_panel_stat (stat, x, y)
-   self.battle.stage:apply_stat(stat, x or self.x, y or self.y)
+function actor:apply_panel_stat (stat, xoff, yoff)
+   xoff = xoff and (self.side == 2 and -xoff or xoff) or 0
+   yoff = yoff or 0
+   self.battle.stage:apply_stat(stat, self.x + xoff, self.y + yoff)
 end
 
 -- Use a chip by name
@@ -108,57 +148,17 @@ function actor:use_queue_chip ()
    end
 end
 
--- Get the information about a panel
-function actor:query_panel (x, y)
-   x = x or self.x
-   y = y or self.y
-   return self.battle.stage:getpanel(x,y)
+function actor:locate_enemy ()
+   return self.battle.stage:locate_enemy(self.x, self.y, self.side)
 end
 
--- AI: figure out if there's an actor belonging to the opposite side
-function actor:get_panel_enemy (x, y)
-   x = x or self.x
-   y = y or self.y
-   local panel = self.battle.stage:getpanel(x,y)
-   local opp_side = self.side==1 and 2 or 1
-   return
-      panel and
-      panel.tenant and
-      panel.tenant.side == opp_side and panel.tenant
+function actor:locate_enemy_ahead ()
+   return self.battle.stage:locate_enemy_ahead(self.x, self.y, self.side)
 end
 
--- AI: figure out if there's an actor in my line of sight
-function actor:locate_enemy_ahead (x, y)
-   x = x or self.x
-   y = y or self.y
-   local inc = self.side==1 and 1 or -1
-   repeat
-      x = x + inc
-      local enemy = self:get_panel_enemy(x, y)
-      if enemy then return enemy end
-   until x < 0 or x > self.battle.stage.num_panels.x
-   return nil
-end
-
-
--- AI: figure out if I can move to a location
-function actor:is_panel_free (x, y)
-   x = x or self.x
-   y = y or self.y
-   local panel = self.battle.stage:getpanel(x,y)
-   if not panel then
-      return false
-   end
-   local position_side = x > self.battle.state.stage.turf[y] and 2 or 1
-   local same_side = self.side == position_side
-   return same_side and not panel.tenant
-end
-
--- Get a current pixel position on screen (default center of actor)
-function actor:screen_pos (x, y)
-   x = x or self.x - 0.5
-   y = y or self.y - 0.5
-   return self.battle.stage:to_screen_pos(x, y)
+-- Get the pixel position of the center of actor
+function actor:screen_pos ()
+   return self.battle.stage:to_screen_pos(self.x - 0.5, self.y - 0.5)
 end
 
 -- Draw HP and/or chip queue
@@ -174,40 +174,12 @@ function actor:draw_info (x, y)
    end
 end
 
-
 ------------------------------------------------------------
 -- Internal methods (override with caution!)
 ------------------------------------------------------------
 
 function actor:init (battle)
    self.battle = battle
-end
-
-function actor:_load ()
-   self:start()
-
-   self.time = 0
-   self.z = self.z or 0
-   if self.max_hp then self.hp = self.max_hp end
-
-   if self.img then
-      self.image = image('battle/actors/' .. self.img)
-      self.img = nil
-   end
-
-   self:after_load()
-end
-
-function actor:_update (input)
-   if self.time then
-      self.time = self.time + 1
-   end
-   self:update(input)
-   if self.hp and self.hp <= 0 or
-      self.lifespan and self.time == self.lifespan
-   then
-      self:die()
-   end
 end
 
 function actor:_draw (draw_shadow)
