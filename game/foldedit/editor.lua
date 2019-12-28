@@ -3,7 +3,7 @@ local oop = require 'src/oop'
 local folder = require 'src/folder'
 local image = require 'src/image'
 
-local elements = require(PATHS.battle .. 'elements')
+local elements = require 'battle/elements'
 
 local editor = oop.class()
 

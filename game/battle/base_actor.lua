@@ -57,7 +57,6 @@ function actor:collide (with)
 end
 
 function actor:die ()
-   self:free_panel()
    self.despawn = true
 end
 
@@ -105,7 +104,7 @@ end
 -- Free a panel, default this one.
 function actor:free_panel (x, y)
    local panel = self:get_panel(x, y)
-   if panel then
+   if panel and panel.tenant == self then
       panel.tenant = nil
    end
 end

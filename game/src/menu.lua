@@ -6,14 +6,14 @@ local menu = oop.class()
 
 -- make a new menu
 function menu.manual_init (name, ...)
-   local self = love.filesystem.load(PATHS.menu .. name .. '.lua')()
+   local self = love.filesystem.load('menus/' .. name .. '.lua')()
    if self.init then
       self:init(...)
    end
    setmetatable(self, {__index = menu})
    if self.bg_img then
       self.bg_image =
-         lg.newImage(PATHS.menu .. self.bg_img .. '.png')
+         lg.newImage('menus/' .. self.bg_img .. '.png')
       self.bg_img = nil
    end
    self.sel = 1

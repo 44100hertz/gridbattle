@@ -12,24 +12,6 @@ local next_tick = 0
 local framedump_canvas, framedump_dir
 
 function love.load ()
-   PATHS = {
-      -- Game Modes
-      battle     = 'battle/',
-      foldedit   = 'foldedit/',
-      world      = 'world/',
-
-      bg         = 'bg/',
-      chipdb     = 'chipdb',
-      chips      = 'chips/',
-      folders    = 'folders/',
-      fonts      = 'fonts/',
-      images     = 'images/',
-      imgdb      = 'imgdb',
-      savedata   = 'savedata',
-      scenes     = 'scenes/',
-      shaders    = 'shaders/',
-      menu       = 'menu/',
-   }
    GAME = {}
    GAME.tickrate = 60
    GAME.size = point(512, 288)
@@ -38,7 +20,7 @@ function love.load ()
    GAME.input = input()
    GAME.scene = scene()
 
-   GAME.chipdb = love.filesystem.load(PATHS.chipdb .. '.lua')()
+   GAME.chipdb = love.filesystem.load('chipdb.lua')()
    -- Give chips an index field based on their order in the file, and
    -- allow chips to be looked up by name.
    for i,chip in ipairs(GAME.chipdb) do
@@ -49,7 +31,7 @@ function love.load ()
    GAME.config = config()
 
    love.graphics.setDefaultFilter('nearest', 'nearest')
-   love.graphics.setNewFont(PATHS.fonts .. 'squrave.ttf', 32, 'none')
+   love.graphics.setNewFont('fonts/squrave.ttf', 32, 'none')
 
    if arg[2] == 'dump' then
       framedump_canvas = love.graphics.newCanvas(GAME.size:unpack())

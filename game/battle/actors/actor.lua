@@ -27,7 +27,6 @@ function actor:update (input)
 end
 
 function actor:die ()
-   self:free_panel()
    self.despawn = true
 --   self:enter_state('die')
 end

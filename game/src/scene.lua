@@ -29,7 +29,7 @@ function scene:pop ()
 end
 
 function scene:push_fade (fadeopts, mod)
-   local fade = require(PATHS.scenes .. 'fade')
+   local fade = require 'scenes/fade'
    local length = fadeopts.length or 0.25
    local fadein = function ()
       self:pop()

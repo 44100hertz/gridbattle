@@ -2,8 +2,7 @@ local oop = require 'src/oop'
 local aloader = require 'src/actor_loader'
 
 local base_actor = require 'battle/base_actor'
-
-local elements = require(PATHS.battle .. 'elements')
+local elements = require 'battle/elements'
 
 local actors = oop.class()
 
@@ -73,6 +72,7 @@ function actors:update (input)
    end
    for i,actor in ipairs(self.actors) do
       if actor.despawn then
+         actor:free_panel()
          table.remove(self.actors, i)
       end
    end

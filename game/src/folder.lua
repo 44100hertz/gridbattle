@@ -11,7 +11,7 @@ function folder:init(name)
 --   if love.filesystem.getInfo(path) then
 --      self.data = love.filesystem.load(input)()
 --   else
-   self.data = love.filesystem.load(PATHS.folders .. name .. '.lua')()
+   self.data = love.filesystem.load('folders/' .. name .. '.lua')()
 --   end
 end
 

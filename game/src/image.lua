@@ -1,13 +1,13 @@
 local oop = require 'src/oop'
 
-local imgdb = require(PATHS.imgdb)
+local imgdb = require 'imgdb'
 
 local image = oop.class()
 
 -- path is not optional, sheet_name is just for when many images share a sheet
 function image:init(path, sheet_name)
    sheet_name = sheet_name or path
-   self.img = love.graphics.newImage(PATHS.images .. sheet_name .. '.png')
+   self.img = love.graphics.newImage('images/' .. sheet_name .. '.png')
    self.iw, self.ih = self.img:getDimensions()
 
    local sheetdata = imgdb[sheet_name]

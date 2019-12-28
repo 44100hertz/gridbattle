@@ -18,7 +18,7 @@ end
 
 function chip_artist:get_image (name)
    if not self.images[name] then
-      local imgpath = PATHS.chips .. name .. '.png'
+      local imgpath = 'chips/' .. name .. '.png'
       self.images[name] = lg.newImage(imgpath)
    end
    return self.images[name]

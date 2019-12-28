@@ -18,7 +18,7 @@ function world:init (path)
 
    self.tiles:add_tile_actors(self.actors)
 
-   self.border_shader = love.graphics.newShader(PATHS.shaders .. 'border.glsl')
+   self.border_shader = love.graphics.newShader('shaders/border.glsl')
    self.border_shader:send('scale', GAME.config.settings.game_scale)
    self.border_shader:send('size', {self.view_size:unpack()})
    self.border_shader:send('position', {(GAME.size/2 - self.view_size/2):unpack()})

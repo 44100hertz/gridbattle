@@ -25,7 +25,6 @@ function test_enemy:start ()
 end
 
 function test_enemy:die ()
-   self:free_panel()
    self.despawn = true
    for _ = 1,50 do
       self:spawn{
