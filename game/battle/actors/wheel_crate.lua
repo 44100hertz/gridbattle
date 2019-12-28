@@ -7,7 +7,7 @@ local wcrate = {
 
 function wcrate:collide (with)
    if self.dx ~= 0 and self.z == 0 then
-      self:apply_damage(with, self.roll_damage)
+      self:damage_other(with, self.roll_damage)
    end
    if with.dx and with.dx~=0 then
       self.dx = with.real_dx>0 and 1/16 or -1/16
