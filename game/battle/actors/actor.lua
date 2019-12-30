@@ -2,12 +2,8 @@ local actor = {}
 
 function actor:enter_state (state)
    self.state = self.states[state]
-   self.image:set_sheet(state)
+   self.image.image:set_sheet(state) -- HACK: will be updated
    self.time = 0
-end
-
-function actor:after_load ()
-   self:enter_state('base')
 end
 
 function actor:update (input)
@@ -17,10 +13,10 @@ function actor:update (input)
    end
    if self.state then self:state() end
 
-   if self.image:get_interruptible() then
+   if self.image.image:get_interruptible() then
       self:act(input)
    end
-   if self.image:get_over() then
+   if self.image.image:get_over() then
       self:enter_state('base')
    end
    self:move()

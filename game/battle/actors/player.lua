@@ -1,14 +1,12 @@
 local player = {
    extends = 'navi',
-   img = 'ben',
 }
 
-function player:start ()
+function player:init ()
    self:attach('hp', 300, true)
-end
-
-function player:after_load ()
-   self.image.yscale = 0.5
+   self:attach('image', 'ben')
+   self.image.image.yscale = 0.5 -- HACK: why
+   self:enter_state('base') -- HACK: normally done by 'actor', to be replaced
 end
 
 function player:act (input)

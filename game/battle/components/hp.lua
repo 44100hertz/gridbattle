@@ -1,15 +1,13 @@
-local oop = require 'src/oop'
+local hp = {}
 
-local hp = oop.class()
-
-function hp:init (max_hp)
+function hp:init (max_hp, hidden)
    self.value = max_hp
    self.max = max_hp
+   self.hidden = hidden
 end
 
-function hp:set (value, hidden)
+function hp:set (value)
    self.value = math.max(math.min(value, self.max), 0)
-   self.hidden = hidden
 end
 
 function hp:adjust (value)

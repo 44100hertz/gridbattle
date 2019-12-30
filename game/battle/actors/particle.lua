@@ -2,7 +2,7 @@ local particle = {
    gravity = 0.1,
 }
 
-function particle:start ()
+function particle:init ()
    local dr = math.random() / 16 + 1/32
    local theta = math.random() * 2 * math.pi
    self.dx = dr * math.sin(theta)

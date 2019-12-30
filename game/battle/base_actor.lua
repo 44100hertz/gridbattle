@@ -9,36 +9,19 @@ local actor = oop.class()
 
 actor.time = 0     -- Length of existance in ticks. May break if modified.
 actor.z = 0        -- z position, used in animation.
-actor.img = nil    -- if set, loads an image (src/image) into 'self.image'
 
--- initialize the actor
--- 'img' must be set here actor if has image
-function actor:start ()
-   --self:occupy()
+function actor:init ()
 end
 
 function actor:attach (name, ...)
-   self[name] = self.battle.components[name](...)
-   self.components[#self.components+1] = self[name]
+   local component = setmetatable({}, {__index = self.battle.components[name]})
+   self[name] = component
+   self.components[#self.components+1] = component
+   component:init(...)
 end
 
--- 'internal' initialization
-function actor:_load ()
-   self.components = {}
-
-   self:start()
-
-   if self.img then
-      self.image = image('battle/actors/' .. self.img)
-      self.img = nil
-   end
-
-   self:after_load()
-end
-
--- change properties on loaded items
--- TODO: remove this
-function actor:after_load ()
+function actor:super () -- HACK
+   return getmetatable(getmetatable(self).__index).__index
 end
 
 -- Called every tick
@@ -65,12 +48,6 @@ function actor:die ()
    self.despawn = true
 end
 
-function actor:draw (x, y, draw_shadow)
-   if self.image then
-      self:draw_image(x, y, draw_shadow)
-   end
-end
-
 ------------------------------------------------------------
 -- Call these methods!
 ------------------------------------------------------------
@@ -84,14 +61,6 @@ function actor:move ()
    end
    if self.dy then self.y = self.y + self.dy end
    if self.dz then self.z = self.z + self.dz end
-end
-
--- Default image drawing routine
-function actor:draw_image (x, y, draw_shadow)
-   local flip = (self.side==2 and not self.noflip)
-   local scale_mult = draw_shadow and 0.3 or 0.2
-   self.image.scale = (1.0 + scale_mult * self.z)
-   self.image:draw(x, y, flip)
 end
 
 -- Spawn another actor (default at this location)
@@ -200,7 +169,6 @@ function actor:_draw (draw_shadow)
       love.graphics.setColor(r, g, b, alpha)
    end
 
-   self:draw(x, y, draw_shadow)
    self:draw_info(x, y, draw_shadow)
 
    love.graphics.setColor(1,1,1)

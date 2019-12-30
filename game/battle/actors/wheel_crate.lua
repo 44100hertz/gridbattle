@@ -1,9 +1,13 @@
 local wcrate = {
    extends = 'crate',
-   img = 'wheel_crate',
    land_damage = 40,
    roll_damage = 4,
 }
+
+function wcrate:init ()
+   self:super().init(self)
+   self:attach('image', 'wheel_crate')
+end
 
 function wcrate:collide (with)
    if self.dx ~= 0 and self.z == 0 then

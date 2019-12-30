@@ -29,6 +29,7 @@ function battle:init (set_name)
 
    self.components = {}
    self.components.hp = dofile 'battle/components/hp.lua'
+   self.components.image = dofile 'battle/components/image.lua'
 
    self.bg = bg(unpack(self.state.bg))
    self.ui = ui()

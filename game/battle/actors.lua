@@ -25,7 +25,8 @@ end
 
 function actors:add (actor)
    self.aloader:load(actor, actor[1])
-   actor:_load()
+   actor.components = {}
+   actor:init()
    table.insert(self.actors, actor)
    return actor
 end
@@ -88,9 +89,6 @@ function actors:update (input)
 end
 
 function actors:draw ()
-   for _,ent in ipairs(self.actors) do
-      ent:_draw(true)
-   end
    for _,ent in ipairs(self.actors) do
       for _,component in ipairs(ent.components) do
          component:draw(ent)

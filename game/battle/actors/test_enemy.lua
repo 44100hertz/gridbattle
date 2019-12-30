@@ -3,21 +3,21 @@ local test_enemy = {
    cooldown = 0,
 }
 
-function test_enemy:after_load ()
-   self.image.yscale = 0.5
-end
-
-function test_enemy:start ()
+function test_enemy:init ()
    assert(self.level)
    self:occupy_panel()
-   local max_hp = ({40, 80})[self.level]
-   self:attach('hp', max_hp)
+   local levels = ({
+      [1] = {40, 'testenemy'},
+      [2] = {80, 'testenemy2'}
+   })
+   local hp, image = unpack(levels[self.level])
+   self:attach('hp', hp)
+   self:attach('image', image)
+   self.image.image.yscale = 0.5 -- HACK: why 2
    if self.level == 1 then
-      self.img = 'testenemy'
       self.color = {169/255.0, 53/255.0, 197/255.0}
       self.bullet = nil
    elseif self.level == 2 then
-      self.img = 'testenemy2'
       self.color = {53/255.0, 57/255.0, 196/255.0}
       self.bullet = 'Triangle'
       self.bullet_delay = 80
