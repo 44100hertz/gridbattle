@@ -28,8 +28,6 @@ function battle:init (set_name)
    end
 
    self.components = {}
-   self.components.hp = dofile 'battle/components/hp.lua'
-   self.components.image = dofile 'battle/components/image.lua'
 
    self.bg = bg(unpack(self.state.bg))
    self.ui = ui()
@@ -40,6 +38,13 @@ function battle:init (set_name)
 
    self.will_select_chips = true
    self.cust_timer = 0
+end
+
+function battle:get_component (name)
+   if not self.components[name] then
+      self.components[name] = dofile('battle/components/' .. name .. '.lua')
+   end
+   return self.components[name]
 end
 
 function battle:request_select_chips()

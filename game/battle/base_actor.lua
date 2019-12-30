@@ -14,7 +14,8 @@ function actor:init ()
 end
 
 function actor:attach (name, ...)
-   local component = setmetatable({}, {__index = self.battle.components[name]})
+   local class = self.battle:get_component(name)
+   local component = setmetatable({}, {__index = class})
    self[name] = component
    self.components[#self.components+1] = component
    component:init(...)
@@ -169,10 +170,14 @@ function actor:_draw (draw_shadow)
       love.graphics.setColor(r, g, b, alpha)
    end
 
+   self:draw(x, y, draw_shadow)
    self:draw_info(x, y, draw_shadow)
 
    love.graphics.setColor(1,1,1)
    love.graphics.pop()
+end
+
+function actor:draw ()
 end
 
 return actor
