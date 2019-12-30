@@ -16,7 +16,7 @@ function ui:draw (set, cust_amount)
       local align = i == 1 and 'left' or 'right'
       if side.is_player then
          -- For player: HP in upper corner
-         local hp = side[1].hp
+         local hp = side[1].hp:get()
          local x = i==2 and GAME.size.x-4 or 4
          love.graphics.print(tostring(math.floor(hp)), x, 4)
          -- Queue top in lower corner

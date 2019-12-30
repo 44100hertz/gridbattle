@@ -87,7 +87,7 @@ function stage:update ()
          if panel.stat=='poison' and
             panel.tenant and panel.tenant.hp
          then
-            panel.tenant.hp = panel.tenant.hp-(1/8)
+            panel.tenant.hp:adjust(-1.0/8)
          end
       end
    end

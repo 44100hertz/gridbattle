@@ -22,7 +22,7 @@ return {
 
    interact = function (send_elem, recv_elem, amount, ent)
       if ent.hp then
-         ent.hp = ent.hp - amount
+         ent.hp:adjust(-amount)
       end
    end
 }

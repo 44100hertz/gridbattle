@@ -1,7 +1,7 @@
 local player = {
    extends = 'navi',
    img = 'ben',
-   hp = 300, hide_hp = true,
+   max_hp = 300, hide_hp = true,
 }
 
 function player:after_load ()

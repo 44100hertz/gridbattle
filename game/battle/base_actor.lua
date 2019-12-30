@@ -9,8 +9,6 @@ local actor = oop.class()
 
 actor.time = 0     -- Length of existance in ticks. May break if modified.
 actor.z = 0        -- z position, used in animation.
-actor.max_hp = nil
-actor.hp = nil     -- defaults to max_hp
 actor.img = nil    -- if set, loads an image (src/image) into 'self.image'
 
 -- initialize the actor
@@ -19,11 +17,17 @@ function actor:start ()
    --self:occupy()
 end
 
+function actor:attach (name, ...)
+   self[name] = self.battle.components[name](self, ...)
+end
+
 -- 'internal' initialization
 function actor:_load ()
    self:start()
 
-   self.hp = self.hp or self.max_hp
+   if self.max_hp then
+      self:attach('hp', self.max_hp)
+   end
    if self.img then
       self.image = image('battle/actors/' .. self.img)
       self.img = nil
@@ -45,10 +49,11 @@ end
 function actor:_update (input)
    self:update(input)
    self.time = self.time + 1
-   if (self.hp and self.hp <= 0) or
+
+   if self.hp and self.hp:is_zero() or
       (self.lifespan and self.time >= self.lifespan)
-   then
-      self:die()
+      then
+         self:die()
    end
 end
 
@@ -164,8 +169,7 @@ end
 function actor:draw_info (x, y)
    local stage = self.battle.stage
    if self.hp and not self.hide_hp then
-      local hpstr = tostring(math.floor(self.hp))
-      love.graphics.printf(hpstr, x - 200, y-stage.panel_size.y/2, 400, 'center')
+      self.hp:draw(x, y)
    end
 
    if self.queue then
