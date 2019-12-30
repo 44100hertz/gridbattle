@@ -18,16 +18,16 @@ function actor:start ()
 end
 
 function actor:attach (name, ...)
-   self[name] = self.battle.components[name](self, ...)
+   self[name] = self.battle.components[name](...)
+   self.components[#self.components+1] = self[name]
 end
 
 -- 'internal' initialization
 function actor:_load ()
+   self.components = {}
+
    self:start()
 
-   if self.max_hp then
-      self:attach('hp', self.max_hp)
-   end
    if self.img then
       self.image = image('battle/actors/' .. self.img)
       self.img = nil
@@ -168,10 +168,6 @@ end
 -- Draw HP and/or chip queue
 function actor:draw_info (x, y)
    local stage = self.battle.stage
-   if self.hp and not self.hide_hp then
-      self.hp:draw(x, y)
-   end
-
    if self.queue then
       self.battle.chip_artist:draw_icon_queue(self.queue, x, y-stage.panel_size.y*0.7)
    end

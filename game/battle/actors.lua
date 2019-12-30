@@ -92,6 +92,9 @@ function actors:draw ()
       ent:_draw(true)
    end
    for _,ent in ipairs(self.actors) do
+      for _,component in ipairs(ent.components) do
+         component:draw(ent)
+      end
       ent:_draw(false)
    end
 end

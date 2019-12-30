@@ -1,8 +1,11 @@
 local player = {
    extends = 'navi',
    img = 'ben',
-   max_hp = 300, hide_hp = true,
 }
+
+function player:start ()
+   self:attach('hp', 300, true)
+end
 
 function player:after_load ()
    self.image.yscale = 0.5

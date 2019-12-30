@@ -1,8 +1,7 @@
 local crate = {}
 
 function crate:start ()
-   self.hp = 1000
-   self.hide_hp = true
+   self:attach('hp', 1000, true)
    self.side = 0 -- Can hurt anyone
    self.spawn_offset = 1 -- Spawn distance from parent
 

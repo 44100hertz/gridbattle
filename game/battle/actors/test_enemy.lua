@@ -10,14 +10,14 @@ end
 function test_enemy:start ()
    assert(self.level)
    self:occupy_panel()
+   local max_hp = ({40, 80})[self.level]
+   self:attach('hp', max_hp)
    if self.level == 1 then
       self.img = 'testenemy'
-      self.max_hp = 40
       self.color = {169/255.0, 53/255.0, 197/255.0}
       self.bullet = nil
    elseif self.level == 2 then
       self.img = 'testenemy2'
-      self.max_hp = 80
       self.color = {53/255.0, 57/255.0, 196/255.0}
       self.bullet = 'Triangle'
       self.bullet_delay = 80
