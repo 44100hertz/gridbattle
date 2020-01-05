@@ -23,7 +23,8 @@ function actors:init (battle, actors_path)
    end
 end
 
-function actors:add (actor)
+function actors:add (actor, pos)
+   actor.pos = pos or point(actor[2], actor[3])
    self.aloader:load(actor, actor[1])
    actor.components = {}
    actor:init()
@@ -34,7 +35,7 @@ end
 function actors:apply_damage (send, recv, amount)
    amount = amount or send.damage
    local recv_elem
-   local panel = self.battle.stage:get_panel(recv.x, recv.y)
+   local panel = self.battle.stage:get_panel(recv.pos)
    if panel and panel.stat and elements.by_name[panel.stat] then
       recv_elem = panel.stat
    else

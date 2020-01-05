@@ -8,7 +8,7 @@ function image:init (path, disable_flip)
 end
 
 function image:draw (actor)
-   local x, y = actor:screen_pos()
+   local x, y = actor:screen_pos():unpack()
    local flip = (actor.side==2 and not self.disable_flip)
 --   local scale_mult = draw_shadow and 0.3 or 0.2
    local scale_mult = 0.2

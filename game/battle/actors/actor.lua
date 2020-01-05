@@ -13,10 +13,10 @@ function actor:update (input)
    end
    if self.state then self:state() end
 
-   if self.image.image:get_interruptible() then
+   if self.image.image:animation_is_interruptible() then
       self:act(input)
    end
-   if self.image.image:get_over() then
+   if self.image.image:animation_is_over() then
       self:enter_state('base')
    end
    self:move()

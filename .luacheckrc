@@ -1,2 +1,2 @@
 std = "luajit + love"
-globals = {"GAME"}
+globals = {"GAME", "point"}

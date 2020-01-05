@@ -17,9 +17,9 @@ function player:act (input)
       self.battle:request_select_chips()
    end
    local move = function  (dx, dy)
-      local goalx, goaly = self.x+dx, self.y+dy
-      if self:is_panel_free(goalx, goaly) then
-         self.goalx, self.goaly = goalx, goaly
+      local goal = self.pos + point(dx, dy)
+      if self:is_panel_free(goal) then
+         self.goal = goal
          self.next_state = 'move'
       end
    end

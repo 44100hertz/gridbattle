@@ -1,8 +1,9 @@
 local oop = require 'src/oop'
+_G.point = require 'src/point'
+
 local input = require 'src/input'
 local scene = require 'src/scene'
 local config = require 'src/config'
-local point = require 'src/point'
 local menu = require 'src/menu'
 
 local total_time = 0

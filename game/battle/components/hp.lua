@@ -26,14 +26,14 @@ function hp:draw (actor)
    if self.hidden then
       return
    end
-   local x, y = actor:screen_pos()
    local panel_height = actor.battle.stage.panel_size.y
+   local pos = actor:screen_pos() - point(200, panel_height/2)
    local hpstr = tostring(math.floor(self.value))
    -- draw shadow
    --love.graphics.setColor(0, 0, 0)
    --love.graphics.printf(hpstr, x-200+2, y-panel_height/2+2, 400, 'center')
    love.graphics.setColor(1, 1, 1)
-   love.graphics.printf(hpstr, x-200, y-panel_height/2, 400, 'center')
+   love.graphics.printf(hpstr, pos.x, pos.y, 400, 'center')
 end
 
 return hp

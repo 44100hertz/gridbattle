@@ -24,24 +24,22 @@ function chip_artist:get_image (name)
    return self.images[name]
 end
 
-function chip_artist:draw_icon (name, x, y)
+function chip_artist:draw_icon (name, pos)
    local img = self:get_image(name)
-   lg.draw(img, icon_quad, x, y)
+   lg.draw(img, icon_quad, pos:unpack())
 end
 
-function chip_artist:draw_icon_queue (queue, x, y)
-   x = x - #queue - 8
-   y = y - #queue - 8
+function chip_artist:draw_icon_queue (queue, pos)
+   pos = pos - #queue - 8
    for i=#queue,1,-1 do
-      self:draw_icon(queue[i].name, x, y)
-      x=x+2
-      y=y+2
+      self:draw_icon(queue[i].name, pos)
+      pos = pos + 2
    end
 end
 
-function chip_artist:draw_art (name, x, y)
+function chip_artist:draw_art (name, pos)
    local img = self:get_image(name)
-   lg.draw(img, art_quad, x, y)
+   lg.draw(img, art_quad, pos:unpack())
 end
 
 return chip_artist

@@ -1,6 +1,5 @@
 local image = require 'src/image'
 local oop = require 'src/oop'
-local point = require 'src/point'
 
 local BIT_XFLIP = 0x80000000
 

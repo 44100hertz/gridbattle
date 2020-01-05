@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local image = require 'src/image'
 
 local actor = oop.class()
 
@@ -45,6 +44,8 @@ end
 function actor:collide (with)
 end
 
+-- Called during update when hp is below zero, or any time this actor is
+-- supposed to die.
 function actor:die ()
    self.despawn = true
 end
@@ -55,41 +56,46 @@ end
 
 -- Update x and y positions (do this once per tick!)
 function actor:move ()
-   -- Mirror x momentum for actors on the right side
-   if self.dx then
-      self.real_dx = self.side==2 and -self.dx or self.dx
-      self.x = self.x + self.real_dx
+   if self.velocity then
+      self.pos = self.pos + self:real_velocity()
    end
-   if self.dy then self.y = self.y + self.dy end
    if self.dz then self.z = self.z + self.dz end
 end
 
+-- If on the right side, multiply by this to mirror x offsets and velocity
+function actor:mirror ()
+   return point(self.side == 2 and -1 or 1, 1.0)
+end
+
+-- Shorthand for effective velocity
+function actor:real_velocity ()
+   return self.velocity and self.velocity * self:mirror()
+end
+
 -- Spawn another actor (default at this location)
-function actor:spawn (a)
-   a.x = a.x or self.x
-   a.y = a.y or self.y
-   return self.battle.actors:add(a)
+function actor:spawn (child)
+   return self.battle.actors:add(child, child.pos or self.pos)
 end
 
 -- Set a panel's tenant to self, by default occupies here
-function actor:occupy_panel (x, y)
-   self:get_panel(x, y).tenant = self
+function actor:occupy_panel (pos)
+   self:get_panel(pos).tenant = self
 end
 
 -- Free a panel, default this one.
-function actor:free_panel (x, y)
-   local panel = self:get_panel(x, y)
+function actor:free_panel (pos)
+   local panel = self:get_panel(pos)
    if panel and panel.tenant == self then
       panel.tenant = nil
    end
 end
 
-function actor:get_panel (x, y)
-   return self.battle.stage:get_panel(x or self.x, y or self.y)
+function actor:get_panel (pos)
+   return self.battle.stage:get_panel(pos or self.pos)
 end
 
-function actor:is_panel_free (x, y)
-   return self.battle.stage:is_panel_free(x or self.x, y or self.y, self.side)
+function actor:is_panel_free (pos)
+   return self.battle.stage:is_panel_free(pos or self.pos, self.side)
 end
 
 -- Hurt a known actor
@@ -98,10 +104,9 @@ function actor:damage_other (target, amount)
 end
 
 -- Apply a status effect to a panel
-function actor:apply_panel_stat (stat, xoff, yoff)
-   xoff = xoff and (self.side == 2 and -xoff or xoff) or 0
-   yoff = yoff or 0
-   self.battle.stage:apply_stat(stat, self.x + xoff, self.y + yoff)
+function actor:apply_panel_stat (stat, offset)
+   local pos = offset and self.pos + offset*self:mirror() or self.pos
+   self.battle.stage:apply_stat(stat, pos)
 end
 
 -- Use a chip by name
@@ -123,23 +128,24 @@ function actor:use_queue_chip ()
 end
 
 function actor:locate_enemy ()
-   return self.battle.stage:locate_enemy(self.x, self.y, self.side)
+   return self.battle.stage:locate_enemy(self.pos, self.side)
 end
 
 function actor:locate_enemy_ahead ()
-   return self.battle.stage:locate_enemy_ahead(self.x, self.y, self.side)
+   return self.battle.stage:locate_enemy_ahead(self.pos, self.side)
 end
 
 -- Get the pixel position of the center of actor
 function actor:screen_pos ()
-   return self.battle.stage:to_screen_pos(self.x - 0.5, self.y - 0.5)
+   return self.battle.stage:to_screen_pos(self.pos - 0.5)
 end
 
 -- Draw HP and/or chip queue
-function actor:draw_info (x, y)
+function actor:draw_info (draw_shadow)
    local stage = self.battle.stage
    if self.queue then
-      self.battle.chip_artist:draw_icon_queue(self.queue, x, y-stage.panel_size.y*0.7)
+      local queue_pos = self:screen_pos() - point(0, stage.panel_size.y * 0.7)
+      self.battle.chip_artist:draw_icon_queue(self.queue, queue_pos)
    end
 end
 
@@ -152,7 +158,6 @@ function actor:init (battle)
 end
 
 function actor:_draw (draw_shadow)
-   local x, y = self:screen_pos()
    love.graphics.push()
 
    -- Shadows are a bit offset from the main actor
@@ -170,8 +175,8 @@ function actor:_draw (draw_shadow)
       love.graphics.setColor(r, g, b, alpha)
    end
 
-   self:draw(x, y, draw_shadow)
-   self:draw_info(x, y, draw_shadow)
+   self:draw(draw_shadow)
+   self:draw_info(draw_shadow)
 
    love.graphics.setColor(1,1,1)
    love.graphics.pop()

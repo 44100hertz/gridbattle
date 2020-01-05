@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local point = require 'src/point'
 
 local tiles = require 'world/tiles'
 local actors = require 'world/actors'

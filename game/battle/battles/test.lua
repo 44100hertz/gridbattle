@@ -5,13 +5,13 @@ return {
    sides = {
       {
          is_player = true,
-         {'player', x=2, y=2},
+         {'player', 2, 2},
       },
       {
-         {'test_enemy', level=1, x=4, y=1},
-         {'test_enemy', level=1, x=4, y=3},
-         {'test_enemy', level=2, x=6, y=1},
-         {'test_enemy', level=2, x=6, y=3},
+         {'test_enemy', 4, 1, level=1},
+         {'test_enemy', 4, 3, level=1},
+         {'test_enemy', 6, 1, level=2},
+         {'test_enemy', 6, 3, level=2},
       },
    },
    bg = {'scroll', 'acid'},

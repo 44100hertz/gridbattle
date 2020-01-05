@@ -42,14 +42,14 @@ function image:set_sheet(name)
    self.start_time = love.timer.getTime()
 end
 
-function image:get_interruptible()
+function image:animation_is_interruptible()
    if self.current.fps==0 then return true end
 
    local dt = love.timer.getTime() - self.start_time
    return math.floor(dt * self.current.fps) >= self.current.iasa
 end
 
-function image:get_over()
+function image:animation_is_over()
    if self.current.fps==0 then return false end
 
    local dt = love.timer.getTime() - self.start_time

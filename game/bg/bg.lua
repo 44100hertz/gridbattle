@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local point = require 'src/point'
 
 local bg = oop.class()
 

@@ -1,5 +1,4 @@
 local oop = require 'src/oop'
-local point = require 'src/point'
 local aloader = require 'src/actor_loader'
 
 local base_actor = require 'world/base_actor'

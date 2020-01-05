@@ -1,6 +1,9 @@
 -- A general purpose 2-dimensional coordinate type.
 -- initialized like a class, i.e. point(x, y), though a custom metatable is used
 
+-- Points are often used as arguments. Library functions should generally not
+-- modify input points, and use point:copy().
+
 local point = {}
 
 local function init (x, y)

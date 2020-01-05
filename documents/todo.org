@@ -45,6 +45,10 @@ create a sense of unity by having visual lists of enemies, maybe even previews.
 ** Saving
 I need a plan on how to implement the save system.
 * Other Stuff
+** point refactor
+I'm using 'point' everywhere, so much that I made it a global.
+*** adjust imgdb format and image.lua
+*** 2d iterator/map
 ** handling music
 I should recover my old music from lanparty-code, get some feedback on it in
 discord or possibly other locations (upload to soundcloud is ideal), and

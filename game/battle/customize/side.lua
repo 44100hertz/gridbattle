@@ -79,7 +79,7 @@ function side:draw()
       local x = 8 + 16*(i-1%5)
       local y = i<=5 and 104 or 128
       if self.pal[i] then
-         self.battle.chip_artist:draw_icon(self.pal[i].name, x, y)
+         self.battle.chip_artist:draw_icon(self.pal[i].name, point(x,y))
          local letter = self.pal[i].ltr:byte() - ('a'):byte() + 1
          self.image:set_sheet'letter'
          self.image:draw(x, y+16, nil, letter)
@@ -92,10 +92,9 @@ function side:draw()
 
    -- Queue --
    for i=1,5 do
-      local x = 96
-      local y = 24 + 16*(i-1)
       if self.queue[i] then
-         self.battle.chip_artist:draw_icon(self.queue[i].name, x, y)
+         local pos = point(96, 24 + 16*(i-1))
+         self.battle.chip_artist:draw_icon(self.queue[i].name, pos)
       end
    end
 
@@ -109,7 +108,7 @@ function side:draw()
    -- Art --
    local sel = self.pal[self.sel]
    if sel then
-      self.battle.chip_artist:draw_art(sel.name, 8, 16, 1)
+      self.battle.chip_artist:draw_art(sel.name, point(8, 16))
       local damage = GAME.chipdb[sel.name].damage
       love.graphics.print(tostring(damage), 8, 88)
    end
