@@ -28,6 +28,7 @@ function love.load ()
       chip.index = i
       GAME.chipdb[chip.name] = chip
    end
+   GAME.imgdb = love.filesystem.load('imgdb.lua')()
 
    GAME.config = config()
 

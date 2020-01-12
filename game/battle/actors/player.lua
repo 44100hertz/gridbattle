@@ -5,7 +5,6 @@ local player = {
 function player:init ()
    self:attach('hp', 300, true)
    self:attach('image', 'ben')
-   self.image.image.yscale = 0.5 -- HACK: why
    self:enter_state('base') -- HACK: normally done by 'actor', to be replaced
 end
 

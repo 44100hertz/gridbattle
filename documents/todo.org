@@ -5,10 +5,9 @@ possibly elsewhere. Ideally I just want to stick all their methods in one place,
 separate from the other code.
 ** Other possible subclasses for actors
 *** Position/movement
-*** HP/damage
-*** Actor/animation system
 *** AI
-*** "Navi"
+*** "actor"
+*** "navi"
 ** Fix Wheel crate
 Wheel crate poses an interesting problem for the panel/occupancy system. It was
 intended to be able to be shot back and forth, but this is only possible if it
@@ -44,10 +43,13 @@ create a sense of unity by having visual lists of enemies, maybe even previews.
 ** Pause screen
 ** Saving
 I need a plan on how to implement the save system.
-* Other Stuff
+* General
+** image cache
+It's possible that the functions in src/image.lua could be relocated to a
+general image loader/cache. This would likely use weak tables. main.lua does a
+tiny bit too much work by loading imgdb.
 ** point refactor
 I'm using 'point' everywhere, so much that I made it a global.
-*** adjust imgdb format and image.lua
 *** 2d iterator/map
 ** handling music
 I should recover my old music from lanparty-code, get some feedback on it in

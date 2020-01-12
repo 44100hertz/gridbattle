@@ -1,97 +1,125 @@
-local oop = require 'src/oop'
+--[[
+   image: A convenient object wrapper around love2d images.
+   Generates quads for sprite and tile sheets, performs flipping and animation.
+--]]
 
-local imgdb = require 'imgdb'
+local oop = require 'src/oop'
 
 local image = oop.class()
 
--- path is not optional, sheet_name is just for when many images share a sheet
-function image:init(path, sheet_name)
-   sheet_name = sheet_name or path
-   self.img = love.graphics.newImage('images/' .. sheet_name .. '.png')
-   self.iw, self.ih = self.img:getDimensions()
+-- Load an image
+-- path: where to load the image from, in images/
+-- sheet_name: where to get metadata from, defaults to GAME.imgdb[<path>]
+function image:init (path, sheet_name)
+   self.name = sheet_name or path
+   -- Load sheet data from imgdb into 'point' data types
+   self.image = love.graphics.newImage('images/' .. path .. '.png')
 
-   local sheetdata = imgdb[sheet_name]
-   if not sheetdata then
-      print('warning: sheet not found: ', sheet_name)
-      sheetdata = {base={}}
-   end
-
-   self.name = sheet_name
+   local sheets = GAME.imgdb[self.name]
    self.sheets = {}
-   for k,v in pairs(sheetdata) do
-      self.sheets[k] = v
-      local sheet = self.sheets[k]
-      sheet.quads = image.make_quads(
-         v.x, v.y, v.w, v.h,
-         v.numx, v.numy, self.iw, self.ih
-      )
-      sheet.ox = sheet.ox or 0
-      sheet.oy = sheet.oy or 0
-      sheet.fps = sheet.fps or 0
-      sheet.anim = sheet.anim or {1}
-      sheet.len = sheet.len or #sheet.anim
-      sheet.iasa = sheet.iasa or sheet.len
-      sheet.name = k
+
+   for name,data in pairs(sheets) do
+      self.sheets[name] = {}
+      local sheet = self.sheets[name]
+      sheet.origin = data.origin and point(unpack(data.origin)) or point(0,0)
+      sheet.scale = data.scale and point(unpack(data.scale)) or point(1,1)
+      sheet.anim = data.anim
+
+      local x,y,w,h = unpack(data.rect)
+      local count = data.count and point(unpack(data.count)) or point(1,1)
+      local image_size = point(self.image:getDimensions())
+      sheet.quads = self.make_quads(point(x,y), point(w,h), count, image_size)
    end
 
-   if self.sheets.base then self:set_sheet('base') end
+   self.scale = point(1,1)
+
+   if self.sheets.base then
+      self:set_sheet('base')
+   end
 end
 
-function image:set_sheet(name)
-   self.current = self.sheets[name]
-   self.start_time = love.timer.getTime()
+-- Sets the current sheet, reset to beginning of animation.
+function image:set_sheet (name)
+   self.sheet = name
+   if not self.sheets[self.sheet] then
+      error('sheet ' .. name .. ' not found for ' .. self.name)
+   end
+   self.animation_start_time = love.timer.getTime()
+end
+
+-- Gets the current sheet data, as loaded
+function image:sheet_data ()
+   if not self.sheet then
+      error('forgot to set sheet on image ' .. self.name)
+   end
+   return self.sheets[self.sheet]
+end
+
+-- Draw the current frame of the current sheet. Or, use frame_number to
+-- override. flip = true will flip the image horizontally.
+function image:draw(x, y, flip, frame_index)
+   local data = self:sheet_data()
+
+   if not frame_index then
+      if data.anim then
+         local elapsed = 1 + (self:frames_elapsed()) % #data.anim.order
+         frame_index = data.anim.order[elapsed]
+      else
+         frame_index = 1
+      end
+   end
+
+   local mirror = flip and point(-1, 1) or point(1,1)
+   local scale = self.scale * data.scale * mirror
+   local origin = data.origin * scale
+   local pos = point(x,y) - origin
+   local quad = data.quads[frame_index]
+   love.graphics.draw(self.image, quad, pos.x, pos.y, 0, scale:unpack())
+end
+
+function image:animation_time ()
+   return love.timer.getTime() - self.animation_start_time
+end
+
+function image:frames_elapsed ()
+   local anim = self:sheet_data().anim
+   if not anim then
+      return 0
+   else
+      local time = self:animation_time()
+      return math.floor(time * anim.fps)
+   end
 end
 
 function image:animation_is_interruptible()
-   if self.current.fps==0 then return true end
-
-   local dt = love.timer.getTime() - self.start_time
-   return math.floor(dt * self.current.fps) >= self.current.iasa
+   local anim = self:sheet_data().anim
+   if anim then
+      return self:frames_elapsed() >= anim.iasa
+   else
+      return true -- non-animated means always interruptible
+   end
 end
 
 function image:animation_is_over()
-   if self.current.fps==0 then return false end
-
-   local dt = love.timer.getTime() - self.start_time
-   return math.floor(dt * self.current.fps) >= self.current.len
+   local anim = self:sheet_data().anim
+   if anim then
+      return self:frames_elapsed() >= anim.len
+   else
+      return false -- non-animated means never over
+   end
 end
 
 -- Read animation data and generate quads
-function image.make_quads(x, y, w, h, numx, numy, iw, ih)
-   x = x or 0
-   y = y or 0
-   w = w or iw
-   h = h or ih
-   numx = numx or 1
-   numy = numy or 1
-
+function image.make_quads(pos, size, count, image_size)
    local quads = {}
-   for iy = 1,numy do
-      for ix = 1,numx do
+   for iy = 1,count.y do
+      for ix = 1,count.x do
+         local offset = pos + point(ix-1, iy-1) * size
          quads[#quads+1] = love.graphics.newQuad(
-            x + ix*w-w, y + iy*h-h, w, h, iw, ih)
+            offset.x, offset.y, size.x, size.y, image_size:unpack())
       end
    end
    return quads
-end
-
-function image:draw(x, y, flip, frame)
-   local xscale = (self.xscale or 1) * (self.scale or 1)
-   local yscale = (self.yscale or 1) * (self.scale or 1)
-
-   if not frame then
-      local dt = love.timer.getTime() - self.start_time
-      local elapsed = 1 + math.ceil(dt * (self.current.fps) - 1) % #self.current.anim
-      frame = self.current.anim[elapsed]
-   end
-
-   local ox = self.current.ox * (xscale or 1)
-   local oy = self.current.oy * (yscale or 1)
-   x = flip and x + ox or x - ox
-   y = y - oy
-   local sx = flip and -xscale or xscale
-   local quad = self.current.quads[frame]
-   love.graphics.draw(self.img, quad, x, y, 0, sx, yscale)
 end
 
 return image

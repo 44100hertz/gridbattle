@@ -20,7 +20,7 @@ end
 
 function go:draw ()
    local elapsed = self:get_elapsed()
-   self.image.yscale = math.sqrt(1 - elapsed) * 3
+   self.image.scale.y = math.sqrt(1 - elapsed) * 3
    self.image:draw((GAME.size * 0.5):unpack())
 end
 

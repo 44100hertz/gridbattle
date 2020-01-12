@@ -12,7 +12,6 @@ function test_enemy:init ()
    local hp, image = unpack(levels[self.level])
    self:attach('hp', hp)
    self:attach('image', image)
-   self.image.image.yscale = 0.5 -- HACK: why 2
    if self.level == 1 then
       self.color = {169/255.0, 53/255.0, 197/255.0}
       self.bullet = nil
