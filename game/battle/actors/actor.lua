@@ -1,7 +1,7 @@
 local actor = {}
 
 function actor:enter_state (state)
-   self.state = self.states[state]
+   self.state = state
    self.image.image:set_sheet(state) -- HACK: will be updated
    self.time = 0
 end
@@ -11,7 +11,9 @@ function actor:update (input)
       self:enter_state(self.next_state)
       self.next_state = nil
    end
-   if self.state then self:state() end
+   if self.state and self.states[self.state] then
+      self.states[self.state](self)
+   end
 
    if self.image.image:animation_is_interruptible() then
       self:act(input)
