@@ -17,7 +17,7 @@ function actor:attach (name, ...)
    local component = setmetatable({}, {__index = class})
    self[name] = component
    self.components[#self.components+1] = component
-   component:init(...)
+   component:init(self, ...)
 end
 
 function actor:super () -- HACK
@@ -119,14 +119,6 @@ function actor:use_chip (chip_name)
    added.side = added.side or self.side
 end
 
--- Use a chip in the current queue
-function actor:use_queue_chip ()
-   if #self.queue>0 then
-      local removed = table.remove(self.queue, 1)
-      self:use_chip(removed.name)
-   end
-end
-
 function actor:locate_enemy ()
    return self.battle.stage:locate_enemy(self.pos, self.side)
 end
@@ -143,10 +135,6 @@ end
 -- Draw HP and/or chip queue
 function actor:draw_info (draw_shadow)
    local stage = self.battle.stage
-   if self.queue then
-      local queue_pos = self:screen_pos() - point(0, stage.panel_size.y * 0.7)
-      self.battle.chip_artist:draw_icon_queue(self.queue, queue_pos)
-   end
 end
 
 ------------------------------------------------------------

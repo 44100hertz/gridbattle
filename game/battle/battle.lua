@@ -55,14 +55,13 @@ end
 
 function battle:update (input)
    if self.will_select_chips then
+      local queues = {}
+      GAME.scene:push(customize(self, self.folders, queues))
       for i = 1,2 do
          if self.state.sides[i].is_player then
-            local q = {}
-            self.state.sides[i].queue = q
-            self.state.sides[i][1].queue = q
+            self.state.sides[i][1].queue:set_queue(queues[i])
          end
       end
-      GAME.scene:push(customize(self))
       self.cust_timer = 0
       self.will_select_chips = false
    elseif input then

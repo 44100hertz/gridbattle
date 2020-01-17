@@ -6,18 +6,14 @@ local elements = require 'battle/elements'
 
 local actors = oop.class()
 
-function actors:init (battle, actors_path)
+function actors:init (battle)
    self.battle = battle
-   self.actors_path = actors_path
 
    self.actors = {}
-   self.aloader = aloader(base_actor(battle), actors_path)
+   self.aloader = aloader(base_actor(battle), 'battle/actors/')
    for i = 1,2 do
      for _,actor in ipairs(battle.state.sides[i]) do
        actor.side = i
-       if actor[1] == 'player' then
-          actor.queue = battle.state.sides[i].queue
-       end
        self:add(actor)
      end
    end
@@ -92,7 +88,7 @@ end
 function actors:draw ()
    for _,ent in ipairs(self.actors) do
       for _,component in ipairs(ent.components) do
-         component:draw(ent)
+         component:draw()
       end
       ent:_draw(false)
    end

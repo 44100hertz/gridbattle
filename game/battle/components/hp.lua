@@ -1,6 +1,7 @@
 local hp = {}
 
-function hp:init (max_hp, hidden)
+function hp:init (actor, max_hp, hidden)
+   self.actor = actor
    self.value = max_hp
    self.max = max_hp
    self.hidden = hidden
@@ -22,12 +23,12 @@ function hp:is_zero ()
    return self.value == 0
 end
 
-function hp:draw (actor)
+function hp:draw ()
    if self.hidden then
       return
    end
-   local panel_height = actor.battle.stage.panel_size.y
-   local pos = actor:screen_pos() - point(200, panel_height/2)
+   local panel_height = self.actor.battle.stage.panel_size.y
+   local pos = self.actor:screen_pos() - point(200, panel_height/2)
    local hpstr = tostring(math.floor(self.value))
    -- draw shadow
    --love.graphics.setColor(0, 0, 0)

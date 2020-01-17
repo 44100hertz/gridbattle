@@ -7,12 +7,12 @@ local customize = oop.class {
    transparent = true,
 }
 
-function customize:init (battle)
---   local two_player = (left_deck.data and right_deck.data)
+function customize:init (battle, folders, queues)
    self.sides = {}
    for i = 1,2 do
+      queues[i] = {}
       if battle.folders[i] then
-         self.sides[i] = side(battle, i)
+         self.sides[i] = side(battle, i, folders[i], queues[i])
       end
    end
 end

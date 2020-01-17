@@ -20,10 +20,10 @@ function ui:draw (set, cust_amount)
          local x = i==2 and GAME.size.x-4 or 4
          love.graphics.print(tostring(math.floor(hp)), x, 4)
          -- Queue top in lower corner
-         if side.queue and #side.queue > 0 then
-            local top = side.queue[#side.queue].name
-            love.graphics.printf(top, 0, GAME.size.y-11, GAME.size.x, align)
-         end
+--         if side.queue and #side.queue > 0 then
+--            local top = side.queue[#side.queue].name
+--            love.graphics.printf(top, 0, GAME.size.y-11, GAME.size.x, align)
+--         end
       else
          -- For enemies: Enemy names in upper corner
          local names = {}

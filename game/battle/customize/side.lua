@@ -6,17 +6,16 @@ local image = require 'src/image'
 
 local side = oop.class()
 
-function side:init(battle, side_index)
+function side:init(battle, side_index, folder, queue)
    self.battle = battle
    self.input_index = side_index
+   self.queue = queue
    local side_data = {
       {0},
       {120},
    }
    self.offset = unpack(side_data[side_index])
-   local deck = battle.folders[side_index]
-   self.pal = deck:draw(5, self.pal)
-   self.queue = battle.state.sides[side_index][1].queue
+   self.pal = folder:draw(5, self.pal)
    self.sel = 1
    self.image = image('customize')
 end

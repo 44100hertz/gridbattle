@@ -5,6 +5,7 @@ local player = {
 function player:init ()
    self:attach('hp', 300, true)
    self:attach('image', 'ben')
+   self:attach('queue', 'user', self.side)
    self:enter_state('base') -- HACK: normally done by 'actor', to be replaced
 end
 
@@ -25,7 +26,7 @@ function player:act (input)
    local lr = input.dr - input.dl
    local ud = input.dd - input.du
 
-   if input.a == 1 then self:use_queue_chip()
+   if input.a == 1 then self.queue:use_chip()
    elseif ud<0 then move(0, -1)
    elseif ud>0 then move(0, 1)
    elseif lr<0 then move(-1, 0)
