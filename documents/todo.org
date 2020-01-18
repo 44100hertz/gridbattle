@@ -1,36 +1,38 @@
 * Battle
-** Other possible subclasses for actors
-*** Position/movement
-*** AI
-*** "actor"
-*** "navi"
-** Fix Wheel crate
-Wheel crate poses an interesting problem for the panel/occupancy system. It was
-intended to be able to be shot back and forth, but this is only possible if it
-prevents other actors from moving to the panel it is on. Maybe I will delete
-this one.
-** Strip away elements system
-I need to make things better in general, and the elements system is confusingly
-implemented and sort of useless.
-** Eliminate use of battle.state
-Change location of queue to player actor. Must relocate all mutable state here.
-May become more clear if scene system is replaced.
-** Navi Enemy
+** Actors
+*** First chip folders
+ Make some folders based on design in the google drive. See what works and what doesn't!
+*** Fix Wheel crate
+ Wheel crate poses an interesting problem for the panel/occupancy system. It was
+ intended to be able to be shot back and forth, but this is only possible if it
+ prevents other actors from moving to the panel it is on. Maybe I will delete
+ this one.
+*** Navi Enemy
 I have some boss designs on paper, I should probably get some feedback on them.
 It's that or determine what navi AI or animation features I want to put into
 place, and make a simple enemy that has all of those traits.
-** netplay
-Where to begin? I may want to separate a server/client somehow. I should start
-by sorting out which data needs to be shared between clients.
-** chip selector for debugging
+** Devtools
+*** chip selector
 I just want a list of all chips and be able to put them into queue easily.
-** possible feature: pvp cust delay
-When one player wants to cust, display a timer on the other players'
-cust menu; give them 10 seconds to finish before the game autostarts.
-** Battle editor GUI
+*** Battle editor
 The idea here is that battles would be easier to edit with a UI, rather than in
 the current primitive format. This is likely to save effort in the long run, and
 create a sense of unity by having visual lists of enemies, maybe even previews.
+** Refactor
+*** Strip away elements system
+I need to make things better in general, and the elements system is confusingly
+implemented and sort of useless.
+*** Eliminate use of battle.state
+Change location of queue to player actor. Must relocate all mutable state here.
+May become more clear if scene system is replaced.
+*** Remove local PVP
+This feature has proven problematic and is likely broken at this point! If I can
+get some sort of netplay going, it will replace this in terms of debugging.
+*** Refactor actors:add and set data
+I don't want actor[1], actor[2], etc. Let's do this better!
+** netplay
+Where to begin? I may want to separate a server/client somehow. I should start
+by sorting out which data needs to be shared between clients.
 * World map
 ** Display actor graphics
 ** Display dialog box w/script
@@ -44,9 +46,6 @@ I need a plan on how to implement the save system.
 It's possible that the functions in src/image.lua could be relocated to a
 general image loader/cache. This would likely use weak tables. main.lua does a
 tiny bit too much work by loading imgdb.
-** point refactor
-I'm using 'point' everywhere, so much that I made it a global.
-*** 2d iterator/map
 ** handling music
 I should recover my old music from lanparty-code, get some feedback on it in
 discord or possibly other locations (upload to soundcloud is ideal), and
