@@ -16,10 +16,10 @@ function player:update (input)
       local move = function  (dx, dy)
          local goal = self.pos + point(dx, dy)
          if self:is_panel_free(goal) then
-            self.goal = goal
             self:set_state('move')
             self:free_panel()
-            self:occupy_panel(goal)
+            self.pos = goal
+            self:occupy_panel()
          end
       end
       local lr = input.dr - input.dl
@@ -34,9 +34,7 @@ function player:update (input)
       elseif lr>0 then move(1, 0)
       end
    elseif self.state == 'move' then
-      assert(self.goal, 'attempt to move player without goal')
       if self.time == 8 then
-         self.pos = self.goal
          self.state = 'idle'
       end
    elseif self.state == 'use_chip' then

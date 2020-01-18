@@ -62,8 +62,10 @@ function image:draw(x, y, flip, frame_index)
 
    if not frame_index then
       if data.anim then
-         local elapsed = 1 + (self:frames_elapsed()) % #data.anim.order
-         frame_index = data.anim.order[elapsed]
+         local time =  love.timer.getTime() - self.animation_start_time
+         local frames_elapsed = math.floor(time * data.anim.fps)
+         local frames = 1 + (frames_elapsed % #data.anim.order)
+         frame_index = data.anim.order[frames]
       else
          frame_index = 1
       end
@@ -75,38 +77,6 @@ function image:draw(x, y, flip, frame_index)
    local pos = point(x,y) - origin
    local quad = data.quads[frame_index]
    love.graphics.draw(self.image, quad, pos.x, pos.y, 0, scale:unpack())
-end
-
-function image:animation_time ()
-   return love.timer.getTime() - self.animation_start_time
-end
-
-function image:frames_elapsed ()
-   local anim = self:sheet_data().anim
-   if not anim then
-      return 0
-   else
-      local time = self:animation_time()
-      return math.floor(time * anim.fps)
-   end
-end
-
-function image:animation_is_interruptible()
-   local anim = self:sheet_data().anim
-   if anim then
-      return self:frames_elapsed() >= anim.iasa
-   else
-      return true -- non-animated means always interruptible
-   end
-end
-
-function image:animation_is_over()
-   local anim = self:sheet_data().anim
-   if anim then
-      return self:frames_elapsed() >= anim.len
-   else
-      return false -- non-animated means never over
-   end
 end
 
 -- Read animation data and generate quads

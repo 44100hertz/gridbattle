@@ -8,8 +8,6 @@
        count: {columns, rows} how many frames in a sprite/tile sheet
        anim: Animation. These fields are needed:
            fps: <number> framerate of animation
-           len: <integer> how many frames to play (at fps), 0 for infinite loop
-           iasa: <integer> how many frames before animation can be interrupted
            order: <list> Frame order. 1 is the first frame
 
    -- The sheet named 'base' will be used by default --
@@ -41,8 +39,7 @@ return {
       base = {rect={0,0,240,160}, origin={120,80}}
    },
    ['battle/actors/bullet'] = {
-      base = {rect={0,0,16,16}, origin={8,8}, count={6,1},
-              anim = {order={1,2,3,4,5,6}, fps=20}},
+      base = {rect={0,0,16,16}, origin={8,8}, count={6,1}, anim = {order={1,2,3,4,5,6}, fps=20}},
    },
 
    ['battle/actors/boots'] = {
@@ -62,11 +59,8 @@ return {
    },
    ['battle/actors/ben'] = {
       base = {rect={0,0,50,60}, origin={24,31}, scale={1,0.5}},
-      move = {rect={0,60,50,60}, origin={24,31}, count={2,1}, scale={1,0.5},
-              anim={fps=20, len=3, iasa=3, order={1,2}}},
-      shoot = {rect={0,120,50,60}, origin={24,31}, count={2,1}, scale={1,0.5},
-               anim={fps=20, len=5, iasa=3, order={1,2}}},
-      throw = {rect={0,180,50,60}, origin={24,31}, count={2,1}, scale={1,0.5},
-               anim={fps=20, len=5, iasa=3, order={1,2}}},
+      move = {rect={0,60,50,60}, origin={24,31}, count={2,1}, scale={1,0.5}, anim={fps=20, order={1,2}}},
+      shoot = {rect={0,120,50,60}, origin={24,31}, count={2,1}, scale={1,0.5}, anim={fps=20, order={1,2}}},
+      throw = {rect={0,180,50,60}, origin={24,31}, count={2,1}, scale={1,0.5}, anim={fps=20, order={1,2}}},
    },
 }

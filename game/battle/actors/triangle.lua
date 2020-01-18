@@ -2,8 +2,6 @@ local triangle = {
    extends = 'bullet',
    lifespan = 60,
    damage = 80,
-   desc={'Shoot out',
-         'some triangle.'},
 }
 
 function triangle:init ()
