@@ -1,7 +1,6 @@
 local mbullet = {}
 
 function mbullet:init ()
-   self.parent.next_state = 'shoot'
    self.lifespan = self.delay + self.num * self.period
 end
 

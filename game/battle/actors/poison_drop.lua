@@ -5,7 +5,6 @@ local poisdrop = {
 function poisdrop:init ()
    self.velocity = point(3.0/60, 0.0)
    self.dz = 1
-   self.parent:enter_state('throw')
    self:attach('image', 'poisdrop')
 end
 

@@ -109,6 +109,12 @@ function actor:apply_panel_stat (stat, offset)
    self.battle.stage:apply_stat(stat, pos)
 end
 
+-- Just a helper function for actors using a 'state' field
+function actor:set_state (state_name, time)
+   self.state = state_name
+   self.time = time or 0
+end
+
 -- Use a chip by name
 function actor:use_chip (chip_name)
    local added = self:spawn {

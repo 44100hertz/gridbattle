@@ -8,7 +8,6 @@ local triangle = {
 
 function triangle:init ()
    self.velocity = point(0, 0)
-   self.parent.next_state = 'shoot'
    self:attach('image', 'bullet')
 end
 

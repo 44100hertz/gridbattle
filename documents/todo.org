@@ -1,8 +1,4 @@
 * Battle
-** Make chip queues a subclass of actors
-Currently chip queues are weirdly initialized as part of the base class, and
-possibly elsewhere. Ideally I just want to stick all their methods in one place,
-separate from the other code.
 ** Other possible subclasses for actors
 *** Position/movement
 *** AI

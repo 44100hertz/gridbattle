@@ -13,7 +13,6 @@ function wcrate:init ()
    self.dz = -5
    self.pos = self.pos + point(1, 0) * self.parent:mirror()
 
-   self.parent.next_state = 'shoot'
    self:attach('image', 'wheel_crate')
 end
 
