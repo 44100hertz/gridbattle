@@ -1,20 +1,17 @@
-local boots = {
-   extends = 'multi_bullet',
-   count = 1,
-   num = 2, delay = 10, period = 30,
-   damage = 40,
-}
+-- a 2-boot spawner
+local boots = {}
 
-function boots:make_bullet ()
-   self:spawn{
-      'boot',
-      x=self.x, y=self.y,
-      frame=self.count,
-      side=self.side,
-      damage=self.damage,
-      parent=self.parent,
-   }
-   self.count = self.count + 1
+function boots:update ()
+   if self.time == 1 or self.time == 30 then
+      self:spawn{
+         'boot',
+         x=self.x, y=self.y,
+         frame=self.count,
+         side=self.side,
+         damage=self.damage,
+         parent=self.parent,
+      }
+   end
 end
 
 return boots

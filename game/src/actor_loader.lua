@@ -13,17 +13,15 @@ end
 
 -- Load an actor or class.
 -- This will chain its type tables.
--- 'extends' is an optional argument that overrides actor.extends field.
-function aloader:load (actor, extends)
-   local atype = extends or actor.extends
+function aloader:load (actor, atype)
    if atype then
       if not self.cache[atype] then
          local class = love.filesystem.load(self.path .. atype .. '.lua')()
-         self.cache[atype] = self:load(class)
+         self.cache[atype] = setmetatable(class, {__index = self.base})
       end
       return setmetatable(actor, {__index = self.cache[atype]})
    else
-      return setmetatable(actor, {__index = self.base})
+      return setmetatable(class, {__index = self.base})
    end
 end
 
