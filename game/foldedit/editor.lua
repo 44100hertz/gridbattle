@@ -3,8 +3,6 @@ local oop = require 'src/oop'
 local folder = require 'src/folder'
 local image = require 'src/image'
 
-local elements = require 'battle/elements'
-
 local editor = oop.class()
 
 local num_entries = 12
@@ -123,8 +121,10 @@ function editor:draw ()
          -- Highlight selection
          if i == pane.sel then love.graphics.setColor(120/255.0, 192/255.0, 128/255.0) end
 
-         elem_index = elements.by_name[GAME.chipdb[v.name].elem]
-         line = string.char(elem_index) .. v.ltr:upper() .. ' ' .. v.name
+--         -- element symbol
+--         elem_index = elements.by_name[GAME.chipdb[v.name].elem]
+--         line = string.char(elem_index) .. v.ltr:upper() .. ' ' .. v.name
+         line = v.ltr:upper() .. ' ' .. v.name
          love.graphics.print(line, x, y)
          love.graphics.print('x' .. v.qty, x+78, y)
          love.graphics.setColor(1.0, 1.0, 1.0)

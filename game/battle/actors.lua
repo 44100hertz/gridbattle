@@ -2,7 +2,6 @@ local oop = require 'src/oop'
 local aloader = require 'src/actor_loader'
 
 local base_actor = require 'battle/base_actor'
-local elements = require 'battle/elements'
 
 local actors = oop.class()
 
@@ -30,14 +29,9 @@ end
 
 function actors:apply_damage (send, recv, amount)
    amount = amount or send.damage
-   local recv_elem
-   local panel = self.battle.stage:get_panel(recv.pos)
-   if panel and panel.stat and elements.by_name[panel.stat] then
-      recv_elem = panel.stat
-   else
-      recv_elem = recv.elem
+   if recv.hp then
+      recv.hp:adjust(-amount)
    end
-   elements.interact(send.elem, recv_elem, amount, recv)
 end
 
 -- Figure out if the battle has ended yet

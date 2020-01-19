@@ -76,7 +76,7 @@ function battle:update (input)
          return
       end
       self.cust_timer = self.cust_timer + 1
-      self.stage:update(self.actors.actors)
+--      self.stage:update(self.actors.actors)
       self.actors:update(input)
    end
 end

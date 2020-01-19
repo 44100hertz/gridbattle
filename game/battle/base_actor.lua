@@ -95,18 +95,14 @@ function actor:get_panel (pos)
 end
 
 function actor:is_panel_free (pos)
-   return self.battle.stage:is_panel_free(pos or self.pos, self.side)
+   pos = pos or self.pos
+   return self.battle.stage:is_panel_free(pos) and
+      self.battle.stage:get_panel_side(pos) == self.side
 end
 
 -- Hurt a known actor
 function actor:damage_other (target, amount)
    self.battle.actors:apply_damage(self, target, amount)
-end
-
--- Apply a status effect to a panel
-function actor:apply_panel_stat (stat, offset)
-   local pos = offset and self.pos + offset*self:mirror() or self.pos
-   self.battle.stage:apply_stat(stat, pos)
 end
 
 -- Just a helper function for actors using a 'state' field
