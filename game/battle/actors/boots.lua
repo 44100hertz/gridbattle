@@ -4,12 +4,9 @@ local boots = {}
 function boots:update ()
    if self.time == 1 or self.time == 30 then
       self:spawn{
-         'boot',
-         x=self.x, y=self.y,
-         frame=self.count,
-         side=self.side,
-         damage=self.damage,
-         parent=self.parent,
+         class = 'boot',
+         frame = self.time == 1 and 1 or 2,
+         parent = self.parent,
       }
    end
 end

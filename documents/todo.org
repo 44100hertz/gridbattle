@@ -1,4 +1,9 @@
 * Battle
+** UI Question
+I eliminated the previous idea of battle data being stored in two different
+tables (one for each side). I want to relocate logic into individual actors and
+their components, then have them allocate UI space to the left or right of the
+stage.
 ** Actors
 *** First chip folders
  Make some folders based on design in the google drive. See what works and what doesn't!

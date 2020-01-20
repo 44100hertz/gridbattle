@@ -1,9 +1,10 @@
 local test_enemy = {
+   is_fighter = true,
    noflip = true,
-   cooldown = 0,
 }
 
 function test_enemy:init ()
+   self.cooldown = 0
    self:occupy_panel()
    local levels = ({
       [1] = {40, 'testenemy'},
@@ -26,8 +27,9 @@ function test_enemy:die ()
    self.despawn = true
    for _ = 1,50 do
       self:spawn{
-         'particle', self.x, self.y, z=20,
-         color=self.color
+         class = 'particle',
+         z = 20,
+         color = self.color
       }
    end
 end

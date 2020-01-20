@@ -1,4 +1,6 @@
-local player = {}
+local player = {
+   is_fighter = true,
+}
 
 function player:init ()
    self:attach('hp', 300, true)

@@ -19,22 +19,19 @@ local battle = oop.class()
 function battle:init (set_name)
    local path = 'battle/battles/' .. set_name .. '.lua'
    self.state = love.filesystem.load(path)()
-
-   self.folders = {}
-   for i = 1,2 do
-      if self.state.sides[i].is_player then
-         self.folders[i] = folder(savedata.player.folder)
-      end
-   end
-
    self.components = {}
-
    self.bg = bg(unpack(self.state.bg))
    self.ui = ui()
-
    self.stage = stage(self.state.stage.turf)
    self.actors = actors(self, 'battle/actors/')
    self.chip_artist = chip_artist()
+
+   self.folders = {folder(savedata.player.folder)} -- HACK: just load this folder
+
+   for _,actor in ipairs(self.state.actors) do
+      actor.side = self.stage:get_side(actor.pos)
+      self.actors:add(actor)
+   end
 
    self.will_select_chips = true
    self.cust_timer = 0
@@ -55,11 +52,11 @@ end
 
 function battle:update (input)
    if self.will_select_chips then
-      local queues = {}
-      GAME.scene:push(customize(self, self.folders, queues))
-      for i = 1,2 do
-         if self.state.sides[i].is_player then
-            self.state.sides[i][1].queue:set_queue(queues[i])
+      self.queues = {}
+      GAME.scene:push(customize(self, self.folders, self.queues))
+      for _,actor in pairs(self.actors.actors) do
+         if actor.class == 'player' then
+            actor.queue:set_queue(self.queues[actor.side])
          end
       end
       self.cust_timer = 0

@@ -1,35 +1,26 @@
 local oop = require 'src/oop'
 
-local actor = oop.class()
+local base_actor = oop.class()
 
 ------------------------------------------------------------
 -- Override these fields!
 ------------------------------------------------------------
 
-actor.time = 0     -- Length of existance in ticks. May break if modified.
-actor.z = 0        -- z position, used in animation.
+base_actor.time = 0     -- Length of existance in ticks. May break if modified.
+base_actor.z = 0        -- z position, used in animation.
+base_actor.is_fighter = false -- Set to 'true' and the game will check if this
+                              -- actor is alive when determining if the battle
+                              -- has ended.
 
-function actor:init ()
-end
-
-function actor:attach (name, ...)
-   local class = self.battle:get_component(name)
-   local component = setmetatable({}, {__index = class})
-   self[name] = component
-   self.components[#self.components+1] = component
-   component:init(self, ...)
-end
-
-function actor:super () -- HACK
-   return getmetatable(getmetatable(self).__index).__index
+function base_actor:init ()
 end
 
 -- Called every tick
-function actor:update ()
+function base_actor:update ()
    self:move()
 end
 
-function actor:_update (input)
+function base_actor:_update (input)
    self:update(input)
    self.time = self.time + 1
 
@@ -41,12 +32,12 @@ function actor:_update (input)
 end
 
 -- Called every frame when colliding with other
-function actor:collide (with)
+function base_actor:collide (with)
 end
 
 -- Called during update when hp is below zero, or any time this actor is
 -- supposed to die.
-function actor:die ()
+function base_actor:die ()
    self.despawn = true
 end
 
@@ -54,8 +45,16 @@ end
 -- Call these methods!
 ------------------------------------------------------------
 
+function base_actor:attach (name, ...)
+   local class = self.battle:get_component(name)
+   local component = setmetatable({}, {__index = class})
+   self[name] = component
+   self.components[#self.components+1] = component
+   component:init(self, ...)
+end
+
 -- Update x and y positions (do this once per tick!)
-function actor:move ()
+function base_actor:move ()
    if self.velocity then
       self.pos = self.pos + self:real_velocity()
    end
@@ -63,79 +62,77 @@ function actor:move ()
 end
 
 -- If on the right side, multiply by this to mirror x offsets and velocity
-function actor:mirror ()
+function base_actor:mirror ()
    return point(self.side == 2 and -1 or 1, 1.0)
 end
 
 -- Shorthand for effective velocity
-function actor:real_velocity ()
+function base_actor:real_velocity ()
    return self.velocity and self.velocity * self:mirror()
 end
 
 -- Spawn another actor (default at this location)
-function actor:spawn (child)
-   return self.battle.actors:add(child, child.pos or self.pos)
+function base_actor:spawn (actor)
+   actor.parent = self
+   actor.pos = actor.pos or self.pos
+   actor.side = actor.side or self.side
+   return self.battle.actors:add(actor)
+end
+
+-- Use a chip by name
+function base_actor:use_chip (chip_name)
+   self:spawn{class = GAME.chipdb[chip_name].class}
 end
 
 -- Set a panel's tenant to self, by default occupies here
-function actor:occupy_panel (pos)
+function base_actor:occupy_panel (pos)
    self:get_panel(pos).tenant = self
 end
 
 -- Free a panel, default this one.
-function actor:free_panel (pos)
+function base_actor:free_panel (pos)
    local panel = self:get_panel(pos)
    if panel and panel.tenant == self then
       panel.tenant = nil
    end
 end
 
-function actor:get_panel (pos)
+function base_actor:get_panel (pos)
    return self.battle.stage:get_panel(pos or self.pos)
 end
 
-function actor:is_panel_free (pos)
+function base_actor:is_panel_free (pos)
    pos = pos or self.pos
    return self.battle.stage:is_panel_free(pos) and
-      self.battle.stage:get_panel_side(pos) == self.side
+      self.battle.stage:get_side(pos) == self.side
 end
 
 -- Hurt a known actor
-function actor:damage_other (target, amount)
+function base_actor:damage_other (target, amount)
    self.battle.actors:apply_damage(self, target, amount)
 end
 
 -- Just a helper function for actors using a 'state' field
-function actor:set_state (state_name, time)
+function base_actor:set_state (state_name, time)
    self.state = state_name
    self.time = time or 0
 end
 
--- Use a chip by name
-function actor:use_chip (chip_name)
-   local added = self:spawn {
-      GAME.chipdb[chip_name].class,
-      parent = self,
-      delay = 8,
-   }
-   added.side = added.side or self.side
-end
-
-function actor:locate_enemy ()
+function base_actor:locate_enemy ()
    return self.battle.stage:locate_enemy(self.pos, self.side)
 end
 
-function actor:locate_enemy_ahead ()
+function base_actor:locate_enemy_ahead ()
    return self.battle.stage:locate_enemy_ahead(self.pos, self.side)
 end
 
 -- Get the pixel position of the center of actor
-function actor:screen_pos ()
+function base_actor:screen_pos ()
    return self.battle.stage:to_screen_pos(self.pos - 0.5)
 end
 
 -- Draw HP and/or chip queue
-function actor:draw_info (draw_shadow)
+function base_actor:draw_info (draw_shadow)
    local stage = self.battle.stage
 end
 
@@ -143,11 +140,11 @@ end
 -- Internal methods (override with caution!)
 ------------------------------------------------------------
 
-function actor:init (battle)
+function base_actor:init (battle)
    self.battle = battle
 end
 
-function actor:_draw (draw_shadow)
+function base_actor:_draw (draw_shadow)
    love.graphics.push()
 
    -- Shadows are a bit offset from the main actor
@@ -172,7 +169,7 @@ function actor:_draw (draw_shadow)
    love.graphics.pop()
 end
 
-function actor:draw ()
+function base_actor:draw ()
 end
 
-return actor
+return base_actor

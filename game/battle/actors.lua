@@ -10,18 +10,12 @@ function actors:init (battle)
 
    self.actors = {}
    self.aloader = aloader(base_actor(battle), 'battle/actors/')
-   for i = 1,2 do
-     for _,actor in ipairs(battle.state.sides[i]) do
-       actor.side = i
-       self:add(actor)
-     end
-   end
 end
 
-function actors:add (actor, pos)
-   actor.pos = pos or point(actor[2], actor[3])
-   self.aloader:load(actor, actor[1])
+function actors:add (actor)
+   actor = actor or {}
    actor.components = {}
+   self.aloader:load(actor, actor.class)
    actor:init()
    table.insert(self.actors, actor)
    return actor
@@ -37,24 +31,28 @@ end
 -- Figure out if the battle has ended yet
 -- Endings in order: win, lose, p1win, p2win
 function actors:get_ending ()
-   local sides = self.battle.state.sides
-   local two_player = sides[1].is_player and sides[2].is_player
-
-   for i = 1,2 do
-      sides[i].alive = false
-      for _,actor in ipairs(sides[i]) do
-         if not actor.despawn then
-            sides[i].alive = true
-            break
-         end
+   local sides = {{}, {}}
+   for _,actor in ipairs(self.actors) do
+      if actor.class == 'player' then
+         sides[actor.side].has_player = true
+      end
+      if actor.is_fighter and not actor.despawn then
+         sides[actor.side].alive = true
       end
    end
 
+   local two_player = sides[1].has_player and sides[2].has_player
+   local loser = nil
    for i = 1,2 do
       if not sides[i].alive then
-         local loser = i == 1 and 2 or 1
-         return two_player and 2+loser or loser
+         loser = 3 - i
+         break
       end
+   end
+   if loser then
+      return two_player and 2 + loser or loser
+   else
+      return nil
    end
 end
 

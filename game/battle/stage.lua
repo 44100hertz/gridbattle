@@ -26,12 +26,12 @@ function stage:locate_enemy_ahead (pos, side)
    until pos.x < 0 or pos.x > self.num_panels.x
 end
 
-function stage:get_panel_side (pos)
+function stage:get_side (pos)
    return pos.x > self.turf[pos.y] and 2 or 1
 end
 
 -- Determine if a panel on the stage is free
-function stage:is_panel_free (pos, side)
+function stage:is_panel_free (pos)
    local panel = self:get_panel(pos)
    return panel and not panel.tenant
 end
