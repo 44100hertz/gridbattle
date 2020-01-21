@@ -24,14 +24,9 @@ The idea here is that battles would be easier to edit with a UI, rather than in
 the current primitive format. This is likely to save effort in the long run, and
 create a sense of unity by having visual lists of enemies, maybe even previews.
 ** Refactor
-*** Eliminate use of battle.state
-Change location of queue to player actor. Must relocate all mutable state here.
-May become more clear if scene system is replaced.
 *** Remove local PVP
 This feature has proven problematic and is likely broken at this point! If I can
 get some sort of netplay going, it will replace this in terms of debugging.
-*** Refactor actors:add and set data
-I don't want actor[1], actor[2], etc. Let's do this better!
 ** netplay
 Where to begin? I may want to separate a server/client somehow. I should start
 by sorting out which data needs to be shared between clients.

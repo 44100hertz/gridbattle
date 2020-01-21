@@ -21,7 +21,6 @@ function wcrate:update ()
    if self.dz<0 and self.z<=0 then
       self.z = 0
       self.dz = 0
-      self.size = 20/64
       local tenant = self.battle:locate_actor(self.pos)
       if tenant then
          self:damage_other(tenant, self.land_damage)
