@@ -16,12 +16,17 @@ local cust_length = 4*60
 
 local battle = oop.class()
 
+------------------------------------------------------------
+-- Call these methods!
+------------------------------------------------------------
+
 -- Return the panel at this x and y position
 function battle:get_panel (pos)
    pos = pos:round()
    return self.stage[pos.x] and self.stage[pos.x][pos.y]
 end
 
+-- Based on the 'turf' of the stage, determine the side that owns a position
 function battle:get_side (pos)
    if pos.x > self.num_panels.x or pos.x < 1 or
       pos.y > self.num_panels.y or pos.y < 1
@@ -32,6 +37,8 @@ function battle:get_side (pos)
    end
 end
 
+-- Return the actor, if any, occupying a given panel
+-- NOTE: this can be multiple actors, solution required?
 function battle:locate_actor (pos)
    for _,actor in ipairs(self.actors) do
       if actor.occupy_space and actor.pos:round() == pos:round() then
@@ -41,6 +48,7 @@ function battle:locate_actor (pos)
    return nil
 end
 
+-- Add an actor to the battle. If calling from an actor, use actor:spawn()
 function battle:add_actor (actor)
    actor = actor or {}
    actor.components = {}
@@ -50,33 +58,10 @@ function battle:add_actor (actor)
    return actor
 end
 
+-- Request chip selection screen, if enough time has passed
 function battle:request_select_chips()
    if self.cust_timer >= cust_length then
       self.will_select_chips = true
-   end
-end
-
--- Figure out if the battle has ended yet
--- Endings in order: win, lose, p1win, p2win
-function battle:get_ending ()
-   local sides = {{}, {}}
-   for _,actor in ipairs(self.actors) do
-      if actor.class == 'player' then
-         sides[actor.side].has_player = true
-      end
-      if actor.is_fighter and not actor.despawn then
-         sides[actor.side].alive = true
-      end
-   end
-
-   local two_player = sides[1].has_player and sides[2].has_player
-   local winner = nil
-   if not sides[1].alive then winner = 2 end
-   if not sides[2].alive then winner = 1 end
-   if winner then
-      return two_player and 2 + winner or winner
-   else
-      return nil
    end
 end
 
@@ -86,6 +71,10 @@ end
 function battle:stage_pos_to_screen (pos)
    return pos * self.panel_size + (GAME.size - self.stage_size) * 0.5
 end
+
+------------------------------------------------------------
+-- Internal methods (do not call!)
+------------------------------------------------------------
 
 function battle:init (set_name)
    local path = 'battle/battles/' .. set_name .. '.lua'
@@ -111,7 +100,6 @@ function battle:init (set_name)
          self.stage[x][y] = {}
       end
    end
-
 
    self.folders = {folder(savedata.player.folder)} -- HACK: just load this folder
 
@@ -176,6 +164,30 @@ function battle:update (input)
          actor:collide(enemy)
          enemy:collide(actor)
       end
+   end
+end
+
+-- Figure out if the battle has ended yet
+-- Endings in order: win, lose, p1win, p2win
+function battle:get_ending ()
+   local sides = {{}, {}}
+   for _,actor in ipairs(self.actors) do
+      if actor.class == 'player' then
+         sides[actor.side].has_player = true
+      end
+      if actor.is_fighter and not actor.despawn then
+         sides[actor.side].alive = true
+      end
+   end
+
+   local two_player = sides[1].has_player and sides[2].has_player
+   local winner = nil
+   if not sides[1].alive then winner = 2 end
+   if not sides[2].alive then winner = 1 end
+   if winner then
+      return two_player and 2 + winner or winner
+   else
+      return nil
    end
 end
 

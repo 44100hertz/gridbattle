@@ -59,7 +59,7 @@ function base_actor:mirror ()
    return point(self.side == 2 and -1 or 1, 1.0)
 end
 
--- Shorthand for effective velocity
+-- 'real velocity' is mirrored by side
 function base_actor:real_velocity ()
    return self.velocity and self.velocity * self:mirror()
 end
@@ -77,12 +77,14 @@ function base_actor:use_chip (chip_name)
    self:spawn{class = GAME.chipdb[chip_name].class}
 end
 
+-- Can I go here?
 function base_actor:is_panel_free (pos)
    pos = pos or self.pos
    return not self.battle:locate_actor(pos) and
       self.battle:get_side(pos) == self.side
 end
 
+-- Is there an enemy here?
 function base_actor:locate_enemy (pos)
    pos = pos or self.pos
    local tenant = self.battle:locate_actor(pos)
@@ -93,6 +95,7 @@ function base_actor:locate_enemy (pos)
    end
 end
 
+-- Is there an enemy in front of here?
 function base_actor:locate_enemy_ahead (pos)
    pos = pos or self.pos
    local inc = self.side==1 and 1 or -1
@@ -102,7 +105,6 @@ function base_actor:locate_enemy_ahead (pos)
       if enemy then return enemy end
    until pos.x < 0 or pos.x > self.battle.num_panels.x
 end
-
 
 -- Hurt a known actor
 function base_actor:damage_other (target, amount)
