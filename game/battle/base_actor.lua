@@ -69,7 +69,7 @@ function base_actor:spawn (actor)
    actor.parent = self
    actor.pos = actor.pos or self.pos
    actor.side = actor.side or self.side
-   return self.battle.actors:add(actor)
+   return self.battle:add_actor(actor)
 end
 
 -- Use a chip by name
@@ -85,7 +85,7 @@ end
 
 -- Hurt a known actor
 function base_actor:damage_other (target, amount)
-   self.battle.actors:apply_damage(self, target, amount)
+   self.battle:apply_damage(self, target, amount)
 end
 
 -- Just a helper function for actors using a 'state' field

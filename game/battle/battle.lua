@@ -1,8 +1,9 @@
 local oop = require 'src/oop'
 local folder = require 'src/folder'
 local menu = require 'src/menu'
+local actor_loader = require 'src/actor_loader'
 
-local actors = require 'battle/actors'
+local base_actor = require 'battle/base_actor'
 local results = require 'battle/results'
 local chip_artist = require 'battle/chip_artist'
 local customize = require 'battle/customize/customize'
@@ -22,7 +23,7 @@ function battle:get_panel (pos)
 end
 
 function battle:locate_actor (pos)
-   for _,actor in ipairs(self.actors.actors) do
+   for _,actor in ipairs(self.actors) do
       if actor.occupy_space and actor.pos:round() == pos:round() then
          return actor
       end
@@ -62,9 +63,49 @@ function battle:get_side (pos)
    end
 end
 
+function battle:add_actor (actor)
+   actor = actor or {}
+   actor.components = {}
+   self.actor_loader:load(actor, actor.class)
+   actor:init()
+   table.insert(self.actors, actor)
+   return actor
+end
+
+function battle:apply_damage (send, recv, amount)
+   amount = amount or send.damage
+   if recv.hp then
+      recv.hp:adjust(-amount)
+   end
+end
+
 function battle:request_select_chips()
    if self.cust_timer >= cust_length then
       self.will_select_chips = true
+   end
+end
+
+-- Figure out if the battle has ended yet
+-- Endings in order: win, lose, p1win, p2win
+function battle:get_ending ()
+   local sides = {{}, {}}
+   for _,actor in ipairs(self.actors) do
+      if actor.class == 'player' then
+         sides[actor.side].has_player = true
+      end
+      if actor.is_fighter and not actor.despawn then
+         sides[actor.side].alive = true
+      end
+   end
+
+   local two_player = sides[1].has_player and sides[2].has_player
+   local winner = nil
+   if not sides[1].alive then winner = 2 end
+   if not sides[2].alive then winner = 1 end
+   if winner then
+      return two_player and 2 + winner or winner
+   else
+      return nil
    end
 end
 
@@ -75,7 +116,6 @@ function battle:stage_pos_to_screen (pos)
    return pos * self.panel_size + (GAME.size - self.stage_size) * 0.5
 end
 
-
 function battle:init (set_name)
    local path = 'battle/battles/' .. set_name .. '.lua'
 
@@ -84,6 +124,9 @@ function battle:init (set_name)
    self.components = {}
    self.bg = bg(unpack(battle_config.bg))
    self.ui = ui()
+   self.actors = {}
+   self.actor_loader = actor_loader(base_actor(self), 'battle/actors/')
+   self.chip_artist = chip_artist()
 
    -- stage
    self.panel_size = point(48, 48)
@@ -98,15 +141,12 @@ function battle:init (set_name)
       end
    end
 
-   -- actors
-   self.actors = actors(self, 'battle/actors/')
-   self.chip_artist = chip_artist()
 
    self.folders = {folder(savedata.player.folder)} -- HACK: just load this folder
 
    for _,actor in ipairs(battle_config.actors) do
       actor.side = self:get_side(actor.pos)
-      self.actors:add(actor)
+      self:add_actor(actor)
    end
 
    self.will_select_chips = true
@@ -124,26 +164,47 @@ function battle:update (input)
    if self.will_select_chips then
       local queues = {}
       GAME.scene:push(customize(self, self.folders, queues))
-      for _,actor in pairs(self.actors.actors) do
+      for _,actor in pairs(self.actors) do
          if actor.class == 'player' then
             actor.queue:set_queue(queues[actor.side])
          end
       end
       self.cust_timer = 0
       self.will_select_chips = false
-   else
-      local ending = self.actors:get_ending(self.state)
-      if ending then
-         GAME.scene:push(results(ending))
-         return
-      end
+      return
+   end
+   local ending = self:get_ending(self.state)
+   if ending then
+      GAME.scene:push(results(ending))
+      return
+   end
+   if input[1].st == 1 or input[2].st == 1 then
+      GAME.scene:push(menu('pause'))
+      return
+   end
 
-      if input[1].st == 1 or input[2].st == 1 then
-         GAME.scene:push(menu('pause'))
-         return
+   self.cust_timer = self.cust_timer + 1
+   for _,actor in ipairs(self.actors) do
+      actor:update(input)
+      actor.time = actor.time + 1
+
+      if actor.hp and actor.hp:is_zero() or
+         (actor.lifespan and actor.time >= actor.lifespan)
+      then
+         actor:die()
       end
-      self.cust_timer = self.cust_timer + 1
-      self.actors:update(input)
+   end
+   for i,actor in ipairs(self.actors) do
+      if actor.despawn then
+         table.remove(self.actors, i)
+      end
+   end
+   for _,actor in ipairs(self.actors) do
+      local enemy = self:locate_enemy(actor.pos, actor.side)
+      if enemy then
+         actor:collide(enemy)
+         enemy:collide(actor)
+      end
    end
 end
 
@@ -166,7 +227,12 @@ function battle:draw ()
          love.graphics.setColor(1,1,1)
       end
    end
-   self.actors:draw()
+   for _,ent in ipairs(self.actors) do
+      for _,component in ipairs(ent.components) do
+         component:draw()
+      end
+      ent:_draw(false)
+   end
 
    local cust_amount = self.cust_timer / cust_length
    self.ui:draw(self.state, cust_amount)
