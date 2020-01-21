@@ -57,12 +57,23 @@ function actors:get_ending ()
 end
 
 function actors:update (input)
-   for _,ent in ipairs(self.actors) do
-      ent:_update(input)
+   for _,actor in ipairs(self.actors) do
+      actor:update(input)
+      actor.time = actor.time + 1
+
+      if actor.hp and actor.hp:is_zero() or
+         (actor.lifespan and actor.time >= actor.lifespan)
+      then
+         actor:die()
+      end
    end
    for i,actor in ipairs(self.actors) do
       if actor.despawn then
-         actor:free_panel()
+         local panel = self.battle.stage:get_panel(actor.pos)
+         -- Remove actor from stage
+         if panel and panel.tenant == actor then
+            panel.tenant = nil
+         end
          table.remove(self.actors, i)
       end
    end

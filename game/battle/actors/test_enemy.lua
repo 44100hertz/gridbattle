@@ -1,11 +1,11 @@
 local test_enemy = {
    is_fighter = true,
+   occupy_space = true,
    noflip = true,
 }
 
 function test_enemy:init ()
    self.cooldown = 0
-   self:occupy_panel()
    local levels = ({
       [1] = {40, 'testenemy'},
       [2] = {80, 'testenemy2'}

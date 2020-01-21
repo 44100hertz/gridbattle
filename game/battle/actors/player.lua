@@ -1,5 +1,6 @@
 local player = {
    is_fighter = true,
+   occupy_space = true,
 }
 
 function player:init ()
@@ -19,9 +20,7 @@ function player:update (input)
          local goal = self.pos + point(dx, dy)
          if self:is_panel_free(goal) then
             self:set_state('move')
-            self:free_panel()
             self.pos = goal
-            self:occupy_panel()
          end
       end
       local lr = input.dr - input.dl

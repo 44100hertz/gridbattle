@@ -61,7 +61,7 @@ function battle:update (input)
       end
       self.cust_timer = 0
       self.will_select_chips = false
-   elseif input then
+   else
       local ending = self.actors:get_ending(self.state)
       if ending then
          GAME.scene:push(results(ending))
@@ -73,7 +73,21 @@ function battle:update (input)
          return
       end
       self.cust_timer = self.cust_timer + 1
---      self.stage:update(self.actors.actors)
+
+      -- Clear out panel tenants
+      for x = 1,self.stage.num_panels.x do
+         for y = 1,self.stage.num_panels.y do
+            self.stage.panels[y][x].tenant = nil
+         end
+      end
+      for _,actor in ipairs(self.actors.actors) do
+         if actor.occupy_space then
+            local panel = self.stage:get_panel(actor.pos)
+            if panel then
+               panel.tenant = actor
+            end
+         end
+      end
       self.actors:update(input)
    end
 end

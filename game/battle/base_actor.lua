@@ -11,6 +11,8 @@ base_actor.z = 0        -- z position, used in animation.
 base_actor.is_fighter = false -- Set to 'true' and the game will check if this
                               -- actor is alive when determining if the battle
                               -- has ended.
+base_actor.occupy_space = false -- Set to 'true' and other actors will not be
+                                -- able to occupy the same space.
 
 function base_actor:init ()
 end
@@ -18,17 +20,6 @@ end
 -- Called every tick
 function base_actor:update ()
    self:move()
-end
-
-function base_actor:_update (input)
-   self:update(input)
-   self.time = self.time + 1
-
-   if self.hp and self.hp:is_zero() or
-      (self.lifespan and self.time >= self.lifespan)
-      then
-         self:die()
-   end
 end
 
 -- Called every frame when colliding with other
@@ -82,19 +73,6 @@ end
 -- Use a chip by name
 function base_actor:use_chip (chip_name)
    self:spawn{class = GAME.chipdb[chip_name].class}
-end
-
--- Set a panel's tenant to self, by default occupies here
-function base_actor:occupy_panel (pos)
-   self:get_panel(pos).tenant = self
-end
-
--- Free a panel, default this one.
-function base_actor:free_panel (pos)
-   local panel = self:get_panel(pos)
-   if panel and panel.tenant == self then
-      panel.tenant = nil
-   end
 end
 
 function base_actor:get_panel (pos)

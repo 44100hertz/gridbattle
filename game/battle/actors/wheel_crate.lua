@@ -27,7 +27,7 @@ function wcrate:update ()
          self:damage_other(panel.tenant, self.land_damage)
          self:die()
       else
-         self:occupy_panel()
+         self.occupy_space = true
       end
    end
 
@@ -44,8 +44,7 @@ function wcrate:collide (with)
    end
    if with.velocity and with.velocity.x ~= 0 then
       -- TODO: will roll the wrong way if used from right side
-      self.velocity.x = with:real_velocity().x > 0 and 1/16 or -1/16
-      self:free_panel()
+      self.velocity.x = with:real_velocity().x > 0 and 1/32 or -1/32
    end
 end
 
