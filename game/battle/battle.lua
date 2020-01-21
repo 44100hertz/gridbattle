@@ -22,37 +22,6 @@ function battle:get_panel (pos)
    return self.stage[pos.x] and self.stage[pos.x][pos.y]
 end
 
-function battle:locate_actor (pos)
-   for _,actor in ipairs(self.actors) do
-      if actor.occupy_space and actor.pos:round() == pos:round() then
-         return actor
-      end
-   end
-   return nil
-end
-
-function battle:is_panel_free (pos)
-   return not self:locate_actor(pos)
-end
-
-function battle:locate_enemy (pos, side)
-   local tenant = self:locate_actor(pos)
-   if tenant and tenant.side ~= side then
-      return tenant
-   else
-      return nil
-   end
-end
-
-function battle:locate_enemy_ahead (pos, side)
-   local inc = side==1 and 1 or -1
-   repeat
-      pos = pos + point(inc, 0)
-      local enemy = self:locate_enemy(pos, side)
-      if enemy then return enemy end
-   until pos.x < 0 or pos.x > self.num_panels.x
-end
-
 function battle:get_side (pos)
    if pos.x > self.num_panels.x or pos.x < 1 or
       pos.y > self.num_panels.y or pos.y < 1
@@ -63,6 +32,15 @@ function battle:get_side (pos)
    end
 end
 
+function battle:locate_actor (pos)
+   for _,actor in ipairs(self.actors) do
+      if actor.occupy_space and actor.pos:round() == pos:round() then
+         return actor
+      end
+   end
+   return nil
+end
+
 function battle:add_actor (actor)
    actor = actor or {}
    actor.components = {}
@@ -70,13 +48,6 @@ function battle:add_actor (actor)
    actor:init()
    table.insert(self.actors, actor)
    return actor
-end
-
-function battle:apply_damage (send, recv, amount)
-   amount = amount or send.damage
-   if recv.hp then
-      recv.hp:adjust(-amount)
-   end
 end
 
 function battle:request_select_chips()
@@ -200,7 +171,7 @@ function battle:update (input)
       end
    end
    for _,actor in ipairs(self.actors) do
-      local enemy = self:locate_enemy(actor.pos, actor.side)
+      local enemy = actor:locate_enemy()
       if enemy then
          actor:collide(enemy)
          enemy:collide(actor)

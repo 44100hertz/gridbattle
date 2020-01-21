@@ -79,13 +79,36 @@ end
 
 function base_actor:is_panel_free (pos)
    pos = pos or self.pos
-   return self.battle:is_panel_free(pos) and
+   return not self.battle:locate_actor(pos) and
       self.battle:get_side(pos) == self.side
 end
 
+function base_actor:locate_enemy (pos)
+   pos = pos or self.pos
+   local tenant = self.battle:locate_actor(pos)
+   if tenant and tenant.side ~= self.side then
+      return tenant
+   else
+      return nil
+   end
+end
+
+function base_actor:locate_enemy_ahead (pos)
+   pos = pos or self.pos
+   local inc = self.side==1 and 1 or -1
+   repeat
+      pos = pos + point(inc, 0)
+      local enemy = self:locate_enemy(pos)
+      if enemy then return enemy end
+   until pos.x < 0 or pos.x > self.battle.num_panels.x
+end
+
+
 -- Hurt a known actor
 function base_actor:damage_other (target, amount)
-   self.battle:apply_damage(self, target, amount)
+   if target.hp then
+      target.hp:adjust(-amount)
+   end
 end
 
 -- Just a helper function for actors using a 'state' field

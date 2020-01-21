@@ -34,7 +34,7 @@ function test_enemy:die ()
 end
 
 function test_enemy:update ()
-   local enemy = self.battle:locate_enemy_ahead(self.pos, self.side)
+   local enemy = self:locate_enemy_ahead()
    if enemy and self.bullet and self.cooldown<1 then
       self.cooldown = self.bullet_delay
       self:use_chip(self.bullet)
