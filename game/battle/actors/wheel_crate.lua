@@ -22,7 +22,7 @@ function wcrate:update ()
       self.z = 0
       self.dz = 0
       self.size = 20/64
-      local panel = self:get_panel()
+      local panel = self.battle:get_panel()
       if panel.tenant then
          self:damage_other(panel.tenant, self.land_damage)
          self:die()
@@ -32,7 +32,7 @@ function wcrate:update ()
    end
 
    -- Roll off stage
-   if self.pos.x < 0 or self.pos.x > self.battle.stage.num_panels.x+1 then
+   if self.pos.x < 0 or self.pos.x > self.battle.num_panels.x+1 then
       self:die()
    end
    self:move()

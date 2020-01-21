@@ -69,7 +69,7 @@ function actors:update (input)
    end
    for i,actor in ipairs(self.actors) do
       if actor.despawn then
-         local panel = self.battle.stage:get_panel(actor.pos)
+         local panel = self.battle:get_panel(actor.pos)
          -- Remove actor from stage
          if panel and panel.tenant == actor then
             panel.tenant = nil
@@ -80,7 +80,7 @@ function actors:update (input)
 
    -- Collisions
    for _,actor in ipairs(self.actors) do
-      local enemy = actor:locate_enemy()
+      local enemy = self.battle:locate_enemy(actor.pos, actor.side)
       if enemy then
          actor:collide(enemy)
          enemy:collide(actor)

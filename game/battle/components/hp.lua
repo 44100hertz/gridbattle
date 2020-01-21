@@ -27,7 +27,7 @@ function hp:draw ()
    if self.hidden then
       return
    end
-   local panel_height = self.actor.battle.stage.panel_size.y
+   local panel_height = self.actor.battle.panel_size.y
    local pos = self.actor:screen_pos() - point(200, panel_height/2)
    local hpstr = tostring(math.floor(self.value))
    -- draw shadow

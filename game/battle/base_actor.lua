@@ -19,7 +19,7 @@ end
 
 -- Called every tick
 function base_actor:update ()
-   self:move()
+   self:move() -- add velocity to position
 end
 
 -- Called every frame when colliding with other
@@ -36,6 +36,8 @@ end
 -- Call these methods!
 ------------------------------------------------------------
 
+-- Connect a component to this actor
+-- see battle/components/
 function base_actor:attach (name, ...)
    local class = self.battle:get_component(name)
    local component = setmetatable({}, {__index = class})
@@ -75,14 +77,10 @@ function base_actor:use_chip (chip_name)
    self:spawn{class = GAME.chipdb[chip_name].class}
 end
 
-function base_actor:get_panel (pos)
-   return self.battle.stage:get_panel(pos or self.pos)
-end
-
 function base_actor:is_panel_free (pos)
    pos = pos or self.pos
-   return self.battle.stage:is_panel_free(pos) and
-      self.battle.stage:get_side(pos) == self.side
+   return self.battle:is_panel_free(pos) and
+      self.battle:get_side(pos) == self.side
 end
 
 -- Hurt a known actor
@@ -96,22 +94,9 @@ function base_actor:set_state (state_name, time)
    self.time = time or 0
 end
 
-function base_actor:locate_enemy ()
-   return self.battle.stage:locate_enemy(self.pos, self.side)
-end
-
-function base_actor:locate_enemy_ahead ()
-   return self.battle.stage:locate_enemy_ahead(self.pos, self.side)
-end
-
 -- Get the pixel position of the center of actor
 function base_actor:screen_pos ()
-   return self.battle.stage:to_screen_pos(self.pos - 0.5)
-end
-
--- Draw HP and/or chip queue
-function base_actor:draw_info (draw_shadow)
-   local stage = self.battle.stage
+   return self.battle:stage_pos_to_screen(self.pos - 0.5)
 end
 
 ------------------------------------------------------------
@@ -141,7 +126,6 @@ function base_actor:_draw (draw_shadow)
    end
 
    self:draw(draw_shadow)
-   self:draw_info(draw_shadow)
 
    love.graphics.setColor(1,1,1)
    love.graphics.pop()

@@ -19,7 +19,7 @@ function queue:set_queue (q)
 end
 
 function queue:draw ()
-   local panel_height = self.actor.battle.stage.panel_size.y
+   local panel_height = self.actor.battle.panel_size.y
    local queue_pos = self.actor:screen_pos() - point(0, panel_height * 0.7)
    self.actor.battle.chip_artist:draw_icon_queue(self.queue, queue_pos)
 end
