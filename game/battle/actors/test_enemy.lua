@@ -1,7 +1,6 @@
 local test_enemy = {
    is_fighter = true,
    occupy_space = true,
-   noflip = true,
 }
 
 function test_enemy:init ()

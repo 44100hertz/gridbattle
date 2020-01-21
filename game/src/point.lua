@@ -26,6 +26,10 @@ function point:floor ()
    return self:map(math.floor)
 end
 
+function point:round ()
+   return (self + 0.5):floor()
+end
+
 function point:lerp (other, weight)
    return (self * (1-weight) + other * weight)
 end
@@ -60,6 +64,9 @@ end
 function point.mt.__div (p, q)
    q = type(q) == 'number' and init(q, q) or q
    return init(p.x / q.x, p.y / q.y)
+end
+function point.mt.__eq (p, q)
+   return p.x == q.x and p.y == q.y
 end
 
 return init

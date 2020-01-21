@@ -15,23 +15,32 @@ local cust_length = 4*60
 
 local battle = oop.class()
 
+-- Return the panel at this x and y position
 function battle:get_panel (pos)
-   -- Return the panel at this x and y position
-   pos = (pos + 0.5):floor()
+   pos = pos:round()
    return self.stage[pos.x] and self.stage[pos.x][pos.y]
 end
 
+function battle:locate_actor (pos)
+   for _,actor in ipairs(self.actors.actors) do
+      if actor.occupy_space and actor.pos:round() == pos:round() then
+         return actor
+      end
+   end
+   return nil
+end
+
 function battle:is_panel_free (pos)
-   local panel = self:get_panel(pos)
-   return panel and not panel.tenant
+   return not self:locate_actor(pos)
 end
 
 function battle:locate_enemy (pos, side)
-   local panel = self:get_panel(pos)
-   return
-      panel and
-      panel.tenant and
-      panel.tenant.side ~= side and panel.tenant
+   local tenant = self:locate_actor(pos)
+   if tenant and tenant.side ~= side then
+      return tenant
+   else
+      return nil
+   end
 end
 
 function battle:locate_enemy_ahead (pos, side)
@@ -44,7 +53,13 @@ function battle:locate_enemy_ahead (pos, side)
 end
 
 function battle:get_side (pos)
-   return pos.x > self.turf[pos.y] and 2 or 1
+   if pos.x > self.num_panels.x or pos.x < 1 or
+      pos.y > self.num_panels.y or pos.y < 1
+   then
+      return nil
+   else
+      return pos.x > self.turf[pos.y] and 2 or 1
+   end
 end
 
 function battle:request_select_chips()
@@ -107,11 +122,11 @@ end
 
 function battle:update (input)
    if self.will_select_chips then
-      self.queues = {}
-      GAME.scene:push(customize(self, self.folders, self.queues))
+      local queues = {}
+      GAME.scene:push(customize(self, self.folders, queues))
       for _,actor in pairs(self.actors.actors) do
          if actor.class == 'player' then
-            actor.queue:set_queue(self.queues[actor.side])
+            actor.queue:set_queue(queues[actor.side])
          end
       end
       self.cust_timer = 0
@@ -128,21 +143,6 @@ function battle:update (input)
          return
       end
       self.cust_timer = self.cust_timer + 1
-
-      -- Clear out panel tenants
-      for x = 1,self.num_panels.x do
-         for y = 1,self.num_panels.y do
-            self.stage[x][y].tenant = nil
-         end
-      end
-      for _,actor in ipairs(self.actors.actors) do
-         if actor.occupy_space then
-            local panel = self:get_panel(actor.pos)
-            if panel then
-               panel.tenant = actor
-            end
-         end
-      end
       self.actors:update(input)
    end
 end

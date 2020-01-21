@@ -69,11 +69,6 @@ function actors:update (input)
    end
    for i,actor in ipairs(self.actors) do
       if actor.despawn then
-         local panel = self.battle:get_panel(actor.pos)
-         -- Remove actor from stage
-         if panel and panel.tenant == actor then
-            panel.tenant = nil
-         end
          table.remove(self.actors, i)
       end
    end

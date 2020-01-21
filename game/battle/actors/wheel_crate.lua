@@ -22,9 +22,9 @@ function wcrate:update ()
       self.z = 0
       self.dz = 0
       self.size = 20/64
-      local panel = self.battle:get_panel()
-      if panel.tenant then
-         self:damage_other(panel.tenant, self.land_damage)
+      local tenant = self.battle:locate_actor(self.pos)
+      if tenant then
+         self:damage_other(tenant, self.land_damage)
          self:die()
       else
          self.occupy_space = true
