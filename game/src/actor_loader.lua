@@ -12,9 +12,6 @@ actor:attach(<component name>, <arguments...>). This will add a component inside
 actor[<component name>]. For example, self:attach('timer', 0) could add a
 self.timer field loaded from <base path>/components/timer.lua, with its initial
 time set to 0. self.timer:seconds() would give seconds elapsed.
-
-The only method classes are expected to have is init, which is called after
-loading the actor. All others are specific to usage.
 --]]
 
 local oop = require 'src/oop'
@@ -56,7 +53,6 @@ function actor_loader:load (actor, class_name)
    setmetatable(actor, {__index = self.actor_cache[class_name]})
 
    actor.components = {}
-   actor:init()
    return actor
 end
 

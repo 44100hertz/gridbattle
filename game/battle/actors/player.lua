@@ -7,7 +7,7 @@ function player:init ()
    self:attach('hp', 300, true)
    self:attach('image', 'ben')
    self:attach('queue', 'user', self.side)
-   self.state = 'idle'
+   self:set_state 'idle'
 end
 
 function player:update (input)

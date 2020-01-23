@@ -15,10 +15,10 @@ base_actor.z = 0        -- z position / height
 base_actor.dz = 0       -- z momentum / falling or rising
 base_actor.despawn = false -- Set to 'true' the actor will be deleted.
 
--- misc:
--- A 'timer' component is on all actors, see battle/components/timer.lua
--- An 'attach' method allows actors to add components, see battle/components/
--- An 'init' method is called on every actor before any other
+-- Called before anything else. At this point, a 'timer' component is already
+-- attached to the actor, see battle/components/timer.lua
+function base_actor:init ()
+end
 
 -- Called every tick
 function base_actor:update ()
@@ -42,6 +42,9 @@ end
 ------------------------------------------------------------
 -- Call these methods!
 ------------------------------------------------------------
+
+-- misc: An 'attach' method allows actors to add components, see
+-- src/actor_loader.lua and battle/components/
 
 -- Update x and y positions (do this once per tick!)
 function base_actor:move ()

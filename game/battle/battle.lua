@@ -53,6 +53,7 @@ function battle:add_actor (actor)
    actor.velocity = point(0,0) -- HACK: cannot share velocity table!
    self.actor_loader:load(actor, actor.class)
    actor:attach('timer')
+   actor:init()
    table.insert(self.actors, actor)
    return actor
 end
