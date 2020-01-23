@@ -41,9 +41,11 @@ return {
    ['battle/actors/bullet'] = {
       base = {rect={0,0,16,16}, origin={8,8}, count={6,1}, anim = {order={1,2,3,4,5,6}, fps=20}},
    },
-
    ['battle/actors/boots'] = {
-      base = {rect={0,0,24,16}, origin={11,7}, count={2,1}}
+      base = {rect={0,0,24,16}, origin={11,7}, count={2,1}},
+   },
+   ['battle/actors/dustball'] = {
+      base = {rect={0,0,40,40}, origin={20,20}},
    },
    ['battle/actors/wheel_crate'] = {
       base = {rect={0,0,45,60}, origin={17,45}}

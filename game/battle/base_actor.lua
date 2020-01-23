@@ -14,6 +14,7 @@ base_actor.occupy_space = false -- Set to 'true' and other actors will not be
 base_actor.z = 0        -- z position / height
 base_actor.dz = 0       -- z momentum / falling or rising
 base_actor.despawn = false -- Set to 'true' the actor will be deleted.
+base_actor.enable_mirror = true -- if true, will reflect X velocity
 
 -- Called before anything else. At this point, a 'timer' component is already
 -- attached to the actor, see battle/components/timer.lua
@@ -54,7 +55,11 @@ end
 
 -- If on the right side, multiply by this to mirror x offsets and velocity
 function base_actor:mirror ()
-   return point(self.side == 2 and -1 or 1, 1.0)
+   if self.enable_mirror and self.side == 2 then
+      return point(-1, 1)
+   else
+      return point(1,1)
+   end
 end
 
 -- 'real velocity' is mirrored by side
@@ -76,9 +81,10 @@ function base_actor:use_chip (chip_name)
 end
 
 -- Can I go here?
-function base_actor:is_panel_free (pos)
+function base_actor:can_occupy (pos)
    pos = pos or self.pos
-   return not self.battle:locate_actor(pos) and
+   local actor = self.battle:locate_actor(pos)
+   return (actor == self or not actor) and
       self.battle:get_side(pos) == self.side
 end
 

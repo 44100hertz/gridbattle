@@ -28,6 +28,7 @@ end
 
 -- Based on the 'turf' of the stage, determine the side that owns a position
 function battle:get_side (pos)
+   pos = pos:round()
    if pos.x > self.num_panels.x or pos.x < 1 or
       pos.y > self.num_panels.y or pos.y < 1
    then
