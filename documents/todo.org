@@ -39,6 +39,16 @@ by sorting out which data needs to be shared between clients.
 ** Saving
 I need a plan on how to implement the save system.
 * General
+** add components to actor_loader, integrate with world map
+** frame rate independence
+As much as I want consistent gameplay, it is healthy for the code not to rely on
+ticks of a specific length. What kind of solutions can I use here?
+** debugging info
+I want to add helpful debug prints in order to 'test the code as it runs' and
+spit out interesting behavior. I'm thinking of adding a "GAME.debug" function to
+print only if debugging is enabled.
+** higher res text?
+I don't really care as long as it looks okay.
 ** image cache
 It's possible that the functions in src/image.lua could be relocated to a
 general image loader/cache. This would likely use weak tables. main.lua does a

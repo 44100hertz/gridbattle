@@ -120,6 +120,13 @@ function battle:get_component (name)
 end
 
 function battle:update (input)
+   -- Display pause menu
+   if input[1].st == 1 or input[2].st == 1 then
+      GAME.scene:push(menu('pause'))
+      return
+   end
+
+   -- Chip selection
    if self.will_select_chips then
       local queues = {}
       GAME.scene:push(customize(self, self.folders, queues))
@@ -132,37 +139,40 @@ function battle:update (input)
       self.will_select_chips = false
       return
    end
+
+   -- Game over?
    local ending = self:get_ending(self.state)
    if ending then
       GAME.scene:push(results(ending))
       return
    end
-   if input[1].st == 1 or input[2].st == 1 then
-      GAME.scene:push(menu('pause'))
-      return
-   end
 
+   -- Main battle
    self.cust_timer = self.cust_timer + 1
    for _,actor in ipairs(self.actors) do
+      -- Main logic
       actor:update(input)
       actor.time = actor.time + 1
 
+      -- Run collisions
+      local enemy = actor:locate_enemy()
+      if enemy then
+         actor:collide(enemy)
+         enemy:collide(actor)
+      end
+
+      -- Check if I'm dead
       if actor.hp and actor.hp:is_zero() or
          (actor.lifespan and actor.time >= actor.lifespan)
       then
          actor:die()
       end
    end
+
+   -- Remove actors only after battle phase has ended
    for i,actor in ipairs(self.actors) do
       if actor.despawn then
          table.remove(self.actors, i)
-      end
-   end
-   for _,actor in ipairs(self.actors) do
-      local enemy = actor:locate_enemy()
-      if enemy then
-         actor:collide(enemy)
-         enemy:collide(actor)
       end
    end
 end
@@ -194,7 +204,7 @@ end
 function battle:draw ()
    self.bg:draw()
 
-   -- draw stage
+   -- stage
    for x = 1,self.num_panels.x do
       for y = 1,self.num_panels.y do
          local screen_pos = self:stage_pos_to_screen(point(x,y)-1)
@@ -210,13 +220,16 @@ function battle:draw ()
          love.graphics.setColor(1,1,1)
       end
    end
-   for _,ent in ipairs(self.actors) do
-      for _,component in ipairs(ent.components) do
+
+   -- actors
+   for _,actor in ipairs(self.actors) do
+      actor:draw()
+      for _,component in ipairs(actor.components) do
          component:draw()
       end
-      ent:_draw(false)
    end
 
+   -- ui
    local cust_amount = self.cust_timer / cust_length
    self.ui:draw(self.state, cust_amount)
 end

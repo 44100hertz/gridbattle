@@ -13,6 +13,7 @@ base_actor.is_fighter = false -- Set to 'true' and the game will check if this
                               -- has ended.
 base_actor.occupy_space = false -- Set to 'true' and other actors will not be
                                 -- able to occupy the same space.
+base_actor.despawn = false -- Set to 'true' the actor will be deleted.
 
 function base_actor:init ()
 end
@@ -20,6 +21,10 @@ end
 -- Called every tick
 function base_actor:update ()
    self:move() -- add velocity to position
+end
+
+-- Called before the actor's components are drawn
+function base_actor:draw ()
 end
 
 -- Called every frame when colliding with other
@@ -130,33 +135,6 @@ end
 
 function base_actor:init (battle)
    self.battle = battle
-end
-
-function base_actor:_draw (draw_shadow)
-   love.graphics.push()
-
-   -- Shadows are a bit offset from the main actor
-   if draw_shadow then
-      love.graphics.setColor(0,0,0,0.5)
-      love.graphics.translate(self.z + 2, self.z * 2 + 2)
-   end
-
-   -- Fade out graphics when height is too much
-   local fade_height_thresh = 20
-   local fade_height_rate = 1.0/50
-   if self.z > fade_height_thresh then
-      local r, g, b = love.graphics.getColor()
-      local alpha = 1.0 + fade_height_rate * (fade_height_thresh - self.z)
-      love.graphics.setColor(r, g, b, alpha)
-   end
-
-   self:draw(draw_shadow)
-
-   love.graphics.setColor(1,1,1)
-   love.graphics.pop()
-end
-
-function base_actor:draw ()
 end
 
 return base_actor
