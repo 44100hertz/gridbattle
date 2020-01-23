@@ -1,10 +1,10 @@
 local boot = {
-   lifespan = 120,
+   lifespan = 2.0,
 }
 
 function boot:init ()
    self:attach('image', 'boots')
-   self.velocity = point(0.1, 0)
+   self.velocity.x = 0.1
 end
 
 function boot:collide (with)

@@ -3,20 +3,22 @@ local oop = require 'src/oop'
 local base_actor = oop.class()
 
 ------------------------------------------------------------
--- Override these methods!
+-- Override these methods and properties!
 ------------------------------------------------------------
 
-base_actor.time = 0     -- Length of existance in ticks. May break if modified.
-base_actor.z = 0        -- z position, used in animation.
 base_actor.is_fighter = false -- Set to 'true' and the game will check if this
                               -- actor is alive when determining if the battle
                               -- has ended.
 base_actor.occupy_space = false -- Set to 'true' and other actors will not be
                                 -- able to occupy the same space.
+base_actor.z = 0        -- z position / height
+base_actor.dz = 0       -- z momentum / falling or rising
 base_actor.despawn = false -- Set to 'true' the actor will be deleted.
 
-function base_actor:init ()
-end
+-- misc:
+-- A 'timer' component is on all actors, see battle/components/timer.lua
+-- An 'attach' method allows actors to add components, see battle/components/
+-- An 'init' method is called on every actor before any other
 
 -- Called every tick
 function base_actor:update ()
@@ -43,9 +45,7 @@ end
 
 -- Update x and y positions (do this once per tick!)
 function base_actor:move ()
-   if self.velocity then
-      self.pos = self.pos + self:real_velocity()
-   end
+   self.pos = self.pos + self:real_velocity()
    if self.dz then self.z = self.z + self.dz end
 end
 
@@ -111,7 +111,7 @@ end
 -- Just a helper function for actors using a 'state' field
 function base_actor:set_state (state_name, time)
    self.state = state_name
-   self.time = time or 0
+   self.timer:init()
 end
 
 -- Get the pixel position of the center of actor
@@ -119,10 +119,8 @@ function base_actor:screen_pos ()
    return self.battle:stage_pos_to_screen(self.pos - 0.5)
 end
 
-------------------------------------------------------------
--- Internal methods (override with caution!)
-------------------------------------------------------------
-
+-- Ignore this method, it's just how the 'battle' field is bound since
+-- base_actor is a class
 function base_actor:init (battle)
    self.battle = battle
 end

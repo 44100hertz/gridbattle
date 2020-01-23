@@ -7,7 +7,7 @@ function player:init ()
    self:attach('hp', 300, true)
    self:attach('image', 'ben')
    self:attach('queue', 'user', self.side)
-   self:set_state('idle')
+   self.state = 'idle'
 end
 
 function player:update (input)
@@ -35,11 +35,11 @@ function player:update (input)
       elseif lr>0 then move(1, 0)
       end
    elseif self.state == 'move' then
-      if self.time == 8 then
+      if self.timer:seconds_equals(8/60.0) then
          self.state = 'idle'
       end
    elseif self.state == 'use_chip' then
-      if self.time == 20 then
+      if self.timer:seconds_equals(20/60.0) then
          self.state = 'idle'
       end
    else

@@ -1,13 +1,18 @@
 -- a 2-boot spawner
 local boots = {}
 
+function boots:init ()
+   self.boot_count = 1
+end
+
 function boots:update ()
-   if self.time == 1 or self.time == 30 then
+   if self.timer:seconds_equals(0) or self.timer:seconds_equals(0.5) then
       self:spawn{
          class = 'boot',
-         frame = self.time == 1 and 1 or 2,
+         frame = self.boot_count,
          parent = self.parent,
       }
+      self.boot_count = 2
    end
 end
 

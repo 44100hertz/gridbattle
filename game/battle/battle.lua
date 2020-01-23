@@ -50,7 +50,9 @@ end
 
 -- Add an actor to the battle. If calling from an actor, use actor:spawn()
 function battle:add_actor (actor)
+   actor.velocity = point(0,0) -- HACK: cannot share velocity table!
    self.actor_loader:load(actor, actor.class)
+   actor:attach('timer')
    table.insert(self.actors, actor)
    return actor
 end
@@ -142,7 +144,7 @@ function battle:update (input)
    for _,actor in ipairs(self.actors) do
       -- Main logic
       actor:update(input)
-      actor.time = actor.time + 1
+      actor.timer:tick()
 
       -- Run collisions
       local enemy = actor:locate_enemy()
@@ -153,7 +155,7 @@ function battle:update (input)
 
       -- Check if I'm dead
       if actor.hp and actor.hp:is_zero() or
-         (actor.lifespan and actor.time >= actor.lifespan)
+         (actor.lifespan and actor.timer:seconds() >= actor.lifespan)
       then
          actor:die()
       end
@@ -215,7 +217,9 @@ function battle:draw ()
    for _,actor in ipairs(self.actors) do
       actor:draw()
       for _,component in ipairs(actor.components) do
-         component:draw()
+         if component.draw then
+            component:draw()
+         end
       end
    end
 

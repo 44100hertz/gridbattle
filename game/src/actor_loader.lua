@@ -34,7 +34,8 @@ function actor_loader:init (base_actor, base_path)
 
    function self.base_actor.attach (base, name, ...)
       if not self.components_cache[name] then
-         self.components_cache[name] = dofile(self.components_path .. name .. '.lua')
+         local path = self.components_path .. name .. '.lua'
+         self.components_cache[name] = love.filesystem.load(path)()
       end
       local class = self.components_cache[name]
       local component = setmetatable({}, {__index = class})

@@ -15,10 +15,7 @@ function particle:update ()
    self:move()
 end
 
-function particle:draw (draw_shadow)
-   if draw_shadow then
-      return
-   end
+function particle:draw ()
    local x, y = self:screen_pos():unpack()
    love.graphics.setColor(unpack(self.color))
    love.graphics.circle('fill', x, y, math.max(0, 5 + self.z*5/200), 4)

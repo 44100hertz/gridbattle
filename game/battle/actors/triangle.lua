@@ -1,14 +1,13 @@
 local triangle = {
-   lifespan = 60,
+   lifespan = 1.0,
 }
 
 function triangle:init ()
-   self.velocity = point(0, 0)
    self:attach('image', 'bullet')
 end
 
 function triangle:update ()
-   self.velocity.x = self.time * 0.005
+   self.velocity.x = self.timer:seconds() * 0.3
    self:move()
 end
 
