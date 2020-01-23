@@ -3,7 +3,7 @@ local oop = require 'src/oop'
 local base_actor = oop.class()
 
 ------------------------------------------------------------
--- Override these fields!
+-- Override these methods!
 ------------------------------------------------------------
 
 base_actor.time = 0     -- Length of existance in ticks. May break if modified.

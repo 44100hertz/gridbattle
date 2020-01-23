@@ -1,20 +1,28 @@
--- Actor loader initializes actors using a "sandwich method"
---  - On the bottom, the base actor, which carries utility methods
---  - In the middle, there is the actor's class, general behaviors.
---  - On the top, the actor instance, its current state
+--[[ Actor loader initializes actors using a "sandwich method"
 
--- Above the actor instance lies components. Components are added any time using
--- actor:attach(<component name>, <arguments...>). This will add a component
--- inside actor[<component name>]. For example, self:attach('timer', 0) may add
--- a self.timer field loaded from <base path>/components/timer.lua, where
--- self.timer:seconds() is a method.
+On the bottom, the 'base actor' carries utility methods inherited by every
+class. In the middle is the class, which overrides some base actor methods
+(usually callbacks) and properties, and calls other methods. On the top is the
+actor instance, and its state is mostly data. The metatable chain is as follows:
+
+   Actor instance -> Actor's class -> Base Actor
+
+Actors can also have components. Components are added any time using
+actor:attach(<component name>, <arguments...>). This will add a component inside
+actor[<component name>]. For example, self:attach('timer', 0) could add a
+self.timer field loaded from <base path>/components/timer.lua, with its initial
+time set to 0. self.timer:seconds() would give seconds elapsed.
+
+The only method classes are expected to have is init, which is called after
+loading the actor. All others are specific to usage.
+--]]
 
 local oop = require 'src/oop'
 
 local actor_loader = oop.class()
 
--- @base_actor contains the "bottom" methods, things that make the actor function.
--- @base_path is where the actors/ and components/ folders need to be located
+-- @base_actor contains the "bottom" methods inherited by every class
+-- @base_path is where the actors/ and components/ folders are located
 function actor_loader:init (base_actor, base_path)
    self.base_actor = base_actor
 
@@ -26,7 +34,7 @@ function actor_loader:init (base_actor, base_path)
 
    function self.base_actor.attach (base, name, ...)
       if not self.components_cache[name] then
-         self.components_cache[name] = dofile('battle/components/' .. name .. '.lua')
+         self.components_cache[name] = dofile(self.components_path .. name .. '.lua')
       end
       local class = self.components_cache[name]
       local component = setmetatable({}, {__index = class})
