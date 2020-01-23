@@ -8,7 +8,7 @@ local actors = oop.class()
 function actors:init (world)
    self.actors = {}
    self.base = base_actor(world)
-   self.aloader = aloader(self.base, 'world/actors/')
+   self.aloader = aloader(self.base, 'world/')
 
    for _,layer in ipairs(world.map.layers) do
       if layer.type == 'objectgroup' then
@@ -39,7 +39,7 @@ function actors:add (actor)
       self.player = actor
    end
    if actor.type == '' then
-      actor.type = nil
+      actor.type = 'dummy'
    end
    self.actors[#self.actors+1] = self.aloader:load(actor, actor.type)
 end

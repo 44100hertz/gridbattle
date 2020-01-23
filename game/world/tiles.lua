@@ -10,13 +10,12 @@ function tiles:init (map, path)
    self.tile_size = point(self.map.tilewidth, self.map.tileheight)
 
    self.set = self.map.tilesets[1]
+   self.image_size = point(self.set.imagewidth, self.set.imageheight)
    local imgpath = path .. self.set.image
    self.set.texture = love.graphics.newImage(imgpath)
    self.set.sheet = image.make_quads(
-      0, 0, self.set.tilewidth, self.set.tileheight,
-      math.floor(self.set.imagewidth / self.set.tilewidth),
-      math.floor(self.set.imageheight / self.set.tileheight),
-      self.set.imagewidth, self.set.imageheight)
+      point(0,0), self.tile_size,
+      (self.image_size / self.tile_size):floor(), self.image_size)
 
    -- Create a more convenient lookup table for tile properties.
    self.tile_properties = {}

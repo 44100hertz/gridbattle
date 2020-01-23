@@ -41,16 +41,6 @@ end
 -- Call these methods!
 ------------------------------------------------------------
 
--- Connect a component to this actor
--- see battle/components/
-function base_actor:attach (name, ...)
-   local class = self.battle:get_component(name)
-   local component = setmetatable({}, {__index = class})
-   self[name] = component
-   self.components[#self.components+1] = component
-   component:init(self, ...)
-end
-
 -- Update x and y positions (do this once per tick!)
 function base_actor:move ()
    if self.velocity then

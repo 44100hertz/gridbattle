@@ -50,10 +50,7 @@ end
 
 -- Add an actor to the battle. If calling from an actor, use actor:spawn()
 function battle:add_actor (actor)
-   actor = actor or {}
-   actor.components = {}
    self.actor_loader:load(actor, actor.class)
-   actor:init()
    table.insert(self.actors, actor)
    return actor
 end
@@ -85,7 +82,7 @@ function battle:init (set_name)
    self.bg = bg(unpack(battle_config.bg))
    self.ui = ui()
    self.actors = {}
-   self.actor_loader = actor_loader(base_actor(self), 'battle/actors/')
+   self.actor_loader = actor_loader(base_actor(self), 'battle/')
    self.chip_artist = chip_artist()
 
    -- stage
@@ -110,13 +107,6 @@ function battle:init (set_name)
 
    self.will_select_chips = true
    self.cust_timer = 0
-end
-
-function battle:get_component (name)
-   if not self.components[name] then
-      self.components[name] = dofile('battle/components/' .. name .. '.lua')
-   end
-   return self.components[name]
 end
 
 function battle:update (input)
