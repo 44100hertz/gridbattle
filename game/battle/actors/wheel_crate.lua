@@ -9,7 +9,7 @@ function wcrate:init ()
 
    -- Spawn up high, in front of parent
    self.velocity = point(0,0)
-   self.z = 200
+   self.z = 3
    self.dz = -5
    self.pos = self.pos + point(1, 0) * self.parent:mirror()
 
@@ -43,7 +43,7 @@ function wcrate:collide (with)
    end
    if with.velocity and with.velocity.x ~= 0 then
       -- TODO: will roll the wrong way if used from right side
-      self.velocity.x = with:real_velocity().x > 0 and 1/32 or -1/32
+      self.velocity.x = with:real_velocity().x > 0 and 2 or -2
    end
 end
 

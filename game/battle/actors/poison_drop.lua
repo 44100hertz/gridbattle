@@ -1,15 +1,14 @@
 local poisdrop = {}
 
 function poisdrop:init ()
-   self.velocity = point(3.0/60, 0.0)
+   self.velocity = point(3.0, 0.0)
    self.lifespan = 10.0
-   self.dz = 1
    self:attach('image', 'poisdrop')
    self.landed = false
 end
 
 function poisdrop:update ()
-   self.dz = self.dz - 1/30
+   self.dz = 1 + self.timer:seconds() * -2
    if self.timer:seconds() >= 1.0 then
       self.landed = true
    else

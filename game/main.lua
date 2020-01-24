@@ -14,9 +14,9 @@ local framedump_canvas, framedump_dir
 
 function love.load ()
    GAME = {}
-   GAME.tickrate = 60
+   GAME.tick_rate = 60
    GAME.size = point(512, 288)
-   GAME.tickperiod = 1/GAME.tickrate
+   GAME.tick_period = 1/GAME.tick_rate
 
    GAME.input = input()
    GAME.scene = scene()
@@ -58,7 +58,7 @@ function love.update (dt)
    -- This loop forces the game to run at a fixed speed.
    total_time = total_time + dt
    while total_time > next_tick do
-      next_tick = next_tick + GAME.tickperiod
+      next_tick = next_tick + GAME.tick_period
       GAME.scene:update()
       -- Frame dumping; frames are dumped at the actual tick rate.
       frame_count = frame_count + 1

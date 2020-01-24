@@ -49,8 +49,10 @@ end
 
 -- Update x and y positions (do this once per tick!)
 function base_actor:move ()
-   self.pos = self.pos + self:real_velocity()
-   if self.dz then self.z = self.z + self.dz end
+   self.pos = self.pos + self:real_velocity() / GAME.tick_rate
+   if self.dz then
+      self.z = self.z + self.dz / GAME.tick_rate
+   end
 end
 
 -- If on the right side, multiply by this to mirror x offsets and velocity

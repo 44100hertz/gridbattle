@@ -9,11 +9,11 @@ function timer:tick ()
 end
 
 function timer:seconds_equals (seconds)
-   return self.tick_count == math.floor(seconds * GAME.tickrate)
+   return self.tick_count == math.floor(seconds * GAME.tick_rate)
 end
 
 function timer:seconds ()
-   return self.tick_count / GAME.tickrate
+   return self.tick_count / GAME.tick_rate
 end
 
 return timer
