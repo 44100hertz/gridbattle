@@ -101,15 +101,28 @@ function base_actor:locate_enemy (pos)
    end
 end
 
--- Is there an enemy in front of here?
-function base_actor:locate_enemy_ahead (pos)
+-- Return the nearest enemy within a given range ahead of self.
+-- @pos: location to detect from
+-- @range: detection range in panels (default right ahead)
+function base_actor:locate_enemy_ahead (pos, range)
    pos = pos or self.pos
-   local inc = self.side==1 and 1 or -1
-   repeat
-      pos = pos + point(inc, 0)
-      local enemy = self:locate_enemy(pos)
-      if enemy then return enemy end
-   until pos.x < 0 or pos.x > self.battle.num_panels.x
+   range = range or point(10, 0.5)
+   -- Place horizontal position in front of pos
+   local x = self.side == 1 and pos.x or pos.x - range.x
+   -- Center vertical position on the position
+   local y = pos.y - range.y / 2
+   -- Locate the nearest (linear distance) actor within range
+   local found_actor, found_distance = nil, 100
+   for _,actor in ipairs(self.battle.actors) do
+      if actor.side ~= self.side and actor.occupy_space and
+         actor.pos:within_rectangle(x, y, range.x, range.y) and
+         found_distance > actor.pos:distance_to(pos)
+      then
+         found_actor = actor
+         found_distance = actor.pos:distance_to(pos)
+      end
+   end
+   return found_actor, found_distance
 end
 
 -- Hurt a known actor
