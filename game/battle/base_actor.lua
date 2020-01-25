@@ -14,7 +14,6 @@ base_actor.occupy_space = false -- Set to 'true' and other actors will not be
 base_actor.z = 0        -- z position / height
 base_actor.dz = 0       -- z momentum / falling or rising
 base_actor.despawn = false -- Set to 'true' the actor will be deleted.
-base_actor.enable_mirror = true -- if true, will reflect X velocity
 
 -- Called before anything else. At this point, a 'timer' component is already
 -- attached to the actor, see battle/components/timer.lua
@@ -49,7 +48,7 @@ end
 
 -- Update x and y positions (do this once per tick!)
 function base_actor:move ()
-   self.pos = self.pos + self:real_velocity() / GAME.tick_rate
+   self.pos = self.pos + self.velocity / GAME.tick_rate
    if self.dz then
       self.z = self.z + self.dz / GAME.tick_rate
    end
@@ -57,16 +56,11 @@ end
 
 -- If on the right side, multiply by this to mirror x offsets and velocity
 function base_actor:mirror ()
-   if self.enable_mirror and self.side == 2 then
+   if self.side == 2 then
       return point(-1, 1)
    else
       return point(1,1)
    end
-end
-
--- 'real velocity' is mirrored by side
-function base_actor:real_velocity ()
-   return self.velocity and self.velocity * self:mirror()
 end
 
 -- Spawn another actor (default at this location)

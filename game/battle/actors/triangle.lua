@@ -7,7 +7,7 @@ function triangle:init ()
 end
 
 function triangle:update ()
-   self.velocity.x = self.timer:seconds() * 10
+   self.velocity.x = self:mirror().x * self.timer:seconds() * 10
    self:move()
 end
 

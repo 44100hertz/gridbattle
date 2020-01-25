@@ -4,7 +4,7 @@ local boot = {
 
 function boot:init ()
    self:attach('image', 'boots')
-   self.velocity.x = 6
+   self.velocity.x = self:mirror().x * 6
 end
 
 function boot:collide (with)

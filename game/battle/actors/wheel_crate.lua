@@ -43,7 +43,7 @@ function wcrate:collide (with)
    end
    if with.velocity and with.velocity.x ~= 0 then
       -- TODO: will roll the wrong way if used from right side
-      self.velocity.x = with:real_velocity().x > 0 and 2 or -2
+      self.velocity.x = with:velocity().x > 0 and 2 or -2
    end
 end
 

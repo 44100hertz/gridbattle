@@ -1,7 +1,7 @@
 local poisdrop = {}
 
 function poisdrop:init ()
-   self.velocity = point(3.0, 0.0)
+   self.velocity = self:mirror() * point(3.0, 0.0)
    self.lifespan = 10.0
    self:attach('image', 'poisdrop')
    self.landed = false
