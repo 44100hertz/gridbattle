@@ -101,9 +101,9 @@ end
 function base_actor:locate_enemy_ahead (pos, range)
    pos = pos or self.pos
    range = range or point(10, 0.5)
-   -- Place horizontal position in front of pos
+   -- Place rectangle in front of pos
    local x = self.side == 1 and pos.x or pos.x - range.x
-   -- Center vertical position on the position
+   -- Center vertical position
    local y = pos.y - range.y / 2
    -- Locate the nearest (linear distance) actor within range
    local found_actor, found_distance = nil, 100
@@ -130,6 +130,12 @@ end
 function base_actor:set_state (state_name, time)
    self.state = state_name
    self.timer:init()
+end
+
+-- Shortcut to add a ui element to this actor
+function base_actor:add_ui_element (element)
+   self.battle.ui.layout:add_element(element)
+   return element
 end
 
 -- Get the pixel position of the center of actor

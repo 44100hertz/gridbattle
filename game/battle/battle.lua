@@ -135,7 +135,7 @@ function battle:update (input)
    end
 
    -- Game over?
-   local ending = self:get_ending(self.state)
+   local ending = self:get_ending()
    if ending then
       GAME.scene:push(results(ending))
       return
@@ -227,7 +227,7 @@ function battle:draw ()
 
    -- ui
    local cust_amount = self.cust_timer / cust_length
-   self.ui:draw(self.state, cust_amount)
+   self.ui:draw(cust_amount)
 end
 
 return battle
