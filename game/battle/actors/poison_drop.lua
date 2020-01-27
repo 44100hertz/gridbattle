@@ -18,7 +18,7 @@ end
 
 function poisdrop:collide (with)
    if self.landed then
-      self:damage_continuously(with, 1.0/8)
+      self:damage_continuously(with, 10.0)
    end
 end
 

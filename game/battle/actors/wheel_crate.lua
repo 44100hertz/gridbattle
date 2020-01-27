@@ -23,7 +23,7 @@ function wcrate:update ()
       self.dz = 0
       local tenant = self.battle:locate_actor(self.pos)
       if tenant then
-         self:damage_other(tenant, self.land_damage)
+         self:damage_once(tenant, self.land_damage)
          self:die()
       else
          self.occupy_space = true
@@ -39,7 +39,7 @@ end
 
 function wcrate:collide (with)
    if self.velocity.x ~= 0 and self.z == 0 then
-      self:damage_other(with, self.roll_damage)
+      self:damage_continuously(with, self.roll_damage)
    end
    if with.velocity and with.velocity.x ~= 0 then
       -- TODO: will roll the wrong way if used from right side

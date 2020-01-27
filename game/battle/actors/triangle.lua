@@ -12,7 +12,7 @@ function triangle:update ()
 end
 
 function triangle:collide (with)
-   self:damage_other(with, 80)
+   self:damage_once(with, 80)
    self.despawn = true
 end
 
