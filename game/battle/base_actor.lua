@@ -119,11 +119,20 @@ function base_actor:locate_enemy_ahead (pos, range)
    return found_actor, found_distance
 end
 
--- Hurt a known actor
-function base_actor:damage_other (target, amount)
+-- Hurt another actor (to be called set number of times; not every frame!)
+-- @target: who to hit
+-- @amount: hit points of damage
+function base_actor:damage_once (target, amount)
    if target.hp then
       target.hp:adjust(-amount)
    end
+end
+
+-- Hurt another actor (to be called every single frame for continuous pain!)
+-- @target: who to hit
+-- @amount: hit points of damage per second
+function base_actor:damage_continuously (target, amount)
+   self:damage_once(target, amount / GAME.tick_rate)
 end
 
 -- Just a helper function for actors using a 'state' field

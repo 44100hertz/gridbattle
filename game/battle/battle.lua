@@ -13,7 +13,7 @@ local customize = require 'battle/customize/customize'
 local savedata = require 'savedata'
 local bg = require 'bg/bg'
 
-local cust_length = 4*60
+local cust_length = 4.0 -- How long it takes to fill cust meter.
 
 local battle = oop.class()
 
@@ -62,7 +62,7 @@ end
 
 -- Request chip selection screen, if enough time has passed
 function battle:request_select_chips()
-   if self.cust_timer >= cust_length then
+   if self.cust_timer / GAME.tick_rate >= cust_length then
       self.will_select_chips = true
    end
 end

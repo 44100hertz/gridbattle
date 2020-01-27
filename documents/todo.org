@@ -1,17 +1,49 @@
+* General
+** Frame rate independence
+Some progress has been made here, it may not be perfect. Known offending
+examples can be listed here... Also variable time dt may never happen but we'll
+see.
+** Debugging features
+I want to add helpful debug prints in order to 'test the code as it runs' and
+spit out interesting behavior. I'm thinking of adding a "GAME.debug" function to
+print only if debugging is enabled.
+
+UPDATE: I want to add debugging and convenience features into a GAME.debug.<x>
+table. This will allow 'secret' developer features to be enabled (which I will
+probably leave in the final game). If it's too annoying to edit the text file I
+absolutely will add a debug menu.
+
+*** Battle Panel Occupancy
+*** Battle base_actor use of locate_ahead and locate
+*** debug.fast_customize -- press R to customize any time, even in 'cust'
+*** debug.endless_customize -- never run out of chips
+** Image cache
+It's possible that the functions in src/image.lua could be relocated to a
+general image loader/cache. This would likely use weak tables. main.lua does a
+tiny bit too much work by loading imgdb.
+** Stop using images/ and just use the root folder
+** handling music
+I should recover my old music from lanparty-code, get some feedback on it in
+discord or possibly other locations (upload to soundcloud is ideal), and
+ultimately decide whether I want a composer for me, or what. hi lorna?
+** Some extra stuff
+*** Higher res text?
+I don't really care as long as it looks okay.
+*** Sound effects
+I should determine sound architecture. Similar to image, or channel-based
+approach? etc.
+*** Improve scene stack system?
+The 'pause' screen for battle just calls scene.pop twice to exit the scene, and
+that's really hacky but I see no better way. A lot of weirdness with fading
+between scenes, too! Could there be a better way?
+*** Exe builder
+** Fix video dumping
+I reorganized all the folders and video dumping might not work. I might also
+make it nicer. I can really just use obs.
 * Battle
-** UI Question
-I eliminated the previous idea of battle data being stored in two different
-tables (one for each side). I want to relocate logic into individual actors and
-their components, then have them allocate UI space to the left or right of the
-stage.
 ** Actors
 *** First chip folders
  Make some folders based on design in the google drive. See what works and what doesn't!
-*** Fix Wheel crate
- Wheel crate poses an interesting problem for the panel/occupancy system. It was
- intended to be able to be shot back and forth, but this is only possible if it
- prevents other actors from moving to the panel it is on. Maybe I will delete
- this one.
 *** Navi Enemy
 I have some boss designs on paper, I should probably get some feedback on them.
 It's that or determine what navi AI or animation features I want to put into
@@ -23,49 +55,67 @@ I just want a list of all chips and be able to put them into queue easily.
 The idea here is that battles would be easier to edit with a UI, rather than in
 the current primitive format. This is likely to save effort in the long run, and
 create a sense of unity by having visual lists of enemies, maybe even previews.
-** Refactor
-*** Remove local PVP
+** Make cust screen use src/layout
+** More general physics? Start with poison_drop
+Find a way to make better animation/physics in general, maybe put a solution in
+src/ or leverage a library.
+** local PVP: remove it or fix it?
 This feature has proven problematic and is likely broken at this point! If I can
 get some sort of netplay going, it will replace this in terms of debugging.
-** netplay
+** Netplay
 Where to begin? I may want to separate a server/client somehow. I should start
 by sorting out which data needs to be shared between clients.
+** Fix dialog box
+There's currently a dialog box crash if you press 'l' during the cust screen.
+** Panels breaking
+Add a 'broken' property to places on stage, display it graphically and add this
+to the location functions. Also, poison_drop should fall through the floor.
+** Graphics Notes
+A lot of little animations need be made and I have lots of ideas. Here's a
+current list:
+ - Moving around: some kind of horizontal shrink / vertical grow / fade to
+   white, and I want to use a 'ghost' actor where actor was
+ - Getting hurt: red flash?
+ - Dying: particle implementation really bad here! I could have a second table
+   for non-interactive actors to aid here.
+ - Panel Breaking: make it shatter!
+ - HP numbers: they should 'drain'
+ - poison_drop: wobble and have a landing animation. how can it layer below
+   tenants?
+
+The battle 'layout' could be restored to BN (top of chip queue, enemy list), or
+redesigned.
+
+Enemies should clearly be facing left or right in battles, no ambiguity!
+
+there's too much space between you and bullet when getting hit. You need to be
+bigger, or bullets, or both. That or make hitboxes smaller, but that is a rabbit
+hole that would require hitbox interpolation.
+** first_time argument for base_actor:collide
+collide is called every frame of collision, so a first_time argument that's true
+only for the first frame of collision could be good. Maybe a collision timer is
+needed? Is there a better solution than self.timer:seconds_equals?
 * World map
+** Merge tiles/sprites into world.lua
+Also, find some things to separate, like maybe the map loader?
+** Move battle data into world?
+It's possible this would be more ideal. Time will tell.
 ** Display actor graphics
+What kind of rules should they follow? Any animation frames? Should they reuse
+the 'image' component of battle, or use a modified version? Generic components?
 ** Display dialog box w/script
 ** Move actors to position w/script
 ** Move actors along path w/script
 ** Pause screen
 ** Saving
 I need a plan on how to implement the save system.
-* General
-** add components to actor_loader, integrate with world map
-** frame rate independence
-As much as I want consistent gameplay, it is healthy for the code not to rely on
-ticks of a specific length. What kind of solutions can I use here?
-** debugging info
-I want to add helpful debug prints in order to 'test the code as it runs' and
-spit out interesting behavior. I'm thinking of adding a "GAME.debug" function to
-print only if debugging is enabled.
-** higher res text?
-I don't really care as long as it looks okay.
-** image cache
-It's possible that the functions in src/image.lua could be relocated to a
-general image loader/cache. This would likely use weak tables. main.lua does a
-tiny bit too much work by loading imgdb.
-** handling music
-I should recover my old music from lanparty-code, get some feedback on it in
-discord or possibly other locations (upload to soundcloud is ideal), and
-ultimately decide whether I want a composer for me, or what. hi lorna?
-** sound effects
-I should determine sound architecture. Similar to image, or channel-based
-approach? etc.
-** Replace scene stack system with simpler loop assignments
-   Must also use this to fix bug in customization dialog box, where local pvp
-   freezes. There's a problem where the 'pause' screen for battle just calls
-   scene.pop twice to exit the scene, and that's really hacky but I see no
-   better way.
-** Exe builder
-** Fix video dumping
-I reorganized all the folders and video dumping might not work. I might also
-make it nicer.
+** Interact/describe
+How should the player interact/describe things?
+ - Interact solid: They must run into the object from any side to interact.
+ - Interact non-solid: They must step on the object and press 'A'
+ - Interact adjacent + cursor: Press A to interact with what's nearby, with
+   multiple items just use a selection cursor.
+ - Interact facing: Give the player 4 facing directions and press A to interact
+   with what's in front.
+
+Should tiles have descriptions? Tile sprites definitely should.
