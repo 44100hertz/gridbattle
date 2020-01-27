@@ -15,10 +15,10 @@ base_actor.z = 0        -- z position / height
 base_actor.dz = 0       -- z momentum / falling or rising
 base_actor.despawn = false -- Set to 'true' the actor will be deleted.
 
--- misc:
--- A 'timer' component is on all actors, see battle/components/timer.lua
--- An 'attach' method allows actors to add components, see battle/components/
--- An 'init' method is called on every actor before any other
+-- Called before anything else. At this point, a 'timer' component is already
+-- attached to the actor, see battle/components/timer.lua
+function base_actor:init ()
+end
 
 -- Called every tick
 function base_actor:update ()
@@ -43,20 +43,24 @@ end
 -- Call these methods!
 ------------------------------------------------------------
 
+-- misc: An 'attach' method allows actors to add components, see
+-- src/actor_loader.lua and battle/components/
+
 -- Update x and y positions (do this once per tick!)
 function base_actor:move ()
-   self.pos = self.pos + self:real_velocity()
-   if self.dz then self.z = self.z + self.dz end
+   self.pos = self.pos + self.velocity / GAME.tick_rate
+   if self.dz then
+      self.z = self.z + self.dz / GAME.tick_rate
+   end
 end
 
 -- If on the right side, multiply by this to mirror x offsets and velocity
 function base_actor:mirror ()
-   return point(self.side == 2 and -1 or 1, 1.0)
-end
-
--- 'real velocity' is mirrored by side
-function base_actor:real_velocity ()
-   return self.velocity and self.velocity * self:mirror()
+   if self.side == 2 then
+      return point(-1, 1)
+   else
+      return point(1,1)
+   end
 end
 
 -- Spawn another actor (default at this location)
@@ -73,9 +77,10 @@ function base_actor:use_chip (chip_name)
 end
 
 -- Can I go here?
-function base_actor:is_panel_free (pos)
+function base_actor:can_occupy (pos)
    pos = pos or self.pos
-   return not self.battle:locate_actor(pos) and
+   local actor = self.battle:locate_actor(pos)
+   return (actor == self or not actor) and
       self.battle:get_side(pos) == self.side
 end
 
@@ -90,15 +95,28 @@ function base_actor:locate_enemy (pos)
    end
 end
 
--- Is there an enemy in front of here?
-function base_actor:locate_enemy_ahead (pos)
+-- Return the nearest enemy within a given range ahead of self.
+-- @pos: location to detect from
+-- @range: detection range in panels (default right ahead)
+function base_actor:locate_enemy_ahead (pos, range)
    pos = pos or self.pos
-   local inc = self.side==1 and 1 or -1
-   repeat
-      pos = pos + point(inc, 0)
-      local enemy = self:locate_enemy(pos)
-      if enemy then return enemy end
-   until pos.x < 0 or pos.x > self.battle.num_panels.x
+   range = range or point(10, 0.5)
+   -- Place rectangle in front of pos
+   local x = self.side == 1 and pos.x or pos.x - range.x
+   -- Center vertical position
+   local y = pos.y - range.y / 2
+   -- Locate the nearest (linear distance) actor within range
+   local found_actor, found_distance = nil, 100
+   for _,actor in ipairs(self.battle.actors) do
+      if actor.side ~= self.side and actor.occupy_space and
+         actor.pos:within_rectangle(x, y, range.x, range.y) and
+         found_distance > actor.pos:distance_to(pos)
+      then
+         found_actor = actor
+         found_distance = actor.pos:distance_to(pos)
+      end
+   end
+   return found_actor, found_distance
 end
 
 -- Hurt another actor (to be called set number of times; not every frame!)
@@ -121,6 +139,12 @@ end
 function base_actor:set_state (state_name, time)
    self.state = state_name
    self.timer:init()
+end
+
+-- Shortcut to add a ui element to this actor
+function base_actor:add_ui_element (element)
+   self.battle.ui.layout:add_element(element)
+   return element
 end
 
 -- Get the pixel position of the center of actor

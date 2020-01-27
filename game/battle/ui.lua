@@ -1,5 +1,6 @@
 local oop = require 'src/oop'
 local image = require 'src/image'
+local layout = require 'src/layout'
 
 local bar_width = 128
 
@@ -7,9 +8,10 @@ local ui = oop.class()
 
 function ui:init ()
    self.image = image('battle/ui')
+   self.layout = layout()
 end
 
-function ui:draw (set, cust_amount)
+function ui:draw (cust_amount)
 --    for i = 1,2 do
 --       local side = set.sides[i]
 --       local align = i == 1 and 'left' or 'right'
@@ -36,6 +38,8 @@ function ui:draw (set, cust_amount)
 --          end
 --       end
 --    end
+
+   self.layout:draw()
 
    -- Customize bar
    local full_amt = cust_amount * bar_width

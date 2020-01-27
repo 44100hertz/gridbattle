@@ -28,6 +28,7 @@ end
 
 -- Based on the 'turf' of the stage, determine the side that owns a position
 function battle:get_side (pos)
+   pos = pos:round()
    if pos.x > self.num_panels.x or pos.x < 1 or
       pos.y > self.num_panels.y or pos.y < 1
    then
@@ -53,6 +54,7 @@ function battle:add_actor (actor)
    actor.velocity = point(0,0) -- HACK: cannot share velocity table!
    self.actor_loader:load(actor, actor.class)
    actor:attach('timer')
+   actor:init()
    table.insert(self.actors, actor)
    return actor
 end
@@ -133,7 +135,7 @@ function battle:update (input)
    end
 
    -- Game over?
-   local ending = self:get_ending(self.state)
+   local ending = self:get_ending()
    if ending then
       GAME.scene:push(results(ending))
       return
@@ -225,7 +227,7 @@ function battle:draw ()
 
    -- ui
    local cust_amount = self.cust_timer / cust_length
-   self.ui:draw(self.state, cust_amount)
+   self.ui:draw(cust_amount)
 end
 
 return battle

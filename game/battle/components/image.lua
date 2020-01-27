@@ -12,7 +12,7 @@ function image:draw ()
    local x, y = self.actor:screen_pos():unpack()
    local flip = (self.actor.side==2 and not self.disable_flip)
 --   local scale_mult = draw_shadow and 0.3 or 0.2
-   local scale_mult = 0.2
+   local scale_mult = 12
    self.image.scale = point(1,1) * (1.0 + scale_mult * self.actor.z)
    self.image:draw(x, y, flip)
 end

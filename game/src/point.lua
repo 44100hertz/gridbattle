@@ -39,9 +39,13 @@ function point:within_rectangle (x, y, w, h)
    return self.x >= x0 and self.x <= x1 and self.y >= y0 and self.y <= y1
 end
 
--- Length from 0,0. A common pattern for distance between is (x - y):distance()
+-- length from 0,0
 function point:length ()
    return math.sqrt(self.x * self.x + self.y * self.y)
+end
+
+function point:distance_to(other)
+   return (self - other):length()
 end
 
 point.mt = {}

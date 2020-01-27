@@ -3,7 +3,7 @@ local particle = {
 }
 
 function particle:init ()
-   local dr = math.random() / 16 + 1/32
+   local dr = math.random() * 4 + 2
    local theta = math.random() * 2 * math.pi
    self.velocity = point(math.sin(theta), math.cos(theta)) * dr
    self.dz = math.random() * 5

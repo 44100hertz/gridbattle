@@ -7,7 +7,7 @@ function player:init ()
    self:attach('hp', 300, true)
    self:attach('image', 'ben')
    self:attach('queue', 'user', self.side)
-   self.state = 'idle'
+   self:set_state 'idle'
 end
 
 function player:update (input)
@@ -18,7 +18,7 @@ function player:update (input)
       end
       local move = function  (dx, dy)
          local goal = self.pos + point(dx, dy)
-         if self:is_panel_free(goal) then
+         if self:can_occupy (goal) then
             self:set_state('move')
             self.pos = goal
          end
