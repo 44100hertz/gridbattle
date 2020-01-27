@@ -16,7 +16,8 @@ function hp:init (actor, max_hp, show_in_ui)
          love.graphics.setColor(0,0,0)
          love.graphics.rectangle('fill', pos.x, pos.y, element.size:unpack())
          love.graphics.setColor(1,1,1)
-         self:_draw(pos)
+         local hpstr = tostring(math.floor(self.value))
+         love.graphics.printf(hpstr, pos.x, pos.y, self.max_width, 'center')
       end
       self.actor:add_ui_element(element)
    else
@@ -24,7 +25,8 @@ function hp:init (actor, max_hp, show_in_ui)
          local pos = self.actor:screen_pos()
          local panel_height = self.actor.battle.panel_size.y
          pos = pos - point(self.max_width/2, panel_height/2)
-         self:_draw(pos)
+         local hpstr = tostring(math.floor(self.value))
+         love.graphics.printf(hpstr, pos.x, pos.y, self.max_width, 'center')
       end
    end
 end
@@ -46,8 +48,6 @@ function hp:is_zero ()
 end
 
 function hp:_draw (pos)
-   local hpstr = tostring(math.floor(self.value))
-   love.graphics.printf(hpstr, pos.x, pos.y, self.max_width, 'center')
 end
 
 return hp

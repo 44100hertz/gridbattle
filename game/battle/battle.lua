@@ -1,13 +1,14 @@
 local oop = require 'src/oop'
+local image = require 'src/image'
 local folder = require 'src/folder'
 local menu = require 'src/menu'
 local actor_loader = require 'src/actor_loader'
+local layout = require 'src/layout'
 
 local base_actor = require 'battle/base_actor'
 local results = require 'battle/results'
 local chip_artist = require 'battle/chip_artist'
 local customize = require 'battle/customize/customize'
-local ui = require 'battle/ui'
 
 local savedata = require 'savedata'
 local bg = require 'bg/bg'
@@ -84,7 +85,8 @@ function battle:init (set_name)
    local battle_config = love.filesystem.load(path)()
    self.components = {}
    self.bg = bg(unpack(battle_config.bg))
-   self.ui = ui()
+   self.cust_bar_image = image('battle/ui')
+   self.layout = layout()
    self.actors = {}
    self.actor_loader = actor_loader(base_actor(self), 'battle/')
    self.chip_artist = chip_artist()
@@ -225,9 +227,33 @@ function battle:draw ()
       end
    end
 
-   -- ui
+   -- customize bar
    local cust_amount = self.cust_timer / cust_length
-   self.ui:draw(cust_amount)
+   local bar_width = 128
+   local full_amt = cust_amount * bar_width
+   local bar_size = math.min(full_amt, bar_width-2)
+   local red = 40
+   if cust_amount >= 1 then
+      red = (math.sin(love.timer.getTime()*4 % math.pi)+1) * 100/256.0
+   end
+   local bar_x = GAME.size.x/2 - bar_width/2
+   local bar_y = 2
+   love.graphics.setColor(red, 40/256.0, 40/256.0)
+   love.graphics.rectangle('fill', bar_x+1, bar_y, bar_size, 8)
+   love.graphics.setColor(255, 255, 255)
+   local x,y = bar_x, bar_y
+   local segs = bar_width/8 - 2
+   self.cust_bar_image:set_sheet('bar')
+   self.cust_bar_image:draw(x, y, nil, 1)
+   for _=1,segs do
+      x = x + 8
+      self.cust_bar_image:draw(x, y, nil, 2)
+   end
+   x = x + 8
+   self.cust_bar_image:draw(x, y, nil, 3)
+
+   -- layout
+   self.layout:draw()
 end
 
 return battle

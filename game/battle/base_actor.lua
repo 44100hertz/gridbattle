@@ -134,7 +134,7 @@ end
 
 -- Shortcut to add a ui element to this actor
 function base_actor:add_ui_element (element)
-   self.battle.ui.layout:add_element(element)
+   self.battle.layout:add_element(element)
    return element
 end
 
