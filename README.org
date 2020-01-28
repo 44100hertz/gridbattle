@@ -5,6 +5,6 @@ This respository is under the zlib open-source license, included in LICENSE.
 The assets included here are fully original and should be considered
 free to use. gamecontrollerdb.txt is created by SDL.
 
-* Building
-Makefile generates tmx -> lua maps for the worldmap. Currently no way to build
-.love or .exe files.
+* Usage
+Makefile can build a .love file, or run the game (assuming you have love2d
+installed) with 'make run'.
