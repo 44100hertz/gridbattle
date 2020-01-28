@@ -4,19 +4,10 @@ Some progress has been made here, it may not be perfect. Known offending
 examples can be listed here... Also variable time dt may never happen but we'll
 see.
 ** Debugging features
-I want to add helpful debug prints in order to 'test the code as it runs' and
-spit out interesting behavior. I'm thinking of adding a "GAME.debug" function to
-print only if debugging is enabled.
-
-UPDATE: I want to add debugging and convenience features into a GAME.debug.<x>
-table. This will allow 'secret' developer features to be enabled (which I will
-probably leave in the final game). If it's too annoying to edit the text file I
+I want to add debugging and convenience features into a GAME.debug.<x> table.
+This will allow 'secret' developer features to be enabled (which I will probably
+leave in the final game). If it's too annoying to edit the text file I
 absolutely will add a debug menu.
-
-*** Battle Panel Occupancy
-*** Battle base_actor use of locate_ahead and locate
-*** debug.fast_customize -- press R to customize any time, even in 'cust'
-*** debug.endless_customize -- never run out of chips
 ** Image cache
 It's possible that the functions in src/image.lua could be relocated to a
 general image loader/cache. This would likely use weak tables. main.lua does a
@@ -40,6 +31,10 @@ between scenes, too! Could there be a better way?
 ** Fix video dumping
 I reorganized all the folders and video dumping might not work. I might also
 make it nicer. I can really just use obs.
+** Graphical Input configurator
+...please consider using a dependency for this!
+* Folder editor
+** Rewrite/redesign folder editor
 * Battle
 ** Actors
 *** First chip folders
@@ -55,7 +50,10 @@ I just want a list of all chips and be able to put them into queue easily.
 The idea here is that battles would be easier to edit with a UI, rather than in
 the current primitive format. This is likely to save effort in the long run, and
 create a sense of unity by having visual lists of enemies, maybe even previews.
-** Make cust screen use src/layout
+*** Show Battle Panel Occupancy
+*** Show Battle base_actor use of locate_ahead and locate
+*** debug.fast_customize -- press R to customize any time, even in 'cust'
+*** debug.endless_customize -- never run out of chips
 ** More general physics? Start with poison_drop
 Find a way to make better animation/physics in general, maybe put a solution in
 src/ or leverage a library.

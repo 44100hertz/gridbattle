@@ -4,7 +4,7 @@ local wcrate = {
 }
 
 function wcrate:init ()
-   self:attach('hp', 1000, true)
+   self:attach('hp', 1000, {hidden = true})
    self.side = 0 -- Can hurt anyone
 
    -- Spawn up high, in front of parent

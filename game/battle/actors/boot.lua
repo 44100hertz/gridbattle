@@ -8,7 +8,7 @@ function boot:init ()
 end
 
 function boot:collide (with)
-   self:damage_other(with, 40)
+   self:damage_once(with, 40)
    self.despawn = true
 end
 

@@ -9,7 +9,7 @@ function folder:init(name)
 --   local path = 'folders/' .. name .. '.lua'
    -- Look first in save dir, then in game folders.
 --   if love.filesystem.getInfo(path) then
---      self.data = love.filesystem.load(input)()
+--      self.data = love.filesystem.load()()
 --   else
    self.data = love.filesystem.load('folders/' .. name .. '.lua')()
 --   end

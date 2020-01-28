@@ -8,7 +8,7 @@ local layout = require 'src/layout'
 local base_actor = require 'battle/base_actor'
 local results = require 'battle/results'
 local chip_artist = require 'battle/chip_artist'
-local customize = require 'battle/customize/customize'
+local customize = require 'battle/customize'
 
 local savedata = require 'savedata'
 local bg = require 'bg/bg'
@@ -83,7 +83,6 @@ function battle:init (set_name)
 
    -- general
    local battle_config = love.filesystem.load(path)()
-   self.components = {}
    self.bg = bg(unpack(battle_config.bg))
    self.cust_bar_image = image('battle/ui')
    self.layout = layout()
@@ -104,33 +103,32 @@ function battle:init (set_name)
       end
    end
 
-   self.folders = {folder(savedata.player.folder)} -- HACK: just load this folder
+   self.folder = folder(savedata.player.folder) -- HACK: just load this folder
 
    for _,actor in ipairs(battle_config.actors) do
       actor.side = self:get_side(actor.pos)
       self:add_actor(actor)
+      if actor.class == 'player' then
+         self.player = actor
+      end
    end
 
    self.will_select_chips = true
    self.cust_timer = 0
 end
 
-function battle:update (input)
+function battle:update ()
    -- Display pause menu
-   if input[1].st == 1 or input[2].st == 1 then
+   if GAME.input:hit'start' then
       GAME.scene:push(menu('pause'))
       return
    end
 
    -- Chip selection
    if self.will_select_chips then
-      local queues = {}
-      GAME.scene:push(customize(self, self.folders, queues))
-      for _,actor in pairs(self.actors) do
-         if actor.class == 'player' then
-            actor.queue:set_queue(queues[actor.side])
-         end
-      end
+      local queue = {}
+      self.player.queue:set(queue)
+      GAME.scene:push(customize(self, self.folder, queue))
       self.cust_timer = 0
       self.will_select_chips = false
       return
@@ -147,7 +145,7 @@ function battle:update (input)
    self.cust_timer = self.cust_timer + 1
    for _,actor in ipairs(self.actors) do
       -- Main logic
-      actor:update(input)
+      actor:update()
       actor.timer:tick()
 
       -- Run collisions
@@ -173,27 +171,19 @@ function battle:update (input)
    end
 end
 
--- Figure out if the battle has ended yet
--- Endings in order: win, lose, p1win, p2win
+-- If a side has won the battle, return that side's index.
+-- For a standard battle, 1 means player won, 2 means enemy
 function battle:get_ending ()
-   local sides = {{}, {}}
+   local alive = {}
    for _,actor in ipairs(self.actors) do
-      if actor.class == 'player' then
-         sides[actor.side].has_player = true
-      end
-      if actor.is_fighter and not actor.despawn then
-         sides[actor.side].alive = true
+      if actor.is_fighter then
+         alive[actor.side] = true
       end
    end
-
-   local two_player = sides[1].has_player and sides[2].has_player
-   local winner = nil
-   if not sides[1].alive then winner = 2 end
-   if not sides[2].alive then winner = 1 end
-   if winner then
-      return two_player and 2 + winner or winner
-   else
-      return nil
+   for i = 1,2 do
+      if not alive[i] then
+         return 3 - i
+      end
    end
 end
 
@@ -228,7 +218,7 @@ function battle:draw ()
    end
 
    -- customize bar
-   local cust_amount = self.cust_timer / cust_length
+   local cust_amount = self.cust_timer / GAME.tick_rate / cust_length
    local bar_width = 128
    local full_amt = cust_amount * bar_width
    local bar_size = math.min(full_amt, bar_width-2)

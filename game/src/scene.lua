@@ -13,7 +13,7 @@ function scene:init()
 end
 
 -- A scene object should have the following fields:
---   object:update(input)
+--   object:update()
 --   object:draw()
 --   object.transparent         if true, draw the scene below this one
 function scene:push (mod)
@@ -42,7 +42,7 @@ end
 function scene:update ()
    local inputs = GAME.input:update()
    if self:top().update then
-      self:top():update(inputs)
+      self:top():update(s)
    end
 end
 

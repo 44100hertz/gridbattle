@@ -23,9 +23,11 @@ function world:init (path)
    self.border_shader:send('position', {(GAME.size/2 - self.view_size/2):unpack()})
 end
 
-function world:update (input)
-   if input[1].st==1 then GAME.scene:pop() end
-   self.actors:update(input)
+function world:update ()
+   if GAME.input:hit'start' then
+      GAME.scene:pop()
+   end
+   self.actors:update()
 end
 
 function world:draw ()

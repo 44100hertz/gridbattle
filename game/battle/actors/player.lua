@@ -4,16 +4,15 @@ local player = {
 }
 
 function player:init ()
-   self:attach('hp', 300, true)
+   self:attach('hp', 300, {hidden = true, ui = true})
    self:attach('image', 'ben')
-   self:attach('queue', 'user', self.side)
+   self:attach('queue', 'user')
    self:set_state 'idle'
 end
 
-function player:update (input)
-   input = input[self.side]
+function player:update ()
    if self.state == 'idle' then
-      if input.l>0 or input.r>0 then
+      if GAME.input:down'l' or GAME.input:down'r' then
          self.battle:request_select_chips()
       end
       local move = function  (dx, dy)
@@ -23,10 +22,10 @@ function player:update (input)
             self.pos = goal
          end
       end
-      local lr = input.dr - input.dl
-      local ud = input.dd - input.du
+      local lr = GAME.input:seconds_down'dr' - GAME.input:seconds_down'dl'
+      local ud = GAME.input:seconds_down'dd' - GAME.input:seconds_down'du'
 
-      if input.a == 1 then
+      if GAME.input:hit'a' then
          self.queue:use_chip()
          self:set_state('use_chip')
       elseif ud<0 then move(0, -1)

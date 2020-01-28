@@ -4,7 +4,7 @@ local queue = {}
 ---- 'user': will display a dialog to select chips
 function queue:init (actor)
    self.actor = actor
-   self:set_queue({})
+   self:set({})
 end
 
 function queue:use_chip ()
@@ -14,7 +14,7 @@ function queue:use_chip ()
    end
 end
 
-function queue:set_queue (q)
+function queue:set (q)
    self.queue = q
 end
 

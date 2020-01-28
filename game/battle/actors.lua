@@ -6,7 +6,7 @@ local actors = oop.class()
 function actors:get_ending ()
 end
 
-function actors:update (input)
+function actors:update ()
 end
 
 function actors:draw ()

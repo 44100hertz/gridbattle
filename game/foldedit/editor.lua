@@ -61,40 +61,42 @@ function editor:move_chip (from, to)
    to.folder:insert(entry)
 end
 
-function editor:update (input)
-   input = input[1]
-   -- Check input with repeat
-   local function repcheck (t)
-      return t % math.max(20-t, 6) == 1
-   end
+function editor:update ()
    local function update_pane (pane)
-      if #pane.folder.data==0 then return end
-      if repcheck(input.dd) then
+      if #pane.folder.data==0 then
+         return
+      elseif GAME.input:hit_with_repeat('dd', 0.1, 10) then
          pane.sel = pane.sel % #pane.folder.data + 1
-      elseif repcheck(input.du) then
+      elseif GAME.input:hit_with_repeat('du', 0.1, 10) then
          pane.sel = (pane.sel-2) % #pane.folder.data + 1
       end
    end
 
-   if input.dr==1 then self.column = self.column%3+1 return end
-   if input.dl==1 then self.column = (self.column-2)%3+1 return end
+   if GAME.input:hit'dr' then
+      self.column = self.column%3+1
+      return
+   end
+   if GAME.input:hit'dl' then
+      self.column = (self.column-2)%3+1
+      return
+   end
 
    if self.column==1 then
-      if input.a==1 then
+      if GAME.input:hit'a' then
          self.icons[self.selection](self)
-      elseif input.dd==1 then
+      elseif GAME.input:hit'dd' then
          self.selection = self.selection % #self.icons + 1
-      elseif input.du==1 then
+      elseif GAME.input:hit'du' then
          self.selection = (self.selection-2) % #self.icons + 1
       end
    elseif self.column==2 then
       update_pane(self.deck)
-      if input.a==1 then
+      if GAME.input:hit'a' then
          self:move_chip(self.deck, self.library)
       end
    elseif self.column==3 then
       update_pane(self.library)
-      if input.a==1 then
+      if GAME.input:hit'a' then
          self:move_chip(self.library, self.deck)
       end
    end

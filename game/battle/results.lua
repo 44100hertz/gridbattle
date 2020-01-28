@@ -10,8 +10,8 @@ function results:init (result)
    self.frame = result
 end
 
-function results:update (input)
-   if input[1].a == 1 then
+function results:update ()
+   if GAME.input:hit_any_button() then
       GAME.scene:pop()
       GAME.scene:pop()
    end

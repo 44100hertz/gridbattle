@@ -24,20 +24,17 @@ local input_check = {
    'a', 'b', 'dl', 'dr', 'l', 'r'
 }
 
-function menu:update (input)
-   local check = function (k)
-      return (input[1][k]==1 or input[2][k]==1)
-   end
+function menu:update ()
    local entry = self[self.sel]
-   for _,button in ipairs(input_check) do
-      if check(button) and entry[button] then
+   for _,button in ipairs(GAME.input.buttons) do
+      if GAME.input:hit(button) and entry[button] then
          entry[button](entry)
          return
       end
    end
-   if check'dd' then
+   if GAME.input:hit'dd' then
       self.sel = self.sel % #self + 1
-   elseif check'du' then
+   elseif GAME.input:hit'du' then
       self.sel = (self.sel-2) % #self + 1
    end
 end

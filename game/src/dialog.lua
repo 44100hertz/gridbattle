@@ -12,9 +12,8 @@ function dialog:init (text, x, y, color)
    self.border_width = 4
 end
 
-function dialog:update (input_list)
-   local input = input_list[1]
-   if input.a == 1 or input.b == 1 then
+function dialog:update ()
+   if GAME.input:hit'a' or GAME.input:hit'b' then
       GAME.scene:pop()
    end
 end

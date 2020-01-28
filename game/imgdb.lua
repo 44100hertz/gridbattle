@@ -33,7 +33,7 @@ return {
       bar = {rect={0,0,8,8}, count={3,1}},
    },
    ['battle/results'] = {
-      base = {rect={0,0,240,160}, count={4,1}}
+      base = {rect={0,0,240,160}, count={2,1}}
    },
    ['battle/start'] = {
       base = {rect={0,0,240,160}, origin={120,80}}

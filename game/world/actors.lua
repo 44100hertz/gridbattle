@@ -44,7 +44,7 @@ function actors:add (actor)
    self.actors[#self.actors+1] = self.aloader:load(actor, actor.type)
 end
 
-function actors:update (input)
+function actors:update ()
    -- check rectangle collisions
    for _,actor in ipairs(self.actors) do
       local _,_,w,h = self.player:rect()
@@ -56,7 +56,7 @@ function actors:update (input)
 
    for _,actor in ipairs(self.actors) do
       if actor.active and actor.update then
-         actor:update(input)
+         actor:update()
       end
    end
 end

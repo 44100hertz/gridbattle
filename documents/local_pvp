@@ -1,0 +1,10 @@
+A funny issue: I thought it was a good idea to implement local (same-screen) PVP
+in a battle network clone. There's a problem here! When you can screen peek, how
+are you supposed to choose your chips? Should players take turns choosing a
+single chip? Should there be a timer, rewarding the player who can enter in all
+their chips before the other person has time to react? Do you avoid looking at
+the other person's half of the screen, out of politeness? Overall, this is an
+awkward feature. I do think local multiplayer is a good thing, I'm a big fan of
+it, but I think in order for this to work properly it has to be on two separate
+screens or devices! Also, my two-player code was slightly hacked in and removing
+it has lifted a small weight off my code base.

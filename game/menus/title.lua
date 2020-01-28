@@ -23,12 +23,6 @@ local title = {
       end,
    },
    {
-      text = 'pvp',
-      a = function ()
-         GAME.scene:push_fade({}, battle('pvp'))
-      end,
-   },
-   {
       text = 'folder editor',
       a = function ()
          GAME.scene:push_fade({}, foldedit('test-collection', 'test'))
