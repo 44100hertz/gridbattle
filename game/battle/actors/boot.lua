@@ -1,5 +1,6 @@
 local boot = {
    lifespan = 2.0,
+   auto_collision = true,
 }
 
 function boot:init ()

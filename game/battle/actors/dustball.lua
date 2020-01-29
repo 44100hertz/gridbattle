@@ -4,7 +4,7 @@ local dustball = {
    enable_mirror = false,
 
    movement_speed = 1,
-   detect_distance = 0.4, -- change directions when this far from obstacle
+   detect_distance = 0.5, -- change directions when this far from obstacle
    shoot_stop_length = 0.5, -- when shooting, pause for this long
    cooldown = 0.5, -- after shooting, move this long before attacking again
 }

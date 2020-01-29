@@ -151,10 +151,12 @@ function battle:update ()
       actor.timer:tick()
 
       -- Run collisions
-      local enemy = actor:locate_enemy()
-      if enemy then
-         actor:collide(enemy)
-         enemy:collide(actor)
+      if actor.auto_collision then
+         local enemy = actor:locate_enemy()
+         if enemy then
+            actor:collide(enemy)
+            enemy:collide(actor)
+         end
       end
 
       -- Check if I'm dead

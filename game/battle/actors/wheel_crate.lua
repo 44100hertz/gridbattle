@@ -1,11 +1,14 @@
 local wcrate = {
    land_damage = 40,
-   roll_damage = 4,
+   roll_damage = 40,
+
+   neutral = true,
+   -- enables auto_collision AND occupy_space after landing
 }
 
 function wcrate:init ()
    self:attach('hp', 1000, {hidden = true})
-   self.side = 0 -- Can hurt anyone
+   self.side = self -- All others are my enemy!
 
    -- Spawn up high, in front of parent
    self.velocity = point(0,0)
@@ -26,7 +29,9 @@ function wcrate:update ()
          self:damage_once(tenant, self.land_damage)
          self:die()
       else
+         self.auto_collision = true
          self.occupy_space = true
+         self.landed = true
       end
    end
 
@@ -38,12 +43,12 @@ function wcrate:update ()
 end
 
 function wcrate:collide (with)
-   if self.velocity.x ~= 0 and self.z == 0 then
-      self:damage_continuously(with, self.roll_damage)
-   end
-   if with.velocity and with.velocity.x ~= 0 then
-      -- TODO: will roll the wrong way if used from right side
-      self.velocity.x = with.velocity.x > 0 and 2 or -2
+   if self.landed then
+      if self.velocity.x == 0 then
+         self.velocity = point(2,0) * with:mirror()
+      else
+         self:damage_continuously(with, self.roll_damage)
+      end
    end
 end
 

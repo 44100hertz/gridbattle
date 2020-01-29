@@ -1,17 +1,25 @@
---[[ Actor loader initializes actors using a "sandwich method"
+--[[
+
+Actor loader: initializes actors using a "sandwich method", and gives them an
+'attach' method for adding components.
 
 On the bottom, the 'base actor' carries utility methods inherited by every
 class. In the middle is the class, which overrides some base actor methods
 (usually callbacks) and properties, and calls other methods. On the top is the
-actor instance, and its state is mostly data. The metatable chain is as follows:
+actor instance, its runtime state which is mostly data. The inheritance chain is
+as follows:
 
    Actor instance -> Actor's class -> Base Actor
 
-Actors can also have components. Components are added any time using
-actor:attach(<component name>, <arguments...>). This will add a component inside
-actor[<component name>]. For example, self:attach('timer', 0) could add a
-self.timer field loaded from <base path>/components/timer.lua, with its initial
-time set to 0. self.timer:seconds() would give seconds elapsed.
+Components are added any time using:
+
+   actor:attach(<component name>, <arguments...>).
+
+This will add a component inside actor[<component name>]. For example,
+self:attach('timer', 0) could add a self.timer field loaded from <base
+path>/components/timer.lua, with its initial time set to 0. self.timer:seconds()
+would give seconds elapsed.
+
 --]]
 
 local oop = require 'src/oop'

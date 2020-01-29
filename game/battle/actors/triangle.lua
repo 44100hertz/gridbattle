@@ -1,5 +1,6 @@
 local triangle = {
    lifespan = 1.5,
+   auto_collision = true,
 }
 
 function triangle:init ()
