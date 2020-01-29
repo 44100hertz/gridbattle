@@ -22,15 +22,16 @@ function customize:update ()
    --   All same letter
    --   All same chip
    local queue_is_valid = function (queue)
+      local same_letter, same_chip = true, true
       for i=2,#queue do
          if queue[i].name ~= queue[1].name then
-            return false
+            same_letter = false
          end
          if queue[i].letter ~= queue[1].letter then
-            return false
+            same_chip = false
          end
       end
-      return true
+      return same_letter or same_chip
    end
 
    local selection = self.palette[self.selection]
