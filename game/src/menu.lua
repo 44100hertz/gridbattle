@@ -20,13 +20,9 @@ function menu.manual_init (name, ...)
    return self
 end
 
-local input_check = {
-   'a', 'b', 'dl', 'dr', 'l', 'r'
-}
-
 function menu:update ()
    local entry = self[self.sel]
-   for _,button in ipairs(GAME.input.buttons) do
+   for _,button in ipairs(GAME.input.keys) do
       if GAME.input:hit(button) and entry[button] then
          entry[button](entry)
          return

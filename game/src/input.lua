@@ -29,6 +29,7 @@ function input:init()
       dl = 'dpleft',
       dr = 'dpright',
    }
+   self.keys = {'a', 'b', 'l', 'r', 'start', 'option', 'du', 'dd', 'dl', 'dr'}
    self.buttons = {'a', 'b', 'l', 'r', 'start', 'option'}
    self.counts = {}
    for key,_ in pairs(self.joybinds) do
@@ -81,7 +82,7 @@ end
 
 function input:update()
    local joy = love.joystick.getJoysticks()[1]
-   for key,_ in pairs(self.joybinds) do
+   for _,key in ipairs(self.keys) do
       local joystick = joy and point(joy:getAxis(1), joy:getAxis(2))
       local down = love.keyboard.isScancodeDown(self.keybinds[key]) or
          (joy and joy:isGamepadDown(self.joybinds[key])) or
