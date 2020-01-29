@@ -10,6 +10,7 @@ local customize = oop.class {
 function customize:init (battle, folder, queue)
    self.battle = battle
    self.queue = queue
+   self.folder = folder
    self.palette = folder:draw(5, self.palette)
    self.selection = 1
    self.image = image('customize')
@@ -53,11 +54,13 @@ function customize:update ()
       local i=1
       while(self.palette[i]~=nil) do i=i+1 end
       self.palette[i] = table.remove(self.queue)
-   elseif GAME.input:hit'l' and selection then
-      local chip = GAME.chipdb[selection.name]
-      GAME.scene:push(dialog(chip.desc, 132, 16))
+--   elseif GAME.input:hit'l' and selection then
+--      local chip = GAME.chipdb[selection.name]
+--      GAME.scene:push(dialog(chip.desc, 132, 16))
    elseif GAME.input:hit'option' then
       self.hide = not self.hide
+   elseif GAME.debug.instant_reload_palette and GAME.input:hit'r' then
+      self.palette = self.folder:draw(5)
    end
 end
 

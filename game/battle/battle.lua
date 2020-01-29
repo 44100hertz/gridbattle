@@ -62,7 +62,9 @@ end
 
 -- Request chip selection screen, if enough time has passed
 function battle:request_select_chips()
-   if self.cust_timer / GAME.tick_rate >= cust_length then
+   if GAME.debug.fast_customize or
+      self.cust_timer / GAME.tick_rate >= cust_length
+   then
       self.will_select_chips = true
    end
 end

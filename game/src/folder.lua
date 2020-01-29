@@ -107,7 +107,9 @@ function folder:remove(index)
       print('tried to remove nonexistant index:', index)
       return
    end
-   entry.qty = entry.qty - 1
+   if not GAME.debug.endless_folder then
+      entry.qty = entry.qty - 1
+   end
    if entry.qty==0 then table.remove(self.data, index) end
    return {name = entry.name, ltr = entry.ltr}
 end
