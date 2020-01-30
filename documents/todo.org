@@ -12,7 +12,6 @@ absolutely will add a debug menu.
 It's possible that the functions in src/image.lua could be relocated to a
 general image loader/cache. This would likely use weak tables. main.lua does a
 tiny bit too much work by loading imgdb.
-** Stop using images/ and just use the root folder
 ** handling music
 I should recover my old music from lanparty-code, get some feedback on it in
 discord or possibly other locations (upload to soundcloud is ideal), and
@@ -36,13 +35,6 @@ make it nicer. I can really just use obs.
 * Folder editor
 ** Rewrite/redesign folder editor
 * Battle
-** Actors
-*** First chip folders
- Make some folders based on design in the google drive. See what works and what doesn't!
-*** Navi Enemy
-I have some boss designs on paper, I should probably get some feedback on them.
-It's that or determine what navi AI or animation features I want to put into
-place, and make a simple enemy that has all of those traits.
 ** Devtools
 *** chip selector
 I just want a list of all chips and be able to put them into queue easily.
@@ -52,41 +44,56 @@ the current primitive format. This is likely to save effort in the long run, and
 create a sense of unity by having visual lists of enemies, maybe even previews.
 *** Show Battle Panel Occupancy
 *** Show Battle base_actor use of locate_ahead and locate
-** More general physics? Start with poison_drop
-Find a way to make better animation/physics in general, maybe put a solution in
-src/ or leverage a library.
-** local PVP: remove it or fix it?
-This feature has proven problematic and is likely broken at this point! If I can
-get some sort of netplay going, it will replace this in terms of debugging.
+** Graphics / Animations
+*** 'Spawning' animations
+    This solves the problem of having 2 states in poisdrop, wheel_crate, etc.
+    where the first state is literally just moving into place. It should replace
+    this complexity with a component, like this:
+     - throwing: `self:attach('animation', 'throw', {distance = 3})` - if liquid, drop
+       should wobble
+     - falling: `self:attach('animation', 'fall, {distance = 1})`
+    It will also take care of showing warning graphics on the panel.
+*** Fixes
+     - Enemies should clearly be facing left or right in battles, no ambiguity!
+     - Bullets do not touch the actor that they hit. Need to increase size.
+*** Additions
+**** Pain
+     - Single damage: A semitransparent red-tinted image of you fades off
+       briefly in a random direction. Some screen shake. Could vary intensity
+       with amount of damage.
+     - Death: Like single damage, but the red ghost leaves nothing behind.
+     - Continuous damage: A 'blip' appears in a random radius in your center.
+       Tiny screen shake that adds up.
+     - HP numbers: Add a color tint. Possibly enclose in rectangle w/tint.
+       Draining animation?
+**** Stage
+     - Panel Breaking: make it shatter!
+     - Stage Glimmer: make the stage feel shiny with white opaque diagonal
+       'flares', or maybe glitter effect. Maybe have variety based on containing
+       area.
+     - Draw shadows below images, hp, and increase shadow distance w/height.
+**** Moving Teleport
+    Likely animation: horizontal shrink / vertical grow / fade to white in the
+    space you just exited. Possible visuals:
+    1. Lazy method: Simply put a sprite where I just was. This doesn't solve
+       pop-in.
+    2. Turn into a ball which moves and reforms in the desired location.
+    3. One sprite exits this way, another enters nearby.
+
+    `self:attach('movement_ghost')` could track position and draw ghost if I
+    move panels.
+** First Chip folders
+** Navi Enemy
+I have some boss designs on paper, I should probably get some feedback on them.
+It's that or determine what navi AI or animation features I want to put into
+place, and make a simple enemy that has all of those traits.
 ** Netplay
 Where to begin? I may want to separate a server/client somehow. I should start
 by sorting out which data needs to be shared between clients.
-** Fix dialog box
-There's currently a dialog box crash if you press 'l' during the cust screen.
+** Item descriptions
 ** Panels breaking
 Add a 'broken' property to places on stage, display it graphically and add this
 to the location functions. Also, poison_drop should fall through the floor.
-** Graphics Notes
-A lot of little animations need be made and I have lots of ideas. Here's a
-current list:
- - Moving around: some kind of horizontal shrink / vertical grow / fade to
-   white, and I want to use a 'ghost' actor where actor was
- - Getting hurt: red flash?
- - Dying: particle implementation really bad here! I could have a second table
-   for non-interactive actors to aid here.
- - Panel Breaking: make it shatter!
- - HP numbers: they should 'drain'
- - poison_drop: wobble and have a landing animation. how can it layer below
-   tenants?
-
-The battle 'layout' could be restored to BN (top of chip queue, enemy list), or
-redesigned.
-
-Enemies should clearly be facing left or right in battles, no ambiguity!
-
-there's too much space between you and bullet when getting hit. You need to be
-bigger, or bullets, or both. That or make hitboxes smaller, but that is a rabbit
-hole that would require hitbox interpolation.
 ** first_time argument for base_actor:collide
 collide is called every frame of collision, so a first_time argument that's true
 only for the first frame of collision could be good. Maybe a collision timer is
