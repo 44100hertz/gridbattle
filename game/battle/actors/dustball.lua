@@ -1,7 +1,6 @@
 local dustball = {
    is_fighter = true,
    occupy_space = true,
-   enable_mirror = false,
 
    movement_speed = 1,
    detect_distance = 0.5, -- change directions when this far from obstacle
