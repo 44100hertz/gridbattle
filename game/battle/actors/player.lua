@@ -49,7 +49,7 @@ end
 
 function player:die ()
    if not GAME.debug.invincibility then
-      self.despawn = true
+      self.remove_from_battle = true
    end
 end
 

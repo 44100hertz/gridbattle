@@ -23,7 +23,7 @@ function test_enemy:init ()
 end
 
 function test_enemy:die ()
-   self.despawn = true
+   self.remove_from_battle = true
    for _ = 1,50 do
       self:spawn{
          class = 'particle',

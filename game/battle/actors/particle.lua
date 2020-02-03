@@ -11,7 +11,7 @@ end
 
 function particle:update ()
    self.dz = self.dz - self.gravity
-   if self.z < -200 then self.despawn = true end
+   if self.z < -200 then self.remove_from_battle = true end
    self:move()
 end
 
@@ -23,7 +23,7 @@ function particle:draw ()
 end
 
 function particle:die ()
-   self.despawn = true
+   self.remove_from_battle = true
 end
 
 return particle

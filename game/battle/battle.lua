@@ -146,6 +146,9 @@ function battle:update ()
    -- Main battle
    self.cust_timer = self.cust_timer + 1
    for _,actor in ipairs(self.actors) do
+      if actor.remove_from_battle then
+         goto continue
+      end
       -- Main logic
       actor:update()
       actor.timer:tick()
@@ -165,14 +168,23 @@ function battle:update ()
       then
          actor:die()
       end
+
+      ::continue::
    end
 
-   -- Remove actors only after battle phase has ended
-   for i,actor in ipairs(self.actors) do
-      if actor.despawn then
-         table.remove(self.actors, i)
+   -- Remove/Replace actors only after battle phase has ended
+   local new_actors = {}
+   for _,actor in ipairs(self.actors) do
+      if actor.remove_from_battle then
+         actor.remove_from_battle = nil
+      elseif actor.replace_with then
+         new_actors[#new_actors + 1] = actor.replace_with
+         actor.replace_with = nil
+      else
+         new_actors[#new_actors + 1] = actor
       end
    end
+   self.actors = new_actors
 end
 
 -- If a side has won the battle, return that side's index.
@@ -214,11 +226,6 @@ function battle:draw ()
    -- actors
    for _,actor in ipairs(self.actors) do
       actor:draw()
-      for _,component in ipairs(actor.components) do
-         if component.draw then
-            component:draw()
-         end
-      end
    end
 
    -- customize bar

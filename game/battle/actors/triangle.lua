@@ -14,7 +14,7 @@ end
 
 function triangle:collide (with)
    self:damage_once(with, 80)
-   self.despawn = true
+   self.remove_from_battle = true
 end
 
 return triangle

@@ -37,8 +37,11 @@ base_actor.neutral = false -- Set to 'true' and no other actor will consider you
                            -- an enemy. Also: see 'side' in next section.
 base_actor.z = 0        -- z position / height
 base_actor.dz = 0       -- z momentum / falling or rising
-base_actor.despawn = false -- Set to 'true' the actor will be removed from
-                           -- battle on the next tick.
+base_actor.remove_from_battle = false -- Set to 'true' the actor will be removed
+                                      -- from battle on the next tick.
+base_actor.replace_with = nil -- Set this to an actor and this actor will be
+                              -- removed from battle and replaced with this
+                              -- actor.
 
 -- Called before anything else. At this point, a 'timer' component is already
 -- attached to the actor, see battle/components/timer.lua
@@ -54,6 +57,7 @@ end
 
 -- Called before the actor's components are drawn.
 function base_actor:draw ()
+   self:call_for_each_component('draw')
 end
 
 -- Called every frame when colliding with other. Note that collisions only occur
@@ -67,7 +71,7 @@ end
 -- any time this actor is supposed to die. This is where you put death
 -- animations, or behaviors alternative to dying.
 function base_actor:die ()
-   self.despawn = true
+   self.remove_from_battle = true
 end
 
 ------------------------------------------------------------

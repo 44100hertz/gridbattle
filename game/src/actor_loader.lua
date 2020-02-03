@@ -48,6 +48,20 @@ function actor_loader:init (base_actor, base_path)
       base.components[#base.components+1] = component
       component:init(base, ...)
    end
+
+   function self.base_actor.for_each_component (base, fn)
+      for name,component in ipairs(base.components) do
+         fn(component, name)
+      end
+   end
+
+   function self.base_actor.call_for_each_component (base, func_name, ...)
+      for _,component in ipairs(base.components) do
+         if component[func_name] then
+            component[func_name](component, ...)
+         end
+      end
+   end
 end
 
 -- set up and initialize an actor instance

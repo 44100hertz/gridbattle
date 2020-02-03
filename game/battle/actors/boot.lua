@@ -10,7 +10,7 @@ end
 
 function boot:collide (with)
    self:damage_once(with, 40)
-   self.despawn = true
+   self.remove_from_battle = true
 end
 
 return boot
