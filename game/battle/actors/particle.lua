@@ -1,6 +1,4 @@
-local particle = {
-   gravity = 0.1,
-}
+local particle = {}
 
 function particle:init ()
    local dr = math.random() * 4 + 2
@@ -10,7 +8,6 @@ function particle:init ()
 end
 
 function particle:update ()
-   self.dz = self.dz - self.gravity
    if self.z < -200 then self.remove_from_battle = true end
    self:move()
 end

@@ -37,6 +37,7 @@ base_actor.neutral = false -- Set to 'true' and no other actor will consider you
                            -- an enemy. Also: see 'side' in next section.
 base_actor.z = 0        -- z position / height
 base_actor.dz = 0       -- z momentum / falling or rising
+base_actor.gravity = -12 -- increase in dz. Probably do not adjust.
 base_actor.remove_from_battle = false -- Set to 'true' the actor will be removed
                                       -- from battle on the next tick.
 base_actor.replace_with = nil -- Set this to an actor and this actor will be
@@ -67,6 +68,10 @@ end
 function base_actor:collide (with)
 end
 
+-- Called once when actor falls onto a panel.
+function base_actor:land ()
+end
+
 -- Called during update when hp is below zero, timer has exceeded lifespan, or
 -- any time this actor is supposed to die. This is where you put death
 -- animations, or behaviors alternative to dying.
@@ -84,12 +89,33 @@ base_actor.side = nil -- Will be set to my side of battle. Set to 'self' to be
 -- misc: An 'attach' method allows actors to add components, see
 -- src/actor_loader.lua and battle/components/
 
--- Update position and z using velocity and dz (do this once per tick!)
+-- Update position and z using velocity, dz, and gravity.
 function base_actor:move ()
    self.pos = self.pos + self.velocity / GAME.tick_rate
-   if self.dz then
-      self.z = self.z + self.dz / GAME.tick_rate
+   -- Solution via https://gamedev.stackexchange.com/questions/15708/how-can-i-implement-gravity/41917#41917
+   local next_z = self.z + GAME.tick_period *
+      (self.dz + GAME.tick_period * self.gravity / 2)
+   if self.battle:get_panel(self.pos) and
+      self.z >= 0 and next_z < 0 -- Am I falling onto a panel?
+   then
+      self:land()
+      self.dz = 0
+      self.z = 0
+   else
+      -- Note that gravity should be constant!
+      self.z = next_z
+      self.dz = self.dz + GAME.tick_period * self.gravity
    end
+end
+
+-- Move in an arc that lands on a specific panel.
+function base_actor:arc_to_panel(pos, initial_height, time)
+   initial_height = initial_height or 1.0
+   time = time or 1.0
+   local distance = pos - self.pos
+   self.velocity = distance / time
+   self.dz = (self.gravity * (time * time) / 2.0 + initial_height) / -time
+   self.z = initial_height
 end
 
 -- This is how actors move in the opposite direction so that both player and

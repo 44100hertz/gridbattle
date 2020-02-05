@@ -45,14 +45,6 @@ create a sense of unity by having visual lists of enemies, maybe even previews.
 *** Show Battle Panel Occupancy
 *** Show Battle base_actor use of locate_ahead and locate
 ** Graphics / Animations
-*** 'Spawning' animations
-    This solves the problem of having 2 states in poisdrop, wheel_crate, etc.
-    where the first state is literally just moving into place. It should replace
-    this complexity with a component, like this:
-     - throwing: `self:attach('animation', 'throw', {distance = 3})` - if liquid, drop
-       should wobble
-     - falling: `self:attach('animation', 'fall, {distance = 1})`
-    It will also take care of showing warning graphics on the panel.
 *** Fixes
      - Enemies should clearly be facing left or right in battles, no ambiguity!
      - Bullets do not touch the actor that they hit. Need to increase size.
