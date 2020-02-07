@@ -7,13 +7,16 @@ local oop = require 'src/oop'
 
 local image = oop.class()
 
+-- Static cache of loaded images.
+local image_cache
+
 -- Load an image
 -- path: where to load the image from, in images/
 -- sheet_name: where to get metadata from, defaults to GAME.imgdb[<path>]
 function image:init (path, sheet_name)
    self.name = sheet_name or path
    -- Load sheet data from imgdb into 'point' data types
-   self.image = love.graphics.newImage('images/' .. path .. '.png')
+   self.image = self:get_image(path)
 
    local sheets = GAME.imgdb[self.name]
    self.sheets = {}
@@ -36,6 +39,19 @@ function image:init (path, sheet_name)
    if self.sheets.base then
       self:set_sheet('base')
    end
+end
+
+-- Uses a local/static image cache instead of loading a next texture every time
+function image:get_image (path)
+   if not image_cache then
+      image_cache = {}
+      -- Ephemeron table: delete from cache when no other references point to it
+      setmetatable(image_cache, {__mode = 'k'})
+   end
+   if not image_cache[path] then
+      image_cache[path] = love.graphics.newImage('images/' .. path .. '.png')
+   end
+   return image_cache[path]
 end
 
 -- Sets the current sheet, reset to beginning of animation.

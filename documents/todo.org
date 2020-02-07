@@ -8,10 +8,6 @@ I want to add debugging and convenience features into a GAME.debug.<x> table.
 This will allow 'secret' developer features to be enabled (which I will probably
 leave in the final game). If it's too annoying to edit the text file I
 absolutely will add a debug menu.
-** Image cache
-It's possible that the functions in src/image.lua could be relocated to a
-general image loader/cache. This would likely use weak tables. main.lua does a
-tiny bit too much work by loading imgdb.
 ** handling music
 I should recover my old music from lanparty-code, get some feedback on it in
 discord or possibly other locations (upload to soundcloud is ideal), and
