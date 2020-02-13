@@ -1,5 +1,6 @@
 local image = require 'src/image'
 local oop = require 'src/oop'
+local dialog = require 'src/dialog'
 
 local go_screen = require 'battle/go_screen'
 
@@ -15,6 +16,7 @@ function customize:init (battle, folder, queue)
    self.selection = 1
    self.image = image('customize')
    self.offset = point(10,10)
+   self.dialog = dialog('', point(132, 16))
 end
 
 function customize:update ()
@@ -24,17 +26,19 @@ function customize:update ()
    local queue_is_valid = function (queue)
       local same_letter, same_chip = true, true
       for i=2,#queue do
+         print(queue[i].name, queue[1].name)
          if queue[i].name ~= queue[1].name then
-            same_letter = false
-         end
-         if queue[i].letter ~= queue[1].letter then
             same_chip = false
          end
+         if queue[i].letter ~= queue[1].letter then
+            same_letter = false
+         end
       end
+      print(same_letter, same_chip)
       return same_letter or same_chip
    end
 
-   local selection = self.palette[self.selection]
+   local chip = self.palette[self.selection]
    if GAME.input:hit'dl' then
       self.selection = (self.selection-1)%6
    elseif GAME.input:hit'dr' then
@@ -43,9 +47,9 @@ function customize:update ()
       -- Hit GO button, exit scene
       GAME.scene:pop()
       GAME.scene:push(go_screen())
-   elseif GAME.input:hit'a' and selection then
+   elseif GAME.input:hit'a' and chip then
       -- Try putting in queue
-      table.insert(self.queue, selection)
+      table.insert(self.queue, chip)
       if queue_is_valid(self.queue) then
          self.palette[self.selection] = nil
       else
@@ -55,9 +59,8 @@ function customize:update ()
       local i=1
       while(self.palette[i]~=nil) do i=i+1 end
       self.palette[i] = table.remove(self.queue)
---   elseif GAME.input:hit'l' and selection then
---      local chip = GAME.chipdb[selection.name]
---      GAME.scene:push(dialog(chip.desc, 132, 16))
+   elseif GAME.input:hit'l' and chip then
+      self.show_dialog = not self.show_dialog
    elseif GAME.input:hit'option' then
       self.hide = not self.hide
    elseif GAME.debug.instant_reload_palette and GAME.input:hit'r' then
@@ -78,7 +81,7 @@ function customize:draw ()
       local y = i<=5 and 104 or 128
       if self.palette[i] then
          self.battle.chip_artist:draw_icon(self.palette[i].name, point(x,y))
-         local letter = self.palette[i].ltr:byte() - ('a'):byte() + 1
+         local letter = self.palette[i].letter:byte() - ('a'):byte() + 1
          self.image:set_sheet'letter'
          self.image:draw(x, y+16, nil, letter)
       end
@@ -104,10 +107,13 @@ function customize:draw ()
    self.image:draw(96, 112, nil, button_selection)
 
    -- Art --
-   local selection = self.palette[self.selection]
-   if selection then
-      self.battle.chip_artist:draw_art(selection.name, point(8, 16))
-      local damage = GAME.chipdb[selection.name].damage
+   local chip = self.palette[self.selection]
+   if chip then
+      local db_info = GAME.chipdb[chip.name]
+      self.dialog:set_text(db_info.info)
+      self.dialog:draw()
+      self.battle.chip_artist:draw_art(chip.name, point(8, 16))
+      local damage = db_info.damage
       love.graphics.print(tostring(damage), 8, 88)
    end
 

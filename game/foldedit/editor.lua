@@ -19,22 +19,10 @@ function editor:init ()
          self.deck.folder:load('leftpane')
          self.library.folder:load('rightpane')
       end,
-      [4] = function (self)
-         self.deck.folder:sort('letter')
-         self.library.folder:sort('letter')
-      end,
-      [5] = function (self)
-         self.deck.folder:sort('name')
-         self.library.folder:sort('name')
-      end,
-      [6] = function (self)
-         self.deck.folder:sort('quantity')
-         self.library.folder:sort('quantity')
-      end,
-      [7] = function (self)
-         self.deck.folder:sort('element')
-         self.library.folder:sort('element')
-      end,
+      [4] = function (self) self:sort 'letter' end,
+      [5] = function (self) self:sort 'name' end,
+      [6] = function (self) self:sort 'amount' end,
+      [7] = function (self) self:sort 'element' end,
    }
    self.column, self.selection = 2,1
    self.deck = {}
@@ -47,6 +35,21 @@ function editor:init ()
    self.library.sel = 1
    self.image = image('foldedit')
 end
+
+-- Sort both the deck and folder. Using the same sort twice in a row will
+-- reverse it.
+function editor:sort (method)
+   local is_ascending = false
+   if self.last_sort_method == method then
+      is_ascending = true
+      self.last_sort_method = nil
+   else
+      self.last_sort_method = method
+   end
+   self.deck.folder:sort(method, is_ascending)
+   self.library.folder:sort(method, is_ascending)
+end
+
 
 function editor:move_chip (from, to)
    local entry = from.folder:remove(from.sel)
@@ -110,7 +113,7 @@ function editor:draw ()
       local y = 19
       local i = pane.sel - 5
       for _ = 1, num_entries do
-         local line, elem_index
+         local line, element_index
          local v = pane.folder.data[i]
          if not v then
             if #pane.folder.data>7 then
@@ -124,11 +127,11 @@ function editor:draw ()
          if i == pane.sel then love.graphics.setColor(120/255.0, 192/255.0, 128/255.0) end
 
 --         -- element symbol
---         elem_index = elements.by_name[GAME.chipdb[v.name].elem]
---         line = string.char(elem_index) .. v.ltr:upper() .. ' ' .. v.name
-         line = v.ltr:upper() .. ' ' .. v.name
+--         element_index = elements.by_name[GAME.chipdb[v.name].element]
+--         line = string.char(element_index) .. v.letter:upper() .. ' ' .. v.name
+         line = v.letter:upper() .. ' ' .. v.name
          love.graphics.print(line, x, y)
-         love.graphics.print('x' .. v.qty, x+78, y)
+         love.graphics.print('x' .. v.amount, x+78, y)
          love.graphics.setColor(1.0, 1.0, 1.0)
          ::continue::
          y = y + entry_height
