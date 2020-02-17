@@ -17,11 +17,15 @@ function love.load ()
 
    -- !!! -- you found the secret debug flags! -- !!! --
    GAME.debug = {
-      fast_customize = true, -- customize without waiting for meter
-      instant_reload_palette = true, -- press R in customize to reload palette
-      endless_folder = true, -- never remove chips from folder when used
-      invincibility = true, -- player can't die
+      disable_all                   = true, -- enable to disable all debug flags!
+      fast_customize                = true, -- customize without waiting for meter
+      instant_reload_palette        = true, -- press R in customize to reload palette
+      endless_folder                = true, -- never remove chips from folder when used
+      invincibility                 = true, -- player can't die
    }
+   if GAME.debug.disable_all then
+      GAME.debug = {}
+   end
 
    GAME.tick_rate = 60
    GAME.size = point(512, 288)

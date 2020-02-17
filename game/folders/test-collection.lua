@@ -1,37 +1,37 @@
 return {
    {
-      ltr = 'a',
+      letter = 'a',
       name = 'Boots',
-      qty = 3,
+      amount = 3,
    },
    {
-      ltr = 'b',
+      letter = 'b',
       name = 'Boots',
-      qty = 5,
+      amount = 5,
    },
    {
-      ltr = 'a',
+      letter = 'a',
       name = 'Triangle',
-      qty = 5,
+      amount = 5,
    },
    {
-      ltr = 'b',
+      letter = 'b',
       name = 'Triangle',
-      qty = 5,
+      amount = 5,
    },
    {
-      ltr = 'a',
+      letter = 'a',
       name = 'PoisDrop',
-      qty = 5,
+      amount = 5,
    },
    {
-      ltr = 'b',
+      letter = 'b',
       name = 'PoisDrop',
-      qty = 5,
+      amount = 5,
    },
    {
-      ltr = 'b',
+      letter = 'b',
       name = 'WhlCrate',
-      qty = 6,
+      amount = 6,
    },
 }

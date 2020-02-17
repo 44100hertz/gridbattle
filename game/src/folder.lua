@@ -24,41 +24,36 @@ function folder:save(name)
          .. '/' .. outdir .. self.name, self.data)
 end
 
+-- Sort a folder using a specific method.
+-- @method: How to sort. If the specified method doesn't work, uses a priority
+--          list.
+-- @reverse: If true, switch the default sort upside down.
+function folder:sort(method, reverse)
+   local fetch_functions = {
+      letter  = function (chip) return chip.letter end,
+      name    = function (chip) return chip.name end,
+      amount  = function (chip) return -chip.amount end,
+      element = function (chip) return GAME.chipdb[chip.name].element end,
+   }
+   local method_priority_lists = {
+      letter  = {'letter', 'name'},
+      name    = {'name', 'letter'},
+      amount  = {'amount', 'letter', 'name'},
+      element = {'element', 'letter', 'name'},
+   }
+   local priority_list = method_priority_lists[method]
 
-local fetch_methods = {
-   ltr = function (o) return o.ltr end,
-   name = function (o) return o.name end,
-   qty = function (o) return -o.qty end,
-   elem = function (o) return GAME.chipdb[o.name].elem end,
-}
-local compare_lists = {
-   letter = {'ltr', 'name'},
-   name = {'name', 'ltr'},
-   quantity = {'qty', 'ltr', 'name'},
-   element = {'elem', 'ltr', 'name'},
-}
-
-function folder:sort(method, is_ascending)
-   if self.lastsort == method then
-      is_ascending = true
-      self.lastsort = nil
-   else
-      self.lastsort = method
-   end
-
-   local sort_list = compare_lists[method]
-   local compare = function (a,b)
-      if is_ascending then a,b = b,a end
-      for _,sortby in ipairs(sort_list) do
-         local fetchval = fetch_methods[sortby]
-         local a_val,b_val = fetchval(a), fetchval(b)
-         if a_val < b_val then return true end
-         if a_val > b_val then return false end
+   local sort_function = function (a,b)
+      for _,method in ipairs(priority_list) do
+         local fetch = fetch_functions[method]
+         local a_val,b_val = fetch(a), fetch(b)
+         if a_val < b_val then return not reverse end
+         if a_val > b_val then return reverse end
       end
-      return false
+      return not reverse
    end
 
-   table.sort(self.data, compare)
+   table.sort(self.data, sort_function)
 end
 
 function folder:condense()
@@ -66,22 +61,22 @@ function folder:condense()
       for j = i+1,#self.data do
          local b = self.data[j]
          if a.name == b.name and
-            a.ltr == b.ltr
+            a.letter == b.letter
          then
-            a.qty = a.qty + b.qty
-            b.qty = 0
+            a.amount = a.amount + b.amount
+            b.amount = 0
          end
       end
    end
    for _,v in ipairs(self.data) do
-      if v.qty == 0 then table.remove(self.data, v) end
+      if v.amount == 0 then table.remove(self.data, v) end
    end
 end
 
 function folder:find(entry)
    for i=1,#self.data do
       if self.data[i].name == entry.name and
-         self.data[i].ltr == entry.ltr
+         self.data[i].letter == entry.letter
       then
          return i
       end
@@ -92,9 +87,9 @@ function folder:insert(entry)
    self.temp_count = nil
    local i = self:find(entry)
    if i then
-      self.data[i].qty = self.data[i].qty + 1
+      self.data[i].amount = self.data[i].amount + 1
    else
-      entry.qty = 1
+      entry.amount = 1
       table.insert(self.data, entry)
    end
 end
@@ -108,17 +103,17 @@ function folder:remove(index)
       return
    end
    if not GAME.debug.endless_folder then
-      entry.qty = entry.qty - 1
+      entry.amount = entry.amount - 1
    end
-   if entry.qty==0 then table.remove(self.data, index) end
-   return {name = entry.name, ltr = entry.ltr}
+   if entry.amount==0 then table.remove(self.data, index) end
+   return {name = entry.name, letter = entry.letter}
 end
 
 function folder:count()
    if not self.temp_count then
       self.temp_count = 0
       for _,v in ipairs(self.data) do
-         self.temp_count = self.temp_count + v.qty
+         self.temp_count = self.temp_count + v.amount
       end
    end
    return self.temp_count
