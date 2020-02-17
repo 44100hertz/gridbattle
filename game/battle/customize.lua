@@ -26,7 +26,6 @@ function customize:update ()
    local queue_is_valid = function (queue)
       local same_letter, same_chip = true, true
       for i=2,#queue do
-         print(queue[i].name, queue[1].name)
          if queue[i].name ~= queue[1].name then
             same_chip = false
          end
@@ -34,7 +33,6 @@ function customize:update ()
             same_letter = false
          end
       end
-      print(same_letter, same_chip)
       return same_letter or same_chip
    end
 

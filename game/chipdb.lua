@@ -26,4 +26,9 @@ return {
       element = 'water',
       class = 'poison_drop',
    },
+   {
+      name = 'HeavyBall',
+      info = 'Break 3 spaces ahead.',
+      class = 'heavy_ball',
+   },
 }

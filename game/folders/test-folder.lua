@@ -21,7 +21,7 @@ return {
    },
    {
       letter = 'a',
-      name = 'PoisDrop',
+      name = 'HeavyBall',
       amount = 6,
    },
    {

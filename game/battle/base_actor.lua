@@ -95,7 +95,8 @@ function base_actor:move ()
    -- Solution via https://gamedev.stackexchange.com/questions/15708/how-can-i-implement-gravity/41917#41917
    local next_z = self.z + GAME.tick_period *
       (self.dz + GAME.tick_period * self.gravity / 2)
-   if self.battle:get_panel(self.pos) and
+   local panel = self.battle:get_panel(self.pos)
+   if panel and (not panel.broken) and
       self.z >= 0 and next_z < 0 -- Am I falling onto a panel?
    then
       self:land()
@@ -151,7 +152,8 @@ function base_actor:can_occupy (pos)
    pos = pos or self.pos
    local actor = self.battle:locate_actor(pos)
    return (actor == self or not actor) and
-      self.battle:get_side(pos) == self.side
+      self.battle:get_side(pos) == self.side and
+      (not self.battle:get_panel(pos).broken)
 end
 
 -- Determine if another actor is my enemy! Note that self:is_enemy(with) may be
@@ -229,6 +231,11 @@ end
 -- Get the pixel position of the center of actor for drawing.
 function base_actor:screen_pos ()
    return self.battle:stage_pos_to_screen(self.pos - 0.5)
+end
+
+-- Get the size of actor based on its z
+function base_actor:depth_scale ()
+   return 3.0 / (3.0 - self.z)
 end
 
 -- Ignore this method.

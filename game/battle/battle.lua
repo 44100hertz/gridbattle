@@ -27,6 +27,16 @@ function battle:get_panel (pos)
    return self.stage[pos.x] and self.stage[pos.x][pos.y]
 end
 
+-- I broke it!
+function battle:break_panel (pos)
+   local panel = self:get_panel(pos)
+   if panel then
+      if not self:locate_actor(pos) then
+         panel.broken = true
+      end
+   end
+end
+
 -- Based on the 'turf' of the stage, determine the side that owns a position
 function battle:get_side (pos)
    pos = pos:round()
@@ -210,13 +220,16 @@ function battle:draw ()
    for x = 1,self.num_panels.x do
       for y = 1,self.num_panels.y do
          local screen_pos = self:stage_pos_to_screen(point(x,y)-1)
+         local panel = self:get_panel(point(x,y))
          if x <= self.turf[y] then
             love.graphics.setColor(1, 0, 1, 0.5)
          else
             love.graphics.setColor(0, 0, 1, 128/256.0, 136/256.0, 0.5)
          end
          local w, h = self.panel_size:unpack()
-         love.graphics.rectangle('fill', screen_pos.x, screen_pos.y, w, h, 5.0)
+         if not panel.broken then
+            love.graphics.rectangle('fill', screen_pos.x, screen_pos.y, w, h, 5.0)
+         end
          love.graphics.setColor(32/256.0, 40/256.0, 56/256.0)
          love.graphics.rectangle('line', screen_pos.x, screen_pos.y, w, h, 5.0)
          love.graphics.setColor(1,1,1)
