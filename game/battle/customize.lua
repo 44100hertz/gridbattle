@@ -100,22 +100,24 @@ function customize:draw ()
    end
 
    -- GO button --
-   local button_selection = 1
-   if self.selection == 0 then button_selection = 2 end
-   if self.ready then button_selection = 3 end
-   self.image:set_sheet'button'
-   self.image:draw(96, 112, nil, button_selection)
-
-   -- Art --
+   local go_button_graphic = 1
    local chip = self.palette[self.selection]
-   if chip then
+   if self.selection == 0 then
+      self.dialog:set_text('Enter the battle!')
+      go_button_graphic = 2
+   elseif chip then
       local db_info = GAME.chipdb[chip.name]
       self.dialog:set_text(db_info.info)
-      self.dialog:draw()
       self.battle.chip_artist:draw_art(chip.name, point(8, 16))
       local damage = db_info.damage
       love.graphics.print(tostring(damage), 8, 88)
+   else
+      self.dialog:set_text('-No Chip-')
    end
+   self.image:set_sheet'button'
+   self.image:draw(96, 112, nil, go_button_graphic)
+
+   self.dialog:draw()
 
    love.graphics.pop()
 end
