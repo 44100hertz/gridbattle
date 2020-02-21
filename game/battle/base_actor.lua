@@ -235,7 +235,8 @@ end
 
 -- Get the size of actor based on its z
 function base_actor:depth_scale ()
-   return 3.0 / (3.0 - self.z)
+   local cd = self.battle.camera_distance
+   return cd / (cd - self.z)
 end
 
 -- Ignore this method.

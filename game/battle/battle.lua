@@ -15,7 +15,9 @@ local bg = require 'bg/bg'
 
 local cust_length = 4.0 -- How long it takes to fill cust meter.
 
-local battle = oop.class()
+local battle = oop.class{
+   camera_distance = 3.0,
+}
 
 ------------------------------------------------------------
 -- Call these methods!
@@ -156,9 +158,11 @@ function battle:update ()
    -- Main battle
    self.cust_timer = self.cust_timer + 1
    for _,actor in ipairs(self.actors) do
+      -- Do not update actors that will be removed
       if actor.remove_from_battle then
          goto continue
       end
+
       -- Main logic
       actor:update()
       actor.timer:tick()
