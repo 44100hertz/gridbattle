@@ -4,7 +4,7 @@ _G.point = require 'src/point'
 local input = require 'src/input'
 local scene = require 'src/scene'
 local config = require 'src/config'
-local menu = require 'src/menu'
+local menu = require 'ui/menu'
 
 local total_time = 0
 local frame_count = 0
@@ -17,7 +17,7 @@ function love.load ()
 
    -- !!! -- you found the secret debug flags! -- !!! --
    GAME.debug = {
-      disable_all                   = true, -- enable to disable all debug flags!
+      disable_all                   = false,-- enable to disable all debug flags!
       fast_customize                = true, -- customize without waiting for meter
       instant_reload_palette        = true, -- press R in customize to reload palette
       endless_folder                = true, -- never remove chips from folder when used
@@ -43,10 +43,14 @@ function love.load ()
    end
    GAME.imgdb = love.filesystem.load('imgdb.lua')()
 
+   GAME.fonts = {
+      square = love.graphics.newFont('fonts/squrave.ttf', 32, 'none')
+   }
+   love.graphics.setFont(GAME.fonts.square)
+
    GAME.config = config()
 
    love.graphics.setDefaultFilter('nearest', 'nearest')
-   love.graphics.setNewFont('fonts/squrave.ttf', 32, 'none')
 
    if arg[2] == 'dump' then
       framedump_canvas = love.graphics.newCanvas(GAME.size:unpack())

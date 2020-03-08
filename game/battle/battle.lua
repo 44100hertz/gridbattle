@@ -1,9 +1,10 @@
 local oop = require 'src/oop'
 local image = require 'src/image'
 local folder = require 'src/folder'
-local menu = require 'src/menu'
 local actor_loader = require 'src/actor_loader'
-local layout = require 'src/layout'
+
+local layout = require 'ui/layout'
+local menu = require 'ui/menu'
 
 local base_actor = require 'battle/base_actor'
 local results = require 'battle/results'

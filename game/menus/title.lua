@@ -1,4 +1,4 @@
-local menu = require 'src/menu'
+local menu = require 'ui/menu'
 
 local world = require 'world/world'
 

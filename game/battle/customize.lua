@@ -1,6 +1,7 @@
 local image = require 'src/image'
 local oop = require 'src/oop'
-local dialog = require 'src/dialog'
+
+local dialog = require 'ui/dialog'
 
 local go_screen = require 'battle/go_screen'
 
