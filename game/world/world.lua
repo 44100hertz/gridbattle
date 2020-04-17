@@ -5,6 +5,28 @@ local actors = require 'world/actors'
 
 local world = oop.class()
 
+   --- work notes (I have to go to work!) the current system is based on an
+   --- older idea of how maps should work. I wanted to have the map inside tiled
+   --- be a relatively visually accurate representation of the map, so it
+   --- follows that I transformed Tiled concepts into map concepts. Now I am
+   --- feeling that it is better to scrap that notion, and focus on creating
+   --- collision maps in tiled that will go through a process later in
+   --- development, wherein they are first auto-transformed into visual maps,
+   --- and then subject to hand-editing for prettification. This way, I can get
+   --- gameplay nuts and bolts into practice ASAP. Actors will be reserved for a
+   --- single object layer that should be present on every map. Yes, this means
+   --- making a lot of objects, but it really isn't that complex. To speed the
+   --- process, I will also create live map reloading (with error handling!) so
+   --- that I can quickly see the results of my work. It was a mistake to
+   --- attempt to use tiled as a WYSIWYG editor, and it is possible that in the
+   --- future I will either create or adapt an editor for the specific purposes
+   --- achieved here. Right now, my goal is rapid prototyping over everything.
+   ---
+   --- So, here's what I can expect to do:
+   ---  - Scrap the existing map concepts when it no longer fits this new minimal concept
+   ---  - Create a pre-loading layer, either at load-time or build-time
+   ---  - Implement live map reloading with error handling.
+   ---  - Map debugging features for viewing and testing maps.
 function world:init (path)
    self.scroll_pos = point(0, 0)
    self.view_size = point(21 * 16, 13 * 16)
@@ -15,8 +37,10 @@ function world:init (path)
    self.tile_size = point(self.map.tilewidth, self.map.tileheight)
    self.actors = actors(self)
 
-   self.tiles:add_tile_actors(self.actors)
+--   self.tiles:add_tile_actors(self.actors)
 
+   -- REVIEW: love2d has clipping functions I can use instead of this shader.
+   -- However, can this shader have desirable results not achievable there?
    self.border_shader = love.graphics.newShader('shaders/border.glsl')
    self.border_shader:send('scale', GAME.config.settings.game_scale)
    self.border_shader:send('size', {self.view_size:unpack()})

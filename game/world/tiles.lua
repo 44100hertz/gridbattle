@@ -12,7 +12,9 @@ function tiles:init (map, path)
    self.set = self.map.tilesets[1]
    self.image_size = point(self.set.imagewidth, self.set.imageheight)
    local imgpath = path .. self.set.image
-   self.set.texture = love.graphics.newImage(imgpath)
+   -- HACK: for now, all maps will use the same debug graphics
+   self.set.texture = love.graphics.newImage('world/maps/land-layout.png')
+--   self.set.texture = love.graphics.newImage(imgpath)
    self.set.sheet = image.make_quads(
       point(0,0), self.tile_size,
       (self.image_size / self.tile_size):floor(), self.image_size)
@@ -23,7 +25,6 @@ function tiles:init (map, path)
       self.tile_properties[i+1] = tile
    end
 end
-
 function tiles:add_tile_actors (actors)
    for layer_index,layer in ipairs(self.map.layers) do
       if layer.type == 'tilelayer' then
