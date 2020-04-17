@@ -1,4 +1,7 @@
-return {
+-- All the chips in the game. Can be indexed by chipdb[index], or
+-- chipdb[chip_name].
+
+local chipdb = {
    {
       name = 'Triangle',
       info = 'Shoot out some triangle.',
@@ -32,3 +35,11 @@ return {
       class = 'heavy_ball',
    },
 }
+
+-- generate indexing by name
+for i,chip in ipairs(chipdb) do
+  chip.index = i
+  chipdb[chip.name] = chip
+end
+
+return chipdb

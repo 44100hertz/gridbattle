@@ -35,12 +35,6 @@ function love.load ()
    GAME.scene = scene()
 
    GAME.chipdb = love.filesystem.load('chipdb.lua')()
-   -- Give chips an index field based on their order in the file, and
-   -- allow chips to be looked up by name.
-   for i,chip in ipairs(GAME.chipdb) do
-      chip.index = i
-      GAME.chipdb[chip.name] = chip
-   end
    GAME.imgdb = love.filesystem.load('imgdb.lua')()
 
    GAME.fonts = {
@@ -50,6 +44,7 @@ function love.load ()
 
    GAME.config = config()
 
+   -- NOTE: this is done AFTER fonts so fonts can be smooth
    love.graphics.setDefaultFilter('nearest', 'nearest')
 
    if arg[2] == 'dump' then
