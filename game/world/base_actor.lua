@@ -22,17 +22,13 @@ end
 function proto:collide (with)
 end
 function proto:rect ()
-   return self.pos.x, self.pos.y, 16, 16
+   return self.pos.x, self.pos.y, self.size.x, self.size.y
 end
 
 -- [[ Callable functions ]]
 
 function proto:enter_battle (name)
    GAME.scene:push_fade({}, battle(name))
-end
-
-function proto:is_walkable (pos)
-   return self.world.tiles:walkable((pos / 16):floor():unpack())
 end
 
 function proto:set_tile_graphics_here (id, xoff, yoff)

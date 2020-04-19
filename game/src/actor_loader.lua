@@ -68,7 +68,12 @@ end
 function actor_loader:load (actor, class_name)
    -- Initialize class for actor
    if not self.actor_cache[class_name] then
-      local class = love.filesystem.load(self.actors_path .. class_name .. '.lua')()
+      local class_file = love.filesystem.load(self.actors_path .. class_name .. '.lua')
+      if not class_file then
+         print(string.format('Error: attempt to load class %s', class_name))
+         return actor
+      end
+      local class = class_file()
       setmetatable(class, {__index = self.base_actor})
       self.actor_cache[class_name] = class
    end

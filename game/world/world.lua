@@ -1,43 +1,77 @@
 local oop = require 'src/oop'
+local image = require 'src/image'
+local aloader = require 'src/actor_loader'
 
-local tiles = require 'world/tiles'
-local actors = require 'world/actors'
+local base_actor = require 'world/base_actor'
 
 local world = oop.class()
 
-   --- work notes (I have to go to work!) the current system is based on an
-   --- older idea of how maps should work. I wanted to have the map inside tiled
-   --- be a relatively visually accurate representation of the map, so it
-   --- follows that I transformed Tiled concepts into map concepts. Now I am
-   --- feeling that it is better to scrap that notion, and focus on creating
-   --- collision maps in tiled that will go through a process later in
-   --- development, wherein they are first auto-transformed into visual maps,
-   --- and then subject to hand-editing for prettification. This way, I can get
-   --- gameplay nuts and bolts into practice ASAP. Actors will be reserved for a
-   --- single object layer that should be present on every map. Yes, this means
-   --- making a lot of objects, but it really isn't that complex. To speed the
-   --- process, I will also create live map reloading (with error handling!) so
-   --- that I can quickly see the results of my work. It was a mistake to
-   --- attempt to use tiled as a WYSIWYG editor, and it is possible that in the
-   --- future I will either create or adapt an editor for the specific purposes
-   --- achieved here. Right now, my goal is rapid prototyping over everything.
-   ---
-   --- So, here's what I can expect to do:
-   ---  - Scrap the existing map concepts when it no longer fits this new minimal concept
-   ---  - Create a pre-loading layer, either at load-time or build-time
-   ---  - Implement live map reloading with error handling.
-   ---  - Map debugging features for viewing and testing maps.
+world.directions = {
+   l = {offset = point(-1,0), opposite = 'r'},
+   r = {offset = point(1,0), opposite = 'l'},
+   u = {offset = point(0,-1), opposite = 'd'},
+   d = {offset = point(0,1), opposite = 'u'},
+}
+
+world.geometries = {
+   flat = {l = 'flat', r = 'flat', u = 'flat', d = 'flat'},
+   vertical = {l = 'vertical', r = 'vertical', u = 'flat', d = 'flat'},
+   -- TODO: implement slopes
+   slope_l = {l = 'flat', r = 'flat', u = 'slope_l', d = 'slope_l'},
+   slope_r = {l = 'flat', r = 'flat', u = 'slope_r', d = 'slope_r'},
+}
+
+function world:add_actor (actor)
+   if actor.type == 'player' then
+      self.player = actor
+   elseif actor.type == 'entrance' then
+      self.entrances[actor.name] = actor
+   elseif actor.type == '' then
+      actor.type = 'dummy'
+   end
+   self.actors[#self.actors+1] = self.aloader:load(actor, actor.type)
+   actor:init(self)
+end
+
+-- Get a tile using a worldmap position
+function world:tile_at (pos)
+   return self:get_tile((pos / self.tile_size):floor())
+end
+
+-- Get a tile using x and y index
+function world:get_tile (pos)
+   local index = pos.x + pos.y * self.map.width + 1
+   local t = self.map.layers[1].data[index]
+   if t == 0 then t = nil end
+   return t
+end
+
+   -- Return true if can walk in direction (l, r, u, or d) from pos
+function world:can_walk(pos, direction)
+   local dd = self.directions[direction]
+   local dest = pos + dd.offset * self.tile_size
+   if not self:tile_at(dest) then
+      return false
+   end
+   local function g (p, dir)
+      local props = self.tile_properties[self:tile_at(p) or 0]
+      local geom = props and self.geometries[props.geom]
+      return geom and geom[dir]
+   end
+   return self.tile_properties[self:tile_at(dest)].walk and
+      g(pos, direction) == g(dest, dd.opposite)
+end
+
 function world:init (path)
    self.scroll_pos = point(0, 0)
    self.view_size = point(21 * 16, 13 * 16)
 
-   self.map = love.filesystem.load(path .. 'map.lua')()
-   self.scroll_speed = 8
-   self.tiles = tiles(self.map, path)
-   self.tile_size = point(self.map.tilewidth, self.map.tileheight)
-   self.actors = actors(self)
+   -- Initialize actors
+   self.actors = {}
+   self.base = base_actor(world)
+   self.aloader = aloader(self.base, 'world/')
 
---   self.tiles:add_tile_actors(self.actors)
+   self:set_map(path)
 
    -- REVIEW: love2d has clipping functions I can use instead of this shader.
    -- However, can this shader have desirable results not achievable there?
@@ -47,17 +81,78 @@ function world:init (path)
    self.border_shader:send('position', {(GAME.size/2 - self.view_size/2):unpack()})
 end
 
+function world:set_map (path)
+   self.map = love.filesystem.load(path .. 'map.lua')()
+   self.tileset = self.map.tilesets[1]
+   self.scroll_speed = 8
+
+   self.tile_size = point(self.map.tilewidth, self.map.tileheight)
+   local tileset_image_size = point(self.tileset.imagewidth, self.tileset.imageheight)
+   local imgpath = path .. self.tileset.image
+   -- HACK: for now, all maps will use the same debug graphics
+   self.tileset.texture = love.graphics.newImage('world/maps/land-layout.png')
+--   self.tileset.texture = love.graphics.newImage(imgpath)
+   self.tileset.sheet = image.make_quads(
+      point(0,0), self.tile_size,
+      (tileset_image_size / self.tile_size):floor(), tileset_image_size)
+
+   -- Create a more convenient lookup table for tile properties.
+   self.tile_properties = {}
+   for i,tile in ipairs(self.tileset.tiles) do
+      self.tile_properties[i] = tile.properties
+   end
+
+   -- Load actors from map
+   for _,object in ipairs(self.map.layers[2].objects) do
+      local out = {}
+      -- These fields are accessible in the script file
+      out.name = object.name
+      out.type = object.type
+      out.shape = object.shape
+      out.pos = point(object.x, object.y)
+      out.size = point(object.width, object.height)
+      out.properties = {}
+      for k,v in pairs(object.properties) do
+         out.properties[k] = v
+      end
+      -- convert polyline to absolute position
+      if object.shape == 'polyline' then
+         out.line = {}
+         for _,p in ipairs(object.polyline) do
+            out.line[#out.line+1] = p.x + object.x
+            out.line[#out.line+1] = p.y + object.y
+         end
+      end
+      self:add_actor(out)
+   end
+
+   self.tile_size = point(self.map.tilewidth, self.map.tileheight)
+end
+
 function world:update ()
    if GAME.input:hit'start' then
       GAME.scene:pop()
    end
-   self.actors:update()
+   -- check rectangle collisions
+   for _,actor in ipairs(self.actors) do
+      local _,_,w,h = self.player:rect()
+      local player_center = self.player.pos + point(w,h)/2
+      if actor.active and (player_center):within_rectangle(actor:rect()) then
+         actor:collide(self.player)
+      end
+   end
+
+   for _,actor in ipairs(self.actors) do
+      if actor.active and actor.update then
+         actor:update()
+      end
+   end
 end
 
 function world:draw ()
    do
       -- smooth scroll follows player
-      local goal = self.actors.player.pos - self.view_size/2
+      local goal = self.player.pos - self.view_size/2
       self.scroll_pos = self.scroll_pos:lerp(goal, 0.2)
       local border_size = (GAME.size - self.view_size) * 0.5
       local offset = -self.scroll_pos + border_size
@@ -65,9 +160,50 @@ function world:draw ()
    end
    love.graphics.clear(0,0,0)
    love.graphics.setShader(self.border_shader)
-   self.tiles:draw(self.scroll_pos - self.tile_size, self.view_size + self.tile_size*2)
-   self.actors:draw(self.scroll_pos - self.tile_size, self.view_size + self.tile_size*2)
+   self:draw_tiles(self.scroll_pos - self.tile_size, self.view_size + self.tile_size*2)
+   self:draw_actors(self.scroll_pos - self.tile_size, self.view_size + self.tile_size*2)
    love.graphics.setShader()
+end
+
+function world:draw_tiles (scroll_pos, view_size)
+   -- iteration boundaries
+   local lower = (scroll_pos / self.tile_size):floor()+1
+   local count = (view_size / self.tile_size):floor()
+   local upper = lower + count
+
+   for _,layer in ipairs(self.map.layers) do
+      if layer.type == 'tilelayer' then
+         for y = lower.y, upper.y do
+            for x = lower.x, upper.x do
+               local tile = self:get_tile(point(x,y))
+               if tile then
+                  love.graphics.draw(self.tileset.texture,
+                                     self.tileset.sheet[tile],
+                                     x * self.map.tilewidth,
+                                     y * self.map.tileheight)
+               end
+            end
+         end
+      end
+   end
+end
+
+function world:draw_actors ()
+   -- Draw hitboxes for debug
+   for _,actor in ipairs(self.actors) do
+      local opacity = actor.visible and 1 or 0.5
+      if actor.active then
+         love.graphics.setColor(1, 0, 0, opacity)
+      else
+         love.graphics.setColor(0, 0, 1, opacity)
+      end
+      if actor.shape == 'point' then
+         love.graphics.circle('line', actor.pos.x+8, actor.pos.y+8, 8)
+      elseif actor.shape == 'polyline' then
+         love.graphics.line(actor.line)
+      end
+   end
+   love.graphics.setColor(1, 1, 1)
 end
 
 return world
