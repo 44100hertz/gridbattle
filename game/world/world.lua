@@ -22,15 +22,17 @@ world.geometries = {
 }
 
 function world:add_actor (actor)
-   if actor.type == 'player' then
-      self.player = actor
-   elseif actor.type == 'entrance' then
-      self.entrances[actor.name] = actor
+   if actor.type == 'spawn' then
+      self.spawns[actor.name] = actor
+      if actor.properties.default_spawn then
+         self.default_spawn = actor
+      end
    elseif actor.type == '' then
       actor.type = 'dummy'
    end
    self.actors[#self.actors+1] = self.aloader:load(actor, actor.type)
    actor:init(self)
+   return actor
 end
 
 -- Get a tile using a worldmap position
@@ -62,16 +64,12 @@ function world:can_walk(pos, direction)
       g(pos, direction) == g(dest, dd.opposite)
 end
 
-function world:init (path)
-   self.scroll_pos = point(0, 0)
+function world:init (map_name, spawn_point)
    self.view_size = point(21 * 16, 13 * 16)
 
-   -- Initialize actors
-   self.actors = {}
-   self.base = base_actor(world)
+   self.base = base_actor()
    self.aloader = aloader(self.base, 'world/')
-
-   self:set_map(path)
+   self:set_map(map_name, spawn_point)
 
    -- REVIEW: love2d has clipping functions I can use instead of this shader.
    -- However, can this shader have desirable results not achievable there?
@@ -81,16 +79,22 @@ function world:init (path)
    self.border_shader:send('position', {(GAME.size/2 - self.view_size/2):unpack()})
 end
 
-function world:set_map (path)
+function world:set_map (name, spawn_point, spawn_offset)
+   self.map_name = name
+
+   self.actors = {}
+   self.spawns = {}
+
+   local path = 'world/maps/' .. name .. '/'
    self.map = love.filesystem.load(path .. 'map.lua')()
    self.tileset = self.map.tilesets[1]
    self.scroll_speed = 8
 
    self.tile_size = point(self.map.tilewidth, self.map.tileheight)
    local tileset_image_size = point(self.tileset.imagewidth, self.tileset.imageheight)
-   local imgpath = path .. self.tileset.image
    -- HACK: for now, all maps will use the same debug graphics
    self.tileset.texture = love.graphics.newImage('world/maps/land-layout.png')
+--   local imgpath = path .. self.tileset.image
 --   self.tileset.texture = love.graphics.newImage(imgpath)
    self.tileset.sheet = image.make_quads(
       point(0,0), self.tile_size,
@@ -127,6 +131,24 @@ function world:set_map (path)
    end
 
    self.tile_size = point(self.map.tilewidth, self.map.tileheight)
+
+   if not spawn_point then
+      if self.default_spawn then
+         self.spawn = self.default_spawn
+      else
+         print('Warning: no spawn point specified for map', name)
+         local k,v = next(self.spawns); self.spawn = v -- just set it to something
+      end
+   else
+      self.spawn = self.spawns[spawn_point]
+   end
+   self.player = self:add_actor{
+      type = 'player',
+      shape = 'point',
+      pos = self.spawn.pos + (spawn_offset or point(0,0)),
+      size = point(0,0),
+   }
+   self.scroll_pos = self.player.pos - self.view_size/2
 end
 
 function world:update ()
@@ -135,16 +157,15 @@ function world:update ()
    end
    -- check rectangle collisions
    for _,actor in ipairs(self.actors) do
-      local _,_,w,h = self.player:rect()
-      local player_center = self.player.pos + point(w,h)/2
-      if actor.active and (player_center):within_rectangle(actor:rect()) then
-         actor:collide(self.player)
+      local pos = self.player.pos + self.tile_size/2
+      if actor.active and pos:within_rectangle(actor:rect()) then
+         actor:collide(self, self.player)
       end
    end
 
    for _,actor in ipairs(self.actors) do
       if actor.active and actor.update then
-         actor:update()
+         actor:update(self)
       end
    end
 end
@@ -198,7 +219,13 @@ function world:draw_actors ()
          love.graphics.setColor(0, 0, 1, opacity)
       end
       if actor.shape == 'point' then
-         love.graphics.circle('line', actor.pos.x+8, actor.pos.y+8, 8)
+         local size = 8
+         if actor.type == 'spawn' then
+            size = 2
+         end
+         love.graphics.circle('line', actor.pos.x+8, actor.pos.y+8, size)
+      elseif actor.shape == 'rectangle' then
+         love.graphics.rectangle('line', actor.pos.x, actor.pos.y, actor.size:unpack())
       elseif actor.shape == 'polyline' then
          love.graphics.line(actor.line)
       end

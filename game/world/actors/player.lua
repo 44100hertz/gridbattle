@@ -1,6 +1,6 @@
 local player = {}
 
-function player:update ()
+function player:update (world)
    local autofire = GAME.input:down'b' and 20 or 5
    local delay = GAME.input:down'b' and 0.03 or 0.08
    local dir
@@ -13,8 +13,8 @@ function player:update ()
    elseif GAME.input:hit_with_repeat('dr', delay, autofire) then
       dir = 'r'
    end
-   if dir and self.world:can_walk(self.pos, dir) then
-      self.pos = self.pos + self.world.directions[dir].offset * self.world.tile_size
+   if dir and world:can_walk(self.pos, dir) then
+      self.pos = self.pos + world.directions[dir].offset * world.tile_size
    end
 end
 

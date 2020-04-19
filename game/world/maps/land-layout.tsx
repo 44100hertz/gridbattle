@@ -38,4 +38,10 @@
    <property name="walk" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="6" type="invisible">
+  <properties>
+   <property name="geom" value="flat"/>
+   <property name="walk" type="bool" value="true"/>
+  </properties>
+ </tile>
 </tileset>

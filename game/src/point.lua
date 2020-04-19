@@ -72,5 +72,8 @@ end
 function point.mt.__eq (p, q)
    return p.x == q.x and p.y == q.y
 end
+function point.mt.__tostring (p)
+   return string.format('point(%d, %d)', p.x, p.y)
+end
 
 return init

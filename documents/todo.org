@@ -85,10 +85,8 @@ to the location functions. Also, poison_drop should fall through the floor.
 ** first_time argument for base_actor:collide
 collide is called every frame of collision, so a first_time argument that's true
 only for the first frame of collision could be good. Maybe a collision timer is
-needed? Is there a better solution than self.timer:seconds_equals?
+needed? Is there a better solution than self.timer:seconds_equals
 * World map
-** Merge tiles/sprites into world.lua
-Also, find some things to separate, like maybe the map loader?
 ** Move battle data into world?
 It's possible this would be more ideal. Time will tell.
 ** Display actor graphics

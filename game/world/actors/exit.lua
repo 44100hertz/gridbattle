@@ -1,12 +1,9 @@
 local exit = {}
 
-function exit:custom_init ()
-   self.key = 'd' .. self.properties.direction
-end
-
-function exit:collide (with)
-   if with.type == 'player' and GAME.input:hit(self.key) then
-      print('Should exit to:', self.name)
+function exit:collide (world, with)
+   if with.type == 'player' then
+      local offset = with.pos - self.pos
+      world:set_map(self.name, self.properties.spawn, offset)
    end
 end
 

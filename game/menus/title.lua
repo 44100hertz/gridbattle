@@ -13,7 +13,7 @@ local title = {
    {
       text = 'worldmap test',
       a = function ()
-         GAME.scene:push_fade({}, world('world/maps/test0/'))
+         GAME.scene:push_fade({}, world('test0'))
       end,
    },
    {
