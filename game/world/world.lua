@@ -171,6 +171,7 @@ function world:update ()
 end
 
 function world:draw ()
+   love.graphics.push()
    do
       -- smooth scroll follows player
       local goal = self.player.pos - self.view_size/2
@@ -184,6 +185,9 @@ function world:draw ()
    self:draw_tiles(self.scroll_pos - self.tile_size, self.view_size + self.tile_size*2)
    self:draw_actors(self.scroll_pos - self.tile_size, self.view_size + self.tile_size*2)
    love.graphics.setShader()
+
+   love.graphics.pop()
+   love.graphics.print(self.map_name, 5, 5)
 end
 
 function world:draw_tiles (scroll_pos, view_size)
@@ -210,7 +214,6 @@ function world:draw_tiles (scroll_pos, view_size)
 end
 
 function world:draw_actors ()
-   -- Draw hitboxes for debug
    for _,actor in ipairs(self.actors) do
       local opacity = actor.visible and 1 or 0.5
       if actor.active then
@@ -218,17 +221,7 @@ function world:draw_actors ()
       else
          love.graphics.setColor(0, 0, 1, opacity)
       end
-      if actor.shape == 'point' then
-         local size = 8
-         if actor.type == 'spawn' then
-            size = 2
-         end
-         love.graphics.circle('line', actor.pos.x+8, actor.pos.y+8, size)
-      elseif actor.shape == 'rectangle' then
-         love.graphics.rectangle('line', actor.pos.x, actor.pos.y, actor.size:unpack())
-      elseif actor.shape == 'polyline' then
-         love.graphics.line(actor.line)
-      end
+      actor:debug_draw(self)
    end
    love.graphics.setColor(1, 1, 1)
 end

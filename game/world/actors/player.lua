@@ -18,4 +18,9 @@ function player:update (world)
    end
 end
 
+function player:debug_draw (world)
+   local x, y = (self.pos + world.tile_size/2):unpack()
+   love.graphics.circle('fill', x, y, 6)
+end
+
 return player
