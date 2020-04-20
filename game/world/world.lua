@@ -85,8 +85,8 @@ function world:set_map (name, spawn_point, spawn_offset)
    self.actors = {}
    self.spawns = {}
 
-   local path = 'world/maps/' .. name .. '/'
-   self.map = love.filesystem.load(path .. 'map.lua')()
+   local path = 'world/maps/' .. name .. '.lua'
+   self.map = love.filesystem.load(path)()
    self.tileset = self.map.tilesets[1]
    self.scroll_speed = 8
 
