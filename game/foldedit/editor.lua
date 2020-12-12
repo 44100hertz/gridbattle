@@ -33,10 +33,7 @@ function editor:init ()
    self.library.folder = folder('test-folder')
    self.library.folder.name = 'rightpane'
    self.library.sel = 1
-   self.image = image('foldedit/foldedit.png', {
-                         icons = {rect={0,0,16,16}, count={2,7}},
-                         fg = {rect={32,0,224,160},},
-   })
+   self.image = image('foldedit/foldedit.png')
 end
 
 -- Sort both the deck and folder. Using the same sort twice in a row will

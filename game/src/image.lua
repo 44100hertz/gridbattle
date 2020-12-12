@@ -25,10 +25,11 @@ local image_cache
 
    -- The sheet named 'base' will be used by default --
 --]]
-function image:init (path, sheets)
+function image:init (path)
    -- Load sheet data from imgdb into 'point' data types
    self.image = self:get_image(path)
    self.sheets = {}
+   sheets = dofile(path .. '.lua')
 
    for name,data in pairs(sheets) do
       self.sheets[name] = {}
