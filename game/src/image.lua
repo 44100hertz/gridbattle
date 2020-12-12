@@ -12,13 +12,22 @@ local image_cache
 
 -- Load an image
 -- path: where to load the image from, in images/
--- sheet_name: where to get metadata from, defaults to GAME.imgdb[<path>]
-function image:init (path, sheet_name)
-   self.name = sheet_name or path
+-- sheets: all relevant sprite sheets for the image
+--[[
+   Sheet format:
+       rect: {x,y,w,h} rectangle use from image (default whole image)
+             for sprite/tile sheets, this is the upper-left corner.
+       origin: {x, y} center of image; how far to offset when drawing
+       count: {columns, rows} how many frames in a sprite/tile sheet
+       anim: Animation. These fields are needed:
+           fps: <number> framerate of animation
+           order: <list> Frame order. 1 is the first frame
+
+   -- The sheet named 'base' will be used by default --
+--]]
+function image:init (path, sheets)
    -- Load sheet data from imgdb into 'point' data types
    self.image = self:get_image(path)
-
-   local sheets = GAME.imgdb[self.name]
    self.sheets = {}
 
    for name,data in pairs(sheets) do
@@ -49,7 +58,7 @@ function image:get_image (path)
       setmetatable(image_cache, {__mode = 'k'})
    end
    if not image_cache[path] then
-      image_cache[path] = love.graphics.newImage('images/' .. path .. '.png')
+      image_cache[path] = love.graphics.newImage(path)
    end
    return image_cache[path]
 end

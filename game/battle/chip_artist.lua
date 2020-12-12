@@ -11,6 +11,11 @@ function chip_artist:init ()
    self.images = {}
 end
 
+   -- chip = {
+   --    icon = {rect={0,0,16,16}},
+   --    art = {rect={0,16,64,72}},
+   -- },
+
 function chip_artist:get_image (name)
    if not self.images[name] then
       local imgpath = 'chips/' .. name .. '.png'

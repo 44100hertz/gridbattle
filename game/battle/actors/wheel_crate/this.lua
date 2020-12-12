@@ -9,7 +9,9 @@ local wcrate = {
 
 function wcrate:init ()
    self:attach('hp', 1000, {hidden = true})
-   self:attach('image', 'wheel_crate')
+   self:attach('image', 'wheel_crate',
+               {base = {rect={0,0,45,60}, origin={17,45}}}
+   )
    self:spawn{class = 'throw_animation', offset = point(1,0)}
    self.side = self -- All others are my enemy!
 end

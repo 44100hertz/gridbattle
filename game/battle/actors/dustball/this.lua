@@ -9,7 +9,7 @@ local dustball = {
 }
 
 function dustball:init ()
-   self:attach('image', 'dustball')
+   self:attach('image', 'dustball', {base = {rect={0,0,40,40}, origin={20,20}}})
    self:attach('hp', 120)
    self.facing = 1
    self:set_state'move'

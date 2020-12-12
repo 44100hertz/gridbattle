@@ -6,7 +6,7 @@ local results = oop.class {
 }
 
 function results:init (result)
-   self.image = image('battle/results')
+   self.image = image('battle/results.png', {base = {rect={0,0,240,160}, count={2,1}}})
    self.frame = result
 end
 

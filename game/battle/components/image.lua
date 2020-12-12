@@ -2,9 +2,9 @@ local src_image = require 'src/image'
 
 local image = {}
 
-function image:init (actor, path, disable_flip)
+function image:init (actor, path, sheet)
    self.actor = actor
-   self.image = src_image('battle/actors/' .. path)
+   self.image = src_image('battle/actors/' .. actor.class .. '/' .. path .. '.png', sheet)
    self.disable_flip = disable_flip
 end
 

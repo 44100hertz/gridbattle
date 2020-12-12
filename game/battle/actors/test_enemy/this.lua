@@ -11,7 +11,7 @@ function test_enemy:init ()
    })
    local hp, image = unpack(levels[self.level])
    self:attach('hp', hp)
-   self:attach('image', image)
+   self:attach('image', image, {base = {rect={0,0,50,60}, origin={22,30}, scale={1,0.5}}})
    if self.level == 1 then
       self.color = {169/255.0, 53/255.0, 197/255.0}
       self.bullet = nil

@@ -5,7 +5,7 @@ local poisdrop = {
 
 function poisdrop:init ()
    self.lifespan = 10.0
-   self:attach('image', 'poisdrop')
+   self:attach('image', 'poisdrop', {base = {rect={0,0,16,16}, origin={8,7}}})
    self:spawn{class = 'throw_animation', offset = point(3,0)}
 end
 

@@ -99,7 +99,7 @@ function battle:init (set_name)
    -- general
    local battle_config = love.filesystem.load(path)()
    self.bg = bg(unpack(battle_config.bg))
-   self.cust_bar_image = image('battle/ui')
+   self.cust_bar_image = image('battle/ui.png', {bar = {rect={0,0,8,8}, count={3,1}}})
    self.layout = layout()
    self.actors = {}
    self.actor_loader = actor_loader(base_actor(self), 'battle/')

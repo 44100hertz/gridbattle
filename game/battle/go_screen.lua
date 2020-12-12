@@ -7,7 +7,7 @@ local go = oop.class{
 }
 
 function go:init ()
-   self.image = image('battle/start')
+   self.image = image('battle/start.png', {base = {rect={0,0,240,160}, origin={120,80}}})
    self.start_time = love.timer.getTime()
 end
 

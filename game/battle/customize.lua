@@ -15,7 +15,13 @@ function customize:init (battle, folder, queue)
    self.folder = folder
    self.palette = folder:draw(5, self.palette)
    self.selection = 1
-   self.image = image('customize')
+   self.image = image('battle/customize.png',
+                      {
+                         bg = {rect={0,0,120,160}},
+                         chipbg = {rect={0,160,16,16}, count={6,1}},
+                         letter = {rect={0,176,16,8}, count={5,1}},
+                         button = {rect={0,184,16,16}, count={3,1}},
+   })
    self.offset = point(10,10)
    self.dialog = dialog('', point(132, 16))
 end

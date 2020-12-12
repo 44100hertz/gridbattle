@@ -35,7 +35,6 @@ function love.load ()
    GAME.scene = scene()
 
    GAME.chipdb = love.filesystem.load('chipdb.lua')()
-   GAME.imgdb = love.filesystem.load('imgdb.lua')()
 
    GAME.fonts = {
       square = love.graphics.newFont('fonts/squrave.ttf', 32, 'none')
